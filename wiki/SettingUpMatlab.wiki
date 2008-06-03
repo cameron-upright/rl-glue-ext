@@ -1,0 +1,14 @@
+#summary Instructions for using the matlab coded (in development)
+
+= Introduction =
+
+In Matlab:
+{{{
+clear java;javaaddpath('/Users/btanner/Documents/Java-Projects/matlabCodec/dist/MatlabRLGlueCodec.jar')}}}
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
