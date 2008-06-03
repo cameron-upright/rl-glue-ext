@@ -4,7 +4,9 @@
 
 In Matlab:
 {{{
-clear java;javaaddpath('/Users/btanner/Documents/Java-Projects/matlabCodec/dist/MatlabRLGlueCodec.jar')
+clear java;
+javaaddpath('/Users/btanner/Documents/Java-Projects/matlabCodec/dist/MatlabRLGlueCodec.jar')
+javaaddpath('/Users/btanner/Documents/Java-Projects/rl-glue/RL-Glue/Java/RL-Glue.jar')
 }}}
 
 = Details =
