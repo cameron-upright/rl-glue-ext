@@ -29,34 +29,45 @@ import rlglue.utilities.TaskSpec;
 public class MatlabCodec implements Agent {
     MatlabControl mc;// = new MatlabControl();
     //main for testing stuff.
+    
+    String agent_initFunc;
+    String agent_startFunc;
+    String agent_stepFunc;
+    String agent_endFunc;
+    
+    static private int initNum=0;
+    static private int startNum=1;
+    static private int stepNum=2;
+    static private int endNum=3;
+    
+    
     public static void main(String[] args){
         
     }
     
-    public MatlabCodec(Object matLabAgentCode){
-        System.out.println(matLabAgentCode.getClass());
+    public MatlabCodec(String[] matLabAgentCode){
         if(mc == null) mc = new MatlabControl();
-    }
-    
-    public void agent_init(TaskSpec task_spec){
-        String theTaskSpec = task_spec.toString();
-        agent_init(theTaskSpec);
-    }
-    
-    public void agent_init(String task_spec){
-        Object[] args = new Object[1];
-        args[0]=task_spec;
         
-        mc.feval(new String("agent_init"), args);
+         agent_initFunc=matLabAgentCode[initNum];
+         agent_startFunc=matLabAgentCode[startNum];
+         agent_stepFunc=matLabAgentCode[stepNum];
+         agent_endFunc=matLabAgentCode[endNum];
+    }
+    
+    /**
+     * This will be called from the Glue
+     * @param task_spec
+     */public void agent_init(String task_spec){
+        mc.testFeval(agent_initFunc, new Object[]{task_spec});
     }
 
     public Action agent_start(Observation obs) {
-        Object[] returnObj = new Object[2];
+        Object returnObj = new Object[2];
         try {
             Object[] args = new Object[2];
             args[0] = obs.intArray;
             args[1] = obs.doubleArray;
-            mc.blockingFeval(new String("agent_start"), args);
+            returnObj=mc.blockingFeval(agent_startFunc, args);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,12 +75,23 @@ public class MatlabCodec implements Agent {
         return null;
     }
 
-    public Action agent_step(double arg0, Observation arg1) {
+    public Action agent_step(double reward, Observation obs) {
+        Object returnObj = new Object[2];
+        try {
+            Object[] args = new Object[3];
+            args[0] = obs.intArray;
+            args[1] = obs.doubleArray;
+            args[2] = reward;
+            returnObj=mc.blockingFeval(agent_startFunc, args);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MatlabCodec.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return null;
     }
 
-    public void agent_end(double arg0) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void agent_end(double reward) {
+        mc.testFeval(agent_initFunc, new Object[]{reward});
     }
 
     public void agent_cleanup() {
