@@ -9,9 +9,11 @@ javaaddpath('/Users/btanner/Documents/Java-Projects/matlabCodec/dist/MatlabRLGlu
 javaaddpath('/Users/btanner/Documents/Java-Projects/rl-glue/RL-Glue/Java/RL-Glue.jar')
 }}}
 
-= Details =
+= Pitfalls =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+An error like
+{{{
+??? Undefined variable "org" or class "org.rlcommunity.rlglue.ext.codecs.matlab.MatlabCodec".
+}}}
+
+Might mean that RL-Glue isn't in your Matlab Java Class path.
