@@ -1,4 +1,4 @@
-package codec;
+package org.rlcommunity.rlglue.ext.codecs.matlab;
 
 /* Agent Interface 
 void agent_init(const Task_specification task_spec);
@@ -11,10 +11,10 @@ Message agent_message(const Message message);
 */
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rlVizLib.utilities.TaskSpecObject;
 import rlglue.agent.Agent;
 import rlglue.types.Action;
 import rlglue.types.Observation;
+import rlglue.utilities.TaskSpec;
 /**
  *
  * @author mradkie
@@ -33,13 +33,12 @@ public class MatlabCodec implements Agent {
         
     }
     
-    public MatlabCodec(MatLabAgentStruct matLabAgentCode){
-        
+    public MatlabCodec(Object matLabAgentCode){
+        System.out.println(matLabAgentCode.getClass());
         if(mc == null) mc = new MatlabControl();
-        
     }
     
-    public void agent_init(TaskSpecObject task_spec){
+    public void agent_init(TaskSpec task_spec){
         String theTaskSpec = task_spec.toString();
         agent_init(theTaskSpec);
     }
