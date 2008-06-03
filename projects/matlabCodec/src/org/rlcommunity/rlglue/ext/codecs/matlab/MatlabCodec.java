@@ -45,6 +45,14 @@ public class MatlabCodec implements Agent {
         
     }
     
+    public void test(){
+        mc.setEchoEval(true);
+ //       Object something=mc.testBlockingFeval("mtest",null);
+       mc.testBlockingFeval("mtest",null);
+       //System.out.println("Back from MC we got: "+theReturn+" of type: "+theReturn.getClass());
+//        System.out.println(something.getClass());
+    }
+    
     public MatlabCodec(String[] matLabAgentCode){
         if(mc == null) mc = new MatlabControl();
         
@@ -82,7 +90,7 @@ public class MatlabCodec implements Agent {
             args[0] = obs.intArray;
             args[1] = obs.doubleArray;
             args[2] = reward;
-            returnObj=mc.blockingFeval(agent_startFunc, args);
+            returnObj=mc.blockingFeval(agent_stepFunc, args);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,7 +99,7 @@ public class MatlabCodec implements Agent {
     }
 
     public void agent_end(double reward) {
-        mc.testFeval(agent_initFunc, new Object[]{reward});
+        mc.testFeval(agent_endFunc, new Object[]{reward});
     }
 
     public void agent_cleanup() {
