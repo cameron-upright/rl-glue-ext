@@ -1,4 +1,4 @@
-package codec;
+package org.rlcommunity.rlglue.ext.codecs.matlab;
 /* MatlabControl.java
  *
  * "Copyright (c) 2001 and The Regents of the University
