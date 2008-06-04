@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import rlglue.agent.Agent;
 import rlglue.types.Action;
 import rlglue.types.Observation;
-import rlglue.utilities.TaskSpec;
 
 /**
  *
@@ -87,32 +86,32 @@ public class MatlabAgentCodec implements Agent {
      * @return
      */
     public Action agent_start(Observation obs) {
-        Object returnObj = new Object[2];
+        Action returnObj = new Action();
         try {
             Object[] args = new Object[2];
             args[0] = obs.intArray;
             args[1] = obs.doubleArray;
-            returnObj = mc.blockingFeval(agent_startFunc, args);
+            returnObj = (Action)mc.blockingFeval(agent_startFunc, args);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return returnObj;
     }
 
     public Action agent_step(double reward, Observation obs) {
-        Object returnObj = new Object[2];
+        Action returnObj = new Action();
         try {
             Object[] args = new Object[3];
             args[0] = obs.intArray;
             args[1] = obs.doubleArray;
             args[2] = reward;
-            returnObj = mc.blockingFeval(agent_stepFunc, args);
+            returnObj = (Action)mc.blockingFeval(agent_stepFunc, args);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return returnObj;
     }
 
     public void agent_end(double reward) {
