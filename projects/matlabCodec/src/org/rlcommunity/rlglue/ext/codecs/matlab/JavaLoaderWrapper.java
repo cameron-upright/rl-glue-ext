@@ -12,11 +12,16 @@ import rlglue.agent.AgentLoader;
  * @author Brian Tanner
  */
 public class JavaLoaderWrapper{
+    AgentLoader theAgentLoader=null;
     public JavaLoaderWrapper(MatlabAgentCodec theAgent) {
-       AgentLoader theAgentLoader=new AgentLoader(theAgent); 
+       theAgentLoader=new AgentLoader(theAgent); 
        
        Thread t=new Thread(theAgentLoader);
        t.start();
+    }
+    
+    public void killThread(){
+        theAgentLoader.killProcess();
     }
 
 

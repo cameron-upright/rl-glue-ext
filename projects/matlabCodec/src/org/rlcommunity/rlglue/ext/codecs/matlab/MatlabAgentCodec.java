@@ -27,8 +27,7 @@ Object[] MatlabControl.blockingFeval(String command, Object[] args)
  * */
 public class MatlabAgentCodec implements Agent {
 
-    MatlabControl mc;// = new MatlabControl();
-    //main for testing stuff.
+    MatlabControl mc;
     String agent_initFunc;
     String agent_startFunc;
     String agent_stepFunc;
@@ -36,22 +35,37 @@ public class MatlabAgentCodec implements Agent {
     String agent_freezeFunc;
     String agent_cleanupFunc;
     String agent_messageFunc;
-    
     static private int initNum = 0;
     static private int startNum = 1;
     static private int stepNum = 2;
     static private int endNum = 3;
-    static private int freezeNum = 4;
-    static private int cleanupNum = 5;
-    static private int messageNum = 6;
-
-    public static void main(String[] args) {
-
-    }
+    static private int cleanupNum = 4;
+    static private int messageNum = 5;
+    static private int freezeNum = 6;
 
     public void test() {
         mc.setEchoEval(true);
         mc.testBlockingFeval("mtest", null);
+    }
+
+    public static void main(String[] args) {
+        Object[] someArray = new Object[3];
+
+        Object otherObject = someArray;
+
+        Object[] thirdArray = (Object[]) otherObject;
+
+
+        Double[] someArrayD = new Double[3];
+
+        Object doubleOBject = someArrayD;
+
+        Double[] secondDoubleArray = (Double[]) doubleOBject;
+
+        System.out.println(someArray.getClass());
+        System.out.println(otherObject.getClass());
+        System.out.println(thirdArray.getClass());
+
 
     }
 
@@ -86,17 +100,23 @@ public class MatlabAgentCodec implements Agent {
      * @return
      */
     public Action agent_start(Observation obs) {
-        Action returnObj = new Action();
+        Action theAction = null;
         try {
-            Object[] args = new Object[2];
-            args[0] = obs.intArray;
-            args[1] = obs.doubleArray;
-            returnObj = (Action)mc.blockingFeval(agent_startFunc, args);
+            Object[] args = new Object[]{obs.intArray,obs.doubleArray};
+
+            Object returnObject = mc.blockingFeval(agent_startFunc, args);
+            int[] intPart = (int[]) (((Object[]) returnObject)[0]);
+            double[] doublePart = (double[]) (((Object[]) returnObject)[1]);
+            
+            
+            theAction=new Action(intPart.length,doublePart.length);
+            theAction.intArray=intPart;
+            theAction.doubleArray=doublePart;
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return returnObj;
+        return theAction;
     }
 
     public Action agent_step(double reward, Observation obs) {
@@ -106,7 +126,7 @@ public class MatlabAgentCodec implements Agent {
             args[0] = obs.intArray;
             args[1] = obs.doubleArray;
             args[2] = reward;
-            returnObj = (Action)mc.blockingFeval(agent_stepFunc, args);
+            returnObj = (Action) mc.blockingFeval(agent_stepFunc, args);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -131,7 +151,7 @@ public class MatlabAgentCodec implements Agent {
         try {
             Object[] args = new Object[1];
             args[0] = message;
-            returnMessage = (String)mc.blockingFeval(agent_messageFunc, args);
+            returnMessage = (String) mc.blockingFeval(agent_messageFunc, args);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
