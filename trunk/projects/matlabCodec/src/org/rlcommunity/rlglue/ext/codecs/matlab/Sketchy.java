@@ -18,9 +18,9 @@ import rlglue.types.Observation;
  */
 public class Sketchy extends Thread{
     volatile public boolean DIE=false;
-MatlabCodec theAgent=null;
+MatlabAgentCodec theAgent=null;
 
-    public Sketchy(MatlabCodec theAgent) {
+    public Sketchy(MatlabAgentCodec theAgent) {
         this.theAgent=theAgent;
         start();
     }
