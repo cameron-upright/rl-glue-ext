@@ -105,9 +105,32 @@ public class MatlabAgentCodec implements Agent {
             Object[] args = new Object[]{obs.intArray,obs.doubleArray};
 
             Object returnObject = mc.blockingFeval(agent_startFunc, args);
-            int[] intPart = (int[]) (((Object[]) returnObject)[0]);
-            double[] doublePart = (double[]) (((Object[]) returnObject)[1]);
+            Object[] roa=(Object[])returnObject;                 
+            int[] intPart =(int[])roa[0];
+            double[] doublePart = (double[])roa[1];         
             
+            theAction=new Action(intPart.length,doublePart.length);
+            theAction.intArray=intPart;
+            theAction.doubleArray=doublePart;
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        return theAction;
+    }
+
+    public Action agent_step(double reward, Observation obs) {
+        Action theAction = null;
+        try {
+            Object[] args = new Object[3];
+            args[0] = obs.intArray;
+            args[1] = obs.doubleArray;
+            args[2] = reward;
+            Object returnObj = (Action) mc.blockingFeval(agent_stepFunc, args);
+            Object[] roa=(Object[])returnObj;                 
+            int[] intPart =(int[])roa[0];
+            double[] doublePart = (double[])roa[1];         
             
             theAction=new Action(intPart.length,doublePart.length);
             theAction.intArray=intPart;
@@ -117,21 +140,6 @@ public class MatlabAgentCodec implements Agent {
         }
 
         return theAction;
-    }
-
-    public Action agent_step(double reward, Observation obs) {
-        Action returnObj = new Action();
-        try {
-            Object[] args = new Object[3];
-            args[0] = obs.intArray;
-            args[1] = obs.doubleArray;
-            args[2] = reward;
-            returnObj = (Action) mc.blockingFeval(agent_stepFunc, args);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return returnObj;
     }
 
     public void agent_end(double reward) {
