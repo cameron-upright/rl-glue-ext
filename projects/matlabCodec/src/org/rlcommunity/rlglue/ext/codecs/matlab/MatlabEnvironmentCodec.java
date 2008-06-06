@@ -83,8 +83,16 @@ public class MatlabEnvironmentCodec implements Environment {
     }
 
     public Observation env_start() {
+        Observation theObservation = null;
         try {
-            return (Observation) mc.blockingFeval(env_startFunc, null);
+            Object returnObject = mc.blockingFeval(env_startFunc, null);
+                        Object[] roa=(Object[])returnObject;                 
+            int[] intPart =(int[])roa[0];
+            double[] doublePart = (double[])roa[1];         
+
+            theObservation=new Observation(intPart.length,doublePart.length);
+            theObservation.intArray=intPart;
+            theObservation.doubleArray=doublePart;
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabEnvironmentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,11 +100,20 @@ public class MatlabEnvironmentCodec implements Environment {
     }
 
     public Reward_observation env_step(Action action) {
+        Reward_observation rewardObs = null;
         try {
             Object[] args = new Object[2];
             args[0] = action.intArray;
             args[1] = action.doubleArray;
-            return (Reward_observation) mc.blockingFeval(env_stepFunc, args);
+            Object returnObject = mc.blockingFeval(env_stepFunc, args);
+            Object[] roa=(Object[])returnObject;                 
+            int[] intPart =(int[])roa[0];
+            double[] doublePart = (double[])roa[1];         
+            double[] rewardPart = (double[])roa[2];
+            double theReward = rewardPart[0];
+           // rewardObs =new Reward_observation(intPart.length,doublePart.length);
+            //theAction.intArray=intPart;
+            //theAction.doubleArray=doublePart;
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -128,12 +145,17 @@ public class MatlabEnvironmentCodec implements Environment {
     }
 
     public Random_seed_key env_get_random_seed() {
+        Random_seed_key rsk = null;
         try {
-            return (Random_seed_key) mc.blockingFeval(env_getrandomseedFunc, null);
+            Object returnObject = mc.blockingFeval(env_getrandomseedFunc, null);
+            Object[] roa=(Object[])returnObject;                 
+            int[] intPart =(int[])roa[0];
+            double[] doublePart = (double[])roa[1];         
+
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabEnvironmentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return rsk;
     }
 
     public void env_cleanup() {
