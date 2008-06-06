@@ -108,7 +108,7 @@ public class MatlabAgentCodec implements Agent {
             Object[] roa=(Object[])returnObject;                 
             int[] intPart =(int[])roa[0];
             double[] doublePart = (double[])roa[1];         
-            
+
             theAction=new Action(intPart.length,doublePart.length);
             theAction.intArray=intPart;
             theAction.doubleArray=doublePart;
@@ -116,45 +116,59 @@ public class MatlabAgentCodec implements Agent {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
+        System.out.println("done agent_start in java");
         return theAction;
     }
 
     public Action agent_step(double reward, Observation obs) {
+        System.out.println("agent_step called in java");
         Action theAction = null;
         try {
             Object[] args = new Object[3];
             args[0] = obs.intArray;
             args[1] = obs.doubleArray;
             args[2] = reward;
-            Object returnObj = (Action) mc.blockingFeval(agent_stepFunc, args);
-            Object[] roa=(Object[])returnObj;                 
+
+            Object returnObject = mc.blockingFeval(agent_stepFunc, args);
+            Object[] roa=(Object[])returnObject;                 
             int[] intPart =(int[])roa[0];
             double[] doublePart = (double[])roa[1];         
-            
+
             theAction=new Action(intPart.length,doublePart.length);
             theAction.intArray=intPart;
             theAction.doubleArray=doublePart;
+
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        System.out.println("agent_step done in java");
         return theAction;
+        
     }
 
     public void agent_end(double reward) {
+        System.out.println("agent_end called in java");
         mc.testFeval(agent_endFunc, new Object[]{reward});
+        System.out.println("agent_end done in java");
+        
     }
 
     public void agent_cleanup() {
+        System.out.println("agent_cleanup called in java");
         mc.testEval(agent_cleanupFunc);
+        System.out.println("agent_cleanup done in java");
+        
     }
 
     public void agent_freeze() {
+        System.out.println("agent_freeze called in java");
+        
         mc.eval(agent_freezeFunc);
+        System.out.println("agent_freeze done in java");
     }
 
     public String agent_message(String message) {
+        System.out.println("agent_message called in java");
         String returnMessage = "";
         try {
             Object[] args = new Object[1];
@@ -163,7 +177,7 @@ public class MatlabAgentCodec implements Agent {
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        System.out.println("agent_message done in java");
         return returnMessage;
     }
 }
