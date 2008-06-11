@@ -74,29 +74,31 @@ public class MatlabEnvironmentCodec implements Environment {
      * This will be called from the Glue.
      */
     public String env_init() {
+        String taskspec = "";
         try {
-            return (String) mc.blockingFeval(env_messageFunc, null);
+
+            taskspec = (String) mc.blockingFeval(env_initFunc, null);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabEnvironmentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "";
+        return taskspec;
     }
 
     public Observation env_start() {
         Observation theObservation = null;
         try {
             Object returnObject = mc.blockingFeval(env_startFunc, null);
-                        Object[] roa=(Object[])returnObject;                 
+            Object[] roa=(Object[])returnObject;                 
             int[] intPart =(int[])roa[0];
-            double[] doublePart = (double[])roa[1];         
-
+            double[] doublePart = (double[])roa[1];        
+            
             theObservation=new Observation(intPart.length,doublePart.length);
             theObservation.intArray=intPart;
             theObservation.doubleArray=doublePart;
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabEnvironmentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return theObservation;
     }
 
     public Reward_observation env_step(Action action) {
@@ -111,14 +113,15 @@ public class MatlabEnvironmentCodec implements Environment {
             double[] doublePart = (double[])roa[1];         
             double[] rewardPart = (double[])roa[2];
             double theReward = rewardPart[0];
-           // rewardObs =new Reward_observation(intPart.length,doublePart.length);
-            //theAction.intArray=intPart;
-            //theAction.doubleArray=doublePart;
+            Observation theObs = new Observation(intPart.length,doublePart.length);
+            theObs.intArray=intPart;
+            theObs.doubleArray=doublePart;
+            rewardObs =new Reward_observation(theReward, theObs, 0);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return rewardObs;
     }
 
     public void env_set_state(State_key sk) {
