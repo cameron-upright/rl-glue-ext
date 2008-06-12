@@ -139,12 +139,19 @@ public class MatlabEnvironmentCodec implements Environment {
     }
 
     public State_key env_get_state() {
+        State_key sk = null;
         try {
-            return (State_key) mc.blockingFeval(env_getstateFunc, null);
+            Object returnObject = mc.blockingFeval(env_getstateFunc, null);
+            Object[] roa=(Object[])returnObject;                 
+            int[] intPart =(int[])roa[0];
+            double[] doublePart = (double[])roa[1];
+            sk = new State_key(intPart.length,doublePart.length);
+            sk.doubleArray = doublePart;
+            sk.intArray = intPart;
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabEnvironmentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return sk;
     }
 
     public Random_seed_key env_get_random_seed() {
@@ -153,7 +160,10 @@ public class MatlabEnvironmentCodec implements Environment {
             Object returnObject = mc.blockingFeval(env_getrandomseedFunc, null);
             Object[] roa=(Object[])returnObject;                 
             int[] intPart =(int[])roa[0];
-            double[] doublePart = (double[])roa[1];         
+            double[] doublePart = (double[])roa[1];
+            rsk = new Random_seed_key(intPart.length,doublePart.length);
+            rsk.doubleArray = doublePart;
+            rsk.intArray = intPart;
 
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabEnvironmentCodec.class.getName()).log(Level.SEVERE, null, ex);
