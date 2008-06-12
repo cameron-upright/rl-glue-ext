@@ -33,14 +33,13 @@ public class MatlabEnvironmentCodec implements Environment {
     static private int initNum = 0;
     static private int startNum = 1;
     static private int stepNum = 2;
-    static private int endNum = 3;
-    static private int freezeNum = 4;
-    static private int cleanupNum = 5;
-    static private int messageNum = 6;
-    static private int setstateNum = 7;
-    static private int getstateNum = 8;
-    static private int setrandomseedNum = 9;
-    static private int getrandomseedNum = 10;
+    static private int freezeNum = 3;
+    static private int cleanupNum = 4;
+    static private int messageNum = 5;
+    static private int setstateNum = 6;
+    static private int getstateNum = 7;
+    static private int setrandomseedNum = 8;
+    static private int getrandomseedNum = 9;
 
     public static void main(String[] args) {
 
@@ -60,7 +59,6 @@ public class MatlabEnvironmentCodec implements Environment {
         env_initFunc = matLabEnvironmentCode[initNum];
         env_startFunc = matLabEnvironmentCode[startNum];
         env_stepFunc = matLabEnvironmentCode[stepNum];
-        env_endFunc = matLabEnvironmentCode[endNum];
         env_freezeFunc = matLabEnvironmentCode[freezeNum];
         env_cleanupFunc = matLabEnvironmentCode[cleanupNum];
         env_messageFunc = matLabEnvironmentCode[messageNum];
