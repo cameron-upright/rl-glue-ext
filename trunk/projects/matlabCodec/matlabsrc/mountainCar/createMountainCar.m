@@ -1,7 +1,6 @@
 mountainCar.init='mountainCar_init';
 mountainCar.start='mountainCar_start';
 mountainCar.step='mountainCar_step';
-mountainCar.end='mountainCar_end';
 mountainCar.message='mountainCar_message';
 mountainCar.cleanup='mountainCar_cleanup';
 mountainCar.freeze='mountainCar_freeze';
