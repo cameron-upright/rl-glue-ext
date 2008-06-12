@@ -42,7 +42,10 @@ Reward_observation{2} = [theState(1) theState(2)];
 
 if(position > goalPos)
     Reward_observation{3} = 0;
+    Reward_observation{4} = 1;
 else
     Reward_observation{3} = -1.0;
+    Reward_observation{4} = 0;
 end
+
 
