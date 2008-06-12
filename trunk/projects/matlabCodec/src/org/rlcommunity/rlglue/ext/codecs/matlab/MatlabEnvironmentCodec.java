@@ -110,11 +110,13 @@ public class MatlabEnvironmentCodec implements Environment {
             int[] intPart =(int[])roa[0];
             double[] doublePart = (double[])roa[1];         
             double[] rewardPart = (double[])roa[2];
+            double[] terminalPart = (double[])roa[3];
             double theReward = rewardPart[0];
+            double terminal = terminalPart[0];
             Observation theObs = new Observation(intPart.length,doublePart.length);
             theObs.intArray=intPart;
             theObs.doubleArray=doublePart;
-            rewardObs =new Reward_observation(theReward, theObs, 0);
+            rewardObs =new Reward_observation(theReward, theObs,(int) terminal);
         } catch (InterruptedException ex) {
             Logger.getLogger(MatlabAgentCodec.class.getName()).log(Level.SEVERE, null, ex);
         }
