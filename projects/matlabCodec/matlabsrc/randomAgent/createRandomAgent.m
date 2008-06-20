@@ -8,6 +8,9 @@ randomAgentStruct.freeze='randomAgent_freeze';
 %Create a mapping of functions to names, to be passed into Java. This is
 %so java knows the name of the functions to call for each of the
 %rl-glue functions.
-theAgentCell=agentCellFromStruct(randomAgentStruct);
 
+
+
+%This will be for Java only
+theAgentCell=agentCellFromStruct(randomAgentStruct);
 theJavaAgent=org.rlcommunity.rlglue.ext.codecs.matlab.MatlabAgentCodec(theAgentCell);
