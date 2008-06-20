@@ -11,8 +11,6 @@ mountainCar.getrandomseed='mountainCar_getrandomseed';
 %Create a mapping of functions to names, to be passed into Java. This is
 %so java knows the name of the functions to call for each of the
 %rl-glue functions.
-global version episodic observation action reward;
-
 theEnvCell=envCellFromStruct(mountainCar);
 
 theJavaEnv=org.rlcommunity.rlglue.ext.codecs.matlab.MatlabEnvironmentCodec(theEnvCell);
