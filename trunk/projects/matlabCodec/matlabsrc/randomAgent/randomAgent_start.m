@@ -1,4 +1,4 @@
-function Action=randomAgent_start(intObservations, doubleObservations)
+function Action=randomAgent_start(theObservation)
    
 %   Action=chooseEpsilonGreedy(intObservations,doubleObservations);
 global TaskSpecMatlabObject;
@@ -22,7 +22,7 @@ for i=1:numActionDimensions
         min = cell2mat(actionSpec{i+2}(1));
         max = str2double(max);
         min = str2double(min);
-        intArray(intIndex) = rand()*max + min;
+        intArray(intIndex) = floor(rand()*(max+1)) + min;
         intIndex = intIndex + 1;
     else
         %i wonder if this will work, random[0,1] * max + min
@@ -34,9 +34,8 @@ for i=1:numActionDimensions
         doubleIndex = doubleIndex + 1;
     end
     
-    intArray = int32(intArray);
-    Action{1} = intArray;
-    Action{2} = doubleArray;
+    Action.intArray=int32(intArray);
+    Action.doubleArray=doubleArray;
 end
 
 

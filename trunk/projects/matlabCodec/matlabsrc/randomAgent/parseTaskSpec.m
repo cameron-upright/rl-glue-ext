@@ -1,4 +1,5 @@
 function  taskSpecMatlabObject=parseTaskSpec(taskSpec)
+
 %split into v:e:o:a:r
 [matchstr splitstr] = regexp(taskSpec, ':', 'match', 'split');
 %version number
@@ -33,3 +34,5 @@ taskSpecMatlabObject.episodic=episodic;
 taskSpecMatlabObject.observation=observation;
 taskSpecMatlabObject.action=action;
 taskSpecMatlabObject.reward=reward;
+
+taskSpecMatlabObject
