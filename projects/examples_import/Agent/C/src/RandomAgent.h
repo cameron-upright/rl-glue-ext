@@ -18,7 +18,15 @@
 #ifndef RandomAgent_h
 #define RandomAgent_h
 
-#include <RL_common.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <rlglue/Agent_common.h>
+#include "C_TaskSpec_Parser.h"
+#ifdef __cplusplus
+}
+#endif
 
 void agent_init(const Task_specification task_spec);
 Action agent_start(Observation o);
