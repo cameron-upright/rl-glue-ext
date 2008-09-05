@@ -19,7 +19,7 @@
 #define RL_network_h
 
 /* Defines types for RL-Glue */
-#include <RL_common.h>
+#include <rlglue/Agent_common.h>
 
 /* RL-Glue needs to know what type of object is trying to connect. */
 #define kExperimentConnection  1
