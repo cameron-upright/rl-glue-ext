@@ -23,8 +23,8 @@
 #include <netdb.h> /* gethostbyname */
 #include <arpa/inet.h> /* inet_ntoa */
 
-#include <RL_common.h>
-#include <RL_network.h>
+#include <rlglue/RL_common.h>
+#include "RL_network.h"
 
 static int theExperimentConnection = 0;
 
