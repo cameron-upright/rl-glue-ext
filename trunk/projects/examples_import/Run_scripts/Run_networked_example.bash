@@ -6,7 +6,7 @@ echo 'Edit "Run_network_demo.bash" to change which agent, environment or experim
 echo
 
 # Run the glue ------------------------------------
-../../RL-Glue/bin/RL_glue & 
+rl_glue & 
 
 # ----------------------------------------------
 # Choose an Agent
