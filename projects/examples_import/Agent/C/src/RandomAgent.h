@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 #include <rlglue/Agent_common.h>
-#include <rlglue/codecs/C/C_TaskSpec_Parser.h>
+#include <rlglue/utils/C/C_TaskSpec_Parser.h>
 #ifdef __cplusplus
 }
 #endif

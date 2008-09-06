@@ -12,7 +12,7 @@ CFLAGS = -I$(AGENT_SRC_PATH)
 all: RL_agent
 
 RL_agent: $(addprefix $(BUILD_PATH)/, $(AGENT_OBJECTS))  
-	$(CC)   -lrlagent -o RL_agent $^ -lm    
+	$(CC)   -lrlagent -lrlutils -lm -o RL_agent $^     
 
 $(BUILD_PATH)/$(basename $(AGENT)).o: $(AGENT_SRC_PATH)/$(AGENT)
 	$(CC) -c $(CFLAGS) $^ -o $@ 
