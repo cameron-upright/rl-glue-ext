@@ -1,4 +1,4 @@
-#include "C_TaskSpec_Parser.h"
+#include <rlglue/codecs/C/C_TaskSpec_Parser.h>
 
 /*int main(void) {
 	task_spec_struct tss;
