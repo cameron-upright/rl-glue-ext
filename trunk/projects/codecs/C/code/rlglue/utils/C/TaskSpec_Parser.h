@@ -9,6 +9,10 @@
 #ifndef C_TASKSPEC_PARSER_H
 #define C_TASKSPEC_PARSER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef INFINITY
 #define INFINITY (1.0f/0.0f)
 #endif
@@ -36,5 +40,9 @@ typedef struct
 
 
 void parse_task_spec(const char* ts, task_spec_struct* ps);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*C_TASKSPEC_PARSER_H*/
