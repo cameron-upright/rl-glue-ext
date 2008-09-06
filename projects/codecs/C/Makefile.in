@@ -210,13 +210,13 @@ target_alias = @target_alias@
 CODEC_RELEASE = 1:0:0
 CODEC_VERSION = 1:0:0
 lib_LTLIBRARIES = librlagent.la librlenvironment.la librlexperiment.la
-librlagent_la_SOURCES = tmp/RL_client_agent.c tmp/RL_network.c tmp/C_TaskSpec_Parser.c tmp/RLStruct_util.c rlglue/codecs/C/C_TaskSpec_Parser.h rlglue/codecs/C/RLStruct_util.h  RL_network.h
+librlagent_la_SOURCES = src/RL_client_agent.c src/RL_network.c src/C_TaskSpec_Parser.c src/RLStruct_util.c rlglue/codecs/C/C_TaskSpec_Parser.h rlglue/codecs/C/RLStruct_util.h  RL_network.h
 librlagent_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 librlagent_la_includedir = $(includedir)/rlglue/codecs/C
 librlagent_la_include_HEADERS = rlglue/codecs/C/C_TaskSpec_Parser.h rlglue/codecs/C/RLStruct_util.h
-librlenvironment_la_SOURCES = tmp/RL_client_environment.c tmp/RL_network.c tmp/C_TaskSpec_Parser.c tmp/RLStruct_util.c rlglue/codecs/C/RLStruct_util.h RL_network.h
+librlenvironment_la_SOURCES = src/RL_client_environment.c src/RL_network.c src/C_TaskSpec_Parser.c src/RLStruct_util.c rlglue/codecs/C/RLStruct_util.h RL_network.h
 librlenvironment_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
-librlexperiment_la_SOURCES = tmp/RL_client_experiment.c tmp/RL_network.c tmp/C_TaskSpec_Parser.c tmp/RLStruct_util.c rlglue/codecs/C/RLStruct_util.h RL_network.h
+librlexperiment_la_SOURCES = src/RL_client_experiment.c src/RL_network.c src/C_TaskSpec_Parser.c src/RLStruct_util.c rlglue/codecs/C/RLStruct_util.h RL_network.h
 librlexperiment_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 all: all-am
 
@@ -323,47 +323,47 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-RL_client_agent.lo: tmp/RL_client_agent.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_client_agent.lo -MD -MP -MF "$(DEPDIR)/RL_client_agent.Tpo" -c -o RL_client_agent.lo `test -f 'tmp/RL_client_agent.c' || echo '$(srcdir)/'`tmp/RL_client_agent.c; \
+RL_client_agent.lo: src/RL_client_agent.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_client_agent.lo -MD -MP -MF "$(DEPDIR)/RL_client_agent.Tpo" -c -o RL_client_agent.lo `test -f 'src/RL_client_agent.c' || echo '$(srcdir)/'`src/RL_client_agent.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RL_client_agent.Tpo" "$(DEPDIR)/RL_client_agent.Plo"; else rm -f "$(DEPDIR)/RL_client_agent.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tmp/RL_client_agent.c' object='RL_client_agent.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/RL_client_agent.c' object='RL_client_agent.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_client_agent.lo `test -f 'tmp/RL_client_agent.c' || echo '$(srcdir)/'`tmp/RL_client_agent.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_client_agent.lo `test -f 'src/RL_client_agent.c' || echo '$(srcdir)/'`src/RL_client_agent.c
 
-RL_network.lo: tmp/RL_network.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_network.lo -MD -MP -MF "$(DEPDIR)/RL_network.Tpo" -c -o RL_network.lo `test -f 'tmp/RL_network.c' || echo '$(srcdir)/'`tmp/RL_network.c; \
+RL_network.lo: src/RL_network.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_network.lo -MD -MP -MF "$(DEPDIR)/RL_network.Tpo" -c -o RL_network.lo `test -f 'src/RL_network.c' || echo '$(srcdir)/'`src/RL_network.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RL_network.Tpo" "$(DEPDIR)/RL_network.Plo"; else rm -f "$(DEPDIR)/RL_network.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tmp/RL_network.c' object='RL_network.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/RL_network.c' object='RL_network.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_network.lo `test -f 'tmp/RL_network.c' || echo '$(srcdir)/'`tmp/RL_network.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_network.lo `test -f 'src/RL_network.c' || echo '$(srcdir)/'`src/RL_network.c
 
-C_TaskSpec_Parser.lo: tmp/C_TaskSpec_Parser.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT C_TaskSpec_Parser.lo -MD -MP -MF "$(DEPDIR)/C_TaskSpec_Parser.Tpo" -c -o C_TaskSpec_Parser.lo `test -f 'tmp/C_TaskSpec_Parser.c' || echo '$(srcdir)/'`tmp/C_TaskSpec_Parser.c; \
+C_TaskSpec_Parser.lo: src/C_TaskSpec_Parser.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT C_TaskSpec_Parser.lo -MD -MP -MF "$(DEPDIR)/C_TaskSpec_Parser.Tpo" -c -o C_TaskSpec_Parser.lo `test -f 'src/C_TaskSpec_Parser.c' || echo '$(srcdir)/'`src/C_TaskSpec_Parser.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/C_TaskSpec_Parser.Tpo" "$(DEPDIR)/C_TaskSpec_Parser.Plo"; else rm -f "$(DEPDIR)/C_TaskSpec_Parser.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tmp/C_TaskSpec_Parser.c' object='C_TaskSpec_Parser.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/C_TaskSpec_Parser.c' object='C_TaskSpec_Parser.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o C_TaskSpec_Parser.lo `test -f 'tmp/C_TaskSpec_Parser.c' || echo '$(srcdir)/'`tmp/C_TaskSpec_Parser.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o C_TaskSpec_Parser.lo `test -f 'src/C_TaskSpec_Parser.c' || echo '$(srcdir)/'`src/C_TaskSpec_Parser.c
 
-RLStruct_util.lo: tmp/RLStruct_util.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RLStruct_util.lo -MD -MP -MF "$(DEPDIR)/RLStruct_util.Tpo" -c -o RLStruct_util.lo `test -f 'tmp/RLStruct_util.c' || echo '$(srcdir)/'`tmp/RLStruct_util.c; \
+RLStruct_util.lo: src/RLStruct_util.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RLStruct_util.lo -MD -MP -MF "$(DEPDIR)/RLStruct_util.Tpo" -c -o RLStruct_util.lo `test -f 'src/RLStruct_util.c' || echo '$(srcdir)/'`src/RLStruct_util.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RLStruct_util.Tpo" "$(DEPDIR)/RLStruct_util.Plo"; else rm -f "$(DEPDIR)/RLStruct_util.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tmp/RLStruct_util.c' object='RLStruct_util.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/RLStruct_util.c' object='RLStruct_util.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RLStruct_util.lo `test -f 'tmp/RLStruct_util.c' || echo '$(srcdir)/'`tmp/RLStruct_util.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RLStruct_util.lo `test -f 'src/RLStruct_util.c' || echo '$(srcdir)/'`src/RLStruct_util.c
 
-RL_client_environment.lo: tmp/RL_client_environment.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_client_environment.lo -MD -MP -MF "$(DEPDIR)/RL_client_environment.Tpo" -c -o RL_client_environment.lo `test -f 'tmp/RL_client_environment.c' || echo '$(srcdir)/'`tmp/RL_client_environment.c; \
+RL_client_environment.lo: src/RL_client_environment.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_client_environment.lo -MD -MP -MF "$(DEPDIR)/RL_client_environment.Tpo" -c -o RL_client_environment.lo `test -f 'src/RL_client_environment.c' || echo '$(srcdir)/'`src/RL_client_environment.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RL_client_environment.Tpo" "$(DEPDIR)/RL_client_environment.Plo"; else rm -f "$(DEPDIR)/RL_client_environment.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tmp/RL_client_environment.c' object='RL_client_environment.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/RL_client_environment.c' object='RL_client_environment.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_client_environment.lo `test -f 'tmp/RL_client_environment.c' || echo '$(srcdir)/'`tmp/RL_client_environment.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_client_environment.lo `test -f 'src/RL_client_environment.c' || echo '$(srcdir)/'`src/RL_client_environment.c
 
-RL_client_experiment.lo: tmp/RL_client_experiment.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_client_experiment.lo -MD -MP -MF "$(DEPDIR)/RL_client_experiment.Tpo" -c -o RL_client_experiment.lo `test -f 'tmp/RL_client_experiment.c' || echo '$(srcdir)/'`tmp/RL_client_experiment.c; \
+RL_client_experiment.lo: src/RL_client_experiment.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_client_experiment.lo -MD -MP -MF "$(DEPDIR)/RL_client_experiment.Tpo" -c -o RL_client_experiment.lo `test -f 'src/RL_client_experiment.c' || echo '$(srcdir)/'`src/RL_client_experiment.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RL_client_experiment.Tpo" "$(DEPDIR)/RL_client_experiment.Plo"; else rm -f "$(DEPDIR)/RL_client_experiment.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tmp/RL_client_experiment.c' object='RL_client_experiment.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/RL_client_experiment.c' object='RL_client_experiment.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_client_experiment.lo `test -f 'tmp/RL_client_experiment.c' || echo '$(srcdir)/'`tmp/RL_client_experiment.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_client_experiment.lo `test -f 'src/RL_client_experiment.c' || echo '$(srcdir)/'`src/RL_client_experiment.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
