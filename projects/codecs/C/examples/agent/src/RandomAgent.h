@@ -18,15 +18,8 @@
 #ifndef RandomAgent_h
 #define RandomAgent_h
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <rlglue/Agent_common.h>
 #include <rlglue/utils/C/TaskSpec_Parser.h>
-#ifdef __cplusplus
-}
-#endif
 
 int egreedy(Observation o);
 

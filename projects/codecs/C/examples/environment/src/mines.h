@@ -18,16 +18,7 @@
 #ifndef mines_h
 #define mines_h
 
-#ifdef __cplusplus
-  extern "C" {
-#endif
-
 #include <rlglue/Environment_common.h>
-
-#ifdef __cplusplus
-}
-#endif
-
 
 /* Mines utility functions */
 void env_print(const char* header, RL_abstract_type* data);
