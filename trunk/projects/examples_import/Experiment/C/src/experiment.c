@@ -15,7 +15,16 @@
  */
 
 #include <stdio.h>
-#include <RL_glue.h>
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+#include <rlglue/Experiment_common.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #define NUM_EPISODES 1000
 int rl_num_steps[NUM_EPISODES];
