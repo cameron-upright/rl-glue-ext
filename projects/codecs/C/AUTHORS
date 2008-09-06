@@ -1,0 +1,10 @@
+
+Authors of the RL-Glue C Codec.
+
+Andrew Butcher, while programmer at the University of Alberta, 2006-2007.
+Designed the overall codec system, wrote all of the code.
+
+Brian Tanner, while Ph.D student at the University of Alberta, 2006 - 2008.
+Cut the codec out of the rl-glue.googlecode.com project, put it in the rl-glue-ext project, made it build with GNU autotools.
+
+Last Updated:  Sept 2008
