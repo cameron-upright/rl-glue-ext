@@ -38,7 +38,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = README $(am__configure_deps) \
-	$(librlagent_la_include_HEADERS) $(srcdir)/Makefile.am \
+	$(librlutils_la_include_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/configure AUTHORS COPYING \
 	ChangeLog INSTALL NEWS config.guess config.sub depcomp \
 	install-sh ltmain.sh missing
@@ -58,21 +58,22 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" \
-	"$(DESTDIR)$(librlagent_la_includedir)"
+	"$(DESTDIR)$(librlutils_la_includedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 librlagent_la_LIBADD =
-am_librlagent_la_OBJECTS = RL_client_agent.lo RL_network.lo \
-	C_TaskSpec_Parser.lo RLStruct_util.lo
+am_librlagent_la_OBJECTS = RL_client_agent.lo RL_network.lo
 librlagent_la_OBJECTS = $(am_librlagent_la_OBJECTS)
 librlenvironment_la_LIBADD =
 am_librlenvironment_la_OBJECTS = RL_client_environment.lo \
-	RL_network.lo C_TaskSpec_Parser.lo RLStruct_util.lo
+	RL_network.lo
 librlenvironment_la_OBJECTS = $(am_librlenvironment_la_OBJECTS)
 librlexperiment_la_LIBADD =
-am_librlexperiment_la_OBJECTS = RL_client_experiment.lo RL_network.lo \
-	C_TaskSpec_Parser.lo RLStruct_util.lo
+am_librlexperiment_la_OBJECTS = RL_client_experiment.lo RL_network.lo
 librlexperiment_la_OBJECTS = $(am_librlexperiment_la_OBJECTS)
+librlutils_la_LIBADD =
+am_librlutils_la_OBJECTS = TaskSpec_Parser.lo RLStruct_util.lo
+librlutils_la_OBJECTS = $(am_librlutils_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -85,11 +86,11 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(librlagent_la_SOURCES) $(librlenvironment_la_SOURCES) \
-	$(librlexperiment_la_SOURCES)
+	$(librlexperiment_la_SOURCES) $(librlutils_la_SOURCES)
 DIST_SOURCES = $(librlagent_la_SOURCES) $(librlenvironment_la_SOURCES) \
-	$(librlexperiment_la_SOURCES)
-librlagent_la_includeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(librlagent_la_include_HEADERS)
+	$(librlexperiment_la_SOURCES) $(librlutils_la_SOURCES)
+librlutils_la_includeHEADERS_INSTALL = $(INSTALL_HEADER)
+HEADERS = $(librlutils_la_include_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -202,14 +203,16 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 CODEC_RELEASE = 1:0:0
 CODEC_VERSION = 1:0:0
-lib_LTLIBRARIES = librlagent.la librlenvironment.la librlexperiment.la
-librlagent_la_SOURCES = src/RL_client_agent.c src/RL_network.c src/C_TaskSpec_Parser.c src/RLStruct_util.c rlglue/codecs/C/C_TaskSpec_Parser.h rlglue/codecs/C/RLStruct_util.h  RL_network.h
+lib_LTLIBRARIES = librlutils.la librlagent.la librlenvironment.la librlexperiment.la
+librlutils_la_SOURCES = src/TaskSpec_Parser.c src/RLStruct_util.c rlglue/utils/C/TaskSpec_Parser.h rlglue/utils/C/RLStruct_util.h 
+librlutils_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
+librlutils_la_includedir = $(includedir)/rlglue/utils/C
+librlutils_la_include_HEADERS = rlglue/utils/C/TaskSpec_Parser.h rlglue/utils/C/RLStruct_util.h
+librlagent_la_SOURCES = src/RL_client_agent.c src/RL_network.c RL_network.h
 librlagent_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
-librlagent_la_includedir = $(includedir)/rlglue/codecs/C
-librlagent_la_include_HEADERS = rlglue/codecs/C/C_TaskSpec_Parser.h rlglue/codecs/C/RLStruct_util.h
-librlenvironment_la_SOURCES = src/RL_client_environment.c src/RL_network.c src/C_TaskSpec_Parser.c src/RLStruct_util.c rlglue/codecs/C/RLStruct_util.h RL_network.h
+librlenvironment_la_SOURCES = src/RL_client_environment.c src/RL_network.c RL_network.h
 librlenvironment_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
-librlexperiment_la_SOURCES = src/RL_client_experiment.c src/RL_network.c src/C_TaskSpec_Parser.c src/RLStruct_util.c rlglue/codecs/C/RLStruct_util.h RL_network.h
+librlexperiment_la_SOURCES = src/RL_client_experiment.c src/RL_network.c RL_network.h
 librlexperiment_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 all: all-am
 
@@ -281,6 +284,8 @@ librlenvironment.la: $(librlenvironment_la_OBJECTS) $(librlenvironment_la_DEPEND
 	$(LINK) -rpath $(libdir) $(librlenvironment_la_LDFLAGS) $(librlenvironment_la_OBJECTS) $(librlenvironment_la_LIBADD) $(LIBS)
 librlexperiment.la: $(librlexperiment_la_OBJECTS) $(librlexperiment_la_DEPENDENCIES) 
 	$(LINK) -rpath $(libdir) $(librlexperiment_la_LDFLAGS) $(librlexperiment_la_OBJECTS) $(librlexperiment_la_LIBADD) $(LIBS)
+librlutils.la: $(librlutils_la_OBJECTS) $(librlutils_la_DEPENDENCIES) 
+	$(LINK) -rpath $(libdir) $(librlutils_la_LDFLAGS) $(librlutils_la_OBJECTS) $(librlutils_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -288,12 +293,12 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/C_TaskSpec_Parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RLStruct_util.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RL_client_agent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RL_client_environment.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RL_client_experiment.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RL_network.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TaskSpec_Parser.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -330,20 +335,6 @@ RL_network.lo: src/RL_network.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_network.lo `test -f 'src/RL_network.c' || echo '$(srcdir)/'`src/RL_network.c
 
-C_TaskSpec_Parser.lo: src/C_TaskSpec_Parser.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT C_TaskSpec_Parser.lo -MD -MP -MF "$(DEPDIR)/C_TaskSpec_Parser.Tpo" -c -o C_TaskSpec_Parser.lo `test -f 'src/C_TaskSpec_Parser.c' || echo '$(srcdir)/'`src/C_TaskSpec_Parser.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/C_TaskSpec_Parser.Tpo" "$(DEPDIR)/C_TaskSpec_Parser.Plo"; else rm -f "$(DEPDIR)/C_TaskSpec_Parser.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/C_TaskSpec_Parser.c' object='C_TaskSpec_Parser.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o C_TaskSpec_Parser.lo `test -f 'src/C_TaskSpec_Parser.c' || echo '$(srcdir)/'`src/C_TaskSpec_Parser.c
-
-RLStruct_util.lo: src/RLStruct_util.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RLStruct_util.lo -MD -MP -MF "$(DEPDIR)/RLStruct_util.Tpo" -c -o RLStruct_util.lo `test -f 'src/RLStruct_util.c' || echo '$(srcdir)/'`src/RLStruct_util.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RLStruct_util.Tpo" "$(DEPDIR)/RLStruct_util.Plo"; else rm -f "$(DEPDIR)/RLStruct_util.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/RLStruct_util.c' object='RLStruct_util.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RLStruct_util.lo `test -f 'src/RLStruct_util.c' || echo '$(srcdir)/'`src/RLStruct_util.c
-
 RL_client_environment.lo: src/RL_client_environment.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RL_client_environment.lo -MD -MP -MF "$(DEPDIR)/RL_client_environment.Tpo" -c -o RL_client_environment.lo `test -f 'src/RL_client_environment.c' || echo '$(srcdir)/'`src/RL_client_environment.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RL_client_environment.Tpo" "$(DEPDIR)/RL_client_environment.Plo"; else rm -f "$(DEPDIR)/RL_client_environment.Tpo"; exit 1; fi
@@ -358,6 +349,20 @@ RL_client_experiment.lo: src/RL_client_experiment.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RL_client_experiment.lo `test -f 'src/RL_client_experiment.c' || echo '$(srcdir)/'`src/RL_client_experiment.c
 
+TaskSpec_Parser.lo: src/TaskSpec_Parser.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT TaskSpec_Parser.lo -MD -MP -MF "$(DEPDIR)/TaskSpec_Parser.Tpo" -c -o TaskSpec_Parser.lo `test -f 'src/TaskSpec_Parser.c' || echo '$(srcdir)/'`src/TaskSpec_Parser.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/TaskSpec_Parser.Tpo" "$(DEPDIR)/TaskSpec_Parser.Plo"; else rm -f "$(DEPDIR)/TaskSpec_Parser.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/TaskSpec_Parser.c' object='TaskSpec_Parser.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o TaskSpec_Parser.lo `test -f 'src/TaskSpec_Parser.c' || echo '$(srcdir)/'`src/TaskSpec_Parser.c
+
+RLStruct_util.lo: src/RLStruct_util.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT RLStruct_util.lo -MD -MP -MF "$(DEPDIR)/RLStruct_util.Tpo" -c -o RLStruct_util.lo `test -f 'src/RLStruct_util.c' || echo '$(srcdir)/'`src/RLStruct_util.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/RLStruct_util.Tpo" "$(DEPDIR)/RLStruct_util.Plo"; else rm -f "$(DEPDIR)/RLStruct_util.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='src/RLStruct_util.c' object='RLStruct_util.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o RLStruct_util.lo `test -f 'src/RLStruct_util.c' || echo '$(srcdir)/'`src/RLStruct_util.c
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
@@ -367,22 +372,22 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-librlagent_la_includeHEADERS: $(librlagent_la_include_HEADERS)
+install-librlutils_la_includeHEADERS: $(librlutils_la_include_HEADERS)
 	@$(NORMAL_INSTALL)
-	test -z "$(librlagent_la_includedir)" || $(mkdir_p) "$(DESTDIR)$(librlagent_la_includedir)"
-	@list='$(librlagent_la_include_HEADERS)'; for p in $$list; do \
+	test -z "$(librlutils_la_includedir)" || $(mkdir_p) "$(DESTDIR)$(librlutils_la_includedir)"
+	@list='$(librlutils_la_include_HEADERS)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  f=$(am__strip_dir) \
-	  echo " $(librlagent_la_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(librlagent_la_includedir)/$$f'"; \
-	  $(librlagent_la_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(librlagent_la_includedir)/$$f"; \
+	  echo " $(librlutils_la_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(librlutils_la_includedir)/$$f'"; \
+	  $(librlutils_la_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(librlutils_la_includedir)/$$f"; \
 	done
 
-uninstall-librlagent_la_includeHEADERS:
+uninstall-librlutils_la_includeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(librlagent_la_include_HEADERS)'; for p in $$list; do \
+	@list='$(librlutils_la_include_HEADERS)'; for p in $$list; do \
 	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(librlagent_la_includedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(librlagent_la_includedir)/$$f"; \
+	  echo " rm -f '$(DESTDIR)$(librlutils_la_includedir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(librlutils_la_includedir)/$$f"; \
 	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
@@ -436,7 +441,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/rlglue/codecs/C
+	$(mkdir_p) $(distdir)/rlglue/utils/C
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -564,7 +569,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(librlagent_la_includedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(librlutils_la_includedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -613,7 +618,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-librlagent_la_includeHEADERS
+install-data-am: install-librlutils_la_includeHEADERS
 
 install-exec-am: install-libLTLIBRARIES
 
@@ -644,7 +649,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
-	uninstall-librlagent_la_includeHEADERS
+	uninstall-librlutils_la_includeHEADERS
 
 .PHONY: CTAGS GTAGS all all-am am--refresh check check-am clean \
 	clean-generic clean-libLTLIBRARIES clean-libtool ctags dist \
@@ -654,13 +659,13 @@ uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	distuninstallcheck dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am \
-	install-libLTLIBRARIES install-librlagent_la_includeHEADERS \
+	install-libLTLIBRARIES install-librlutils_la_includeHEADERS \
 	install-man install-strip installcheck installcheck-am \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
 	uninstall-am uninstall-info-am uninstall-libLTLIBRARIES \
-	uninstall-librlagent_la_includeHEADERS
+	uninstall-librlutils_la_includeHEADERS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
