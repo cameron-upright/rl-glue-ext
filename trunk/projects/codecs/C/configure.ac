@@ -1,0 +1,7 @@
+AC_INIT(tmp/RL_network.c)
+AM_INIT_AUTOMAKE(rlglue_codec_c,1.0)
+AC_PROG_CC
+AC_PROG_INSTALL
+AM_PROG_LIBTOOL
+
+AC_OUTPUT(Makefile)
