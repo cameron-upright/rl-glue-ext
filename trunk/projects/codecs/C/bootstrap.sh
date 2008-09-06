@@ -1,2 +1,5 @@
 #! /bin/sh
-autoreconf -if
+libtoolize --automake -c -f
+aclocal -I config
+autoconf
+automake --foreign --add-missing --copy
