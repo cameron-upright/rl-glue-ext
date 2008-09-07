@@ -11,7 +11,7 @@
 
 RL_abstract_type copyRLStruct(RL_abstract_type newStruct)
 {
-	RL_abstract_type oldStruct;
+	RL_abstract_type oldStruct={0};
 
 //Copy the contents of an old RL_abstract_type to the new RL_abstract_type
 	unsigned int i =0;
