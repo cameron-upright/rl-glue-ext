@@ -25,8 +25,8 @@ double rl_return[NUM_EPISODES];
 void run(int num_episodes) {        
   int x = 0;
   for(x = 0; x < num_episodes; ++x) {
-    RL_episode(0);
-    fprintf(stderr, ".");
+    Terminal terminal=RL_episode(200);
+   	fprintf(stderr, ".");
     rl_num_steps[x] = RL_num_steps();
     rl_return[x] = RL_return();
   }

@@ -354,21 +354,25 @@ int RL_num_episodes() {
   return numEpisodes;
 }
 
-void RL_episode(unsigned int numSteps) {
-  unsigned int offset = 0;
-  int experimentState = kRLEpisode;
+Terminal RL_episode(unsigned int numSteps) {
+	Terminal terminal=0;
+	unsigned int offset = 0;
+	int experimentState = kRLEpisode;
 
-  assert(theExperimentConnection != 0);
+	assert(theExperimentConnection != 0);
 
-  rlBufferClear(&theBuffer);
-  offset = 0;
-  offset = rlBufferWrite(&theBuffer, offset, &numSteps, 1, sizeof(int));
-  rlSendBufferData(theExperimentConnection, &theBuffer, experimentState);
+	rlBufferClear(&theBuffer);
+	offset = 0;
+	offset = rlBufferWrite(&theBuffer, offset, &numSteps, 1, sizeof(int));
+	rlSendBufferData(theExperimentConnection, &theBuffer, experimentState);
 
-  rlBufferClear(&theBuffer);
-  rlRecvBufferData(theExperimentConnection, &theBuffer, &experimentState);
-
-  assert(experimentState == kRLEpisode);
+	rlBufferClear(&theBuffer);
+	/*Brian Sept 8 2008 :: Not really sure if I should be resetting offset to 0 here.  Seems to work as is*/
+	offset=0;
+	rlRecvBufferData(theExperimentConnection, &theBuffer, &experimentState);
+	offset = rlBufferRead(&theBuffer, offset, &terminal, 1, sizeof(Terminal));
+	assert(experimentState == kRLEpisode);
+	return terminal;
 }
 
 void RL_freeze() {
