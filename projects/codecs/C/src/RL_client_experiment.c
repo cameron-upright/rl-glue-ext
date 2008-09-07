@@ -81,7 +81,9 @@ static void forceConnection()
   }
 }
 
-void RL_init() {
+Task_specification RL_init() {
+  unsigned int offset=0;
+unsigned int messageLength=0;
   int experimentState = kRLInit;
 
   forceConnection();
@@ -93,8 +95,23 @@ void RL_init() {
   /* Recv back a reply from RL_init */
   rlBufferClear(&theBuffer);
   rlRecvBufferData(theExperimentConnection, &theBuffer, &experimentState);
-
   assert(experimentState == kRLInit);
+
+ /* Brian added Sept 8 so that RL_init returns the task spec */
+ /* We'll reuse messageLength and theMessage from Agent_message*/
+  offset = rlBufferRead(&theBuffer, offset, &messageLength, 1, sizeof(unsigned int));
+  if (messageLength > theMessageCapacity) {
+    free(theMessage);
+    theMessage = (char*)calloc(messageLength+1, sizeof(char));
+    theMessageCapacity = messageLength;
+  }
+
+  if (messageLength > 0) {
+    offset = rlBufferRead(&theBuffer, offset, theMessage, messageLength, sizeof(char));
+    theMessage[messageLength] = '\0';
+  }
+
+  return theMessage;
 }
 
 Observation_action RL_start() {

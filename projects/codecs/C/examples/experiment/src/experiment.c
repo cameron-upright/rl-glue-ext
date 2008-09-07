@@ -33,11 +33,13 @@ void run(int num_episodes) {
 }
 
 int main(int argc, char *argv[]) {
+	Task_specification task_spec;
   unsigned int i = 0;
   double avg_steps = 0.0;
   double avg_return = 0.0;
 
-  RL_init();
+  task_spec=RL_init();
+fprintf(stdout,"Task spec was: %s\n",task_spec);
   run(NUM_EPISODES);
   RL_cleanup();
   for (i = 0; i < NUM_EPISODES; i++) {
