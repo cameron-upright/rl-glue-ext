@@ -392,19 +392,6 @@ Terminal RL_episode(unsigned int numSteps) {
 	return terminal;
 }
 
-void RL_freeze() {
-  int experimentState = kRLFreeze;
-
-  assert(theExperimentConnection != 0);
-
-  rlBufferClear(&theBuffer);
-  rlSendBufferData(theExperimentConnection, &theBuffer, experimentState);
-
-  rlBufferClear(&theBuffer);
-  rlRecvBufferData(theExperimentConnection, &theBuffer, &experimentState);
-  assert(experimentState == kRLFreeze);
-}
-
 void RL_set_state(State_key theStateKey) {
   int experimentState = kRLSetState;
   unsigned int offset = 0;

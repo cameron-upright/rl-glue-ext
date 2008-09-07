@@ -34,7 +34,6 @@ extern Action agent_start(Observation o);
 extern Action agent_step(Reward r, Observation o);
 extern void agent_end(Reward r);
 extern void agent_cleanup();
-extern void agent_freeze();
 extern Message agent_message(const Message inMessage);
 
 static const char* kUnknownMessage = "Unknown Message: %d\n";
@@ -136,16 +135,6 @@ static void onAgentCleanup(int theConnection) {
   theInMessageCapacity = 0;
 }
 
-static void onAgentFreeze(int theConnection) {
-  /* Read the data in the buffer (data from server) */
-  /* No data sent for agent cleanup */
-
-  /* Call RL method on the recv'd data */
-  agent_freeze();
-
-  /* Prepare the buffer for sending data back to the server */
-  rlBufferClear(&theBuffer);
-}
 
 static void onAgentMessage(int theConnection) {
   unsigned int inMessageLength = 0;
@@ -215,10 +204,6 @@ static void runAgentEventLoop(int theConnection) {
 
     case kAgentCleanup:
       onAgentCleanup(theConnection);
-      break;
-
-    case kAgentFreeze:
-      onAgentFreeze(theConnection);
       break;
 
     case kAgentMessage:
