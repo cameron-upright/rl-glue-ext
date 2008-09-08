@@ -38,6 +38,7 @@ observation_t o;
 mine_env M;
 reward_observation_t ro;
 int env_terminal;
+int counter;
 
 int env_map[6][18] = 
 { 
@@ -70,10 +71,14 @@ task_specification_t env_init()
   
   o.numInts    = 1;
   o.numDoubles = 0;
-
   o.intArray    = (int*)malloc(sizeof(int)*o.numInts);
   o.doubleArray = 0;
 
+  /*This is a bad idea because nobody can free it later */
+  o.charArray = "can I do this successfully?";
+  o.numChars=strlen(o.charArray);
+	counter=0;
+  
 	srand(0);
 
   /* Return task specification */
@@ -108,7 +113,27 @@ observation_t env_start()
 }
 
 reward_observation_t env_step(action_t a)
-{    
+{
+	/*768 should be enough for anybody ;) */
+	char stringBuffer[768];
+	char* stringObservation=0;
+	counter++;
+
+
+	snprintf(stringBuffer, 768,"We're on step %d",counter);
+	
+	/* Going to make a new array unless the existing one is exactly the right size*/
+	if(o.numChars!=strlen(stringBuffer)+1){
+		printf("\tHad to change array size from %d to %d\n",o.numChars,strlen(stringBuffer)+1);
+		/*Not sure if this should be strlen+1 or what */
+		o.numChars=strlen(stringBuffer)+1;
+		// free(o.charArray);
+		o.charArray=calloc(o.numChars,sizeof(char));
+	}else{
+		printf("\tArray size was right %d\n",o.numChars);
+	}
+	memcpy(o.charArray, stringBuffer, o.numChars);
+	
   getNextPosition(a); /* getNextPosition will update the values of agentRow and agentColumn */
  
   o.intArray[0] = getPosition();
