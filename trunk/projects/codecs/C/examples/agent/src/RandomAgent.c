@@ -41,6 +41,7 @@ void agent_init(const task_specification_t task_spec)
   action.intArray    = (int*)malloc(sizeof(int)*action.numInts);
   action.numDoubles  = 0;//tss.num_continuous_action_dims;
   action.doubleArray = 0;
+
 }
 
 action_t agent_start(observation_t o) {
@@ -50,6 +51,7 @@ action_t agent_start(observation_t o) {
 }
 
 action_t agent_step(reward_t reward, observation_t o) {
+	printf("The observation char array is: %s\n",o.charArray);
 	randomify(action);
 	return action;
 }
