@@ -6,33 +6,48 @@
  *  Copyright 2007 __MyCompanyName__. All rights reserved.
  *
  */
-
+#include <stdlib.h> /* free, calloc */
+#include <string.h> /* memcpy */
 #include <rlglue/utils/C/RLStruct_util.h>
 
-/*	Returns a struct with the same data as newStruct 
-* 	Apparently it assumes that the arrays are already all set?
-*
-*	Is this terribly broken?  I think possibly it is.
-*/
+/**	
+*	Sept 8 2008, Brian Tanner is creating replace function
+*	This one takes a src and dst, and puts all the data from the src into the dst
+*	Freeing and reallocating if necessary
+**/
+void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst){
+	if(dst->numInts!=src->numInts){
+		if(dst->numInts>0 || dst->intArray!=0){
+			free(dst->intArray);
+		}
+		dst->numInts=src->numInts;
+		dst->intArray=(int *)calloc(dst->numInts,sizeof(int));
+	}
+	if(src->numInts>0){
+		memcpy(dst->intArray, src->intArray,dst->numInts);
+	}
 
-rl_abstract_type_t copyRLStruct(rl_abstract_type_t newStruct)
-{
-	rl_abstract_type_t oldStruct={0};
+	if(dst->numDoubles!=src->numDoubles){
+		if(dst->numDoubles>0 || dst->doubleArray!=0){
+			free(dst->doubleArray);
+		}
+		dst->numDoubles=src->numDoubles;
+		dst->doubleArray=(double *)calloc(dst->numDoubles,sizeof(double));
+	}
+	if(src->numDoubles>0){
+		memcpy(dst->doubleArray, src->doubleArray,dst->numDoubles);
+	}
 
-//Copy the contents of an old RL_abstract_type to the new RL_abstract_type
-	unsigned int i =0;
-	oldStruct.numInts = newStruct.numInts;
-	oldStruct.numDoubles = newStruct.numDoubles;
-	oldStruct.numChars = newStruct.numChars;
-
-	for(i=0; i<newStruct.numInts; i++)
-		oldStruct.intArray[i] = newStruct.intArray[i];
-
-	for(i=0;i<newStruct.numDoubles;i++)
-		oldStruct.doubleArray[i] = newStruct.doubleArray[i];
-
-	for(i=0;i<newStruct.numChars;i++)
-		oldStruct.charArray[i] = newStruct.charArray[i];
+	if(dst->numChars!=src->numChars){
+		if(dst->numChars>0 || dst->charArray!=0){
+			free(dst->charArray);
+		}
+		dst->numChars=src->numChars;
+		dst->charArray=(char *)calloc(dst->numChars,sizeof(char));
+	}
+	if(src->numChars>0){
+		memcpy(dst->charArray, src->charArray,dst->numChars);
+	}
 	
-	return oldStruct;
 }
+
