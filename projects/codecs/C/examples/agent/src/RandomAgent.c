@@ -51,7 +51,19 @@ action_t agent_start(observation_t o) {
 }
 
 action_t agent_step(reward_t reward, observation_t o) {
+	observation_t newObs={0};
 	printf("The observation char array is: %s\n",o.charArray);
+	printf("Going to copy the observation\n");
+	
+	replaceRLStruct(&o, &newObs);
+	
+	printf("Comparing them\n");
+	printf("Num ints %d \t%d\n",o.numInts,newObs.numInts);
+	printf("Num doubles %d \t%d\n",o.numDoubles,newObs.numDoubles);
+	printf("Num chars %d \t%d\n",o.numChars,newObs.numChars);
+	
+	printf("Actual character string: %s \t %s\n",o.charArray,newObs.charArray);
+	
 	randomify(action);
 	return action;
 }

@@ -20,6 +20,7 @@
 
 #include <rlglue/Agent_common.h>
 #include <rlglue/utils/C/TaskSpec_Parser.h>
+#include <rlglue/utils/C/RLStruct_util.h>
 
 int egreedy(observation_t o);
 
