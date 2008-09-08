@@ -25,24 +25,23 @@
 #include <arpa/inet.h> /* inet_ntoa */
 
 #include <rlglue/Agent_common.h>
-#include <rlglue/legacy_types.h>
 #include "RL_network.h"
 
 
 /* Provide forward declaration of agent interface */
-extern void agent_init(const Task_specification task_spec);
-extern Action agent_start(Observation o);
-extern Action agent_step(Reward r, Observation o);
-extern void agent_end(Reward r);
+extern void agent_init(const task_specification_t task_spec);
+extern action_t agent_start(observation_t o);
+extern action_t agent_step(reward_t r, observation_t o);
+extern void agent_end(reward_t r);
 extern void agent_cleanup();
-extern Message agent_message(const Message inMessage);
+extern message_t agent_message(const message_t inMessage);
 
 static const char* kUnknownMessage = "Unknown Message: %d\n";
 
 static char* theTaskSpec = 0;
-static Observation theObservation = {0};
+static observation_t theObservation = {0};
 static rlBuffer theBuffer = {0};
-static Message theInMessage = 0;
+static message_t theInMessage = 0;
 static unsigned int theInMessageCapacity = 0;
 
 static void onAgentInit(int theConnection) {
@@ -64,7 +63,7 @@ static void onAgentInit(int theConnection) {
 }
 
 static void onAgentStart(int theConnection) {
-  Action theAction = {0};
+  action_t theAction = {0};
   unsigned int offset = 0;
 
   /* Read the data in the buffer (data from server) */
@@ -80,8 +79,8 @@ static void onAgentStart(int theConnection) {
 }
 
 static void onAgentStep(int theConnection) {
-  Reward theReward = 0;
-  Action theAction = {0};
+  reward_t theReward = 0;
+  action_t theAction = {0};
   unsigned int offset = 0;
 
   /* Read the data in the buffer (data from server) */
@@ -98,11 +97,11 @@ static void onAgentStep(int theConnection) {
 }
 
 static void onAgentEnd(int theConnection) {
-  Reward theReward = 0;
+  reward_t theReward = 0;
   unsigned int offset = 0;
 
   /* Read the data in the buffer (data from server) */
-  offset = rlBufferRead(&theBuffer, offset, &theReward, 1, sizeof(Reward));
+  offset = rlBufferRead(&theBuffer, offset, &theReward, 1, sizeof(reward_t));
 
   /* Call RL method on the recv'd data */
   agent_end(theReward);
@@ -140,8 +139,8 @@ static void onAgentCleanup(int theConnection) {
 static void onAgentMessage(int theConnection) {
   unsigned int inMessageLength = 0;
   unsigned int outMessageLength = 0;
-  Message inMessage = 0;
-  Message outMessage = 0;
+  message_t inMessage = 0;
+  message_t outMessage = 0;
   unsigned int offset = 0;
 
   /* Read the data in the buffer (data from server) */
@@ -149,7 +148,7 @@ static void onAgentMessage(int theConnection) {
   offset = rlBufferRead(&theBuffer, offset, &inMessageLength, 1, sizeof(int));
 
   if (inMessageLength > theInMessageCapacity) {
-    inMessage = (Message)calloc(inMessageLength+1, sizeof(char));
+    inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
     free(theInMessage);
 
     theInMessage = inMessage;

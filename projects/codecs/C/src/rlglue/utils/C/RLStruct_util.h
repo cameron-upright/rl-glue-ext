@@ -6,9 +6,8 @@ extern "C" {
 #endif
 
 #include <rlglue/RL_common.h>
-#include <rlglue/legacy_types.h>
 
-RL_abstract_type copyRLStruct(RL_abstract_type newStruct);
+rl_abstract_type_t copyRLStruct(rl_abstract_type_t newStruct);
 
 #ifdef __cplusplus
 }

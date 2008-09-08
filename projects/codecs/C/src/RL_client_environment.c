@@ -25,31 +25,30 @@
 #include <arpa/inet.h> /* inet_ntoa */
 
 #include <rlglue/Environment_common.h>
-#include <rlglue/legacy_types.h>
 #include "RL_network.h"
 
 /* Provide forward declaration of environment interface */
-extern Task_specification env_init();
-extern Observation env_start();
-extern Reward_observation env_step(Action a);
+extern task_specification_t env_init();
+extern observation_t env_start();
+extern reward_observation_t env_step(action_t a);
 extern void env_cleanup();
-extern void env_set_state(State_key sk);
-extern void env_set_random_seed(Random_seed_key rsk);
-extern State_key env_get_state();
-extern Random_seed_key env_get_random_seed();
-extern Message env_message(const Message inMessage);
+extern void env_set_state(state_key_t sk);
+extern void env_set_random_seed(random_seed_key_t rsk);
+extern state_key_t env_get_state();
+extern random_seed_key_t env_get_random_seed();
+extern message_t env_message(const message_t inMessage);
 
 static const char* kUnknownMessage = "Unknown Message: %s\n";
 
-static Action theAction                 = {0};
-static State_key theStateKey            = {0};
-static Random_seed_key theRandomSeedKey = {0};
+static action_t theAction                 = {0};
+static state_key_t theStateKey            = {0};
+static random_seed_key_t theRandomSeedKey = {0};
 static rlBuffer theBuffer               = {0};
-static Message theInMessage = 0;
+static message_t theInMessage = 0;
 static unsigned int theInMessageCapacity = 0;
 
 static void onEnvInit(int theConnection) {
-  Task_specification theTaskSpec = 0;
+  task_specification_t theTaskSpec = 0;
   unsigned int theTaskSpecLength = 0;
   unsigned int offset = 0;
 
@@ -71,7 +70,7 @@ static void onEnvInit(int theConnection) {
 }
 
 static void onEnvStart(int theConnection) {
-  Observation theObservation = env_start();
+  observation_t theObservation = env_start();
   unsigned int offset = 0;
 
   rlBufferClear(&theBuffer);
@@ -79,7 +78,7 @@ static void onEnvStart(int theConnection) {
 }
 
 static void onEnvStep(int theConnection) {
-  Reward_observation ro = {0};
+  reward_observation_t ro = {0};
   unsigned int offset = 0;
 
   offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
@@ -88,7 +87,7 @@ static void onEnvStep(int theConnection) {
   rlBufferClear(&theBuffer);
   offset = 0;
   offset = rlBufferWrite(&theBuffer, offset, &ro.terminal, 1, sizeof(int));
-  offset = rlBufferWrite(&theBuffer, offset, &ro.r, 1, sizeof(Reward));
+  offset = rlBufferWrite(&theBuffer, offset, &ro.r, 1, sizeof(reward_t));
   offset = rlCopyADTToBuffer(&ro.o, &theBuffer, offset);
 }
 
@@ -141,7 +140,7 @@ static void onEnvSetRandomSeed(int theConnection) {
 }
 
 static void onEnvGetState(int theConnection) {
-  State_key key = env_get_state();
+  state_key_t key = env_get_state();
   unsigned int offset = 0;
 
   rlBufferClear(&theBuffer);
@@ -149,7 +148,7 @@ static void onEnvGetState(int theConnection) {
 }
 
 static void onEnvGetRandomSeed(int theConnection) {
-  Random_seed_key key = env_get_random_seed();
+  random_seed_key_t key = env_get_random_seed();
   unsigned int offset = 0;
 
   rlBufferClear(&theBuffer);
@@ -159,14 +158,14 @@ static void onEnvGetRandomSeed(int theConnection) {
 static void onEnvMessage(int theConnection) {
   unsigned int inMessageLength = 0;
   unsigned int outMessageLength = 0;
-  Message inMessage = 0;
-  Message outMessage = 0;
+  message_t inMessage = 0;
+  message_t outMessage = 0;
   unsigned int offset = 0;
 
   offset = 0;
   offset = rlBufferRead(&theBuffer, offset, &inMessageLength, 1, sizeof(int));
   if (inMessageLength > theInMessageCapacity) {
-    inMessage = (Message)calloc(inMessageLength+1, sizeof(char));
+    inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
     free(theInMessage);
 
     theInMessage = inMessage;

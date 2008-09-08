@@ -20,7 +20,6 @@
 
 /* Defines types for RL-Glue */
 #include <rlglue/Agent_common.h>
-#include <rlglue/legacy_types.h>
 /* RL-Glue needs to know what type of object is trying to connect. */
 #define kExperimentConnection  1
 #define kAgentConnection       2
@@ -104,7 +103,7 @@ unsigned int rlRecvBufferData(int theSocket, rlBuffer* buffer, int* target);
 int rlGetSystemByteOrder();
 void rlSwapData(void* out, const void* in, const unsigned int size);
 int rlWaitForConnection(const char *address, const short port, const int retryTimeout);
-unsigned int rlCopyADTToBuffer(const RL_abstract_type* src, rlBuffer* dst, unsigned int offset);
-unsigned int rlCopyBufferToADT(const rlBuffer* src, unsigned int offset, RL_abstract_type* dst);
+unsigned int rlCopyADTToBuffer(const rl_abstract_type_t* src, rlBuffer* dst, unsigned int offset);
+unsigned int rlCopyBufferToADT(const rlBuffer* src, unsigned int offset, rl_abstract_type_t* dst);
 
 #endif
