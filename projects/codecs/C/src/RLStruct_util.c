@@ -17,7 +17,7 @@
 **/
 void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst){
 	if(dst->numInts!=src->numInts){
-		if(dst->numInts>0 || dst->intArray!=0){
+		if(dst->numInts>0 && dst->intArray!=0){
 			free(dst->intArray);
 		}
 		dst->numInts=src->numInts;
@@ -28,7 +28,7 @@ void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst){
 	}
 
 	if(dst->numDoubles!=src->numDoubles){
-		if(dst->numDoubles>0 || dst->doubleArray!=0){
+		if(dst->numDoubles>0 && dst->doubleArray!=0){
 			free(dst->doubleArray);
 		}
 		dst->numDoubles=src->numDoubles;
@@ -39,7 +39,7 @@ void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst){
 	}
 
 	if(dst->numChars!=src->numChars){
-		if(dst->numChars>0 || dst->charArray!=0){
+		if(dst->numChars>0 && dst->charArray!=0){
 			free(dst->charArray);
 		}
 		dst->numChars=src->numChars;
