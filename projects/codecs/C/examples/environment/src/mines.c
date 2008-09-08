@@ -34,9 +34,9 @@ typedef struct
   int agentColumn;	        /* Agents current position */
 } mine_env;
 
-Observation o;
+observation_t o;
 mine_env M;
-Reward_observation ro;
+reward_observation_t ro;
 int env_terminal;
 
 int env_map[6][18] = 
@@ -51,7 +51,7 @@ int env_map[6][18] =
 
 /* RL-Glue Interface */
 
-Task_specification env_init()
+task_specification_t env_init()
 {    
   static char Task_spec[100] = {0};
 
@@ -82,7 +82,7 @@ Task_specification env_init()
   return Task_spec;
 }
 
-Observation env_start()
+observation_t env_start()
 {   
   int r = 0, c = 0;
 
@@ -107,7 +107,7 @@ Observation env_start()
   return o;
 }
 
-Reward_observation env_step(Action a)
+reward_observation_t env_step(action_t a)
 {    
   getNextPosition(a); /* getNextPosition will update the values of agentRow and agentColumn */
  
@@ -133,27 +133,27 @@ void env_cleanup()
   o.doubleArray = 0;
 }
 
-void env_set_state(State_key sk)
+void env_set_state(state_key_t sk)
 {
 }
      
-void env_set_random_seed(Random_seed_key rsk)
+void env_set_random_seed(random_seed_key_t rsk)
 {
 }
 
-State_key env_get_state()
+state_key_t env_get_state()
 {
-  State_key theKey;
+  state_key_t theKey;
   return theKey;
 }
 
-Random_seed_key env_get_random_seed()
+random_seed_key_t env_get_random_seed()
 {
-  Random_seed_key theKey;
+  random_seed_key_t theKey;
   return theKey;
 }
 
-Message env_message(const Message inMessage) {
+message_t env_message(const message_t inMessage) {
   return NULL;
 }
 
@@ -161,7 +161,7 @@ Message env_message(const Message inMessage) {
 /* mines utitily functions */
 
 
-void env_print(const char* header, RL_abstract_type* data) {
+void env_print(const char* header, rl_abstract_type_t* data) {
   unsigned int i = 0;
   fprintf(stderr, "%s", header);
   fprintf(stderr, "%d %d\n", data->numInts, data->numDoubles);
@@ -190,7 +190,7 @@ int getPosition()
   }
 }
 
-void getNextPosition(Action a)
+void getNextPosition(action_t a)
 {
   /* When the move would result in hitting an obstacles, the agent simply doesn't move */
   int newRow = M.agentRow;
@@ -217,7 +217,7 @@ void getNextPosition(Action a)
   }
 }
 
-Reward getReward()
+reward_t getReward()
 {
   if (env_map[M.agentRow][M.agentColumn] == M.GOAL){
     return 10;}
