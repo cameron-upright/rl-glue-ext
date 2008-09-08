@@ -6,8 +6,14 @@ extern "C" {
 #endif
 
 #include <rlglue/RL_common.h>
-/* As of Sept 8/2008 I think this function might be very broken */
-rl_abstract_type_t copyRLStruct(rl_abstract_type_t newStruct);
+
+
+/**	
+*	Sept 8 2008, Brian Tanner is creating replace function
+*	This one takes a src and dst, and puts all the data from the src into the dst
+*	Freeing and reallocating if necessary
+**/
+void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst);
 
 #ifdef __cplusplus
 }
