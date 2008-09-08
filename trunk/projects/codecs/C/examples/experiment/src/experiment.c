@@ -17,6 +17,7 @@
 #include <stdio.h>
 
 #include <rlglue/Experiment_common.h>
+#include <rlglue/legacy_types.h>
 
 #define NUM_EPISODES 1000
 int rl_num_steps[NUM_EPISODES];
