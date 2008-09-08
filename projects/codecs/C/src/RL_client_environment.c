@@ -24,7 +24,8 @@
 #include <netdb.h> /* gethostbyname */
 #include <arpa/inet.h> /* inet_ntoa */
 
-#include <rlglue/RL_common.h>
+#include <rlglue/Environment_common.h>
+#include <rlglue/legacy_types.h>
 #include "RL_network.h"
 
 /* Provide forward declaration of environment interface */

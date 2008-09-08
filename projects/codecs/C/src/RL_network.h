@@ -20,7 +20,7 @@
 
 /* Defines types for RL-Glue */
 #include <rlglue/Agent_common.h>
-
+#include <rlglue/legacy_types.h>
 /* RL-Glue needs to know what type of object is trying to connect. */
 #define kExperimentConnection  1
 #define kAgentConnection       2

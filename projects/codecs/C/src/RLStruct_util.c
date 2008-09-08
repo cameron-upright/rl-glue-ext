@@ -7,7 +7,7 @@
  *
  */
 
-#include <rlglue/codecs/C/RLStruct_util.h>
+#include <rlglue/utils/C/RLStruct_util.h>
 
 RL_abstract_type copyRLStruct(RL_abstract_type newStruct)
 {
