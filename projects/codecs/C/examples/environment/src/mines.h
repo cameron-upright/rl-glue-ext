@@ -19,6 +19,7 @@
 #define mines_h
 
 #include <rlglue/Environment_common.h>
+#include <rlglue/legacy_types.h>
 
 /* Mines utility functions */
 void env_print(const char* header, RL_abstract_type* data);

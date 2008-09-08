@@ -19,6 +19,7 @@
 #define RandomAgent_h
 
 #include <rlglue/Agent_common.h>
+#include <rlglue/legacy_types.h>
 #include <rlglue/utils/C/TaskSpec_Parser.h>
 
 int egreedy(Observation o);
