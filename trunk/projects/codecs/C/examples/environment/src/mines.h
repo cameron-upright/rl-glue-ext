@@ -19,12 +19,11 @@
 #define mines_h
 
 #include <rlglue/Environment_common.h>
-#include <rlglue/legacy_types.h>
 
 /* Mines utility functions */
-void env_print(const char* header, RL_abstract_type* data);
+void env_print(const char* header, rl_abstract_type_t* data);
 int getPosition();
-void getNextPosition(Action a);
-Reward getReward();
+void getNextPosition(action_t a);
+reward_t getReward();
 
 #endif

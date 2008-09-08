@@ -17,7 +17,6 @@
 #include <stdio.h>
 
 #include <rlglue/Experiment_common.h>
-#include <rlglue/legacy_types.h>
 
 #define NUM_EPISODES 1000
 int rl_num_steps[NUM_EPISODES];
@@ -26,7 +25,7 @@ double rl_return[NUM_EPISODES];
 void run(int num_episodes) {        
   int x = 0;
   for(x = 0; x < num_episodes; ++x) {
-    Terminal terminal=RL_episode(200);
+    terminal_t terminal=RL_episode(200);
    	fprintf(stderr, ".");
     rl_num_steps[x] = RL_num_steps();
     rl_return[x] = RL_return();
@@ -34,7 +33,7 @@ void run(int num_episodes) {
 }
 
 int main(int argc, char *argv[]) {
-	Task_specification task_spec;
+ 	task_specification_t task_spec;
   unsigned int i = 0;
   double avg_steps = 0.0;
   double avg_return = 0.0;
