@@ -57,18 +57,15 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 librlagent_la_LIBADD =
-am_librlagent_la_OBJECTS = librlagent_la-RL_client_agent.lo \
-	librlagent_la-RL_network.lo
+am_librlagent_la_OBJECTS = librlagent_la-RL_client_agent.lo
 librlagent_la_OBJECTS = $(am_librlagent_la_OBJECTS)
 librlenvironment_la_LIBADD =
 am_librlenvironment_la_OBJECTS =  \
-	librlenvironment_la-RL_client_environment.lo \
-	librlenvironment_la-RL_network.lo
+	librlenvironment_la-RL_client_environment.lo
 librlenvironment_la_OBJECTS = $(am_librlenvironment_la_OBJECTS)
 librlexperiment_la_LIBADD =
 am_librlexperiment_la_OBJECTS =  \
-	librlexperiment_la-RL_client_experiment.lo \
-	librlexperiment_la-RL_network.lo
+	librlexperiment_la-RL_client_experiment.lo
 librlexperiment_la_OBJECTS = $(am_librlexperiment_la_OBJECTS)
 librlutils_la_LIBADD =
 am_librlutils_la_OBJECTS = librlutils_la-TaskSpec_Parser.lo \
@@ -206,13 +203,13 @@ librlutils_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 librlutils_la_includedir = $(includedir)/rlglue/utils/C
 librlutils_la_include_HEADERS = rlglue/utils/C/TaskSpec_Parser.h rlglue/utils/C/RLStruct_util.h
 librlutils_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99
-librlagent_la_SOURCES = RL_client_agent.c RL_network.c RL_network.h
+librlagent_la_SOURCES = RL_client_agent.c
 librlagent_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
-librlagent_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99
-librlenvironment_la_SOURCES = RL_client_environment.c RL_network.c RL_network.h
+librlagent_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99 
+librlenvironment_la_SOURCES = RL_client_environment.c
 librlenvironment_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 librlenvironment_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99
-librlexperiment_la_SOURCES = RL_client_experiment.c RL_network.c RL_network.h
+librlexperiment_la_SOURCES = RL_client_experiment.c
 librlexperiment_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 librlexperiment_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99
 all: all-am
@@ -291,11 +288,8 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlagent_la-RL_client_agent.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlagent_la-RL_network.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlenvironment_la-RL_client_environment.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlenvironment_la-RL_network.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlexperiment_la-RL_client_experiment.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlexperiment_la-RL_network.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlutils_la-RLStruct_util.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlutils_la-TaskSpec_Parser.Plo@am__quote@
 
@@ -327,13 +321,6 @@ librlagent_la-RL_client_agent.lo: RL_client_agent.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlagent_la_CFLAGS) $(CFLAGS) -c -o librlagent_la-RL_client_agent.lo `test -f 'RL_client_agent.c' || echo '$(srcdir)/'`RL_client_agent.c
 
-librlagent_la-RL_network.lo: RL_network.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlagent_la_CFLAGS) $(CFLAGS) -MT librlagent_la-RL_network.lo -MD -MP -MF "$(DEPDIR)/librlagent_la-RL_network.Tpo" -c -o librlagent_la-RL_network.lo `test -f 'RL_network.c' || echo '$(srcdir)/'`RL_network.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/librlagent_la-RL_network.Tpo" "$(DEPDIR)/librlagent_la-RL_network.Plo"; else rm -f "$(DEPDIR)/librlagent_la-RL_network.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='RL_network.c' object='librlagent_la-RL_network.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlagent_la_CFLAGS) $(CFLAGS) -c -o librlagent_la-RL_network.lo `test -f 'RL_network.c' || echo '$(srcdir)/'`RL_network.c
-
 librlenvironment_la-RL_client_environment.lo: RL_client_environment.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlenvironment_la_CFLAGS) $(CFLAGS) -MT librlenvironment_la-RL_client_environment.lo -MD -MP -MF "$(DEPDIR)/librlenvironment_la-RL_client_environment.Tpo" -c -o librlenvironment_la-RL_client_environment.lo `test -f 'RL_client_environment.c' || echo '$(srcdir)/'`RL_client_environment.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/librlenvironment_la-RL_client_environment.Tpo" "$(DEPDIR)/librlenvironment_la-RL_client_environment.Plo"; else rm -f "$(DEPDIR)/librlenvironment_la-RL_client_environment.Tpo"; exit 1; fi
@@ -341,26 +328,12 @@ librlenvironment_la-RL_client_environment.lo: RL_client_environment.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlenvironment_la_CFLAGS) $(CFLAGS) -c -o librlenvironment_la-RL_client_environment.lo `test -f 'RL_client_environment.c' || echo '$(srcdir)/'`RL_client_environment.c
 
-librlenvironment_la-RL_network.lo: RL_network.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlenvironment_la_CFLAGS) $(CFLAGS) -MT librlenvironment_la-RL_network.lo -MD -MP -MF "$(DEPDIR)/librlenvironment_la-RL_network.Tpo" -c -o librlenvironment_la-RL_network.lo `test -f 'RL_network.c' || echo '$(srcdir)/'`RL_network.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/librlenvironment_la-RL_network.Tpo" "$(DEPDIR)/librlenvironment_la-RL_network.Plo"; else rm -f "$(DEPDIR)/librlenvironment_la-RL_network.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='RL_network.c' object='librlenvironment_la-RL_network.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlenvironment_la_CFLAGS) $(CFLAGS) -c -o librlenvironment_la-RL_network.lo `test -f 'RL_network.c' || echo '$(srcdir)/'`RL_network.c
-
 librlexperiment_la-RL_client_experiment.lo: RL_client_experiment.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlexperiment_la_CFLAGS) $(CFLAGS) -MT librlexperiment_la-RL_client_experiment.lo -MD -MP -MF "$(DEPDIR)/librlexperiment_la-RL_client_experiment.Tpo" -c -o librlexperiment_la-RL_client_experiment.lo `test -f 'RL_client_experiment.c' || echo '$(srcdir)/'`RL_client_experiment.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/librlexperiment_la-RL_client_experiment.Tpo" "$(DEPDIR)/librlexperiment_la-RL_client_experiment.Plo"; else rm -f "$(DEPDIR)/librlexperiment_la-RL_client_experiment.Tpo"; exit 1; fi
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='RL_client_experiment.c' object='librlexperiment_la-RL_client_experiment.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlexperiment_la_CFLAGS) $(CFLAGS) -c -o librlexperiment_la-RL_client_experiment.lo `test -f 'RL_client_experiment.c' || echo '$(srcdir)/'`RL_client_experiment.c
-
-librlexperiment_la-RL_network.lo: RL_network.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlexperiment_la_CFLAGS) $(CFLAGS) -MT librlexperiment_la-RL_network.lo -MD -MP -MF "$(DEPDIR)/librlexperiment_la-RL_network.Tpo" -c -o librlexperiment_la-RL_network.lo `test -f 'RL_network.c' || echo '$(srcdir)/'`RL_network.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/librlexperiment_la-RL_network.Tpo" "$(DEPDIR)/librlexperiment_la-RL_network.Plo"; else rm -f "$(DEPDIR)/librlexperiment_la-RL_network.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='RL_network.c' object='librlexperiment_la-RL_network.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlexperiment_la_CFLAGS) $(CFLAGS) -c -o librlexperiment_la-RL_network.lo `test -f 'RL_network.c' || echo '$(srcdir)/'`RL_network.c
 
 librlutils_la-TaskSpec_Parser.lo: TaskSpec_Parser.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlutils_la_CFLAGS) $(CFLAGS) -MT librlutils_la-TaskSpec_Parser.lo -MD -MP -MF "$(DEPDIR)/librlutils_la-TaskSpec_Parser.Tpo" -c -o librlutils_la-TaskSpec_Parser.lo `test -f 'TaskSpec_Parser.c' || echo '$(srcdir)/'`TaskSpec_Parser.c; \

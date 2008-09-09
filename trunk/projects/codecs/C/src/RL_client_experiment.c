@@ -24,7 +24,7 @@
 #include <arpa/inet.h> /* inet_ntoa */
 
 #include <rlglue/Experiment_common.h>
-#include "RL_network.h"
+#include <rlglue/network/RL_network.h>
 
 static int theExperimentConnection = 0;
 
