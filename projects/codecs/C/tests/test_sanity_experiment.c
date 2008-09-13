@@ -17,7 +17,7 @@
 *  $Revision$
 *  $Date$
 *  $Author$
-*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/experiment.c $
+*  $HeadURL$
 * 
 */
 

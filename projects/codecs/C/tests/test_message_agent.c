@@ -17,7 +17,7 @@
 *  $Revision$
 *  $Date$
 *  $Author$
-*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/message_test_agent.c $
+*  $HeadURL$
 * 
 */
 
