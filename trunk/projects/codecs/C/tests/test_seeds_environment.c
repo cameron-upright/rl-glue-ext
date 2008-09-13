@@ -14,10 +14,10 @@
  limitations under the License.
 
 * 
-*  $Revision$
-*  $Date$
-*  $Author$
-*  $HeadURL$
+*  $Revision: 816 $
+*  $Date: 2008-09-12 22:26:15 -0600 (Fri, 12 Sep 2008) $
+*  $Author: brian@tannerpages.com $
+*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/test_seeds_environment.c $
 * 
 */
 
@@ -26,87 +26,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <rlglue/Environment_common.h>
-#include "useful_functions.h"
+#include "useful_functions.h";
 
 
 observation_t o={0};
 reward_observation_t ro={0};
-message_t env_responseMessage=0;
-int stepCount=0;
+
+state_key_t env_saved_state_key={0};
+random_seed_key_t env_saved_random_key={0};
 
 task_specification_t env_init()
 {    
-	return "sample task spec";
+	return "";
 }
 
 observation_t env_start()
 {
-	stepCount=0;
-	clean_abstract_type(&o);
-	makeKInts(&o,1);
-	makeKDoubles(&o,2);
-	makeKChars(&o,3);
-__RL_CHECK_STRUCT(&o)
 	return o;
 }
 
 reward_observation_t env_step(action_t a)
 {
-	clean_abstract_type(&o);
-	makeKInts(&o,1);
-	o.intArray[0]=stepCount;
-	
-	ro.o=o;
-	ro.r=1.0;
-  
-	stepCount++;
-	
-	ro.terminal=stepCount==5;
-	__RL_CHECK_STRUCT(&ro.o)
-    return ro;
+  return ro;
 }
 
 void env_cleanup()
 {
-  clean_abstract_type(&o);
+
 }
 
 void env_set_state(state_key_t sk)
 {
+	copy_structure_to_structure(&env_saved_state_key, &sk);
 }
      
 void env_set_random_seed(random_seed_key_t rsk)
 {
+	copy_structure_to_structure(&env_saved_random_key, &rsk);
 }
 
 state_key_t env_get_state()
 {
-  state_key_t theKey;
-  return theKey;
+	return env_saved_state_key;
 }
 
 random_seed_key_t env_get_random_seed()
 {
-  random_seed_key_t theKey;
-  return theKey;
+	return env_saved_random_key;
 }
 
 message_t env_message(const message_t inMessage) {
-	int timesToPrint=stepCount%3;
-	int i;
-	char tmpBuffer[1024];
-	
-	sprintf(tmpBuffer,"%s|",inMessage);
-	for(i=0;i<timesToPrint;i++){
-		sprintf(tmpBuffer,"%s%d.", tmpBuffer,stepCount);
-	}
-	sprintf(tmpBuffer,"%s|%s",tmpBuffer,inMessage);
-	
-	if(env_responseMessage!=0){
-		free(env_responseMessage);
-		env_responseMessage=0;
-	}
-	env_responseMessage=(char *)calloc(strlen(tmpBuffer),sizeof(char));
-	sprintf(env_responseMessage,"%s",tmpBuffer);
-	return env_responseMessage;
+
 }
+	
