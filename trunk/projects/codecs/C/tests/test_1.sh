@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# *  $Revision$
+# *  $Date$
+# *  $Author$
+# *  $HeadURL$
+
 killall rl_glue
 killall test_1_agent
 killall test_1_environment
