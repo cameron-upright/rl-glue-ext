@@ -16,13 +16,26 @@ package rlglue.types;
 
 public class Observation extends RL_abstract_type {
 
-    public Observation() {
-        this(0, 0);
-    }
+  	public Observation() 
+	{
+		this(0,0,0);
+	}
 
-    public Observation(int numInts, int numDoubles) {
-        super(numInts, numDoubles);
-    }
+	/**
+         * For backwards compatibility wiht RL-Glue 2.x
+         * @param numInts
+         * @param numDoubles
+         * @param numChars
+         */
+        public Observation(int numInts, int numDoubles)
+	{
+		this(numInts,numDoubles,0);
+	}
+
+        public Observation(int numInts, int numDoubles, int numChars)
+	{
+		super(numInts,numDoubles,numChars);
+	}       
 
     public Observation(Observation src) {
         super(src);

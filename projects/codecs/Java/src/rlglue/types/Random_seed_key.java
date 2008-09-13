@@ -23,12 +23,23 @@ public class Random_seed_key extends RL_abstract_type
 
 	public Random_seed_key() 
 	{
-		this(0,0);
+		this(0,0,0);
 	}
 
-	public Random_seed_key(int numInts, int numDoubles)
+	/**
+         * For backwards compatibility wiht RL-Glue 2.x
+         * @param numInts
+         * @param numDoubles
+         * @param numChars
+         */
+        public Random_seed_key(int numInts, int numDoubles)
 	{
-		super(numInts,numDoubles);
+		this(numInts,numDoubles,0);
+	}
+
+        public Random_seed_key(int numInts, int numDoubles, int numChars)
+	{
+		super(numInts,numDoubles,numChars);
 	}
         
 	public Random_seed_key(Random_seed_key src)

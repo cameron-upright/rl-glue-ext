@@ -26,17 +26,20 @@ package rlglue.types;
  * @author btanner
  */
 public class RL_abstract_type{
-	public int [] intArray;
-	public double [] doubleArray;
+	public int [] intArray=null;
+	public double [] doubleArray=null;
+        public char[] charArray=null;
 
-	public RL_abstract_type(int numInts, int numDoubles) {
+	public RL_abstract_type(int numInts, int numDoubles,int numChars) {
 		intArray = new int[numInts];
 		doubleArray = new double[numDoubles];
+                charArray=new char[numChars];
+                
 	}
         
         
         public RL_abstract_type(RL_abstract_type src){
-            this(src.intArray.length,src.doubleArray.length);
+            this(src.intArray.length,src.doubleArray.length, src.charArray.length);
             RLStructCopy(src, this);
         }
 	
@@ -46,8 +49,11 @@ public class RL_abstract_type{
                 dest.intArray=new int[src.intArray.length];
             if(dest.doubleArray.length!=src.doubleArray.length)
                 dest.doubleArray=new double[src.doubleArray.length];
+            if(dest.charArray.length!=src.charArray.length)
+                dest.charArray=new char[src.charArray.length];
             
             System.arraycopy(src.intArray, 0,dest.intArray, 0, src.intArray.length);
             System.arraycopy(src.doubleArray, 0,dest.doubleArray, 0, src.doubleArray.length);	
+            System.arraycopy(src.charArray, 0,dest.charArray, 0, src.charArray.length);	
 	}
 }

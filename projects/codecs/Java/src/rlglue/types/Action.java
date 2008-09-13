@@ -22,14 +22,25 @@ public class Action extends RL_abstract_type
 {
 	public Action() 
 	{
-		this(0,0);
+		this(0,0,0);
 	}
 
-	public Action(int numInts, int numDoubles)
+	/**
+         * For backwards compatibility wiht RL-Glue 2.x
+         * @param numInts
+         * @param numDoubles
+         * @param numChars
+         */
+        public Action(int numInts, int numDoubles)
 	{
-		super(numInts,numDoubles);
+		this(numInts,numDoubles,0);
 	}
-        
+
+        public Action(int numInts, int numDoubles, int numChars)
+	{
+		super(numInts,numDoubles,numChars);
+	}       
+       
 	public Action(Action src)
 	{
 		super(src);
