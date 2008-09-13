@@ -67,9 +67,10 @@ static void onEnvInit(int theConnection) {
 }
 
 static void onEnvStart(int theConnection) {
-  observation_t theObservation = env_start();
-  unsigned int offset = 0;
+	observation_t theObservation = {0};
+  	unsigned int offset = 0;
 
+	theObservation=env_start();
 	__RL_CHECK_STRUCT(&theObservation)
 
   rlBufferClear(&theBuffer);
@@ -77,10 +78,9 @@ static void onEnvStart(int theConnection) {
 }
 
 static void onEnvStep(int theConnection) {
-  reward_observation_t ro = {0};
+	reward_observation_t ro = {0};
 	unsigned int offset = 0;
 
-  /*Shouldn't we have to read this ? */
   offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
   __RL_CHECK_STRUCT(&theAction);
 
@@ -144,16 +144,24 @@ static void onEnvSetRandomSeed(int theConnection) {
 }
 
 static void onEnvGetState(int theConnection) {
-  state_key_t key = env_get_state();
+	state_key_t key = {0};
   unsigned int offset = 0;
 
-  rlBufferClear(&theBuffer);
+  key=	env_get_state();
+
+
+		__RL_CHECK_STRUCT(&key);
+		rlBufferClear(&theBuffer);
   offset = rlCopyADTToBuffer(&key, &theBuffer, offset);
 }
 
 static void onEnvGetRandomSeed(int theConnection) {
-  random_seed_key_t key = env_get_random_seed();
+	random_seed_key_t key = {0};
   unsigned int offset = 0;
+
+key=env_get_random_seed();
+	__RL_CHECK_STRUCT(&key);
+
 
   rlBufferClear(&theBuffer);
   rlCopyADTToBuffer(&key, &theBuffer, offset);
@@ -260,14 +268,12 @@ int main(int argc, char** argv) {
 
   const char *usage = "The following environment variables are used by the environment to control its function:\n"
     "RLGLUE_HOST  : If set the environment will use this ip or hostname to connect to rather than %s\n"
-    "RLGLUE_PORT  : If set the environment will use this port to connect on rather than %d\n"
-    "RLGLUE_AUTORECONNECT  : If set the environment will reconnect to the glue after an experiment has finished\n";
-  
+	"RLGLUE_PORT  : If set the environment will use this port to connect on rather than %d\n"; 
+	 
   struct hostent *host_ent;
 
   char* host = kLocalHost;
   short port = kDefaultPort;
-  int autoReconnect = 0;
 
   char* envptr = 0;
 
@@ -289,10 +295,6 @@ int main(int argc, char** argv) {
     }
   }
 
-  envptr = getenv("RLGLUE_AUTORECONNECT");
-  if (envptr != 0) {
-    autoReconnect = strtol(envptr, 0, 10);
-  }
 
   if (isalpha(host[0])) {
     host_ent = gethostbyname(host); 
@@ -306,14 +308,12 @@ int main(int argc, char** argv) {
   /* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
   rlBufferCreate(&theBuffer, 4096);
   
-  do {
     theConnection = rlWaitForConnection(host, port, kRetryTimeout);
-		fprintf(stderr, "Connected\n");
+	fprintf(stderr, "Connected\n");
     rlBufferClear(&theBuffer);
     rlSendBufferData(theConnection, &theBuffer, kEnvironmentConnection);
     runEnvironmentEventLoop(theConnection);
     rlClose(theConnection);
-  } while(autoReconnect);
 
   rlBufferDestroy(&theBuffer);
 
