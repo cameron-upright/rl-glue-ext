@@ -1,5 +1,5 @@
 /* 
-* Copyright (C) 2007, Brian Tanner
+* Copyright (C) 2008, Brian Tanner
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,12 +14,13 @@
  limitations under the License.
 
 * 
-*  $Revision: 810 $
-*  $Date: 2008-09-11 23:08:25 -0600 (Thu, 11 Sep 2008) $
-*  $Author: brian@tannerpages.com $
-*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/constant_environment.c $
+*  $Revision$
+*  $Date$
+*  $Author$
+*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/echo_agent.c $
 * 
 */
+
 
 
 #include <string.h>

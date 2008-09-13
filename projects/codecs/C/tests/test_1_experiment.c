@@ -14,9 +14,9 @@
  limitations under the License.
 
 * 
-*  $Revision: 809 $
-*  $Date: 2008-09-11 22:56:21 -0600 (Thu, 11 Sep 2008) $
-*  $Author: brian@tannerpages.com $
+*  $Revision$
+*  $Date$
+*  $Author$
 *  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/experiment.c $
 * 
 */
