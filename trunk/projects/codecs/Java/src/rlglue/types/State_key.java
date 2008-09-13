@@ -20,17 +20,26 @@ package rlglue.types;
 
 public class State_key extends RL_abstract_type
 {
-
 	public State_key() 
 	{
-		this(0,0);
+		this(0,0,0);
 	}
 
-	public State_key(int numInts, int numDoubles)
+	/**
+         * For backwards compatibility wiht RL-Glue 2.x
+         * @param numInts
+         * @param numDoubles
+         * @param numChars
+         */
+        public State_key(int numInts, int numDoubles)
 	{
-		super(numInts,numDoubles);
+		this(numInts,numDoubles,0);
 	}
-        
+
+        public State_key(int numInts, int numDoubles, int numChars)
+	{
+		super(numInts,numDoubles,numChars);
+	}       
 	public State_key(State_key src)
 	{
 		super(src);
