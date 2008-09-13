@@ -90,6 +90,7 @@ static void onAgentStep(int theConnection) {
   /* Read the data in the buffer (data from server) */
   offset = rlBufferRead(&theBuffer, offset, &theReward, 1, sizeof(theReward));
   offset = rlCopyBufferToADT(&theBuffer, offset, &theObservation);
+	__RL_CHECK_STRUCT(&theObservation)
 
   /* Call RL method on the recv'd data */
   theAction = agent_step(theReward, theObservation);
@@ -233,14 +234,12 @@ int main(int argc, char** argv) {
 
   const char *usage = "The following environment variables are used by the agent to control its function:\n"
     "RLGLUE_HOST  : If set the agent will use this ip or hostname to connect to rather than %s\n"
-    "RLGLUE_PORT  : If set the agent will use this port to connect on rather than %d\n"
-    "RLGLUE_AUTORECONNECT  : If set the agent will reconnect to the glue after an experiment has finished\n";
+	"RLGLUE_PORT  : If set the agent will use this port to connect on rather than %d\n";
   
   struct hostent *host_ent;
 
   char* host = kLocalHost;
   short port = kDefaultPort;
-  int autoReconnect = 0;
 
   char* envptr = 0;
 
@@ -262,11 +261,6 @@ int main(int argc, char** argv) {
     }
   }
 
-  envptr = getenv("RLGLUE_AUTORECONNECT");
-  if (envptr != 0) {
-    autoReconnect = strtol(envptr, 0, 10);
-  }
-
   if (isalpha(host[0])) {
     host_ent = gethostbyname(host); 
     host = inet_ntoa(*(struct in_addr*)host_ent->h_addr);
@@ -278,14 +272,12 @@ int main(int argc, char** argv) {
   /* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
   rlBufferCreate(&theBuffer, 4096);
   
-  do {
     theConnection = rlWaitForConnection(host, port, kRetryTimeout);
-		fprintf(stderr, "Connected\n");
+	fprintf(stderr, "Connected\n");
     rlBufferClear(&theBuffer);
     rlSendBufferData(theConnection, &theBuffer, kAgentConnection);
     runAgentEventLoop(theConnection);
     rlClose(theConnection);
-  } while(autoReconnect);
 
   rlBufferDestroy(&theBuffer);
 
