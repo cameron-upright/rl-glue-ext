@@ -12,7 +12,15 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- */
+
+* 
+*  $Revision: 809 $
+*  $Date: 2008-09-11 22:56:21 -0600 (Thu, 11 Sep 2008) $
+*  $Author: brian@tannerpages.com $
+*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/echo_agent.c $
+* 
+*/
+
 
 /**
 This agent is used for testing.  It will mostly just return whatever it receives.
@@ -33,18 +41,20 @@ int agent_stepCount=0;
 
 
 void agent_init(const task_specification_t task_spec){
-	printf("AS a quick test, the size of the null string is %ld and a length 1 string is %ld\n",strlen(""), strlen("1"));
+	__RL_CHECK_STRUCT(&action)
 }
 
 action_t agent_start(observation_t o) {
 	agent_stepCount=0;
 	copy_structure_to_structure(&action,&o);
+	__RL_CHECK_STRUCT(&action)
 	return action;
 }
 
 action_t agent_step(reward_t reward, observation_t o) {
 	agent_stepCount++;
 	copy_structure_to_structure(&action,&o);
+	__RL_CHECK_STRUCT(&action)
 	return action;
 }
 

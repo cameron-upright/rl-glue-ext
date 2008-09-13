@@ -27,16 +27,6 @@
 #include <rlglue/Environment_common.h>
 #include <rlglue/network/RL_network.h>
 
-/* Provide forward declaration of environment interface */
-extern task_specification_t env_init();
-extern observation_t env_start();
-extern reward_observation_t env_step(action_t a);
-extern void env_cleanup();
-extern void env_set_state(state_key_t sk);
-extern void env_set_random_seed(random_seed_key_t rsk);
-extern state_key_t env_get_state();
-extern random_seed_key_t env_get_random_seed();
-extern message_t env_message(const message_t inMessage);
 
 static const char* kUnknownMessage = "Unknown Message: %s\n";
 
@@ -73,20 +63,27 @@ static void onEnvStart(int theConnection) {
   observation_t theObservation = env_start();
   unsigned int offset = 0;
 
+	__RL_CHECK_STRUCT(&theObservation)
+
   rlBufferClear(&theBuffer);
   offset = rlCopyADTToBuffer(&theObservation, &theBuffer, offset);
 }
 
 static void onEnvStep(int theConnection) {
   reward_observation_t ro = {0};
-  unsigned int offset = 0;
+	unsigned int offset = 0;
 
+  /*Shouldn't we have to read this ? */
   offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
-  ro = env_step(theAction);
+  __RL_CHECK_STRUCT(&theAction);
+
+  ro = env_step(theAction);	
+  __RL_CHECK_STRUCT(&ro.o)
+
 
   rlBufferClear(&theBuffer);
   offset = 0;
-  offset = rlBufferWrite(&theBuffer, offset, &ro.terminal, 1, sizeof(int));
+  offset = rlBufferWrite(&theBuffer, offset, &ro.terminal, 1, sizeof(terminal_t));
   offset = rlBufferWrite(&theBuffer, offset, &ro.r, 1, sizeof(reward_t));
   offset = rlCopyADTToBuffer(&ro.o, &theBuffer, offset);
 }
@@ -164,7 +161,7 @@ static void onEnvMessage(int theConnection) {
 
   offset = 0;
   offset = rlBufferRead(&theBuffer, offset, &inMessageLength, 1, sizeof(int));
-  if (inMessageLength > theInMessageCapacity) {
+  if (inMessageLength >= theInMessageCapacity) {
     inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
     free(theInMessage);
 
@@ -183,6 +180,7 @@ static void onEnvMessage(int theConnection) {
   if (outMessage != NULL) {
    outMessageLength = strlen(outMessage);
   }
+
   
   /* we want to start sending, so we're going to reset the offset to 0 so we write the the beginning of the buffer */
   rlBufferClear(&theBuffer);

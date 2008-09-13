@@ -28,13 +28,6 @@
 #include <rlglue/network/RL_network.h>
 
 
-/* Provide forward declaration of agent interface */
-extern void agent_init(const task_specification_t task_spec);
-extern action_t agent_start(observation_t o);
-extern action_t agent_step(reward_t r, observation_t o);
-extern void agent_end(reward_t r);
-extern void agent_cleanup();
-extern message_t agent_message(const message_t inMessage);
 
 static const char* kUnknownMessage = "Unknown Message: %d\n";
 
@@ -53,6 +46,8 @@ static void onAgentInit(int theConnection) {
   if (theTaskSpecLength > 0) {
     theTaskSpec = (char*)calloc(theTaskSpecLength+1, sizeof(char));
     offset = rlBufferRead(&theBuffer, offset, theTaskSpec, theTaskSpecLength, sizeof(char));
+	/*Added by Brian Tanner Sept 12 2008 to match some other places where we do the same thing */
+	theTaskSpec[theTaskSpecLength]="\0";
   }
 
   /* Call RL method on the recv'd data */
@@ -68,9 +63,11 @@ static void onAgentStart(int theConnection) {
 
   /* Read the data in the buffer (data from server) */
   offset = rlCopyBufferToADT(&theBuffer, offset, &theObservation);
+	__RL_CHECK_STRUCT(&theObservation)
 
   /* Call RL method on the recv'd data */
   theAction = agent_start(theObservation);
+	__RL_CHECK_STRUCT(&theAction)
 
   /* Prepare the buffer for sending data back to the server */
   rlBufferClear(&theBuffer);
@@ -89,19 +86,20 @@ static void onAgentStep(int theConnection) {
 
   /* Call RL method on the recv'd data */
   theAction = agent_step(theReward, theObservation);
+	__RL_CHECK_STRUCT(&theAction)
 
   /* Prepare the buffer for sending data back to the server */
   rlBufferClear(&theBuffer);
   offset = 0;
+
   rlCopyADTToBuffer(&theAction, &theBuffer, offset);
 }
 
 static void onAgentEnd(int theConnection) {
   reward_t theReward = 0;
-  unsigned int offset = 0;
 
   /* Read the data in the buffer (data from server) */
-  offset = rlBufferRead(&theBuffer, offset, &theReward, 1, sizeof(reward_t));
+  rlBufferRead(&theBuffer, 0, &theReward, 1, sizeof(reward_t));
 
   /* Call RL method on the recv'd data */
   agent_end(theReward);
@@ -147,7 +145,7 @@ static void onAgentMessage(int theConnection) {
   offset = 0;
   offset = rlBufferRead(&theBuffer, offset, &inMessageLength, 1, sizeof(int));
 
-  if (inMessageLength > theInMessageCapacity) {
+  if (inMessageLength >= theInMessageCapacity) {
     inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
     free(theInMessage);
 
