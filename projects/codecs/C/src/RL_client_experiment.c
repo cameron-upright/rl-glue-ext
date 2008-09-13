@@ -83,7 +83,7 @@ static void forceConnection()
 
 task_specification_t RL_init() {
   unsigned int offset=0;
-unsigned int messageLength=0;
+  unsigned int messageLength=0;
   int experimentState = kRLInit;
 
   forceConnection();
@@ -130,6 +130,8 @@ observation_action_t RL_start() {
 
   offset = rlCopyBufferToADT(&theBuffer, offset, &theObservation);
   offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
+	__RL_CHECK_STRUCT(&theObservation)
+	__RL_CHECK_STRUCT(&theAction)
 
   oa.o = theObservation;
   oa.a = theAction;
@@ -156,6 +158,8 @@ reward_observation_action_terminal_t RL_step() {
   offset = rlBufferRead(&theBuffer, offset, &roat.r, 1, sizeof(reward_t));
   offset = rlCopyBufferToADT(&theBuffer, offset, &theObservation);
   offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
+	__RL_CHECK_STRUCT(&theObservation)
+	__RL_CHECK_STRUCT(&theAction)
 
   roat.o = theObservation;
   roat.a = theAction;
@@ -299,7 +303,8 @@ message_t RL_agent_message(const message_t message) {
   assert(experimentState == kRLAgentMessage);
 
   offset = rlBufferRead(&theBuffer, offset, &messageLength, 1, sizeof(int));
-  if (messageLength > theMessageCapacity) {
+  /* Sept 12 2008 made this >= instead of > so that we'd at least have size 1 */
+  if (messageLength >= theMessageCapacity) {
     free(theMessage);
     theMessage = (char*)calloc(messageLength+1, sizeof(char));
     theMessageCapacity = messageLength;
@@ -307,8 +312,9 @@ message_t RL_agent_message(const message_t message) {
 
   if (messageLength > 0) {
     offset = rlBufferRead(&theBuffer, offset, theMessage, messageLength, sizeof(char));
-    theMessage[messageLength] = '\0';
   }
+  /* Sept 12 2008 moved this out of the if statement so we actually null terminate at the right place if we get a "" message */
+  theMessage[messageLength] = '\0';
 
   return theMessage;
 }
@@ -338,7 +344,8 @@ message_t RL_env_message(const message_t message) {
 
   offset = 0;
   offset = rlBufferRead(&theBuffer, offset, &messageLength, 1, sizeof(int));
-  if (messageLength > theMessageCapacity) {
+  /* Sept 12 2008 made this >= instead of > so that we'd at least have size 1 */
+  if (messageLength >= theMessageCapacity) {
     free(theMessage);
     theMessage = (char*)calloc(messageLength+1, sizeof(char));
     theMessageCapacity = messageLength;
@@ -346,8 +353,9 @@ message_t RL_env_message(const message_t message) {
 
   if (messageLength > 0) {
     offset = rlBufferRead(&theBuffer, offset, theMessage, messageLength, sizeof(char));
-    theMessage[messageLength] = '\0';
   }
+  /* Sept 12 2008 moved this out of the if statement so we actually null terminate at the right place if we get a "" message */
+theMessage[messageLength] = '\0';
 
   return theMessage;
 }
