@@ -128,7 +128,7 @@ reward_observation_t env_step(action_t a)
 		/*Not sure if this should be strlen+1 or what */
 		o.numChars=strlen(stringBuffer)+1;
 		// free(o.charArray);
-		o.charArray=calloc(o.numChars,sizeof(char));
+		o.charArray=(char *)calloc(o.numChars,sizeof(char));
 	}else{
 		printf("\tArray size was right %d\n",o.numChars);
 	}
