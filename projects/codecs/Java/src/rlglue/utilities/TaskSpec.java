@@ -9,7 +9,14 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
- */
+* 
+*  $Revision$
+*  $Date$
+*  $Author$
+*  $HeadURL$
+* 
+*/
+
 package rlglue.utilities;
 /**
  * This class is used to store and parse the information given to an Agent in
