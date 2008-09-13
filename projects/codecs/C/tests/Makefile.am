@@ -1,6 +1,6 @@
-TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh
+TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh
 
-check_PROGRAMS = test_sanity_experiment test_1_agent test_1_environment test_1_experiment test_message_agent test_message_environment test_message_experiment test_rl_episode_experiment
+check_PROGRAMS = test_sanity_experiment test_1_agent test_1_environment test_1_experiment test_message_agent test_message_environment test_message_experiment  test_rl_episode_experiment test_seeds_experiment test_seeds_environment
 
 AM_CFLAGS=-g
 test_sanity_experiment_SOURCES = test_sanity_experiment.c useful_functions.c useful_functions.h
@@ -28,17 +28,11 @@ test_message_experiment_LDADD = ../src/librlexperiment.la
 test_rl_episode_experiment_SOURCES = test_rl_episode_experiment.c useful_functions.c useful_functions.h
 test_rl_episode_experiment_LDADD = ../src/librlexperiment.la
 
+test_seeds_experiment_SOURCES = test_seeds_experiment.c useful_functions.c useful_functions.h
+test_seeds_experiment_LDADD = ../src/librlexperiment.la
+
+test_seeds_environment_SOURCES = test_seeds_environment.c useful_functions.c useful_functions.h
+test_seeds_environment_LDADD = ../src/librlenvironment.la
 
 INCLUDES = -I$(top_srcdir)/src
-# LDADD = ../src/librlglue.la
-# 
-# test1_SOURCES = test1_environment.c	test1_agent.c experiment.c useful_functions.c useful_functions.h
-# test1_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99
-# 
-# message_test_SOURCES = message_test_agent.c	message_test_environment.c message_test_experiment.c useful_functions.c useful_functions.h
-# message_test_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99
-# 
-# rl_episode_test_experiment_SOURCES = test1_environment.c	test1_agent.c rl_episode_test_experiment.c useful_functions.c useful_functions.h
-# rl_episode_test_experiment_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99
-# 
-# noinst_PROGRAMS = $(TESTS)
+
