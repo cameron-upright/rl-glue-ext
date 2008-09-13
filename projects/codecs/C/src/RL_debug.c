@@ -16,7 +16,7 @@
 *  $Revision$
 *  $Date$
 *  $Author$
-*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/src/RL_glue.c $
+*  $HeadURL$
 * 
 */
 #include <assert.h>
@@ -25,6 +25,7 @@
 
 
 int __rlglue_check_abstract_type(const rl_abstract_type_t *theStruct){
+
 	if(theStruct->numInts>1000)return 1;
 	if(theStruct->numDoubles>1000)return 2;
 	if(theStruct->numChars>1000)return 3;
