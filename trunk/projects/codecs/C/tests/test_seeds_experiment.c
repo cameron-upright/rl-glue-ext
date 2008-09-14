@@ -14,10 +14,10 @@
  limitations under the License.
 
 * 
-*  $Revision: 816 $
-*  $Date: 2008-09-12 22:26:15 -0600 (Fri, 12 Sep 2008) $
-*  $Author: brian@tannerpages.com $
-*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/tests/test_seeds_experiment.c $
+*  $Revision$
+*  $Date$
+*  $Author$
+*  $HeadURL$
 * 
 */
 

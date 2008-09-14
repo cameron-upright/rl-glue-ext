@@ -1,6 +1,7 @@
-TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh
+TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh test_empty.sh
 
-check_PROGRAMS = test_sanity_experiment test_1_agent test_1_environment test_1_experiment test_message_agent test_message_environment test_message_experiment  test_rl_episode_experiment test_seeds_experiment test_seeds_environment
+check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh test_empty.sh
+check_PROGRAMS = test_sanity_experiment test_1_agent test_1_environment test_1_experiment test_message_agent test_message_environment test_message_experiment  test_rl_episode_experiment test_seeds_experiment test_seeds_environment test_empty_agent test_empty_environment test_empty_experiment
 
 AM_CFLAGS=-g
 test_sanity_experiment_SOURCES = test_sanity_experiment.c useful_functions.c useful_functions.h
@@ -34,5 +35,16 @@ test_seeds_experiment_LDADD = ../src/librlexperiment.la
 test_seeds_environment_SOURCES = test_seeds_environment.c useful_functions.c useful_functions.h
 test_seeds_environment_LDADD = ../src/librlenvironment.la
 
+test_empty_agent_SOURCES = test_empty_agent.c useful_functions.c useful_functions.h
+test_empty_agent_LDADD = ../src/librlagent.la
+
+test_empty_environment_SOURCES = test_empty_environment.c useful_functions.c useful_functions.h
+test_empty_environment_LDADD = ../src/librlenvironment.la
+
+test_empty_experiment_SOURCES = test_empty_experiment.c useful_functions.c useful_functions.h
+test_empty_experiment_LDADD = ../src/librlexperiment.la
+
 INCLUDES = -I$(top_srcdir)/src
 
+#noinst_SCRIPTS = $(check_SCRIPTS)
+# noinst_PROGRAMS = $(check_PROGRAMS)

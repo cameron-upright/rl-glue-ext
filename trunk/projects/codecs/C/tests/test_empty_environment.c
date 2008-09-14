@@ -26,56 +26,83 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <rlglue/Environment_common.h>
-#include "useful_functions.h";
 
+#include "useful_functions.h"
 
-observation_t o={0};
-reward_observation_t ro={0};
+message_t env_responseMessage=0;
+observation_t emptyObservation;
+observation_t nonEmptyObservation;
 
-state_key_t env_saved_state_key={0};
-random_seed_key_t env_saved_random_key={0};
+int env_whichEpisode=0;
 
 task_specification_t env_init()
 {    
+	env_whichEpisode=0;
+
+	clean_abstract_type(&emptyObservation);
+	clean_abstract_type(&nonEmptyObservation);
+
+	set_k_ints_in_abstract_type(&nonEmptyObservation,2);
+	set_k_doubles_in_abstract_type(&nonEmptyObservation,4);
+	set_k_chars_in_abstract_type(&nonEmptyObservation,5);
+
 	return "";
 }
 
 observation_t env_start()
 {
-	return o;
+	env_whichEpisode++;
+	
+	if(env_whichEpisode%2==0)
+		return emptyObservation;
+
+	return nonEmptyObservation;
 }
 
 reward_observation_t env_step(action_t a)
 {
-  return ro;
+	reward_observation_t ro={0};
+
+	if(env_whichEpisode%2==0)
+		ro.o=emptyObservation;
+	else
+		ro.o=nonEmptyObservation;
+		
+	ro.r=0;
+	ro.terminal=0;
+	
+	return ro;
 }
 
 void env_cleanup()
 {
-
+	clean_abstract_type(&emptyObservation);
+	clean_abstract_type(&nonEmptyObservation);
 }
 
 void env_set_state(state_key_t sk)
 {
-	copy_structure_to_structure(&env_saved_state_key, &sk);
 }
      
 void env_set_random_seed(random_seed_key_t rsk)
 {
-	copy_structure_to_structure(&env_saved_random_key, &rsk);
 }
 
 state_key_t env_get_state()
 {
-	return env_saved_state_key;
+	state_key_t theKey={0};
+	clean_abstract_type(&theKey);
+	return theKey;
 }
 
 random_seed_key_t env_get_random_seed()
 {
-	return env_saved_random_key;
+	random_seed_key_t theKey={0};
+	clean_abstract_type(&theKey);
+	return theKey;
 }
 
 message_t env_message(const message_t inMessage) {
-
+	return "";
 }
 	
