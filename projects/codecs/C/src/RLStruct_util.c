@@ -19,7 +19,9 @@
 *  $HeadURL$
 * 
 */
-
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <stdlib.h> /* free, calloc */
 #include <string.h> /* memcpy */

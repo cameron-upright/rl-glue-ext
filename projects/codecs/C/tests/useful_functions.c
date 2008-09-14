@@ -20,7 +20,9 @@
 *  $HeadURL$
 * 
 */
-
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include "useful_functions.h"
 
 #include <stdlib.h>
