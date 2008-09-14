@@ -54,7 +54,7 @@ static void onAgentInit(int theConnection) {
     theTaskSpec = (char*)calloc(theTaskSpecLength+1, sizeof(char));
     offset = rlBufferRead(&theBuffer, offset, theTaskSpec, theTaskSpecLength, sizeof(char));
 	/*Added by Brian Tanner Sept 12 2008 to match some other places where we do the same thing */
-	theTaskSpec[theTaskSpecLength]="\0";
+	theTaskSpec[theTaskSpecLength]='\0';
   }
 
   /* Call RL method on the recv'd data */
