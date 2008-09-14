@@ -19,7 +19,9 @@
 *  $HeadURL$
 * 
 */
-
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <assert.h> /* assert  */
 #include <unistd.h> /* sleep   */
@@ -301,8 +303,8 @@ int main(int argc, char** argv) {
     host = inet_ntoa(*(struct in_addr*)host_ent->h_addr);
   }
 
-  fprintf(stderr, "Connecting to host=%s on port=%d...", host, port);
-	fflush(stderr);
+  fprintf(stdout, "RL-Glue C Environment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,SVN_VERSION,host, port);
+	fflush(stdout);
 
 
   /* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */

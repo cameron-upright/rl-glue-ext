@@ -20,7 +20,9 @@
 *  $HeadURL$
 * 
 */
-
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 /**
 This agent is used for testing.  It will mostly just return whatever it receives.

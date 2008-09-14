@@ -50,6 +50,7 @@ am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
+CONFIG_HEADER = $(top_builddir)/config/config.h
 CONFIG_CLEAN_FILES =
 am_test_1_agent_OBJECTS = test_1_agent.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
@@ -107,7 +108,7 @@ am_test_seeds_experiment_OBJECTS = test_seeds_experiment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_seeds_experiment_OBJECTS = $(am_test_seeds_experiment_OBJECTS)
 test_seeds_experiment_DEPENDENCIES = ../src/librlexperiment.la
-DEFAULT_INCLUDES = -I. -I$(srcdir)
+DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/config
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -243,6 +244,7 @@ program_transform_name = @program_transform_name@
 psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
+svnversioncommand = @svnversioncommand@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh test_empty.sh
@@ -275,6 +277,7 @@ test_empty_environment_LDADD = ../src/librlenvironment.la
 test_empty_experiment_SOURCES = test_empty_experiment.c useful_functions.c useful_functions.h
 test_empty_experiment_LDADD = ../src/librlexperiment.la
 INCLUDES = -I$(top_srcdir)/src
+EXTRA_DIST = $(check_SCRIPTS)
 all: all-am
 
 .SUFFIXES:
@@ -648,9 +651,6 @@ uninstall-am: uninstall-info-am
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-info-am
 
-
-#noinst_SCRIPTS = $(check_SCRIPTS)
-# noinst_PROGRAMS = $(check_PROGRAMS)
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

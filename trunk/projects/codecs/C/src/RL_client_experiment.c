@@ -19,7 +19,9 @@
 *  $HeadURL$
 * 
 */
-
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <stdlib.h> /* calloc */
 #include <string.h> /* strlen */
@@ -77,7 +79,8 @@ static void forceConnection()
       host = inet_ntoa(*(struct in_addr*)host_ent->h_addr);
     }
 
-    fprintf(stderr, "Connecting to host=%s on port=%d\n", host, port);
+  fprintf(stdout, "RL-Glue C Experiment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,SVN_VERSION,host, port);
+fflush(stdout);
     theExperimentConnection = rlWaitForConnection(host, port, kRetryTimeout);
 
     /* Send the connection type */

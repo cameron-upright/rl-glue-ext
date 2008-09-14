@@ -27,6 +27,9 @@ This agent is used for testing.  It will mostly just return whatever it receives
 
 This agent doesn't implement all the methods.. isn't that bad?
 **/
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>

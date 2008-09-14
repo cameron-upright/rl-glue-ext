@@ -46,5 +46,4 @@ test_empty_experiment_LDADD = ../src/librlexperiment.la
 
 INCLUDES = -I$(top_srcdir)/src
 
-#noinst_SCRIPTS = $(check_SCRIPTS)
-# noinst_PROGRAMS = $(check_PROGRAMS)
+EXTRA_DIST=$(check_SCRIPTS)
