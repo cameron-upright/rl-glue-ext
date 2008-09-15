@@ -270,12 +270,12 @@ int main(int argc, char** argv) {
 
   fprintf(stdout, "RL-Glue C Agent Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,SVN_VERSION,host, port);
   fflush(stdout);
-
+  
   /* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
   rlBufferCreate(&theBuffer, 4096);
   
     theConnection = rlWaitForConnection(host, port, kRetryTimeout);
-	fprintf(stderr, "Connected\n");
+	fprintf(stderr, "\tRL-Glue C Agent Codec :: Connected\n");
     rlBufferClear(&theBuffer);
     rlSendBufferData(theConnection, &theBuffer, kAgentConnection);
     runAgentEventLoop(theConnection);
