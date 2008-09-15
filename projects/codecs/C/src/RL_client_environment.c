@@ -311,7 +311,7 @@ int main(int argc, char** argv) {
   rlBufferCreate(&theBuffer, 4096);
   
     theConnection = rlWaitForConnection(host, port, kRetryTimeout);
-	fprintf(stderr, "Connected\n");
+	fprintf(stderr, "\tRL-Glue C Environment Codec :: Connected\n");
     rlBufferClear(&theBuffer);
     rlSendBufferData(theConnection, &theBuffer, kEnvironmentConnection);
     runEnvironmentEventLoop(theConnection);
