@@ -18,14 +18,14 @@
 /* Define to 1 if you have the <rlglue/Environment_common.h> header file. */
 #undef HAVE_RLGLUE_ENVIRONMENT_COMMON_H
 
-/* Define to 1 if you have the <rlglue/Experiment_common.h> header file. */
-#undef HAVE_RLGLUE_EXPERIMENT_COMMON_H
-
 /* Define to 1 if you have the <rlglue/network/RL_network.h> header file. */
 #undef HAVE_RLGLUE_NETWORK_RL_NETWORK_H
 
 /* Define to 1 if you have the <rlglue/RL_common.h> header file. */
 #undef HAVE_RLGLUE_RL_COMMON_H
+
+/* Define to 1 if you have the <rlglue/RL_glue.h> header file. */
+#undef HAVE_RLGLUE_RL_GLUE_H
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
