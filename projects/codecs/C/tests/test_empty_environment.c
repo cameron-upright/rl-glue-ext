@@ -24,6 +24,7 @@
 #include <config.h>
 #endif
 
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,7 +36,9 @@ message_t env_responseMessage=0;
 observation_t emptyObservation;
 observation_t nonEmptyObservation;
 
+
 int env_whichEpisode=0;
+
 
 task_specification_t env_init()
 {    
