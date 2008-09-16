@@ -23,7 +23,7 @@ LDFLAGS = -lm -lrlutils -lrlglue
 all: $(BIN_PATH)/RL_agent_env_experiment
 
 $(BIN_PATH)/RL_agent_env_experiment: $(BUILD_PATH)/$(basename $(ENVIRONMENT)).o $(BUILD_PATH)/$(basename $(AGENT)).o $(BUILD_PATH)/$(basename $(EXPERIMENT)).o
-	$(CC)   $(LDFLAGS) -o RL_agent_env_experiment $^
+	$(CC)   $^ $(LDFLAGS) -o RL_agent_env_experiment 
 
 
 $(BUILD_PATH)/$(basename $(ENVIRONMENT)).o: $(ENV_SRC_PATH)/$(ENVIRONMENT)
