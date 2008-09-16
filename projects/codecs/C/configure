@@ -2219,7 +2219,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=rlglue_codec_c
- VERSION=1.0-alpha-1
+ VERSION=1.0-alpha-2
 
 
 cat >>confdefs.h <<_ACEOF
@@ -4334,7 +4334,7 @@ done
 
 
 
-for ac_header in rlglue/RL_common.h rlglue/Agent_common.h rlglue/Environment_common.h rlglue/Experiment_common.h rlglue/network/RL_network.h
+for ac_header in rlglue/RL_common.h rlglue/Agent_common.h rlglue/Environment_common.h rlglue/RL_glue.h rlglue/network/RL_network.h
 do
 as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
 if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
@@ -4494,7 +4494,7 @@ if test `eval echo '${'$as_ac_Header'}'` = yes; then
 _ACEOF
 
 else
-  echo "You must have RL-Glue installed to use this codec.  If you have not downloaded it please see http://glue.rl-community.org/.  We could not find RL-Glue headers: rlglue/RL_common.h rlglue/Agent_common.h rlglue/Environment_common.h rlglue/Experiment_common.h rlglue/network/RL_network.h. If they are not in a standard location please do ./configure CFLAGS=-I/path/to/rlglue/glue/headers"; exit 1
+  echo "You must have RL-Glue installed to use this codec.  If you have not downloaded it please see http://glue.rl-community.org/.  We could not find RL-Glue headers: rlglue/RL_common.h rlglue/Agent_common.h rlglue/Environment_common.h rlglue/RL_glue.h rlglue/network/RL_network.h. If they are not in a standard location please do ./configure CFLAGS=-I/path/to/rlglue/glue/headers"; exit 1
 fi
 
 done

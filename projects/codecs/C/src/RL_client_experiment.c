@@ -32,7 +32,7 @@
 #include <netdb.h> /* gethostbyname */
 #include <arpa/inet.h> /* inet_ntoa */
 
-#include <rlglue/Experiment_common.h>
+#include <rlglue/RL_glue.h>
 #include <rlglue/network/RL_network.h>
 
 static int theExperimentConnection = 0;
