@@ -13,8 +13,10 @@ CFLAGS = -I$(ENV_SRC_PATH)
 
 all: RL_environment
 
+#Note -lrlgluenetdev is only necessary for cygwin compatibility
+
 RL_environment: $(addprefix $(BUILD_PATH)/, $(ENV_OBJECTS))
-	$(CC)  -lrlenvironment -lm -o RL_environment $^
+	$(CC)  -lrlenvironment -lrlgluenetdev -lm -o RL_environment $^
 
 $(BUILD_PATH)/$(basename $(ENVIRONMENT)).o: $(ENV_SRC_PATH)/$(ENVIRONMENT)
 	$(CC) 	-c $(CFLAGS) $^ -o $@
