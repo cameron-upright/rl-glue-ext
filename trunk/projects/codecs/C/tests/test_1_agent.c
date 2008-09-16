@@ -24,6 +24,7 @@
 #include <config.h>
 #endif
 
+
 /**
 This agent is used for testing.  It will mostly just return whatever it receives.
 
@@ -84,7 +85,7 @@ message_t agent_message(const message_t inMessage) {
 		free(agent_responseMessage);
 		agent_responseMessage=0;
 	}
-	agent_responseMessage=(char *)calloc(strlen(tmpBuffer),sizeof(char));
+	agent_responseMessage=(char *)calloc(strlen(tmpBuffer)+1,sizeof(char));
 	sprintf(agent_responseMessage,"%s",tmpBuffer);
 	return agent_responseMessage;
 }

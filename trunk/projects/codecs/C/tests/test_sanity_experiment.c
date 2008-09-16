@@ -24,6 +24,7 @@
 #include <config.h>
 #endif
 
+
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
@@ -42,7 +43,6 @@ void check_fail(int condition){
 	
 	
 int main(int argc, char *argv[]) {
-  reward_observation_action_terminal_t roat;
   task_specification_t task_spec;
   task_spec=RL_init();
 

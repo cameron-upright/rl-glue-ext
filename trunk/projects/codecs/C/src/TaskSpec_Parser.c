@@ -23,6 +23,11 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_IEEEFP_H 
+/* CYGWIN needs this to get isnan and isinf*/
+#include <ieeefp.h>
+#endif
+
 #include <rlglue/utils/C/TaskSpec_Parser.h>
 
 /*int main(void) {

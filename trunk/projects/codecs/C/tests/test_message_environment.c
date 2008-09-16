@@ -24,14 +24,14 @@
 #include <config.h>
 #endif
 
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <rlglue/Environment_common.h>
 
+#include "useful_functions.h"
 
-observation_t o={0};
-reward_observation_t ro={0};
 message_t env_responseMessage=0;
 
 task_specification_t env_init()
@@ -41,12 +41,16 @@ task_specification_t env_init()
 
 observation_t env_start()
 {
+	observation_t o={0};
+	clean_abstract_type(&o);
 	return o;
 }
 
 reward_observation_t env_step(action_t a)
 {
-  return ro;
+	reward_observation_t ro={0};
+	clean_abstract_type(&ro.o);
+	return ro;
 }
 
 void env_cleanup()
@@ -64,10 +68,16 @@ void env_set_random_seed(random_seed_key_t rsk)
 
 state_key_t env_get_state()
 {
+	state_key_t theKey={0};
+	clean_abstract_type(&theKey);
+	return theKey;
 }
 
 random_seed_key_t env_get_random_seed()
 {
+	random_seed_key_t theKey={0};
+	clean_abstract_type(&theKey);
+	return theKey;
 }
 
 message_t env_message(const message_t inMessage) {
@@ -88,7 +98,7 @@ message_t env_message(const message_t inMessage) {
 		free(env_responseMessage);
 		env_responseMessage=0;
 	}
-	env_responseMessage=(char *)calloc(strlen(tmpBuffer),sizeof(char));
+	env_responseMessage=(char *)calloc(strlen(tmpBuffer)+1,sizeof(char));
 	sprintf(env_responseMessage,"%s",tmpBuffer);
 	return env_responseMessage;
 }

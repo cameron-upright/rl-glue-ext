@@ -20,6 +20,9 @@
 *  $HeadURL$
 * 
 */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 
 /**
@@ -27,25 +30,31 @@ This agent is used for testing.  It will mostly just return whatever it receives
 
 This agent doesn't implement all the methods.. isn't that bad?
 **/
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <rlglue/Agent_common.h>
+
+#include "useful_functions.h"
+
+
 message_t agent_responseMessage=0;
+action_t emptyAction;
 
 
 
 void agent_init(const task_specification_t task_spec){
+	clean_abstract_type(&emptyAction);
+
 }
 
 action_t agent_start(observation_t o) {
+	return emptyAction;
 }
 
 action_t agent_step(reward_t reward, observation_t o) {
+	return emptyAction;
 }
 
 void agent_end(reward_t reward) {
@@ -75,7 +84,7 @@ message_t agent_message(const message_t inMessage) {
 		free(agent_responseMessage);
 		agent_responseMessage=0;
 	}
-	agent_responseMessage=(char *)calloc(strlen(tmpBuffer),sizeof(char));
+	agent_responseMessage=(char *)calloc(strlen(tmpBuffer)+1,sizeof(char));
 	sprintf(agent_responseMessage,"%s",tmpBuffer);
 	return agent_responseMessage;
 }
