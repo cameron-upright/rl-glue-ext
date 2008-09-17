@@ -30,57 +30,56 @@ import org.rlcommunity.rlglue.types.State_key;
  *
  * @author Brian Tanner
  */
-public class Test_1_Environment implements EnvironmentInterface {
-
-    int stepCount = 0;
-    Observation o =new Observation();
+public class Test_Empty_Environment implements EnvironmentInterface {
+    int whichEpisode = 0;
     
-    public Test_1_Environment() {
+    Observation emptyObservation=new Observation(0,0,0);
+    Observation nonEmptyObservation=new Observation(2,4,5);
+
+    
+    
+    public Test_Empty_Environment() {
     }
 
     
     public String env_message(String inMessage) {
-        int timesToPrint = stepCount % 3;
-        StringBuffer b = new StringBuffer();
-
-        b.append(inMessage);
-        b.append("|");
-        for (int i = 0; i < timesToPrint; i++) {
-            b.append(stepCount);
-            b.append(".");
-        }
-        b.append("|");
-        b.append(inMessage);
-        return b.toString();
+        return "";
     }
 
     public static void main(String[] args){
-        EnvironmentLoader L=new EnvironmentLoader(new Test_1_Environment());
+        EnvironmentLoader L=new EnvironmentLoader(new Test_Empty_Environment());
         L.run();
     }
 
     public String env_init() {
-	return "sample task spec";    }
+	whichEpisode=0;
 
+        TestUtility.clean_abstract_type(emptyObservation);
+        TestUtility.clean_abstract_type(nonEmptyObservation);
+
+        TestUtility.set_k_ints_in_abstract_type(nonEmptyObservation, 2);
+        TestUtility.set_k_doubles_in_abstract_type(nonEmptyObservation, 4);
+        TestUtility.set_k_chars_in_abstract_type(nonEmptyObservation, 5);
+
+	return "";
+    }
     public Observation env_start() {
-        stepCount=0;
-        TestUtility.clean_abstract_type(o);
-        TestUtility.set_k_ints_in_abstract_type(o, 1);
-        TestUtility.set_k_doubles_in_abstract_type(o, 2);
-        TestUtility.set_k_chars_in_abstract_type(o, 3);
-        return o;   
+	whichEpisode++;
+	
+	if(whichEpisode%2==0)
+		return emptyObservation;
+
+	return nonEmptyObservation;
     }
 
     public Reward_observation env_step(Action action) {
-        TestUtility.clean_abstract_type(o);
-        TestUtility.set_k_ints_in_abstract_type(o, 1);
-        o.intArray[0]=stepCount;
         
-      	stepCount++;
-                
-        int terminal=0;
-        if(stepCount==5)terminal=1;
-        Reward_observation ro=new Reward_observation(1.0d, o, terminal);
+        Reward_observation ro=new Reward_observation();
+        
+	if(whichEpisode%2==0)
+            ro.o=emptyObservation;
+        else
+            ro.o=nonEmptyObservation;
         return ro;
     }
 
