@@ -30,57 +30,49 @@ import org.rlcommunity.rlglue.types.State_key;
  *
  * @author Brian Tanner
  */
-public class Test_1_Environment implements EnvironmentInterface {
+public class Test_Message_Environment implements EnvironmentInterface {
 
     int stepCount = 0;
     Observation o =new Observation();
     
-    public Test_1_Environment() {
+    public Test_Message_Environment() {
     }
 
     
     public String env_message(String inMessage) {
-        int timesToPrint = stepCount % 3;
-        StringBuffer b = new StringBuffer();
+        if(inMessage==null)
+            return "null";
 
-        b.append(inMessage);
-        b.append("|");
-        for (int i = 0; i < timesToPrint; i++) {
-            b.append(stepCount);
-            b.append(".");
-        }
-        b.append("|");
-        b.append(inMessage);
-        return b.toString();
+       if(inMessage.equals(""))
+           return "empty";
+        
+        if(inMessage.equals("null"))
+            return null;
+
+        if(inMessage.equals("empty"))
+            return "";
+
+        return new String(inMessage);
     }
 
     public static void main(String[] args){
-        EnvironmentLoader L=new EnvironmentLoader(new Test_1_Environment());
+        EnvironmentLoader L=new EnvironmentLoader(new Test_Message_Environment());
         L.run();
     }
 
     public String env_init() {
-	return "sample task spec";    }
+	return "";    }
 
     public Observation env_start() {
         stepCount=0;
         TestUtility.clean_abstract_type(o);
-        TestUtility.set_k_ints_in_abstract_type(o, 1);
-        TestUtility.set_k_doubles_in_abstract_type(o, 2);
-        TestUtility.set_k_chars_in_abstract_type(o, 3);
         return o;   
     }
 
     public Reward_observation env_step(Action action) {
         TestUtility.clean_abstract_type(o);
-        TestUtility.set_k_ints_in_abstract_type(o, 1);
-        o.intArray[0]=stepCount;
-        
-      	stepCount++;
-                
         int terminal=0;
-        if(stepCount==5)terminal=1;
-        Reward_observation ro=new Reward_observation(1.0d, o, terminal);
+        Reward_observation ro=new Reward_observation(0.0d, o, terminal);
         return ro;
     }
 
