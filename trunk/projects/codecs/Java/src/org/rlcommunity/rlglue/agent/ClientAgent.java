@@ -23,19 +23,19 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.agent;
+package org.rlcommunity.rlglue.agent;
 
 import java.io.*;
 
-import rlglue.network.Network;
-import rlglue.types.Action;
-import rlglue.types.Observation;
+import org.rlcommunity.rlglue.network.Network;
+import org.rlcommunity.rlglue.types.Action;
+import org.rlcommunity.rlglue.types.Observation;
 
 public class ClientAgent 
 {
 	protected static final String kUnknownMessage = "Unknown Message: ";
 	protected Network network;
-	protected Agent agent;
+	protected AgentInterface agent;
 	
 	protected boolean killedFromLocalProcess=false;
 	
@@ -47,7 +47,7 @@ public class ClientAgent
 		killedFromLocalProcess=true;
 	}
 
-	public ClientAgent(Agent agent) 
+	public ClientAgent(AgentInterface agent) 
 	{
 		this.agent = agent;
 		this.network = new Network();
@@ -111,6 +111,9 @@ public class ClientAgent
 		network.putInt(0); // No data in this packet
 	}
 
+        /**
+         * @deprecated
+         */
 	protected void onAgentFreeze()
 	{
 		agent.agent_freeze();
@@ -200,9 +203,6 @@ public class ClientAgent
 				onAgentCleanup();
 				break;
 
-			case Network.kAgentFreeze:
-				onAgentFreeze();
-				break;
 
 			case Network.kAgentMessage:
 				onAgentMessage();

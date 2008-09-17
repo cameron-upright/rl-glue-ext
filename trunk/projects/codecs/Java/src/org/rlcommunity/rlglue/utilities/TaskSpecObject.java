@@ -1,4 +1,4 @@
-package rlglue.utilities;
+package org.rlcommunity.rlglue.utilities;
 
 /*
 Copyright 2008 Matt Radkie

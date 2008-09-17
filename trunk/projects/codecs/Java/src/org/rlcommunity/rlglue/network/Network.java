@@ -23,7 +23,7 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.network;
+package org.rlcommunity.rlglue.network;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -31,11 +31,12 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import rlglue.types.Action;
-import rlglue.types.Observation;
-import rlglue.types.Random_seed_key;
-import rlglue.types.Reward_observation;
-import rlglue.types.State_key;
+import org.rlcommunity.rlglue.types.Action;
+import org.rlcommunity.rlglue.types.Observation;
+import org.rlcommunity.rlglue.types.RL_abstract_type;
+import org.rlcommunity.rlglue.types.Random_seed_key;
+import org.rlcommunity.rlglue.types.Reward_observation;
+import org.rlcommunity.rlglue.types.State_key;
 
 public class Network
 {
@@ -73,6 +74,7 @@ public class Network
 	public static final int kRLSetRandomSeed = 29;
 	public static final int kRLGetState      = 30;
 	public static final int kRLGetRandomSeed = 31;
+        //RLFreeze is deprecated
 	public static final int kRLFreeze        = 32;
 	public static final int kRLAgentMessage  = 33;
 	public static final int kRLEnvMessage    = 34;
@@ -81,11 +83,12 @@ public class Network
 
 	public static final String kDefaultHost = "127.0.0.1";
 	public static final int kDefaultPort = 4096;
-	public static final int kRetryTimeout = 10;
+	public static final int kRetryTimeout = 2;
 
 	protected static final int kByteBufferDefaultSize = 4096;
 	public static final int kIntSize = 4;
 	protected static final int kDoubleSize = 8;
+        protected static final int kCharSize = 1;
 	
 	protected SocketChannel socketChannel;
 	protected ByteBuffer recvBuffer;
@@ -180,7 +183,18 @@ public class Network
 	{
 		return recvBuffer.getDouble();
 	}
+        
+        public char getChar(){
+            return recvBuffer.getChar();
+        }
 	
+        /**
+         * Used for getting task spec and env/agent messages. UNLIKE the
+         * charArrays in observations/actions/etc, these strings are null
+         * terminated?
+         * @return
+         * @throws java.io.UnsupportedEncodingException
+         */
 	public String getString() throws UnsupportedEncodingException
 	{
 		int recvLength = this.getInt();
@@ -191,58 +205,30 @@ public class Network
 
 	public Observation getObservation()
 	{
-		final int numInts = this.getInt();
-		final int numDoubles = this.getInt();
-
-		Observation obs = new Observation(numInts, numDoubles);	
-		
-		for (int i = 0; i < numInts; ++i)
-			obs.intArray[i] = this.getInt();
-		
-		for (int i = 0; i < numDoubles; ++i)
-			obs.doubleArray[i] = this.getDouble();
-
-		return obs;
+            return new Observation(getAbstractType());
 	}
 
 	public Action getAction()
 	{
-		final int numInts = this.getInt();
-		final int numDoubles = this.getInt();
-
-		Action action = new Action(numInts, numDoubles);
-		
-		for (int i = 0; i < numInts; ++i)
-			action.intArray[i] = this.getInt();
-		
-		for (int i = 0; i < numDoubles; ++i)
-			action.doubleArray[i] = this.getDouble();
-
-		return action;
+            return new Action(getAbstractType());
 	}
 
 	public State_key getStateKey()
 	{
-		final int numInts = this.getInt();
-		final int numDoubles = this.getInt();
-
-		State_key key = new State_key(numInts, numDoubles);
-		
-		for (int i = 0; i < numInts; ++i)
-			key.intArray[i] = this.getInt();
-		
-		for (int i = 0; i < numDoubles; ++i)
-			key.doubleArray[i] = this.getDouble();
-
-		return key;
+            return new State_key(getAbstractType());
 	}
 
 	public Random_seed_key getRandomSeedKey()
 	{
+		return new Random_seed_key(getAbstractType());
+	}
+	
+        private final RL_abstract_type getAbstractType(){
 		final int numInts = this.getInt();
 		final int numDoubles = this.getInt();
+		final int numChars = this.getInt();
 
-		Random_seed_key key = new Random_seed_key(numInts, numDoubles);
+                RL_abstract_type key = new RL_abstract_type(numInts, numDoubles,numChars);
 
 		for (int i = 0; i < numInts; ++i)
 			key.intArray[i] = this.getInt();
@@ -250,10 +236,13 @@ public class Network
 		for (int i = 0; i < numDoubles; ++i)
 			key.doubleArray[i] = this.getDouble();
 
-		return key;
-	}
-	
-	public void putInt(int value)
+		for (int i = 0; i < numChars; ++i)
+			key.charArray[i] = this.getChar();
+
+                return key;
+        }
+
+        public void putInt(int value)
 	{
 		this.ensureSendCapacityRemains(Network.kIntSize);
 		this.sendBuffer.putInt(value);
@@ -265,7 +254,18 @@ public class Network
 		this.sendBuffer.putDouble(value);
 	}
 
-	public void putString(String message) throws UnsupportedEncodingException
+        /**
+         * Brian Tanner adding this for RL-Glue 3.x compatibility
+         * @since 1.0
+         * @param value
+         */
+	public void putChar(char value)
+	{
+		this.ensureSendCapacityRemains(Network.kCharSize);
+		this.sendBuffer.putChar(value);
+	}
+
+        public void putString(String message) throws UnsupportedEncodingException
 	{		
 		// We don't want to have to deal null...
 		if (message == null)
@@ -279,113 +279,61 @@ public class Network
 			sendBuffer.put(message.getBytes("UTF-8"));
 		}
 	}
-
-	public void putObservation(Observation obs)
-	{	
-		this.ensureSendCapacityRemains(Network.sizeOf(obs));
-
+        
+        private final void putAbstractType(RL_abstract_type theObject){
+            this.ensureSendCapacityRemains(Network.sizeOf(theObject));
+            
 		int numInts = 0;
 		int numDoubles = 0;
-		
-		if (obs != null)
+		int numChars = 0;
+                
+		if (theObject != null)
 		{
-			if (obs.intArray != null)
-				numInts = obs.intArray.length;
+			if (theObject.intArray != null)
+				numInts = theObject.intArray.length;
 			
-			if (obs.doubleArray != null)
-				numDoubles = obs.doubleArray.length;
+			if (theObject.doubleArray != null)
+				numDoubles = theObject.doubleArray.length;
+
+                        if (theObject.charArray != null)
+				numChars = theObject.charArray.length;
 		}
 		
 
 		this.putInt(numInts);
 		this.putInt(numDoubles);
+                this.putInt(numChars);
 		
 		for (int i = 0; i < numInts; ++i)
-			this.putInt(obs.intArray[i]);
+			this.putInt(theObject.intArray[i]);
 		
 		for (int i = 0; i < numDoubles; ++i)
-			this.putDouble(obs.doubleArray[i]);
+			this.putDouble(theObject.doubleArray[i]);
 
+                for (int i = 0; i < numChars; ++i)
+			this.putChar(theObject.charArray[i]);
+        }
+
+        public void putObservation(Observation obs)
+	{	
+                putAbstractType(obs);
 	}
 
 	public void putAction(Action action)
 	{
-		this.ensureSendCapacityRemains(Network.sizeOf(action));
-		
-		int numInts = 0;
-		int numDoubles = 0;
-		
-		if (action != null)
-		{
-			if (action.intArray != null)
-				numInts = action.intArray.length;
-			
-			if (action.doubleArray != null)
-				numDoubles = action.doubleArray.length;
-		}
-		
-		this.putInt(numInts);
-		this.putInt(numDoubles);
-		
-		for (int i = 0; i < numInts; ++i)
-			this.putInt(action.intArray[i]);
-		
-		for (int i = 0; i < numDoubles; ++i)
-			this.putDouble(action.doubleArray[i]);
+                putAbstractType(action);
 	}
 
 	public void putStateKey(State_key key)
 	{
-		this.ensureSendCapacityRemains(Network.sizeOf(key));
-		
-		int numInts = 0;
-		int numDoubles = 0;
-		
-		if (key != null)
-		{
-			if (key.intArray != null)
-				numInts = key.intArray.length;
-			
-			if (key.doubleArray != null)
-				numDoubles = key.doubleArray.length;
-		}
-		
-		this.putInt(numInts);
-		this.putInt(numDoubles);
-		
-		for (int i = 0; i < numInts; ++i)
-			this.putInt(key.intArray[i]);
-		
-		for (int i = 0; i < numDoubles; ++i)
-			this.putDouble(key.doubleArray[i]);
+                putAbstractType(key);
 	}
-
+        
 	public void putRandomSeedKey(Random_seed_key key)
 	{
-		this.ensureSendCapacityRemains(Network.sizeOf(key));
-		
-		int numInts = 0;
-		int numDoubles = 0;
-		
-		if (key != null)
-		{
-			if (key.intArray != null)
-				numInts = key.intArray.length;
-			
-			if (key.doubleArray != null)
-				numDoubles = key.doubleArray.length;
-		}
-
-		this.putInt(numInts);
-		this.putInt(numDoubles);
-		
-		for (int i = 0; i < key.intArray.length; ++i)
-			this.putInt(key.intArray[i]);
-
-		for (int i = 0; i < key.doubleArray.length; ++i)
-			this.putDouble(key.doubleArray[i]);
+                putAbstractType(key);
 	}
-	
+
 	public void putRewardObservation(Reward_observation rewardObservation)
 	{
 		this.ensureSendCapacityRemains(Network.sizeOf(rewardObservation));
@@ -434,73 +382,28 @@ public class Network
 		return size;
 	}
 	
-	public static int sizeOf(Action action)
+	public static int sizeOf(RL_abstract_type theObject)
 	{
-		int size = Network.kIntSize * 2;
+		int size = Network.kIntSize * 3;
 		int intSize = 0;
 		int doubleSize = 0;
+                int charSize = 0;
 		
-		if (action != null)
+		if (theObject != null)
 		{
-			if (action.intArray != null)
-				intSize = Network.kIntSize * action.intArray.length;
+			if (theObject.intArray != null)
+				intSize = Network.kIntSize * theObject.intArray.length;
 			
-			if (action.doubleArray != null)
-				doubleSize = Network.kDoubleSize * action.doubleArray.length;
-		}
-		return size + intSize + doubleSize;
-	}
-	
-	public static int sizeOf(Observation obs)
-	{
-		int size = Network.kIntSize * 2;
-		int intSize = 0;
-		int doubleSize = 0;
-		
-		if (obs != null)
-		{
-			if (obs.intArray != null)
-				intSize = Network.kIntSize * obs.intArray.length;
+			if (theObject.doubleArray != null)
+				doubleSize = Network.kDoubleSize * theObject.doubleArray.length;
 
-			if (obs.doubleArray != null)
-				doubleSize = Network.kDoubleSize * obs.doubleArray.length;
+                        if (theObject.charArray != null)
+				charSize = Network.kCharSize * theObject.charArray.length;
 		}
-		return size + intSize + doubleSize;
+		return size + intSize + doubleSize + charSize;
 	}
 	
-	public static int sizeOf(State_key key)
-	{
-		int size = Network.kIntSize * 2;
-		int intSize = 0;
-		int doubleSize = 0;
-		
-		if (key != null)
-		{
-			if (key.intArray != null)
-				intSize = Network.kIntSize * key.intArray.length;
-			
-			if (key.doubleArray != null)
-				doubleSize = Network.kDoubleSize * key.doubleArray.length;
-		}
-		return size + intSize + doubleSize;
-	}
-	
-	public static int sizeOf(Random_seed_key key)
-	{
-		int size = Network.kIntSize * 2;
-		int intSize = 0;
-		int doubleSize = 0;
-		
-		if (key != null)
-		{
-			if (key.intArray != null)
-				intSize = Network.kIntSize * key.intArray.length;
-			
-			if (key.doubleArray != null)
-				doubleSize = Network.kDoubleSize * key.doubleArray.length;
-		}
-		return size + intSize + doubleSize;
-	}
+
 	
 	public static int sizeOf(Reward_observation rewardObservation)
 	{

@@ -23,7 +23,7 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.types;
+package org.rlcommunity.rlglue.types;
 
 
 public class Reward_observation_action_terminal

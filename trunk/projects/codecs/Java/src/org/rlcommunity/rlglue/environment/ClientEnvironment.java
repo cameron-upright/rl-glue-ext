@@ -23,25 +23,25 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.environment;
+package org.rlcommunity.rlglue.environment;
 
 import java.io.*;
 
-import rlglue.network.Network;
-import rlglue.types.Action;
-import rlglue.types.Observation;
-import rlglue.types.Reward_observation;
-import rlglue.types.Random_seed_key;
-import rlglue.types.State_key;
+import org.rlcommunity.rlglue.network.Network;
+import org.rlcommunity.rlglue.types.Action;
+import org.rlcommunity.rlglue.types.Observation;
+import org.rlcommunity.rlglue.types.Reward_observation;
+import org.rlcommunity.rlglue.types.Random_seed_key;
+import org.rlcommunity.rlglue.types.State_key;
 
 public class ClientEnvironment
 {
 	protected static final String kUnknownMessage = "ClientEnvironment.java :: Unknown Message: ";
 	protected Network network;
-	protected Environment env;
+	protected EnvironmentInterface env;
         protected volatile boolean killedFromAbove=false;
 
-	public ClientEnvironment(Environment env) 
+	public ClientEnvironment(EnvironmentInterface env) 
 	{
 		this.env = env;
 		this.network = new Network();

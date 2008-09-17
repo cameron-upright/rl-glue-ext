@@ -23,23 +23,38 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.environment;
+package org.rlcommunity.rlglue.types;
 
-import rlglue.types.Action;
-import rlglue.types.Observation;
-import rlglue.types.Random_seed_key;
-import rlglue.types.Reward_observation;
-import rlglue.types.State_key;
-
-public interface Environment
+public class Action extends RL_abstract_type
 {
-    String env_init();
-    Observation env_start();
-    Reward_observation env_step(Action action);
-    void env_cleanup();
-    void env_set_state(State_key key);
-    void env_set_random_seed(Random_seed_key key);
-    State_key env_get_state();
-    Random_seed_key env_get_random_seed();
-    String env_message(final String message);
+	public Action() 
+	{
+		this(0,0,0);
+	}
+
+	/**
+         * For backwards compatibility wiht RL-Glue 2.x
+         * @param numInts
+         * @param numDoubles
+         * @param numChars
+         */
+        public Action(int numInts, int numDoubles)
+	{
+		this(numInts,numDoubles,0);
+	}
+
+        public Action(int numInts, int numDoubles, int numChars)
+	{
+		super(numInts,numDoubles,numChars);
+	}       
+       
+	public Action(RL_abstract_type src)
+	{
+		super(src);
+	}
+        
+
+        public Action duplicate(){
+            return new Action(this);
+        }
 }

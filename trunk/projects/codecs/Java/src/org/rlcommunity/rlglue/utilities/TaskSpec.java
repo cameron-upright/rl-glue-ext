@@ -17,7 +17,7 @@ limitations under the License.
 * 
 */
 
-package rlglue.utilities;
+package org.rlcommunity.rlglue.utilities;
 /**
  * This class is used to store and parse the information given to an Agent in
  * the RL-Glue framework. The Task Spec stores information the Agent needs

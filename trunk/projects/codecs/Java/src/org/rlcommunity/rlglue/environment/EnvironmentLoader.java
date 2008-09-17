@@ -19,9 +19,9 @@ limitations under the License.
 * 
 */
 
-package rlglue.environment;
+package org.rlcommunity.rlglue.environment;
 
-import rlglue.network.Network;
+import org.rlcommunity.rlglue.network.Network;
 
 /**
  * This class can be called from the command line to load an environment and create
@@ -36,14 +36,14 @@ public class EnvironmentLoader implements Runnable {
     String host = Network.kDefaultHost;
     int port = Network.kDefaultPort;
     int autoReconnect = 0;
-    Environment theEnvironment = null;
+    EnvironmentInterface theEnvironment = null;
     ClientEnvironment theClient = null;
 
-    public EnvironmentLoader(Environment theEnvironment) {
+    public EnvironmentLoader(EnvironmentInterface theEnvironment) {
         this.theEnvironment = theEnvironment;
     }
 
-    public EnvironmentLoader(String hostString, String portString, String reconnectString, Environment theEnvironment) {
+    public EnvironmentLoader(String hostString, String portString, String reconnectString, EnvironmentInterface theEnvironment) {
         if (hostString != null) {
             host = hostString;
         }
@@ -85,14 +85,14 @@ public class EnvironmentLoader implements Runnable {
      * @param envClassName
      */
     public static EnvironmentLoader loadEnvironment(String envClassName) {
-        Environment env = null;
+        EnvironmentInterface env = null;
 
         String hostString = System.getenv("RLGLUE_HOST");
         String portString = System.getenv("RLGLUE_PORT");
         String reconnectString = System.getenv("RLGLUE_AUTORECONNECT");
 
         try {
-            env = (Environment) Class.forName(envClassName).newInstance();
+            env = (EnvironmentInterface) Class.forName(envClassName).newInstance();
         } catch (Exception e) {
             System.err.println("loadEnvironment(" + envClassName + ") threw Exception: " + e);
         }
