@@ -22,7 +22,7 @@ Copyright 2008 Matt Radkie
 
 
 
-package rlglue.utilities;
+package org.rlcommunity.rlglue.utilities;
 
 /**
  * TaskSpecDelegate was written to be the medium between the Task Spec object

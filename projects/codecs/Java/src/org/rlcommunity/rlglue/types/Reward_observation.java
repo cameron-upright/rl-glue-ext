@@ -19,31 +19,34 @@ limitations under the License.
 * 
 */
 
-package rlglue.types;
+package org.rlcommunity.rlglue.types;
 
-public class Observation_action {
+public class Reward_observation {
 
+    public double r;
     public Observation o;
-    public Action a;
+    public int terminal;
 
-    public Observation_action() {
+    public Reward_observation() {
     }
 
-    public Observation_action(Observation theObservation, Action theAction) {
-        this.o = theObservation;
-        this.a = theAction;
+    public Reward_observation(double reward, Observation observation, int terminal) {
+        this.r = reward;
+        this.o = observation;
+        this.terminal = terminal;
     }
 
     /**
      * This is a deep copy constructor
      * @param src
      */
-    public Observation_action(Observation_action src) {
+    public Reward_observation(Reward_observation src) {
         this.o = src.o.duplicate();
-        this.a = src.a.duplicate();
+        this.r = src.r;
+        this.terminal = src.terminal;
     }
 
-    public Observation_action duplicate() {
-        return new Observation_action(this);
+    public Reward_observation duplicate() {
+        return new Reward_observation(this);
     }
 }

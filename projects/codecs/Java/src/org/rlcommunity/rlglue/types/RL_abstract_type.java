@@ -23,7 +23,7 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.types;
+package org.rlcommunity.rlglue.types;
 
 /**
  * Common superclass for all of the Java RL-Glue types.
@@ -49,6 +49,7 @@ public class RL_abstract_type{
             this(src.intArray.length,src.doubleArray.length, src.charArray.length);
             RLStructCopy(src, this);
         }
+        
 	
 	public static void RLStructCopy(RL_abstract_type src, RL_abstract_type dest){
             if(src==null||dest==null)throw new IllegalArgumentException("Either src or dest RL_Abstract_Type was null in RLStructCopy");

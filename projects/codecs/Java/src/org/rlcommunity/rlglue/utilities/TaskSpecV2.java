@@ -22,7 +22,7 @@ Copyright 2008 Matt Radkie
 
 
   
-package rlglue.utilities;
+package org.rlcommunity.rlglue.utilities;
 
 import java.util.StringTokenizer;
 

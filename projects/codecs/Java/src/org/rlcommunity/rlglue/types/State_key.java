@@ -23,18 +23,38 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.agent;
+package org.rlcommunity.rlglue.types;
 
-import rlglue.types.Action;
-import rlglue.types.Observation;
-
-public interface Agent
+public class State_key extends RL_abstract_type
 {
-    public void agent_init(final String taskSpecification);
-    public Action agent_start(Observation observation);
-    public Action agent_step(double reward, Observation observation);
-    public void agent_end(double reward);
-    public void agent_cleanup();
-    public void agent_freeze();
-    public String agent_message(final String message);
+	public State_key() 
+	{
+		this(0,0,0);
+	}
+
+	/**
+         * For backwards compatibility wiht RL-Glue 2.x
+         * @param numInts
+         * @param numDoubles
+         * @param numChars
+         */
+        public State_key(int numInts, int numDoubles)
+	{
+		this(numInts,numDoubles,0);
+	}
+
+        public State_key(int numInts, int numDoubles, int numChars)
+	{
+		super(numInts,numDoubles,numChars);
+	}       
+	public State_key(RL_abstract_type src)
+	{
+		super(src);
+	}
+        
+
+        public State_key duplicate(){
+            return new State_key(this);
+        }
+
 }

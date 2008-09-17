@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 * 
 */
 
-package rlglue.utilities;
+package org.rlcommunity.rlglue.utilities;
 import java.util.StringTokenizer;
 
 /**

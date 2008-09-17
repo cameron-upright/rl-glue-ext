@@ -19,9 +19,9 @@ limitations under the License.
 * 
 */
 
-package rlglue.agent;
+package org.rlcommunity.rlglue.agent;
 
-import rlglue.network.Network;
+import org.rlcommunity.rlglue.network.Network;
 
 /**
  * This class can be called from the command line to load an agent and create
@@ -36,14 +36,14 @@ public class AgentLoader implements Runnable {
     String host = Network.kDefaultHost;
     int port = Network.kDefaultPort;
     int autoReconnect = 0;
-    Agent theAgent = null;
+    AgentInterface theAgent = null;
     ClientAgent theClient = null;
 
-    public AgentLoader(Agent theAgent) {
+    public AgentLoader(AgentInterface theAgent) {
         this.theAgent = theAgent;
     }
 
-    public AgentLoader(String hostString, String portString, String reconnectString, Agent theAgent) {
+    public AgentLoader(String hostString, String portString, String reconnectString, AgentInterface theAgent) {
         this.theAgent = theAgent;
 
         if (hostString != null) {
@@ -71,7 +71,7 @@ public class AgentLoader implements Runnable {
      * @param envClassName
      */
     public static AgentLoader loadAgent(String agentClassName) {
-        Agent agent = null;
+        AgentInterface agent = null;
 
 
         String hostString = System.getenv("RLGLUE_HOST");
@@ -79,7 +79,7 @@ public class AgentLoader implements Runnable {
         String reconnectString = System.getenv("RLGLUE_AUTORECONNECT");
 
         try {
-            agent = (Agent) Class.forName(agentClassName).newInstance();
+            agent = (AgentInterface) Class.forName(agentClassName).newInstance();
         } catch (Exception ex) {
             System.err.println("loadAgent(" + agentClassName + ") threw Exception: " + ex);
         }

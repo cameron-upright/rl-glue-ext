@@ -19,36 +19,31 @@ limitations under the License.
 * 
 */
 
-package rlglue.types;
+package org.rlcommunity.rlglue.types;
 
-public class Observation extends RL_abstract_type {
+public class Observation_action {
 
-  	public Observation() 
-	{
-		this(0,0,0);
-	}
+    public Observation o;
+    public Action a;
 
-	/**
-         * For backwards compatibility wiht RL-Glue 2.x
-         * @param numInts
-         * @param numDoubles
-         * @param numChars
-         */
-        public Observation(int numInts, int numDoubles)
-	{
-		this(numInts,numDoubles,0);
-	}
-
-        public Observation(int numInts, int numDoubles, int numChars)
-	{
-		super(numInts,numDoubles,numChars);
-	}       
-
-    public Observation(Observation src) {
-        super(src);
+    public Observation_action() {
     }
 
-    public Observation duplicate() {
-        return new Observation(this);
+    public Observation_action(Observation theObservation, Action theAction) {
+        this.o = theObservation;
+        this.a = theAction;
+    }
+
+    /**
+     * This is a deep copy constructor
+     * @param src
+     */
+    public Observation_action(Observation_action src) {
+        this.o = src.o.duplicate();
+        this.a = src.a.duplicate();
+    }
+
+    public Observation_action duplicate() {
+        return new Observation_action(this);
     }
 }

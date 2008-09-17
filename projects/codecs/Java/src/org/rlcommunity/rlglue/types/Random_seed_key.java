@@ -23,7 +23,7 @@ http://rl-glue.googlecode.com/
 */
 
 
-package rlglue.types;
+package org.rlcommunity.rlglue.types;
 
 public class Random_seed_key extends RL_abstract_type
 {
@@ -49,7 +49,7 @@ public class Random_seed_key extends RL_abstract_type
 		super(numInts,numDoubles,numChars);
 	}
         
-	public Random_seed_key(Random_seed_key src)
+	public Random_seed_key(RL_abstract_type src)
 	{
 		super(src);
 	}
