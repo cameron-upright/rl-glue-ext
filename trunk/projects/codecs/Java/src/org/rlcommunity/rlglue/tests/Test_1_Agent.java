@@ -35,12 +35,10 @@ public class Test_1_Agent implements AgentInterface {
     }
 
     public void agent_init(String taskSpecString) {
-        System.out.println("Java agent: agent_init with: "+taskSpecString);
     }
 
     public Action agent_start(Observation o) {
         stepCount = 0;
-        System.out.println("Java agent: agent_start returning: "+new Action(o));
         return new Action(o);
     }
 
