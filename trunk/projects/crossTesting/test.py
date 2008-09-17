@@ -1,25 +1,43 @@
 #!/usr/bin/env python
-import subprocess,os
+import subprocess,os,signal,time
 
 totalTests=0
+subprocess.call(["killall rl_glue"],shell=True)
 
 def run_test(agent, env, experiment):
 	global totalTests
 	debug=False
 	totalTests+=1
-	cmds = ["killall rl_glue","rl_glue &",agent,env]
+	#If there are errors, a time.sleep 1 here might help
+	allSubProcesses=[]
+	cmds = ["rl_glue &",agent,env]
 	for cmd in cmds:
 		if debug:
-		    subprocess.call(cmd, shell=True,)
+			print "\t\trunning: "+cmd
+			thisProc=subprocess.Popen([cmd],shell=True)
+			print "\t\t\tIt has PID="+str(thisProc.pid)
+			allSubProcesses.append(thisProc)
 		else:
-		    subprocess.call(cmd, shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
+			thisProc=subprocess.Popen([cmd],shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
+			allSubProcesses.append(thisProc)
+
+	time.sleep(.35)
 	if debug:
+		print "\t\texperiment: "+experiment
 		retcode = subprocess.call([experiment],shell=True)
 	else:
 		retcode = subprocess.call([experiment],shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
 
+	time.sleep(.5)
+	for someSubProcess in allSubProcesses:
+		if debug:
+			print "Calling Kill on PID: "+str(someSubProcess.pid)
+		os.kill(someSubProcess.pid, signal.SIGKILL)
+		
+
 	if retcode!= 0:
-		print "\t\t"+str(retcode)+" errors"
+		print "\t\tNonzero return code: "+str(retcode)
+		exit(1)
 	return retcode
 	
 	
@@ -74,20 +92,32 @@ test_1_environment["C"]="../codecs/C/tests/test_1_environment &";
 test_1_environment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_1_Environment &";
 
 test_empty_environment["C"]="../codecs/C/tests/test_empty_environment &";
-#test_empty_environment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Empty_Environment &";
+test_empty_environment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Empty_Environment &";
 
 test_message_environment["C"]="../codecs/C/tests/test_message_environment &";
 test_message_environment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Message_Environment &";
 
 test_seeds_environment["C"]="../codecs/C/tests/test_seeds_environment &";
+test_seeds_environment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Seeds_Environment &";
 
 #Experiment should not have & at the end
 test_sanity_experiment["C"]="../codecs/C/tests/test_sanity_experiment";
+test_sanity_experiment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Sanity_Experiment &";
+
 test_1_experiment["C"]="../codecs/C/tests/test_1_experiment";
+test_1_experiment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_1_Experiment &";
+
 test_message_experiment["C"]="../codecs/C/tests/test_message_experiment";
+test_message_experiment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Message_Experiment &";
+
 test_empty_experiment["C"]="../codecs/C/tests/test_empty_experiment";
+test_empty_experiment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Empty_Experiment &";
+
 test_seeds_experiment["C"]="../codecs/C/tests/test_seeds_experiment";
+test_seeds_experiment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_Seeds_Experiment &";
+
 test_rl_episode_experiment["C"]="../codecs/C/tests/test_rl_episode_experiment"
+test_rl_episode_experiment["Java"]="java -Xmx128M -classpath ../codecs/Java/dist/JavaCodec.jar org.rlcommunity.rlglue.tests.Test_RL_Episode_Experiment &";
 
 #Define the high level tests here... IE: Map actual test names/labels to which
 #agent/env/experiment should be used
@@ -100,6 +130,7 @@ tests["test_message"] = [test_message_agent,test_message_environment,test_messag
 tests["test_rl_episode"] = [test_1_agent,test_1_environment,test_rl_episode_experiment];
 tests["test_seeds"] = [test_1_agent,test_seeds_environment,test_seeds_experiment];
 
+print "Running Codec Test Suites"
 totalErrors=run_all_tests(tests)
 print "Total Errors = "+str(totalErrors)+" on a total of: "+str(totalTests)+" tests"
 
