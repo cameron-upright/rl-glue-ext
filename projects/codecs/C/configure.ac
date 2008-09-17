@@ -1,6 +1,6 @@
 AC_INIT(src/RL_client_agent.c)
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(rlglue_codec_c,1.0-alpha-2)
+AM_INIT_AUTOMAKE(rlglue_codec_c,1.0-alpha-3)
 
 #Check to make sure we can find the rlglue libraries and headers.  If no, then tell them how to tell us where they are.
 AC_CHECK_LIB([rlgluenetdev], [rlConnect], , echo "You must have RL-Glue installed to use this codec.  We could not find the RL-Glue library.  If you have not downloaded it please see http://glue.rl-community.org/. If RL-Glue is not in a standard location please do ./configure LDFLAGS=-L/path/to/rlglue/glue/lib"; exit 1)

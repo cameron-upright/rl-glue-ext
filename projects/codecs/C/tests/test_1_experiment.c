@@ -46,9 +46,12 @@ int main(int argc, char *argv[]) {
   reward_observation_action_terminal_t roat;
   task_specification_t task_spec;
 
-  task_spec=RL_init();
-    RL_start();
+    task_spec=RL_init();
+
+	RL_start();
+
 	roat=RL_step();
+
 	
 	
 	check_fail(roat.o.numInts!=1);
@@ -92,7 +95,7 @@ int main(int argc, char *argv[]) {
 
 	roat=RL_step();
     check_fail(strcmp("five|5.5.|five",RL_env_message("five"))!=0);
-    check_fail(strcmp("five|4.|five",RL_agent_message("five"))!=0);
+	check_fail(strcmp("five|4.|five",RL_agent_message("five"))!=0);
 	check_fail(roat.terminal=0);
 	
 	if(tests_failed!=0)
