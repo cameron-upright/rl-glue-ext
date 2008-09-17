@@ -38,6 +38,8 @@ public class ClientAgent
 	protected AgentInterface agent;
 	
 	protected boolean killedFromLocalProcess=false;
+        
+        private boolean debug=false;
 	
 	/**
 	*If you are using ClientAgent in a local context (like from Matlab)
@@ -61,13 +63,18 @@ public class ClientAgent
 
 		network.clearSendBuffer();
 		network.putInt(Network.kAgentInit);
+                //BTANNER: Sept 16 2008.. why are we putting this here?
+                //OH, it's the size!  Ok.  I think.
 		network.putInt(0); // No data following this header
 	}
 
 	protected void onAgentStart()
 	{
+            if(debug)System.out.println("\tonAgentStart()");
 		Observation observation = network.getObservation();
+            if(debug)System.out.println("\t\tgot observation");
 		Action action = agent.agent_start(observation);
+            if(debug)System.out.println("\t\tgot action");
 
 		int size = Network.sizeOf(action); 
 
@@ -111,17 +118,6 @@ public class ClientAgent
 		network.putInt(0); // No data in this packet
 	}
 
-        /**
-         * @deprecated
-         */
-	protected void onAgentFreeze()
-	{
-		agent.agent_freeze();
-
-		network.clearSendBuffer();
-		network.putInt(Network.kAgentFreeze);
-		network.putInt(0); // No data in this packet
-	}
 
 	protected void onAgentMessage() throws UnsupportedEncodingException
 	{

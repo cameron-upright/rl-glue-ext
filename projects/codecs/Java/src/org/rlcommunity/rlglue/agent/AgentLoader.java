@@ -80,6 +80,7 @@ public class AgentLoader implements Runnable {
 
         try {
             agent = (AgentInterface) Class.forName(agentClassName).newInstance();
+            System.out.println("Agent dynamically loaded...");
         } catch (Exception ex) {
             System.err.println("loadAgent(" + agentClassName + ") threw Exception: " + ex);
         }
