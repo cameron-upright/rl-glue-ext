@@ -59,7 +59,8 @@ public class RLGlueCore {
             EnvironmentLoader.loadEnvironment(args[1]);
         }
         if (args[0].equalsIgnoreCase("-a") || args[0].equalsIgnoreCase("--agent")) {
-            AgentLoader.loadAgent(args[1]);
+            System.out.println("Loading agent...");
+            AgentLoader.loadAgent(args[1]).run();
         }
 
     }

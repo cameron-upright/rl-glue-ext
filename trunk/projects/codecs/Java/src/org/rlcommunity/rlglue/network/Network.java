@@ -93,6 +93,8 @@ public class Network
 	protected SocketChannel socketChannel;
 	protected ByteBuffer recvBuffer;
 	protected ByteBuffer sendBuffer;
+        
+        private boolean debug=false;
 
 	public Network()
 	{
@@ -184,8 +186,16 @@ public class Network
 		return recvBuffer.getDouble();
 	}
         
+        /**
+         * @since 1.0
+         * Pull a char off the buffer.  Slightly tricky because chars are unicode
+         * (more than a byte) in Java, but only 1 byte in our network protocol.
+         * <p>Thanks: http://bytes.com/forum/thread17160.html
+         * @return
+         */
         public char getChar(){
-            return recvBuffer.getChar();
+            byte b=recvBuffer.get();
+            return (char)(b & 0xFF);
         }
 	
         /**
@@ -225,20 +235,28 @@ public class Network
 	
         private final RL_abstract_type getAbstractType(){
 		final int numInts = this.getInt();
+                if(debug)System.out.println("\tNetwork.java\t got numInts: "+numInts);
 		final int numDoubles = this.getInt();
+                if(debug)System.out.println("\tNetwork.java\t got numDoubles: "+numDoubles);
 		final int numChars = this.getInt();
+                if(debug)System.out.println("\tNetwork.java\t got numChars: "+numChars);
 
                 RL_abstract_type key = new RL_abstract_type(numInts, numDoubles,numChars);
 
 		for (int i = 0; i < numInts; ++i)
 			key.intArray[i] = this.getInt();
 		
+                if(debug)System.out.println("\tNetwork.java\t Done reading the ints.");
 		for (int i = 0; i < numDoubles; ++i)
 			key.doubleArray[i] = this.getDouble();
 
-		for (int i = 0; i < numChars; ++i)
+                if(debug)System.out.println("\tNetwork.java\t Done reading the doubles.");
+		for (int i = 0; i < numChars; ++i){
 			key.charArray[i] = this.getChar();
+                        if(debug)System.out.println("\tNetwork.java\t\tRead character: "+key.charArray[i]);
+                }
 
+                if(debug)System.out.println("\tNetwork.java\t Done reading the chars.");
                 return key;
         }
 
@@ -256,13 +274,15 @@ public class Network
 
         /**
          * Brian Tanner adding this for RL-Glue 3.x compatibility
+         * Converts unicode (> 1 byte) char to 1 byte network char protocol
+         * <p>Thanks http://bytes.com/forum/thread17160.html
          * @since 1.0
          * @param value
          */
-	public void putChar(char value)
+	public void putChar(char c)
 	{
 		this.ensureSendCapacityRemains(Network.kCharSize);
-		this.sendBuffer.putChar(value);
+		this.sendBuffer.put((byte)(c & 0xFF));
 	}
 
         public void putString(String message) throws UnsupportedEncodingException

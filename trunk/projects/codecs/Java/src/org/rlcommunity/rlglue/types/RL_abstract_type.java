@@ -25,6 +25,8 @@ http://rl-glue.googlecode.com/
 
 package org.rlcommunity.rlglue.types;
 
+import com.sun.tools.javac.tree.Tree.ForeachLoop;
+
 /**
  * Common superclass for all of the Java RL-Glue types.
  * Try to keep handles to the objects and not their arrays, 
@@ -64,4 +66,23 @@ public class RL_abstract_type{
             System.arraycopy(src.doubleArray, 0,dest.doubleArray, 0, src.doubleArray.length);	
             System.arraycopy(src.charArray, 0,dest.charArray, 0, src.charArray.length);	
 	}
+        
+        public String toString(){
+            StringBuffer b=new StringBuffer();
+            b.append("numInts: "+intArray.length);
+            b.append("\n");
+            b.append("numDoubles: "+doubleArray.length);
+            b.append("\n");
+            b.append("numChars: "+charArray.length);
+            b.append("\n");
+            if(intArray!=null)
+                for(int i=0;i<intArray.length;i++)
+                    b.append(" "+intArray[i]);
+                for(int i=0;i<doubleArray.length;i++)
+                    b.append(" "+doubleArray[i]);
+                for(int i=0;i<charArray.length;i++)
+                    b.append(" "+charArray[i]);
+                    
+            return b.toString();
+        }
 }
