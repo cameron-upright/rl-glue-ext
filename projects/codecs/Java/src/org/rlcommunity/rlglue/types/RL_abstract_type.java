@@ -34,7 +34,7 @@ import com.sun.tools.javac.tree.Tree.ForeachLoop;
  * reallocated during certain operations.
  * @author btanner
  */
-public class RL_abstract_type{
+public class RL_abstract_type implements Comparable{
 	public int [] intArray=null;
 	public double [] doubleArray=null;
         public char[] charArray=null;
@@ -85,4 +85,57 @@ public class RL_abstract_type{
                     
             return b.toString();
         }
+
+        /**
+         * Allows us to easily compare abstract types so that we can put them
+         * in maps and stuff.
+         * @param o
+         * @return
+         */
+    public int compareTo(Object o) {
+        RL_abstract_type compareO=(RL_abstract_type)o;
+        
+        if(intArray==null&compareO.intArray!=null)return -1;
+        if(intArray!=null&compareO.intArray==null)return 1;
+        
+        if(intArray!=null&compareO.intArray!=null){
+            if(intArray.length<compareO.intArray.length)return -1;
+            if(intArray.length>compareO.intArray.length)return 1;
+            
+            for (int i = 0; i < intArray.length; i++) {
+                if(intArray[i]<compareO.intArray[i])return -1;
+                if(intArray[i]>compareO.intArray[i])return 1;
+            }
+        }
+        if(doubleArray==null&compareO.doubleArray!=null)return -1;
+        if(doubleArray!=null&compareO.doubleArray==null)return 1;
+        
+        if(doubleArray!=null&compareO.doubleArray!=null){
+            if(doubleArray.length<compareO.doubleArray.length)return -1;
+            if(doubleArray.length>compareO.doubleArray.length)return 1;
+            
+            for (int i = 0; i < doubleArray.length; i++) {
+                if(doubleArray[i]<compareO.doubleArray[i])return -1;
+                if(doubleArray[i]>compareO.doubleArray[i])return 1;
+            }
+        }
+        
+        if(charArray==null&compareO.charArray!=null)return -1;
+        if(charArray!=null&compareO.charArray==null)return 1;
+        
+        if(charArray!=null&compareO.charArray!=null){
+            if(charArray.length<compareO.charArray.length)return -1;
+            if(charArray.length>compareO.charArray.length)return 1;
+            
+            for (int i = 0; i < charArray.length; i++) {
+                if(charArray[i]<compareO.charArray[i])return -1;
+                if(charArray[i]>compareO.charArray[i])return 1;
+            }
+        }
+        return 0;
+    }
+
+   
+        
+        
 }

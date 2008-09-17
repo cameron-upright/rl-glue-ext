@@ -103,20 +103,23 @@ public class RLGlue
 		network.send();
 	}
 	
-	public static synchronized void RL_init()
+	public static synchronized String RL_init()
 	{
+                String task_spec="";
 		forceConnection();
 
 		try
 		{
 			doCallWithNoParams(Network.kRLInit);
 			doStandardRecv(Network.kRLInit);
+                        task_spec=network.getString();
 		}
 		catch(IOException ioException)
 		{
 			ioException.printStackTrace();
 			System.exit(1);
 		}
+                return task_spec;
 	}
 
 	public static synchronized Observation_action RL_start()
@@ -334,8 +337,9 @@ public class RLGlue
 		return numEpisodes;
 	}
 
-	public static synchronized void RL_episode(int numSteps)
+	public static synchronized int RL_episode(int numSteps)
 	{
+                int exitStatus=0;
 		try
 		{
 			network.clearSendBuffer();
@@ -346,6 +350,7 @@ public class RLGlue
 			network.send();
 
 			doStandardRecv(Network.kRLEpisode);
+                        exitStatus=network.getInt();
 		}
 		catch (IOException ioException)
 		{
@@ -358,6 +363,7 @@ public class RLGlue
 			nullException.printStackTrace();
 			System.exit(1);
 		}
+                return exitStatus;
 	}
 
 	/**
