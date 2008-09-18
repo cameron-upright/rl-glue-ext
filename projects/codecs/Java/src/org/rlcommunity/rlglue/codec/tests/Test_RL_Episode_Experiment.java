@@ -17,7 +17,7 @@
  *  limitations under the License.
  */
 
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.RLGlue;
 
@@ -25,32 +25,36 @@ import org.rlcommunity.rlglue.codec.RLGlue;
  *
  * @author Brian Tanner
  */
-public class Test_Speed_Experiment {
+public class Test_RL_Episode_Experiment {
     
     public static void main(String[] args){
         Glue_Test tester=new Glue_Test("Test_RL_Episode_Experiment");
 
         RLGlue.RL_init();
-//Run an episode to get the JVM warmed up, etc             
-	int isTerminal = RLGlue.RL_episode(500);
         
-        
-        long startTime=System.currentTimeMillis();
-        RLGlue.RL_episode(0);
-        long endTime=System.currentTimeMillis();
-        int steps=RLGlue.RL_num_steps();
-        System.out.println("MS to run Episode Type 1 "+(endTime-startTime)+" (per step: "+((double)(endTime-startTime)/(double)steps)+")");
+	int isTerminal = RLGlue.RL_episode(0);
+	tester.check_fail(isTerminal!=1);
+	tester.check_fail(RLGlue.RL_num_steps()!=6);
 
-        startTime=System.currentTimeMillis();
-        RLGlue.RL_episode(0);
-        endTime=System.currentTimeMillis();
-        steps=RLGlue.RL_num_steps();
-        System.out.println("MS to run Episode Type 2 "+(endTime-startTime)+" (per step: "+((double)(endTime-startTime)/(double)steps)+")");
+	isTerminal = RLGlue.RL_episode(1);
+	tester.check_fail(isTerminal!=0);
+	tester.check_fail(RLGlue.RL_num_steps()!=1);
 
-        
-        System.out.println(tester);
-        System.exit(tester.getFailCount());
+	isTerminal = RLGlue.RL_episode(2);
+	tester.check_fail(isTerminal!=0);
+	tester.check_fail(RLGlue.RL_num_steps()!=2);
 
+	isTerminal = RLGlue.RL_episode(5);
+	tester.check_fail(isTerminal!=0);
+	tester.check_fail(RLGlue.RL_num_steps()!=5);
+
+	isTerminal = RLGlue.RL_episode(6);
+	tester.check_fail(isTerminal!=1);
+	tester.check_fail(RLGlue.RL_num_steps()!=6);
+
+	isTerminal = RLGlue.RL_episode(7);
+	tester.check_fail(isTerminal!=1);
+	tester.check_fail(RLGlue.RL_num_steps()!=6);
 
         
         System.out.println(tester);

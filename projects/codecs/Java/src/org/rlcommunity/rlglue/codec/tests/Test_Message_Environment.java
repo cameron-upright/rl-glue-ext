@@ -16,7 +16,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
@@ -30,63 +30,49 @@ import org.rlcommunity.rlglue.codec.types.State_key;
  *
  * @author Brian Tanner
  */
-public class Test_Speed_Environment implements EnvironmentInterface {
+public class Test_Message_Environment implements EnvironmentInterface {
 
-
-   int whichEpisode=0;
-   int stepCount=0;
-   
-   Observation o =new Observation();
+    int stepCount = 0;
+    Observation o =new Observation();
     
-    public Test_Speed_Environment() {
+    public Test_Message_Environment() {
     }
 
     
     public String env_message(String inMessage) {
-        return "";
+        if(inMessage==null)
+            return "null";
+
+       if(inMessage.equals(""))
+           return "empty";
+        
+        if(inMessage.equals("null"))
+            return null;
+
+        if(inMessage.equals("empty"))
+            return "";
+
+        return new String(inMessage);
     }
 
     public static void main(String[] args){
-        EnvironmentLoader L=new EnvironmentLoader(new Test_Speed_Environment());
+        EnvironmentLoader L=new EnvironmentLoader(new Test_Message_Environment());
         L.run();
     }
 
     public String env_init() {
-        return "";
-    }
+	return "";    }
+
     public Observation env_start() {
         stepCount=0;
-        whichEpisode++;
         TestUtility.clean_abstract_type(o);
         return o;   
     }
 
     public Reward_observation env_step(Action action) {
-        stepCount++;
-        Reward_observation ro=null;
-        
         TestUtility.clean_abstract_type(o);
-        
-        //Short episode with big observations
-        if(whichEpisode%2==0){
-            TestUtility.set_k_ints_in_abstract_type(o, 50000);
-            TestUtility.set_k_doubles_in_abstract_type(o, 50000);
-
-            int terminal=0;
-            if(stepCount==200)terminal=1;
-                ro=new Reward_observation(1.0d, o, terminal);
-        }
-        //Longer episode with smaller obserations
-        if(whichEpisode%2==1){
-            TestUtility.set_k_ints_in_abstract_type(o, 5);
-            TestUtility.set_k_doubles_in_abstract_type(o, 5);
-
-            int terminal=0;
-            if(stepCount==5000)terminal=1;
-                ro=new Reward_observation(1.0d, o, terminal);
-        }
-        
-                
+        int terminal=0;
+        Reward_observation ro=new Reward_observation(0.0d, o, terminal);
         return ro;
     }
 

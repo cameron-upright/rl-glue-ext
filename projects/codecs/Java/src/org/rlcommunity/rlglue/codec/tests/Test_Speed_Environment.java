@@ -16,7 +16,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
@@ -30,37 +30,63 @@ import org.rlcommunity.rlglue.codec.types.State_key;
  *
  * @author Brian Tanner
  */
-public class Test_Seeds_Environment implements EnvironmentInterface {
+public class Test_Speed_Environment implements EnvironmentInterface {
 
-    Observation o =new Observation();
+
+   int whichEpisode=0;
+   int stepCount=0;
+   
+   Observation o =new Observation();
     
-    State_key savedStateKey=new State_key();
-    Random_seed_key savedRandomSeed = new Random_seed_key();
+    public Test_Speed_Environment() {
+    }
+
     
-    
+    public String env_message(String inMessage) {
+        return "";
+    }
+
     public static void main(String[] args){
-        EnvironmentLoader L=new EnvironmentLoader(new Test_Seeds_Environment());
+        EnvironmentLoader L=new EnvironmentLoader(new Test_Speed_Environment());
         L.run();
     }
 
-        
-    public Test_Seeds_Environment() {
-    }
-
-    
-
     public String env_init() {
-	return "";    }
-
+        return "";
+    }
     public Observation env_start() {
+        stepCount=0;
+        whichEpisode++;
         TestUtility.clean_abstract_type(o);
         return o;   
     }
 
     public Reward_observation env_step(Action action) {
+        stepCount++;
+        Reward_observation ro=null;
+        
         TestUtility.clean_abstract_type(o);
-        int terminal=0;
-        Reward_observation ro=new Reward_observation(0.0d, o, terminal);
+        
+        //Short episode with big observations
+        if(whichEpisode%2==0){
+            TestUtility.set_k_ints_in_abstract_type(o, 50000);
+            TestUtility.set_k_doubles_in_abstract_type(o, 50000);
+
+            int terminal=0;
+            if(stepCount==200)terminal=1;
+                ro=new Reward_observation(1.0d, o, terminal);
+        }
+        //Longer episode with smaller obserations
+        if(whichEpisode%2==1){
+            TestUtility.set_k_ints_in_abstract_type(o, 5);
+            TestUtility.set_k_doubles_in_abstract_type(o, 5);
+
+            int terminal=0;
+            if(stepCount==5000)terminal=1;
+                ro=new Reward_observation(1.0d, o, terminal);
+        }
+        
+                
         return ro;
     }
 
@@ -68,22 +94,17 @@ public class Test_Seeds_Environment implements EnvironmentInterface {
     }
 
     public void env_set_state(State_key key) {
-        this.savedStateKey=key;
     }
 
     public void env_set_random_seed(Random_seed_key key) {
-        this.savedRandomSeed=key;
     }
 
     public State_key env_get_state() {
-        return savedStateKey;
+        return new State_key();
     }
 
     public Random_seed_key env_get_random_seed() {
-        return savedRandomSeed;
+        return new Random_seed_key();
     }
 
-    public String env_message(String message) {
-        return "";
-    }
 }

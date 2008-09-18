@@ -16,7 +16,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;

@@ -16,7 +16,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
@@ -30,41 +30,29 @@ import org.rlcommunity.rlglue.codec.types.State_key;
  *
  * @author Brian Tanner
  */
-public class Test_Message_Environment implements EnvironmentInterface {
+public class Test_Seeds_Environment implements EnvironmentInterface {
 
-    int stepCount = 0;
     Observation o =new Observation();
     
-    public Test_Message_Environment() {
+    State_key savedStateKey=new State_key();
+    Random_seed_key savedRandomSeed = new Random_seed_key();
+    
+    
+    public static void main(String[] args){
+        EnvironmentLoader L=new EnvironmentLoader(new Test_Seeds_Environment());
+        L.run();
+    }
+
+        
+    public Test_Seeds_Environment() {
     }
 
     
-    public String env_message(String inMessage) {
-        if(inMessage==null)
-            return "null";
-
-       if(inMessage.equals(""))
-           return "empty";
-        
-        if(inMessage.equals("null"))
-            return null;
-
-        if(inMessage.equals("empty"))
-            return "";
-
-        return new String(inMessage);
-    }
-
-    public static void main(String[] args){
-        EnvironmentLoader L=new EnvironmentLoader(new Test_Message_Environment());
-        L.run();
-    }
 
     public String env_init() {
 	return "";    }
 
     public Observation env_start() {
-        stepCount=0;
         TestUtility.clean_abstract_type(o);
         return o;   
     }
@@ -80,17 +68,22 @@ public class Test_Message_Environment implements EnvironmentInterface {
     }
 
     public void env_set_state(State_key key) {
+        this.savedStateKey=key;
     }
 
     public void env_set_random_seed(Random_seed_key key) {
+        this.savedRandomSeed=key;
     }
 
     public State_key env_get_state() {
-        return new State_key();
+        return savedStateKey;
     }
 
     public Random_seed_key env_get_random_seed() {
-        return new Random_seed_key();
+        return savedRandomSeed;
     }
 
+    public String env_message(String message) {
+        return "";
+    }
 }
