@@ -45,6 +45,7 @@ public class ClientEnvironment
 	public ClientEnvironment(EnvironmentInterface env) 
 	{
 		this.env = env;
+                assert(env!=null);
 		this.network = new Network();
 	}
 
