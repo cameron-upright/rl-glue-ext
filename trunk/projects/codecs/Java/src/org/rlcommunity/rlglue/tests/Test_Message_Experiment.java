@@ -19,7 +19,7 @@
 
 package org.rlcommunity.rlglue.tests;
 
-import org.rlcommunity.rlglue.RLGlue;
+import org.rlcommunity.rlglue.codec.RLGlue;
 
 /**
  *

@@ -23,16 +23,17 @@ http://rl-glue.googlecode.com/
 */
 
 
-package org.rlcommunity.rlglue.environment;
+package org.rlcommunity.rlglue.codec.network;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 
-import org.rlcommunity.rlglue.network.Network;
-import org.rlcommunity.rlglue.types.Action;
-import org.rlcommunity.rlglue.types.Observation;
-import org.rlcommunity.rlglue.types.Reward_observation;
-import org.rlcommunity.rlglue.types.Random_seed_key;
-import org.rlcommunity.rlglue.types.State_key;
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
+import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.Random_seed_key;
+import org.rlcommunity.rlglue.codec.types.State_key;
 
 public class ClientEnvironment
 {
@@ -233,7 +234,7 @@ public class ClientEnvironment
 		} while (envState != Network.kRLTerm && !killedFromAbove);
 	}
 
-    void killProcess() {
+    public void killProcess() {
        killedFromAbove=true;
     }
 }

@@ -19,9 +19,9 @@
 
 package org.rlcommunity.rlglue.tests;
 
-import org.rlcommunity.rlglue.RLGlue;
-import org.rlcommunity.rlglue.types.Random_seed_key;
-import org.rlcommunity.rlglue.types.State_key;
+import org.rlcommunity.rlglue.codec.RLGlue;
+import org.rlcommunity.rlglue.codec.types.Random_seed_key;
+import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
  *

@@ -23,11 +23,11 @@ http://rl-glue.googlecode.com/
 */
 
 
-package org.rlcommunity.rlglue.types;
+package org.rlcommunity.rlglue.codec.types;
 
-public class Action extends RL_abstract_type
+public class State_key extends RL_abstract_type
 {
-	public Action() 
+	public State_key() 
 	{
 		this(0,0,0);
 	}
@@ -38,23 +38,23 @@ public class Action extends RL_abstract_type
          * @param numDoubles
          * @param numChars
          */
-        public Action(int numInts, int numDoubles)
+        public State_key(int numInts, int numDoubles)
 	{
 		this(numInts,numDoubles,0);
 	}
 
-        public Action(int numInts, int numDoubles, int numChars)
+        public State_key(int numInts, int numDoubles, int numChars)
 	{
 		super(numInts,numDoubles,numChars);
 	}       
-       
-	public Action(RL_abstract_type src)
+	public State_key(RL_abstract_type src)
 	{
 		super(src);
 	}
         
 
-        public Action duplicate(){
-            return new Action(this);
+        public State_key duplicate(){
+            return new State_key(this);
         }
+
 }

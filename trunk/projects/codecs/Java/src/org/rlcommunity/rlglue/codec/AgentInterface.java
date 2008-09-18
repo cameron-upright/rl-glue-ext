@@ -23,10 +23,10 @@ http://rl-glue.googlecode.com/
 */
 
 
-package org.rlcommunity.rlglue.agent;
+package org.rlcommunity.rlglue.codec;
 
-import org.rlcommunity.rlglue.types.Action;
-import org.rlcommunity.rlglue.types.Observation;
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
 
 /**
  * Replaces rlglue.agent.Agent

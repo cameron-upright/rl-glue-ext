@@ -18,10 +18,10 @@
  */
 package org.rlcommunity.rlglue.tests;
 
-import org.rlcommunity.rlglue.agent.AgentInterface;
-import org.rlcommunity.rlglue.agent.AgentLoader;
-import org.rlcommunity.rlglue.types.Action;
-import org.rlcommunity.rlglue.types.Observation;
+import org.rlcommunity.rlglue.codec.AgentInterface;
+import org.rlcommunity.rlglue.codec.util.AgentLoader;
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
 
 /**
  *

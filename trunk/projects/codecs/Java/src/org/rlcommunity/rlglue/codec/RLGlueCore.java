@@ -20,10 +20,10 @@ limitations under the License.
 * 
 */
 
-package org.rlcommunity.rlglue;
+package org.rlcommunity.rlglue.codec;
 
-import org.rlcommunity.rlglue.agent.AgentLoader;
-import org.rlcommunity.rlglue.environment.EnvironmentLoader;
+import org.rlcommunity.rlglue.codec.util.AgentLoader;
+import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 
 /**
  *
