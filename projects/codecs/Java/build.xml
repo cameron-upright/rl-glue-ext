@@ -5,6 +5,14 @@
 <project name="JavaCodec" default="default" basedir=".">
     <description>Builds, tests, and runs the project JavaCodec.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <target name="get.svn.version" description="Get the current subversion revision number of the project">
+    <exec executable="svnversion"
+          failifexecutionfails="no"
+          outputproperty="svn.revision.version">
+    <arg value="."/>
+    </exec>
+</target>
     <!--
 
     There exist several targets which are by default empty and which can be 

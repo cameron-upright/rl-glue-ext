@@ -23,7 +23,7 @@ http://rl-glue.googlecode.com/
 */
 
 
-package org.rlcommunity.rlglue.network;
+package org.rlcommunity.rlglue.codec.network;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -31,12 +31,12 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import org.rlcommunity.rlglue.types.Action;
-import org.rlcommunity.rlglue.types.Observation;
-import org.rlcommunity.rlglue.types.RL_abstract_type;
-import org.rlcommunity.rlglue.types.Random_seed_key;
-import org.rlcommunity.rlglue.types.Reward_observation;
-import org.rlcommunity.rlglue.types.State_key;
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
+import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
+import org.rlcommunity.rlglue.codec.types.Random_seed_key;
+import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.State_key;
 
 public class Network
 {

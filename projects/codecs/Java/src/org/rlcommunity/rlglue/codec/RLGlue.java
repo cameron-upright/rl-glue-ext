@@ -23,15 +23,15 @@ http://rl-glue.googlecode.com/
 */
 
 
-package org.rlcommunity.rlglue;
+package org.rlcommunity.rlglue.codec;
 
-import java.io.*;
 
-import org.rlcommunity.rlglue.network.Network;
-import org.rlcommunity.rlglue.types.Observation_action;
-import org.rlcommunity.rlglue.types.Random_seed_key;
-import org.rlcommunity.rlglue.types.Reward_observation_action_terminal;
-import org.rlcommunity.rlglue.types.State_key;
+import java.io.IOException;
+import org.rlcommunity.rlglue.codec.network.Network;
+import org.rlcommunity.rlglue.codec.types.Observation_action;
+import org.rlcommunity.rlglue.codec.types.Random_seed_key;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
+import org.rlcommunity.rlglue.codec.types.State_key;
 
 public class RLGlue
 {

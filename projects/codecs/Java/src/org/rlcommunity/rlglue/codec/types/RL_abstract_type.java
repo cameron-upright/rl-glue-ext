@@ -23,7 +23,7 @@ http://rl-glue.googlecode.com/
 */
 
 
-package org.rlcommunity.rlglue.types;
+package org.rlcommunity.rlglue.codec.types;
 
 import com.sun.tools.javac.tree.Tree.ForeachLoop;
 

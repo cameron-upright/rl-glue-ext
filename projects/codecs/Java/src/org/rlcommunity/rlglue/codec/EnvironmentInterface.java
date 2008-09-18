@@ -23,13 +23,13 @@ http://rl-glue.googlecode.com/
 */
 
 
-package org.rlcommunity.rlglue.environment;
+package org.rlcommunity.rlglue.codec;
 
-import org.rlcommunity.rlglue.types.Action;
-import org.rlcommunity.rlglue.types.Observation;
-import org.rlcommunity.rlglue.types.Random_seed_key;
-import org.rlcommunity.rlglue.types.Reward_observation;
-import org.rlcommunity.rlglue.types.State_key;
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
+import org.rlcommunity.rlglue.codec.types.Random_seed_key;
+import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.State_key;
 
 public interface EnvironmentInterface
 {

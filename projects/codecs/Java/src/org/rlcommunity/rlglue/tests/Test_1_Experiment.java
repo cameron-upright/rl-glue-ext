@@ -19,8 +19,8 @@
 
 package org.rlcommunity.rlglue.tests;
 
-import org.rlcommunity.rlglue.RLGlue;
-import org.rlcommunity.rlglue.types.Reward_observation_action_terminal;
+import org.rlcommunity.rlglue.codec.RLGlue;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
 
 /**
  *

@@ -19,9 +19,11 @@ limitations under the License.
 * 
 */
 
-package org.rlcommunity.rlglue.environment;
+package org.rlcommunity.rlglue.codec.util;
 
-import org.rlcommunity.rlglue.network.Network;
+import org.rlcommunity.rlglue.codec.EnvironmentInterface;
+import org.rlcommunity.rlglue.codec.network.ClientEnvironment;
+import org.rlcommunity.rlglue.codec.network.Network;
 
 /**
  * This class can be called from the command line to load an environment and create

@@ -18,13 +18,13 @@
  */
 package org.rlcommunity.rlglue.tests;
 
-import org.rlcommunity.rlglue.environment.EnvironmentInterface;
-import org.rlcommunity.rlglue.environment.EnvironmentLoader;
-import org.rlcommunity.rlglue.types.Action;
-import org.rlcommunity.rlglue.types.Observation;
-import org.rlcommunity.rlglue.types.Random_seed_key;
-import org.rlcommunity.rlglue.types.Reward_observation;
-import org.rlcommunity.rlglue.types.State_key;
+import org.rlcommunity.rlglue.codec.EnvironmentInterface;
+import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
+import org.rlcommunity.rlglue.codec.types.Random_seed_key;
+import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
  *

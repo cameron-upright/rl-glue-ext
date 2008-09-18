@@ -19,7 +19,7 @@
 
 package org.rlcommunity.rlglue.tests;
 
-import org.rlcommunity.rlglue.types.RL_abstract_type;
+import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
 
 /**
      * Ported from the RL-Glue C tests.  So much nicer in Java.
