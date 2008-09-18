@@ -16,7 +16,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.AgentInterface;
 import org.rlcommunity.rlglue.codec.util.AgentLoader;
@@ -27,37 +27,24 @@ import org.rlcommunity.rlglue.codec.types.Observation;
  *
  * @author Brian Tanner
  */
-public class Test_Empty_Agent implements AgentInterface {
+public class Test_1_Agent implements AgentInterface {
 
-    int whichEpisode = 0;
-    
-    Action emptyAction=new Action(0,0,0);
-    Action nonEmptyAction=new Action(7,3,1);
+    int stepCount = 0;
 
-    public Test_Empty_Agent() {
+    public Test_1_Agent() {
     }
 
     public void agent_init(String taskSpecString) {
-        TestUtility.set_k_ints_in_abstract_type(nonEmptyAction, 7);
-        TestUtility.set_k_doubles_in_abstract_type(nonEmptyAction, 3);
-        TestUtility.set_k_chars_in_abstract_type(nonEmptyAction, 1);
-        whichEpisode=0;
     }
 
     public Action agent_start(Observation o) {
-        whichEpisode++;
-        
-        if(whichEpisode%2==0)
-            return emptyAction;
-                    
-        return nonEmptyAction;
+        stepCount = 0;
+        return new Action(o);
     }
 
     public Action agent_step(double arg0, Observation o) {
-        if(whichEpisode%2==0)
-            return emptyAction;
-                    
-        return nonEmptyAction;
+        stepCount++;
+        return new Action(o);
     }
 
     public void agent_end(double arg0) {
@@ -65,7 +52,18 @@ public class Test_Empty_Agent implements AgentInterface {
     }
 
     public String agent_message(String inMessage) {
-        return "";
+        int timesToPrint = stepCount % 3;
+        StringBuffer b = new StringBuffer();
+
+        b.append(inMessage);
+        b.append("|");
+        for (int i = 0; i < timesToPrint; i++) {
+            b.append(stepCount);
+            b.append(".");
+        }
+        b.append("|");
+        b.append(inMessage);
+        return b.toString();
     }
 
     public void agent_cleanup() {
@@ -73,7 +71,7 @@ public class Test_Empty_Agent implements AgentInterface {
     }
     
     public static void main(String[] args){
-        AgentLoader L=new AgentLoader(new Test_Empty_Agent());
+        AgentLoader L=new AgentLoader(new Test_1_Agent());
         L.run();
     }
 }

@@ -17,7 +17,7 @@
  *  limitations under the License.
  */
 
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
 

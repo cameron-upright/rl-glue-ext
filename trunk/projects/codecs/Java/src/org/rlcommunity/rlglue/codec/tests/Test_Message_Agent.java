@@ -16,7 +16,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.AgentInterface;
 import org.rlcommunity.rlglue.codec.util.AgentLoader;
@@ -27,24 +27,25 @@ import org.rlcommunity.rlglue.codec.types.Observation;
  *
  * @author Brian Tanner
  */
-public class Test_1_Agent implements AgentInterface {
+public class Test_Message_Agent implements AgentInterface {
 
-    int stepCount = 0;
+    int whichEpisode = 0;
+    
+    private final Action emptyAction;
 
-    public Test_1_Agent() {
+    public Test_Message_Agent() {
+        emptyAction=new Action(0,0,0);
     }
 
     public void agent_init(String taskSpecString) {
     }
 
     public Action agent_start(Observation o) {
-        stepCount = 0;
-        return new Action(o);
+            return emptyAction;
     }
 
     public Action agent_step(double arg0, Observation o) {
-        stepCount++;
-        return new Action(o);
+            return emptyAction;
     }
 
     public void agent_end(double arg0) {
@@ -52,26 +53,47 @@ public class Test_1_Agent implements AgentInterface {
     }
 
     public String agent_message(String inMessage) {
-        int timesToPrint = stepCount % 3;
-        StringBuffer b = new StringBuffer();
+        if(inMessage==null)
+            return "null";
 
-        b.append(inMessage);
-        b.append("|");
-        for (int i = 0; i < timesToPrint; i++) {
-            b.append(stepCount);
-            b.append(".");
-        }
-        b.append("|");
-        b.append(inMessage);
-        return b.toString();
+       if(inMessage.equals(""))
+           return "empty";
+        
+        if(inMessage.equals("null"))
+            return null;
+
+        if(inMessage.equals("empty"))
+            return "";
+
+        return new String(inMessage);
     }
-
+//The C code
+//	char tmpBuffer[1024];
+//	
+//	if(inMessage==0)
+//		return "null";
+//	if(strcmp(inMessage,"")==0)
+//		return "empty";
+//	if(strcmp(inMessage,"null")==0)
+//		return 0;
+//	if(strcmp(inMessage,"empty")==0)
+//		return "";
+//	
+//	sprintf(tmpBuffer,"%s", inMessage);
+//
+//	if(agent_responseMessage!=0){
+//		free(agent_responseMessage);
+//		agent_responseMessage=0;
+//	}
+//	agent_responseMessage=(char *)calloc(strlen(tmpBuffer)+1,sizeof(char));
+//	sprintf(agent_responseMessage,"%s",tmpBuffer);
+//	return agent_responseMessage;
     public void agent_cleanup() {
         // TODO Auto-generated method stub
     }
     
     public static void main(String[] args){
-        AgentLoader L=new AgentLoader(new Test_1_Agent());
+        AgentLoader L=new AgentLoader(new Test_Message_Agent());
         L.run();
     }
 }

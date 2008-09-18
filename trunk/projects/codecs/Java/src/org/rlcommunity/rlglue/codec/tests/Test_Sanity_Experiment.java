@@ -17,7 +17,7 @@
  *  limitations under the License.
  */
 
-package org.rlcommunity.rlglue.tests;
+package org.rlcommunity.rlglue.codec.tests;
 
 import org.rlcommunity.rlglue.codec.RLGlue;
 
@@ -25,36 +25,14 @@ import org.rlcommunity.rlglue.codec.RLGlue;
  *
  * @author Brian Tanner
  */
-public class Test_RL_Episode_Experiment {
+public class Test_Sanity_Experiment {
     
     public static void main(String[] args){
-        Glue_Test tester=new Glue_Test("Test_RL_Episode_Experiment");
+        Glue_Test tester=new Glue_Test("Test_Sanity_Experiment");
 
-        RLGlue.RL_init();
+        String task_spec=RLGlue.RL_init();
         
-	int isTerminal = RLGlue.RL_episode(0);
-	tester.check_fail(isTerminal!=1);
-	tester.check_fail(RLGlue.RL_num_steps()!=6);
-
-	isTerminal = RLGlue.RL_episode(1);
-	tester.check_fail(isTerminal!=0);
-	tester.check_fail(RLGlue.RL_num_steps()!=1);
-
-	isTerminal = RLGlue.RL_episode(2);
-	tester.check_fail(isTerminal!=0);
-	tester.check_fail(RLGlue.RL_num_steps()!=2);
-
-	isTerminal = RLGlue.RL_episode(5);
-	tester.check_fail(isTerminal!=0);
-	tester.check_fail(RLGlue.RL_num_steps()!=5);
-
-	isTerminal = RLGlue.RL_episode(6);
-	tester.check_fail(isTerminal!=1);
-	tester.check_fail(RLGlue.RL_num_steps()!=6);
-
-	isTerminal = RLGlue.RL_episode(7);
-	tester.check_fail(isTerminal!=1);
-	tester.check_fail(RLGlue.RL_num_steps()!=6);
+        tester.check_fail(!task_spec.equals("sample task spec"));
 
         
         System.out.println(tester);

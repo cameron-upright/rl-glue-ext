@@ -17,26 +17,40 @@
  *  limitations under the License.
  */
 
-package org.rlcommunity.rlglue.tests;
-
-import org.rlcommunity.rlglue.codec.RLGlue;
+package org.rlcommunity.rlglue.codec.tests;
 
 /**
  *
  * @author Brian Tanner
  */
-public class Test_Sanity_Experiment {
+public class Glue_Test {
+private int tests_failed=0;
+private int test_count=0;
+
+String callerName;
+
+public Glue_Test(String callerName){
+    this.callerName=callerName;
+}
+
+public void check_fail(boolean didFail){
+	test_count++;
+	if(didFail){
+		System.out.println("Failed check: "+test_count);
+		tests_failed++;
+	}
+}
+
+public String toString(){
+    if(tests_failed>0)
+       return "Failed "+tests_failed+" / "+test_count+" in "+callerName;
+
+    return "Passed all "+test_count+" checks in "+callerName;
     
-    public static void main(String[] args){
-        Glue_Test tester=new Glue_Test("Test_Sanity_Experiment");
+}
 
-        String task_spec=RLGlue.RL_init();
-        
-        tester.check_fail(!task_spec.equals("sample task spec"));
-
-        
-        System.out.println(tester);
-        System.exit(tester.getFailCount());
+    public int getFailCount() {
+       return tests_failed;
     }
-
+	
 }
