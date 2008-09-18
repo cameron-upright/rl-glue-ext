@@ -29,7 +29,7 @@ import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 
 /**
- * Replaces rlglue.agent.Agent
+ * Replaces org.rlcommunity.rlglue.codec.AgentInterface
  * 
  * Note that agent_freeze no longer exists as per RL-Glue 3.x spec.
  * @author btanner
