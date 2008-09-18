@@ -78,6 +78,9 @@ public class EnvironmentLoader implements Runnable {
                 theClient.close();
             } while (autoReconnect == 1);
         } catch (Exception e) {
+            System.err.println("Exception: "+e);
+            e.printStackTrace();
+            System.err.println("The environment was: "+theEnvironment.getClass());
             System.err.println("EnvironmentLoader run(" + theEnvironment.getClass() + ") threw Exception: " + e);
         }
     }
