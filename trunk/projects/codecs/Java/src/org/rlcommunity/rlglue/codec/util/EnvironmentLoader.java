@@ -65,6 +65,10 @@ public class EnvironmentLoader implements Runnable {
 
     public void run() {
         System.out.print("Connecting to " + host + " on port " + port + "...");
+        
+        if(theEnvironment!=null){
+            System.out.println("Creating a new client environment from a NOT null environment");
+        }
         theClient = new ClientEnvironment(theEnvironment);
         try {
             do {
