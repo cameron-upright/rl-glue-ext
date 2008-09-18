@@ -72,6 +72,10 @@ public class RLGlueCore {
      * 
      */
     public static String getSpecVersion() {
+        System.out.println("Package is: "+RLGlueCore.class.getPackage());
+        Package thisPackage=RLGlueCore.class.getPackage();
+        System.out.println(thisPackage+" \t:\t"+thisPackage.getSpecificationTitle()+"\t:\t"+thisPackage.getSpecificationVersion());
+        System.out.println(thisPackage+" \t:\t"+thisPackage.getImplementationTitle()+"\t:\t"+thisPackage.getImplementationVersion());
         String specAsString = RLGlueCore.class.getPackage().getSpecificationVersion();
         return specAsString;
     }
