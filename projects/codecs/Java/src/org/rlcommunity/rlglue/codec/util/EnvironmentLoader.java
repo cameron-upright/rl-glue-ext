@@ -38,16 +38,18 @@ public class EnvironmentLoader implements Runnable {
     String host = Network.kDefaultHost;
     int port = Network.kDefaultPort;
     int autoReconnect = 0;
-    EnvironmentInterface theEnvironment = null;
+    final EnvironmentInterface theEnvironment;
     ClientEnvironment theClient = null;
 
     public EnvironmentLoader(EnvironmentInterface theEnvironment) {
         assert(theEnvironment!=null);
         this.theEnvironment = theEnvironment;
+        System.out.println("1 arg constructor... is the Env null?: "+(this.theEnvironment==null));
     }
 
     public EnvironmentLoader(String hostString, String portString, EnvironmentInterface theEnvironment) {
         assert(theEnvironment!=null);
+        this.theEnvironment=theEnvironment;
         if (hostString != null) {
             host = hostString;
         }
@@ -57,6 +59,7 @@ public class EnvironmentLoader implements Runnable {
         } catch (Exception e) {
             port = Network.kDefaultPort;
         }
+        System.out.println("3 arg constructor... is the Env null?: "+(this.theEnvironment==null));
     }
 
     public void killProcess() {
@@ -68,6 +71,10 @@ public class EnvironmentLoader implements Runnable {
         
         if(theEnvironment!=null){
             System.out.println("Creating a new client environment from a NOT null environment");
+        }else{
+            System.out.println("Creating a new client environment from a NULL environment? WTF");
+            Thread.dumpStack();
+            
         }
         theClient = new ClientEnvironment(theEnvironment);
         try {
