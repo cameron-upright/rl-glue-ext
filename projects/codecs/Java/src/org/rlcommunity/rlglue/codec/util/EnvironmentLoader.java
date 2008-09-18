@@ -98,6 +98,10 @@ public class EnvironmentLoader implements Runnable {
         } catch (Exception e) {
             System.err.println("loadEnvironment(" + envClassName + ") threw Exception: " + e);
         }
+        
+        if(env==null){
+            System.err.println("We tried to create newInstance in loadEnvironment but unfortunatey it was null.  Environment not loaded: "+envClassName);
+        }
 
         return new EnvironmentLoader(hostString, portString, reconnectString, env);
     }
