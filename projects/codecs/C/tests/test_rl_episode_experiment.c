@@ -44,8 +44,6 @@
 	
 
 int main(int argc, char *argv[]) {
-	char *theResponse;
-
 	RL_init();
 	/* No cutoff */
 	terminal_t isTerminal = RL_episode(0);
