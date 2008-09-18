@@ -42,10 +42,12 @@ public class EnvironmentLoader implements Runnable {
     ClientEnvironment theClient = null;
 
     public EnvironmentLoader(EnvironmentInterface theEnvironment) {
+        assert(theEnvironment!=null);
         this.theEnvironment = theEnvironment;
     }
 
-    public EnvironmentLoader(String hostString, String portString, String reconnectString, EnvironmentInterface theEnvironment) {
+    public EnvironmentLoader(String hostString, String portString, EnvironmentInterface theEnvironment) {
+        assert(theEnvironment!=null);
         if (hostString != null) {
             host = hostString;
         }
@@ -54,12 +56,6 @@ public class EnvironmentLoader implements Runnable {
             port = Integer.parseInt(portString);
         } catch (Exception e) {
             port = Network.kDefaultPort;
-        }
-
-        try {
-            autoReconnect = Integer.parseInt(reconnectString);
-        } catch (Exception e) {
-            autoReconnect = 0;
         }
     }
 
@@ -94,7 +90,6 @@ public class EnvironmentLoader implements Runnable {
 
         String hostString = System.getenv("RLGLUE_HOST");
         String portString = System.getenv("RLGLUE_PORT");
-        String reconnectString = System.getenv("RLGLUE_AUTORECONNECT");
 
         try {
             env = (EnvironmentInterface) Class.forName(envClassName).newInstance();
@@ -106,7 +101,7 @@ public class EnvironmentLoader implements Runnable {
             System.err.println("We tried to create newInstance in loadEnvironment but unfortunatey it was null.  Environment not loaded: "+envClassName);
         }
 
-        return new EnvironmentLoader(hostString, portString, reconnectString, env);
+        return new EnvironmentLoader(hostString, portString, env);
     }
 
     public static void main(String[] args) throws Exception {
@@ -114,8 +109,7 @@ public class EnvironmentLoader implements Runnable {
 
         String envVars = "The following environment variables are used by the environment to control its function:\n" +
                 "RLGLUE_HOST  : If set the environment will use this ip or hostname to connect to rather than " + Network.kDefaultHost + "\n" +
-                "RLGLUE_PORT  : If set the environment will use this port to connect on rather than " + Network.kDefaultPort + "\n" +
-                "RLGLUE_AUTORECONNECT  : If set the enviroment will reconnect to the glue after an experiment has finished\n";
+                "RLGLUE_PORT  : If set the environment will use this port to connect on rather than " + Network.kDefaultPort + "\n";
 
         if (args.length < 1) {
             System.out.println(usage);
