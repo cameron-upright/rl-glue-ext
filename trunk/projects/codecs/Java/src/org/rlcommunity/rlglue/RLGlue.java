@@ -366,29 +366,6 @@ public class RLGlue
                 return exitStatus;
 	}
 
-	/**
-         * @deprecated 
-         */
-        public static synchronized void RL_freeze()
-	{
-		try
-		{
-			doCallWithNoParams(Network.kRLFreeze);
-			doStandardRecv(Network.kRLFreeze);
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_freeze");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-	}
-
 	public static synchronized void RL_set_state(State_key sk)
 	{
 		try
