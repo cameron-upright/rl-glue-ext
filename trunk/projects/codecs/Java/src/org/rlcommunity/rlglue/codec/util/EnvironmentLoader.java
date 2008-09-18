@@ -44,7 +44,6 @@ public class EnvironmentLoader implements Runnable {
     public EnvironmentLoader(EnvironmentInterface theEnvironment) {
         assert(theEnvironment!=null);
         this.theEnvironment = theEnvironment;
-        System.out.println("1 arg constructor... is the Env null?: "+(this.theEnvironment==null));
     }
 
     public EnvironmentLoader(String hostString, String portString, EnvironmentInterface theEnvironment) {
@@ -59,7 +58,6 @@ public class EnvironmentLoader implements Runnable {
         } catch (Exception e) {
             port = Network.kDefaultPort;
         }
-        System.out.println("3 arg constructor... is the Env null?: "+(this.theEnvironment==null));
     }
 
     public void killProcess() {
@@ -68,14 +66,7 @@ public class EnvironmentLoader implements Runnable {
 
     public void run() {
         System.out.print("Connecting to " + host + " on port " + port + "...");
-        
-        if(theEnvironment!=null){
-            System.out.println("Creating a new client environment from a NOT null environment");
-        }else{
-            System.out.println("Creating a new client environment from a NULL environment? WTF");
-            Thread.dumpStack();
-            
-        }
+
         theClient = new ClientEnvironment(theEnvironment);
         try {
             do {
@@ -85,9 +76,6 @@ public class EnvironmentLoader implements Runnable {
                 theClient.close();
             } while (autoReconnect == 1);
         } catch (Exception e) {
-            System.err.println("Exception: "+e);
-            e.printStackTrace();
-            System.err.println("The environment was: "+theEnvironment.getClass());
             System.err.println("EnvironmentLoader run(" + theEnvironment.getClass() + ") threw Exception: " + e);
         }
     }
@@ -108,10 +96,6 @@ public class EnvironmentLoader implements Runnable {
             System.err.println("loadEnvironment(" + envClassName + ") threw Exception: " + e);
         }
         
-        if(env==null){
-            System.err.println("We tried to create newInstance in loadEnvironment but unfortunatey it was null.  Environment not loaded: "+envClassName);
-        }
-
         return new EnvironmentLoader(hostString, portString, env);
     }
 
