@@ -71,14 +71,12 @@ void check_fail(int condition){
 	
 	
 int main(int argc, char *argv[]) {
-  reward_observation_action_terminal_t roat;
-  task_specification_t task_spec;
 	long t0,t1;
 	int steps;
 
-    task_spec=RL_init();
+    RL_init();
 	//Run an episode to get the System warmed up, etc             
-	int isTerminal = RL_episode(500);
+	RL_episode(500);
         
 	t0=get_current_ms_time();
 	    RL_episode(0);

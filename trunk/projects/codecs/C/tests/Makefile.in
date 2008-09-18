@@ -262,7 +262,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh test_empty.sh test_speed.sh
 check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh test_empty.sh test_speed.sh
-AM_CFLAGS = -g
+AM_CFLAGS = -g -Wall -pedantic -std=c99
 test_sanity_experiment_SOURCES = test_sanity_experiment.c useful_functions.c useful_functions.h
 test_sanity_experiment_LDADD = ../src/librlexperiment.la
 test_1_agent_SOURCES = test_1_agent.c useful_functions.c useful_functions.h
