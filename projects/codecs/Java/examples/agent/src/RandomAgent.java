@@ -49,10 +49,6 @@ public class RandomAgent implements AgentInterface {
 		
 	}
 
-	public void agent_freeze() {
-            // TODO Auto-generated method stub
-		
-	}
 
 	public void agent_init(String taskSpecString) {
             TSO = new TaskSpec(taskSpecString);

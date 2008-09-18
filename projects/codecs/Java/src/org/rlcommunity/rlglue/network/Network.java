@@ -170,8 +170,24 @@ public class Network
 	{
 		recvBuffer.flip();
 	}
+        
+        public int[] getInts(int howMany){
+            int currentPosition=recvBuffer.position();
+            int[] returnArray=new int[howMany];
+            recvBuffer.asIntBuffer().get(returnArray);
+            recvBuffer.position(currentPosition+howMany*4);
+            return returnArray;
+        }
 	
-	public int getInt() 
+        public double[] getDoubles(int howMany){
+            int currentPosition=recvBuffer.position();
+            double[] returnArray=new double[howMany];
+            recvBuffer.asDoubleBuffer().get(returnArray);
+            recvBuffer.position(currentPosition+howMany*8);
+            return returnArray;
+        }
+        
+        public int getInt() 
 	{
 		return recvBuffer.getInt();
 	}
@@ -243,15 +259,20 @@ public class Network
 
                 RL_abstract_type key = new RL_abstract_type(numInts, numDoubles,numChars);
 
-		for (int i = 0; i < numInts; ++i)
-			key.intArray[i] = this.getInt();
+                key.intArray=getInts(numInts);
+//		for (int i = 0; i < numInts; ++i)
+//			key.intArray[i] = this.getInt();
 		
+                key.doubleArray=getDoubles(numDoubles);
                 if(debug)System.out.println("\tNetwork.java\t Done reading the ints.");
-		for (int i = 0; i < numDoubles; ++i)
-			key.doubleArray[i] = this.getDouble();
+//		for (int i = 0; i < numDoubles; ++i)
+//			key.doubleArray[i] = this.getDouble();
 
                 if(debug)System.out.println("\tNetwork.java\t Done reading the doubles.");
-		for (int i = 0; i < numChars; ++i){
+
+                //Not implementing a getChars because each char is currently
+                //converted manually from a byte
+                for (int i = 0; i < numChars; ++i){
 			key.charArray[i] = this.getChar();
                         if(debug)System.out.println("\tNetwork.java\t\tRead character: "+key.charArray[i]);
                 }
@@ -260,6 +281,32 @@ public class Network
                 return key;
         }
 
+        /**
+         * Experimental
+         * @param values
+         */
+        public void putInts(int[] values){
+            if(values==null)return;
+            this.ensureSendCapacityRemains(Network.kIntSize*values.length); 
+            int currentPosition=sendBuffer.position();
+            sendBuffer.asIntBuffer().put(values);
+            //Using the intBuffer view doesn't increment the position in the underlying
+            //buffer so we have to push it along
+            sendBuffer.position(currentPosition+values.length*4);
+            
+        }
+        /**
+         * Experimental
+         * @param values
+         */
+        public void putDoubles(double[] values){
+            if(values==null)return;
+		this.ensureSendCapacityRemains(Network.kDoubleSize*values.length);
+            int currentPosition=sendBuffer.position();
+                sendBuffer.asDoubleBuffer().put(values);
+            sendBuffer.position(currentPosition+values.length*8);
+            
+        }
         public void putInt(int value)
 	{
 		this.ensureSendCapacityRemains(Network.kIntSize);
@@ -323,12 +370,20 @@ public class Network
 		this.putInt(numInts);
 		this.putInt(numDoubles);
                 this.putInt(numChars);
+                
 		
-		for (int i = 0; i < numInts; ++i)
-			this.putInt(theObject.intArray[i]);
+//		for (int i = 0; i < numInts; ++i)
+//			this.putInt(theObject.intArray[i]);
+//                
 		
-		for (int i = 0; i < numDoubles; ++i)
-			this.putDouble(theObject.doubleArray[i]);
+                putInts(theObject.intArray);
+//		for (int i = 0; i < numDoubles; ++i)
+//			this.putDouble(theObject.doubleArray[i]);
+
+                putDoubles(theObject.doubleArray);
+                
+                //Not implementing a putChars because each char is currently
+                //converted manually from a byte
 
                 for (int i = 0; i < numChars; ++i)
 			this.putChar(theObject.charArray[i]);
