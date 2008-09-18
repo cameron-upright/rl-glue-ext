@@ -22,9 +22,9 @@ import java.util.Random;
 
 //import rlVizLib.utilities.TaskSpecObject;
 import org.rlcommunity.rlglue.utilities.TaskSpec;
-import org.rlcommunity.rlglue.agent.AgentInterface;
-import org.rlcommunity.rlglue.types.Action;
-import org.rlcommunity.rlglue.types.Observation;
+import org.rlcommunity.org.rlcommunity.rlglue.codec.AgentInterfaceInterface;
+import org.rlcommunity.org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.org.rlcommunity.rlglue.codec.types.Observation;
 
 public class RandomAgent implements AgentInterface {
 	private Action action;
