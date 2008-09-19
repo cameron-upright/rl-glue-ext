@@ -96,6 +96,7 @@ public class Network
         
         private boolean debug=false;
 
+        
 	public Network()
 	{
 		recvBuffer = ByteBuffer.allocateDirect(kByteBufferDefaultSize);
