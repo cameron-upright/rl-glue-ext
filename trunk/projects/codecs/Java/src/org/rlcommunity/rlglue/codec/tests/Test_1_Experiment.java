@@ -27,9 +27,8 @@ import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
  * @author Brian Tanner
  */
 public class Test_1_Experiment {
-    
-    public static void main(String[] args){
-        Glue_Test tester=new Glue_Test("Test_1_Experiment");
+    public static int runTest(){
+                Glue_Test tester=new Glue_Test("Test_1_Experiment");
         Reward_observation_action_terminal roat;
 
         String task_spec=RLGlue.RL_init();
@@ -88,7 +87,11 @@ public class Test_1_Experiment {
         
         
         System.out.println(tester);
-        System.exit(tester.getFailCount());
+        
+        return tester.getFailCount();
+    }
+    public static void main(String[] args){
+        System.exit(runTest());
     }
 
 }

@@ -29,8 +29,8 @@ import org.rlcommunity.rlglue.codec.types.State_key;
  */
 public class Test_Seeds_Experiment {
     
-    public static void main(String[] args){
-        Glue_Test tester=new Glue_Test("Test_Seeds_Experiment");
+public static int runTest(){
+            Glue_Test tester=new Glue_Test("Test_Seeds_Experiment");
 
 	State_key the_state_key=new State_key();
 	State_key empty_state_key=new State_key();
@@ -94,7 +94,13 @@ public class Test_Seeds_Experiment {
 	
         
         System.out.println(tester);
-        System.exit(tester.getFailCount());
+        return tester.getFailCount();
+}
+        
+
+        public static void main(String[] args){
+
+        System.exit(runTest());
     }
 
 }
