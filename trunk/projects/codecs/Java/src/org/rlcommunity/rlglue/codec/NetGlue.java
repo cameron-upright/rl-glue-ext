@@ -36,7 +36,7 @@ import org.rlcommunity.rlglue.codec.types.State_key;
 public class NetGlue implements RLGlueInterface
 {
 
-	private Network network;
+	private     Network network;
 
         private  void forceConnection()
 	{
