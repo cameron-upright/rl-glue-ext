@@ -42,12 +42,12 @@ public class EnvironmentLoader implements Runnable {
     ClientEnvironment theClient = null;
 
     public EnvironmentLoader(EnvironmentInterface theEnvironment) {
-        assert(theEnvironment!=null);
+        assert theEnvironment!=null : "theEnvironment is null in EnvironmentLoader Constructor";
         this.theEnvironment = theEnvironment;
     }
 
     public EnvironmentLoader(String hostString, String portString, EnvironmentInterface theEnvironment) {
-        assert(theEnvironment!=null);
+        assert theEnvironment!=null : "theEnvironment is null in EnvironmentLoader Constructor";
         this.theEnvironment=theEnvironment;
         if (hostString != null) {
             host = hostString;
