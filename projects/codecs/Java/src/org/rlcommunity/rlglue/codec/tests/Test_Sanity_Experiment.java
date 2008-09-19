@@ -26,9 +26,9 @@ import org.rlcommunity.rlglue.codec.RLGlue;
  * @author Brian Tanner
  */
 public class Test_Sanity_Experiment {
-    
-    public static void main(String[] args){
-        Glue_Test tester=new Glue_Test("Test_Sanity_Experiment");
+
+    public static int runTest(){
+                Glue_Test tester=new Glue_Test("Test_Sanity_Experiment");
 
         String task_spec=RLGlue.RL_init();
         
@@ -36,7 +36,11 @@ public class Test_Sanity_Experiment {
 
         
         System.out.println(tester);
-        System.exit(tester.getFailCount());
+        return tester.getFailCount();
+
+    }
+    public static void main(String[] args){
+        System.exit(runTest());
     }
 
 }

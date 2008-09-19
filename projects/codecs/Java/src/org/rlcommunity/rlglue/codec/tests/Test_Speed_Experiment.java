@@ -26,9 +26,8 @@ import org.rlcommunity.rlglue.codec.RLGlue;
  * @author Brian Tanner
  */
 public class Test_Speed_Experiment {
-    
-    public static void main(String[] args){
-        Glue_Test tester=new Glue_Test("Test_RL_Episode_Experiment");
+public static int runTest(){
+            Glue_Test tester=new Glue_Test("Test_RL_Episode_Experiment");
 
         RLGlue.RL_init();
 //Run an episode to get the JVM warmed up, etc             
@@ -54,7 +53,12 @@ public class Test_Speed_Experiment {
 
         
         System.out.println(tester);
-        System.exit(tester.getFailCount());
+        return tester.getFailCount();
+
+}    
+    public static void main(String[] args){
+        
+        System.exit(runTest());
     }
 
 }
