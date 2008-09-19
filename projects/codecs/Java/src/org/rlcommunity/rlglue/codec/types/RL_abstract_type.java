@@ -48,7 +48,7 @@ public class RL_abstract_type implements Comparable{
         
         
         public RL_abstract_type(RL_abstract_type src){
-            this(src.intArray.length,src.doubleArray.length, src.charArray.length);
+            this(src.intArray.length,src.doubleArray.length,src.charArray.length);
             RLStructCopy(src, this);
         }
         
