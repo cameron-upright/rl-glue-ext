@@ -27,22 +27,28 @@ import org.rlcommunity.rlglue.codec.RLGlue;
  */
 public class Test_Speed_Experiment {
 public static int runTest(){
-            Glue_Test tester=new Glue_Test("Test_RL_Episode_Experiment");
+        Glue_Test tester=new Glue_Test("Test_RL_Episode_Experiment");
 
+        System.err.println("RL init");
         RLGlue.RL_init();
 //Run an episode to get the JVM warmed up, etc             
+        System.err.println("RL_episode");
 	int isTerminal = RLGlue.RL_episode(500);
         
         
         long startTime=System.currentTimeMillis();
+        System.err.println("RL_episode");
         RLGlue.RL_episode(0);
         long endTime=System.currentTimeMillis();
+        System.err.println("RL_num_steps");
         int steps=RLGlue.RL_num_steps();
         System.out.println("MS to run Episode Type 1 "+(endTime-startTime)+" (per step: "+((double)(endTime-startTime)/(double)steps)+")");
 
         startTime=System.currentTimeMillis();
+        System.err.println("RL_episode");
         RLGlue.RL_episode(0);
         endTime=System.currentTimeMillis();
+        System.err.println("RL_num_steps");
         steps=RLGlue.RL_num_steps();
         System.out.println("MS to run Episode Type 2 "+(endTime-startTime)+" (per step: "+((double)(endTime-startTime)/(double)steps)+")");
 
