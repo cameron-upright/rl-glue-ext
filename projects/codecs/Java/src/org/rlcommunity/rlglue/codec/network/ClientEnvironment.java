@@ -45,12 +45,8 @@ public class ClientEnvironment
 	public ClientEnvironment(EnvironmentInterface env) 
 	{
 		this.env = env;
-//                assert(env!=null);
+                assert env!=null : "env null in ClientEnvironment constructor";;
                 
-                if(env==null){
-                    System.out.println("And somehow env is null");
-                    Thread.dumpStack();
-                }
 		this.network = new Network();
 	}
 

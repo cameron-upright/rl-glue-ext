@@ -53,7 +53,7 @@ public class ClientAgent
 	public ClientAgent(AgentInterface agent) 
 	{
 		this.agent = agent;
-                assert(agent!=null);
+                assert agent!=null : "agent null in ClientAgent constructor";
 		this.network = new Network();
 	}
 
