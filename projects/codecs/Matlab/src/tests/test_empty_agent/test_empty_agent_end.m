@@ -1,0 +1,2 @@
+function test_empty_agent_end(theReward)
+end

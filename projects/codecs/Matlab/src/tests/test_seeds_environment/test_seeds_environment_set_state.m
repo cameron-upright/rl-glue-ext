@@ -1,0 +1,4 @@
+function test_seeds_environment_set_seed(theState)
+	global test_seeds_environment_struct;
+	test_seeds_environment_struct.state=theState;
+end

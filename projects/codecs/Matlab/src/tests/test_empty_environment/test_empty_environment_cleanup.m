@@ -1,0 +1,2 @@
+function test_empty_environment_cleanup()
+end

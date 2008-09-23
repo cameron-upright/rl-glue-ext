@@ -1,0 +1,4 @@
+function test_seeds_environment_set_random_seed(randomSeed)
+	global test_seeds_environment_struct;
+	test_seeds_environment_struct.seed=randomSeed;
+end

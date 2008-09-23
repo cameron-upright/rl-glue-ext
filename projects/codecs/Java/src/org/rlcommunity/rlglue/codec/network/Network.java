@@ -38,6 +38,11 @@ import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
+/**
+ * This class does the heavy lifting of sendig and receiving data over the 
+ * network. It is used by both the Java and Matlab codecs.
+ * @author btanner
+ */
 public class Network
 {
 	public static final int kExperimentConnection  = 1;

@@ -57,8 +57,6 @@ public class ClientEnvironment
 		network.clearSendBuffer();
 		network.putInt(Network.kEnvInit);
 		network.putInt(Network.sizeOf(taskSpec)); // This is different than taskSpec.length(). It also includes
-												  // the four bytes that describe the length of the string
-												  // that is inserted by network.putString()
 		network.putString(taskSpec);
 	}
 
