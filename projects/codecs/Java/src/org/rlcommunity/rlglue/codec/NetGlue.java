@@ -1,472 +1,290 @@
 /* 
-* Copyright (C) 2007, Brian Tanner
-* 
+ * Copyright (C) 2007, Brian Tanner
+ * 
 http://rl-glue.googlecode.com/
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-* 
-*  $Revision: 151 $
-*  $Date: 2008-09-17 20:09:24 -0600 (Wed, 17 Sep 2008) $
-*  $Author: brian@tannerpages.com $
-*  $HeadURL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/src/org/rlcommunity/rlglue/codec/RLGlue.java $
-* 
-*/
-
-
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ * 
+ *  $Revision: 151 $
+ *  $Date: 2008-09-17 20:09:24 -0600 (Wed, 17 Sep 2008) $
+ *  $Author: brian@tannerpages.com $
+ *  $HeadURL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/src/org/rlcommunity/rlglue/codec/RLGlue.java $
+ * 
+ */
 package org.rlcommunity.rlglue.codec;
-
 
 import java.io.IOException;
 import org.rlcommunity.rlglue.codec.network.Network;
 import org.rlcommunity.rlglue.codec.types.Observation_action;
+import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
 import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
-public class NetGlue implements RLGlueInterface
-{
+public class NetGlue implements RLGlueInterface {
 
-	private     Network network;
+    private Network network;
 
-        private  void forceConnection()
-	{
-		if (network == null)
-		{   
-			network = new Network();
+    public synchronized String RL_init() {
+        forceConnection();
 
-			// Connect
-			network.connect(Network.kDefaultHost, 
-					Network.kDefaultPort, 
-					Network.kRetryTimeout);
+        sendEmpty(Network.kRLInit, "RL_init");
+        String task_spec = network.getString();
+        return task_spec;
+    }
 
-			network.clearSendBuffer();
-			network.putInt(Network.kExperimentConnection);
-			network.putInt(0);
-			network.flipSendBuffer();
+    public synchronized Observation_action RL_start() {
+        sendEmpty(Network.kRLStart, "RL_start");
+        Observation_action obsact = new Observation_action();
 
-			try 
-			{
-				network.send();
-			}
-			catch(IOException ioException)
-			{
-				ioException.printStackTrace();
-				System.exit(1);
-			}
-		}
-	}
+        obsact.o = network.getObservation();
+        obsact.a = network.getAction();
+        return obsact;
+    }
 
-	private  synchronized void doStandardRecv(int state) throws IOException
-	{
-		network.clearRecvBuffer();
-		
-		int recvSize = network.recv(8) - 8;
+    public synchronized Reward_observation_action_terminal RL_step() {
+        sendEmpty(Network.kRLStep, "RL_step");
 
-		int glueState = network.getInt(0);
-		int dataSize = network.getInt(Network.kIntSize);
-		int remaining = dataSize - recvSize;
+        Reward_observation_action_terminal roat = new Reward_observation_action_terminal();
+        roat.terminal = network.getInt();
+        roat.r = network.getDouble();
+        roat.o = network.getObservation();
+        roat.a = network.getAction();
 
-		if (remaining < 0)
-			remaining = 0;
-		
-		int remainingReceived=network.recv(remaining);
+        return roat;
+    }
 
-		network.flipRecvBuffer();	
-		
-		// Discard the header - we should have a more elegant method for doing this.
-		network.getInt();
-		network.getInt();
-		
-		if (glueState != state)
-		{
-			System.err.println("Not synched with server. glueState = " + glueState + " but should be " + state);
-			System.exit(1);
-		}
-	}
-	
-	private  synchronized void doCallWithNoParams(int state) throws IOException
-	{		
-		network.clearSendBuffer();
-		network.putInt(state);
-		network.putInt(0);
-		network.flipSendBuffer();
-		network.send();
-	}
-	
-	public  synchronized String RL_init()
-	{
-                String task_spec="";
-		forceConnection();
+    public synchronized void RL_cleanup() {
+        sendEmpty(Network.kRLCleanup, "RL_cleanup");
+    }
 
-		try
-		{
-			doCallWithNoParams(Network.kRLInit);
-			doStandardRecv(Network.kRLInit);
-                        task_spec=network.getString();
-		}
-		catch(IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-                return task_spec;
-	}
+    public synchronized String RL_agent_message(String message) {
+        forceConnection();
 
-	public  synchronized Observation_action RL_start()
-	{
-		Observation_action obsact = null;
-		try
-		{
+        sendString(message, Network.kRLAgentMessage, "RL_agent_message");
+        String response = network.getString();
+        return response;
 
-			doCallWithNoParams(Network.kRLStart);
+    }
 
-			doStandardRecv(Network.kRLStart);
-			
-			obsact = new Observation_action();
+    public synchronized String RL_env_message(String message) {
+        forceConnection();
 
-			obsact.o = network.getObservation();
+        sendString(message, Network.kRLEnvMessage, "RL_env_message");
+        String response = network.getString();
+        return response;
+    }
 
-			obsact.a = network.getAction();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_start");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
+    public synchronized double RL_return() {
+        sendEmpty(Network.kRLReturn, "RL_return");
 
+        double reward = network.getDouble();
 
-		return obsact;
-	}
+        return reward;
+    }
 
-	public  synchronized Reward_observation_action_terminal RL_step()
-	{
-		Reward_observation_action_terminal roat = null;
-		try 
-		{
-			doCallWithNoParams(Network.kRLStep);
-			doStandardRecv(Network.kRLStep);
-			
-			roat = new Reward_observation_action_terminal();
-			roat.terminal = network.getInt();
-			roat.r = network.getDouble();
-			roat.o = network.getObservation();
-			roat.a = network.getAction();
+    public synchronized int RL_num_steps() {
+        sendEmpty(Network.kRLNumSteps, "RL_num_steps");
 
-			return roat;
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_step");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-		return roat;
-	}
+        int numSteps = network.getInt();
 
-	public  synchronized void RL_cleanup()
-	{
-		try
-		{
-			doCallWithNoParams(Network.kRLCleanup);
-			doStandardRecv(Network.kRLCleanup);
+        return numSteps;
+    }
 
-			//network.close(); // Cleanup no longer closes the connection.  
-			
-			//We need to be able to run multiple RL_init/RL_cleanup's without killing the 
-			//connection between.  Since this code is running from the user experiment
-			//the connection never gets explicitly closed.  :(
-			//The VM/OS will clean this up and close the connection when the program exits.
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_cleanup");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-	}
+    public synchronized int RL_num_episodes() {
+        sendEmpty(Network.kRLNumEpisodes, "RL_num_episodes");
 
-	public  synchronized String RL_agent_message(String message)
-	{		
-		String response = "";
-		forceConnection();
+        int numEpisodes = network.getInt();
+        
+        return numEpisodes;
+    }
 
-		try
-		{
-			network.clearSendBuffer();
-			network.putInt(Network.kRLAgentMessage);
-			network.putInt(Network.sizeOf(message));
-			network.putString(message);
-			network.flipSendBuffer();
-			network.send();
+    public synchronized int RL_episode(int numSteps) {
+        sendInt(numSteps, Network.kRLEpisode, "RL_episode");
 
-			doStandardRecv(Network.kRLAgentMessage);
-			response = network.getString();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		return response;
-	}
+        int exitStatus = network.getInt();
 
-	public  synchronized String RL_env_message(String message)
-	{
-		String response = "";
-		forceConnection();
-				
-		try
-		{
+        return exitStatus;
+    }
 
-			network.clearSendBuffer();
-			network.putInt(Network.kRLEnvMessage);
-			network.putInt(Network.sizeOf(message));
-			network.putString(message);
-			network.flipSendBuffer();
-			network.send();
+    public synchronized void RL_set_state(State_key sk) {
+        send_abstract_type(sk, Network.kRLSetState, "RL_set_state");
+    }
 
-			doStandardRecv(Network.kRLEnvMessage);
-			response = network.getString();
+    public synchronized void RL_set_random_seed(Random_seed_key rsk) {
+        send_abstract_type(rsk, Network.kRLSetRandomSeed, "RL_set_random_seed");
+    }
 
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		return response;
-	}
+    public synchronized State_key RL_get_state() {
+        sendEmpty(Network.kRLGetState, "RL_get_state");
+        State_key key = network.getStateKey();
+        return key;
+    }
 
-	public  synchronized double RL_return()
-	{
-		double reward = 0.0;
+    public synchronized Random_seed_key RL_get_random_seed() {
+        sendEmpty(Network.kRLGetRandomSeed, "RL_get_random_seed");
+        Random_seed_key key = network.getRandomSeedKey();
+        return key;
+    }
 
-		try
-		{
-			doCallWithNoParams(Network.kRLReturn);
-			doStandardRecv(Network.kRLReturn);
-			reward = network.getDouble();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_return");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-		return reward;
-	}
+    /**
+     * 
+     * 
+     * 
+     * PRIVATE METHODS BELOW ARE HELPERS
+     * 
+     * 
+     * 
+     */
+    private void forceConnection() {
+        if (network == null) {
+            network = new Network();
 
-	public  synchronized int RL_num_steps()
-	{
-		int numSteps = 0;
-		
-		try
-		{
-			doCallWithNoParams(Network.kRLNumSteps);
-			doStandardRecv(Network.kRLNumSteps);
-			
-			numSteps = network.getInt();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_num_steps");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-		
-		return numSteps;
-	}
+            // Connect
+            network.connect(Network.kDefaultHost,
+                    Network.kDefaultPort,
+                    Network.kRetryTimeout);
 
-	public  synchronized int RL_num_episodes()
-	{
-		int numEpisodes = 0;
-		
-		try
-		{
-			doCallWithNoParams(Network.kRLNumEpisodes);
-			doStandardRecv(Network.kRLNumEpisodes);
-			numEpisodes = network.getInt();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_num_episodes");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-		return numEpisodes;
-	}
+            network.clearSendBuffer();
+            network.putInt(Network.kExperimentConnection);
+            network.putInt(0);
+            network.flipSendBuffer();
 
-	public  synchronized int RL_episode(int numSteps)
-	{
-                int exitStatus=0;
-		try
-		{
-			network.clearSendBuffer();
-			network.putInt(Network.kRLEpisode);
-			network.putInt(Network.kIntSize);
-			network.putInt(numSteps);
-			network.flipSendBuffer();
-			network.send();
+            try {
+                network.send();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                System.exit(1);
+            }
+        }
+    }
 
-			doStandardRecv(Network.kRLEpisode);
-                        exitStatus=network.getInt();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_episode");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-                return exitStatus;
-	}
+    private synchronized void doStandardRecv(int state) throws IOException {
+        network.clearRecvBuffer();
 
-	public  synchronized void RL_set_state(State_key sk)
-	{
-		try
-		{
-			network.clearSendBuffer();
-			network.putInt(Network.kRLSetState);
-			network.putInt(Network.sizeOf(sk));
-			network.putStateKey(sk);
-			network.flipSendBuffer();
-			network.send();
+        int recvSize = network.recv(8) - 8;
 
-			doStandardRecv(Network.kRLSetState);
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_set_state");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-	}
+        int glueState = network.getInt(0);
+        int dataSize = network.getInt(Network.kIntSize);
+        int remaining = dataSize - recvSize;
 
-	public  synchronized void RL_set_random_seed(Random_seed_key rsk)
-	{
-		try
-		{
-			network.clearSendBuffer();
-			network.putInt(Network.kRLSetRandomSeed);
-			network.putInt(Network.sizeOf(rsk));
-			network.putRandomSeedKey(rsk);
-			network.flipSendBuffer();
-			network.send();
+        if (remaining < 0) {
+            remaining = 0;
+        }
+        int remainingReceived = network.recv(remaining);
 
-			doStandardRecv(Network.kRLSetRandomSeed);
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_set_random_seed");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-	}
+        network.flipRecvBuffer();
 
-	public  synchronized State_key RL_get_state()
-	{
-		State_key key = null;
-		
-		try
-		{
-			doCallWithNoParams(Network.kRLGetState);
-			doStandardRecv(Network.kRLGetState);
-			
-			key = network.getStateKey();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_get_state_key");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-		return key;
-	}
+        // Discard the header - we should have a more elegant method for doing this.
+        network.getInt();
+        network.getInt();
 
-	public  synchronized Random_seed_key RL_get_random_seed()
-	{
-		Random_seed_key key = null;
-		
-		try
-		{
-			doCallWithNoParams(Network.kRLGetRandomSeed);
-			doStandardRecv(Network.kRLGetRandomSeed);
-			
-			key = network.getRandomSeedKey();
-		}
-		catch (IOException ioException)
-		{
-			ioException.printStackTrace();
-			System.exit(1);
-		}
-		catch (NullPointerException nullException)
-		{
-			System.err.println("You must call RL_init before calling RL_get_state_key");
-			nullException.printStackTrace();
-			System.exit(1);
-		}
-		
-		return key;
-	}
+        if (glueState != state) {
+            System.err.println("Not synched with server. glueState = " + glueState + " but should be " + state);
+            System.exit(1);
+        }
+    }
 
+    private synchronized void doCallWithNoParams(int state) throws IOException {
+        network.clearSendBuffer();
+        network.putInt(state);
+        network.putInt(0);
+        network.flipSendBuffer();
+        network.send();
+    }
+
+    private synchronized void sendString(String theString, int theCode, String callerName) {
+        try {
+            network.clearSendBuffer();
+            network.putInt(theCode);
+            network.putInt(Network.sizeOf(theString));
+            network.putString(theString);
+            network.flipSendBuffer();
+            network.send();
+
+            doStandardRecv(theCode);
+
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            System.exit(1);
+        } catch (NullPointerException nullException) {
+            System.err.println("You must call RL_init before calling " + callerName);
+            nullException.printStackTrace();
+            System.exit(1);
+        }
+
+    }
+
+    private synchronized void sendEmpty(int theCode, String callerName) {
+        try {
+            doCallWithNoParams(theCode);
+            doStandardRecv(theCode);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            System.exit(1);
+        } catch (NullPointerException nullException) {
+            System.err.println("You must call RL_init before calling " + callerName);
+            nullException.printStackTrace();
+            System.exit(1);
+        }
+
+    }
+
+    private synchronized void sendInt(int intToSend, int theCode, String callerName) {
+        try {
+            network.clearSendBuffer();
+            network.putInt(theCode);
+            network.putInt(Network.kIntSize);
+            network.putInt(intToSend);
+            network.flipSendBuffer();
+            network.send();
+
+            doStandardRecv(theCode);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            System.exit(1);
+        } catch (NullPointerException nullException) {
+            System.err.println("You must call RL_init before calling " + callerName);
+            nullException.printStackTrace();
+            System.exit(1);
+        }
+
+    }
+
+    /**
+     * Added by Brian Tanner to simplify the code in here.
+     * @param theObject
+     * @param theCode
+     * @param callerName
+     */
+    private synchronized void send_abstract_type(RL_abstract_type theObject, int theCode, String callerName) {
+        try {
+            network.clearSendBuffer();
+            network.putInt(theCode);
+            network.putInt(Network.sizeOf(theObject));
+            network.putAbstractType(theObject);
+            network.flipSendBuffer();
+            network.send();
+
+            doStandardRecv(theCode);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            System.exit(1);
+        } catch (NullPointerException nullException) {
+            System.err.println("You must call RL_init before calling " + callerName);
+            nullException.printStackTrace();
+            System.exit(1);
+        }
+
+    }
 }

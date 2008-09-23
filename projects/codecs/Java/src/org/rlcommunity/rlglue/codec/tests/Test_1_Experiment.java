@@ -28,7 +28,7 @@ import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
  */
 public class Test_1_Experiment {
     public static int runTest(){
-                Glue_Test tester=new Glue_Test("Test_1_Experiment");
+        Glue_Test tester=new Glue_Test("Test_1_Experiment");
         Reward_observation_action_terminal roat;
 
         String task_spec=RLGlue.RL_init();
