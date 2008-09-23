@@ -1,0 +1,2 @@
+function randomSeed=test_1_environment_get_random_seed()
+end

@@ -1,0 +1,2 @@
+function test_empty_environment_set_seed(theState)
+end

@@ -1,0 +1,2 @@
+function test_speed_environment_set_seed(theState)
+end

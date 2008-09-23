@@ -1,0 +1,4 @@
+function test_message_environment_set_seed(theState)
+	global test_message_environment_struct;
+	test_message_environment_struct.state=theState;
+end
