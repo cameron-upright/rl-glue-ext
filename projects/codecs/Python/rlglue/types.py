@@ -17,41 +17,55 @@
 #
 
 
+#Brian Tanner thinks we should be able to use inheritance here to make
+#this not suck so bad.
 class Action:
-	def __init__(self,numInts=None,numDoubles=None):
+	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		self.intArray = []
 		self.doubleArray = []
+		self.charArray = []
 		if numInts != None:
 			self.intArray = [0]*numInts
 		if numDoubles != None:
 			self.doubleArray = [0.0]*numDoubles
+		if numChars != None:
+			self.charArray = ['']*numChars
 
 class Observation:
-	def __init__(self,numInts=None,numDoubles=None):
+	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		self.intArray = []
 		self.doubleArray = []
+		self.charArray = []
 		if numInts != None:
 			self.intArray = [0]*numInts
 		if numDoubles != None:
 			self.doubleArray = [0.0]*numDoubles
+		if numChars != None:
+			self.charArray = ['']*numChars
 
 class Random_seed_key:
-	def __init__(self,numInts=None,numDoubles=None):
+	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		self.intArray = []
 		self.doubleArray = []
+		self.charArray = []
 		if numInts != None:
 			self.intArray = [0]*numInts
 		if numDoubles != None:
 			self.doubleArray = [0.0]*numDoubles
+		if numChars != None:
+			self.charArray = ['']*numChars
 
 class State_key:
-	def __init__(self,numInts=None,numDoubles=None):
+	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		self.intArray = []
 		self.doubleArray = []
+		self.charArray = []
 		if numInts != None:
 			self.intArray = [0]*numInts
 		if numDoubles != None:
 			self.doubleArray = [0.0]*numDoubles
+		if numChars != None:
+			self.charArray = ['']*numChars
 
 class Observation_action:
 	def __init__(self,theObservation=None,theAction=None):

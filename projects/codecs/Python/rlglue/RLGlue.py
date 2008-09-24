@@ -66,11 +66,15 @@ def doCallWithNoParams(state):
 	network.putInt(0)
 	network.send()
 
-# () -> void
+#Brian Tanner... need to make this return a string
+# () -> string
 def RL_init():
 	forceConnection()
 	doCallWithNoParams(Network.kRLInit)
 	doStandardRecv(Network.kRLInit)
+	#Brian Tanner added
+	taskSpecResponse = network.getString()
+	return taskSpecResponse
 
 # () -> Observation_action
 def RL_start():
@@ -105,6 +109,7 @@ def RL_agent_message(message):
 	forceConnection()
 	network.clearSendBuffer()
 	network.putInt(Network.kRLAgentMessage)
+	#Payload Size
 	network.putInt(len(message) + 4)
 	network.putString(message)
 	network.send()
@@ -118,6 +123,7 @@ def RL_env_message(message):
 	forceConnection()
 	network.clearSendBuffer()
 	network.putInt(Network.kRLEnvMessage)
+	#Payload Size
 	network.putInt(len(message) + 4)
 	network.putString(message)
 	network.send()
@@ -149,7 +155,8 @@ def RL_num_episodes():
 	numEpisodes = network.getInt()
 	return numEpisodes
 
-# (int) -> void
+#Brian Tanner needs to make this return an int
+# (int) -> int
 def RL_episode(num_steps):
 	network.clearSendBuffer()
 	network.putInt(Network.kRLEpisode)
@@ -157,7 +164,11 @@ def RL_episode(num_steps):
 	network.putInt(num_steps)
 	network.send()
 	doStandardRecv(Network.kRLEpisode)
+	#Brian Tanner added
+	exitStatus = network.getInt()
+	return exitStatus
 
+#This is deprecated, should remove it
 # () -> void
 def RL_freeze():
 	doCallWithNoParams(Network.kRLFreeze)

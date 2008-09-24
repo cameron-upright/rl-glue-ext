@@ -19,6 +19,8 @@
 class RL_abstract_type:
 	intArray = []
 	doubleArray = []
+#Brian Tanner Added
+	charArray = []
 
 Observation = RL_abstract_type
 Action = RL_abstract_type

@@ -31,8 +31,6 @@ import org.rlcommunity.rlglue.codec.types.State_key;
  * @author Brian Tanner
  */
 public class Test_Message_Environment implements EnvironmentInterface {
-
-    int stepCount = 0;
     Observation o =new Observation();
     
     public Test_Message_Environment() {
@@ -64,7 +62,6 @@ public class Test_Message_Environment implements EnvironmentInterface {
 	return "";    }
 
     public Observation env_start() {
-        stepCount=0;
         TestUtility.clean_abstract_type(o);
         return o;   
     }

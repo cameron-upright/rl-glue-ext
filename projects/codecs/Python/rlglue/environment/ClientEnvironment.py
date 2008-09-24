@@ -105,9 +105,12 @@ class ClientEnvironment:
 		self.network.clearSendBuffer()
 		self.network.putInt(Network.kEnvMessage)
 		if reply == None:
+			#Brian Tanner added payload even for empty message (IE: send that the size is 0)
+			self.network.putInt(4)
 			self.network.putInt(0)
 		else:
-			self.network.putInt(len(reply))
+			#Brian Tanner, added 4 to the payload size because we putString sends the string AND its size
+			self.network.putInt(len(reply) + 4)
 			self.network.putString(reply)
 
 	# (string, int, int) -> void

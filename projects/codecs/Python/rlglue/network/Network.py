@@ -72,11 +72,12 @@ kRLTerm           = 35
 
 kLocalHost = "127.0.0.1"
 kDefaultPort = 4096
-kRetryTimeout = 10
+kRetryTimeout = 2
 
 kDefaultBufferSize = 4096
 kIntSize = 4
 kDoubleSize = 8
+kCharSize = 1
 
 kUnknownMessage = "Unknown Message: %s\n"
 
@@ -142,51 +143,68 @@ class Network:
 	def getObservation(self):
 		numInts = self.getInt()
 		numDoubles = self.getInt()		
-		obs = Observation(numInts,numDoubles)
+		numChars = self.getInt()		
+		obs = Observation(numInts,numDoubles,numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
 			obs.intArray = struct.unpack("!%di" % (numInts),s)
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
 			obs.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+		if numChars > 0:
+			s = self.recvBuffer.read(numChars*kCharSize)
+			obs.charArray = struct.unpack("!%dc" % (numChars),s)
 		return obs
 
 	def getAction(self):
 		numInts = self.getInt()
 		numDoubles = self.getInt()		
-		action = Action(numInts,numDoubles)
+		numChars = self.getInt()		
+		action = Action(numInts,numDoubles, numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
 			action.intArray = struct.unpack("!%di" % (numInts),s)
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
 			action.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+		if numChars > 0:
+			s = self.recvBuffer.read(numChars*kCharSize)
+			action.charArray = struct.unpack("!%dc" % (numChars),s)
 		return action
 
 	def getStateKey(self):
 		numInts = self.getInt()
 		numDoubles = self.getInt()		
-		key = State_key(numInts,numDoubles)
+		numChars = self.getInt()		
+		key = State_key(numInts,numDoubles, numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
-			key.intArray = struct.unpack("!%di" % (numInts),s)
+			obs.intArray = struct.unpack("!%di" % (numInts),s)
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			key.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+			obs.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+		if numChars > 0:
+			s = self.recvBuffer.read(numChars*kCharSize)
+			key.charArray = struct.unpack("!%dc" % (numChars),s)
 		return key
 	
 	def getRandomSeedKey(self):
 		numInts = self.getInt()
 		numDoubles = self.getInt()		
-		key = Random_seed_key(numInts,numDoubles)
+		numChars = self.getInt()		
+		key = Random_seed_key(numInts,numDoubles, numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
-			key.intArray = struct.unpack("!%di" % (numInts),s)
+			obs.intArray = struct.unpack("!%di" % (numInts),s)
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			key.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+			obs.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+		if numChars > 0:
+			s = self.recvBuffer.read(numChars*kCharSize)
+			key.charArray = struct.unpack("!%dc" % (numChars),s)
 		return key
 	
+		
 	def putInt(self,value):
 		self.sendBuffer.write(struct.pack("!i",value))
 	
@@ -200,85 +218,63 @@ class Network:
 		self.sendBuffer.write(value)
 	
 	def putObservation(self,obs):
-		self.putInt(len(obs.intArray))
-		self.putInt(len(obs.doubleArray))
-		if len(obs.intArray) > 0:
-			self.sendBuffer.write(struct.pack("!%di" % (len(obs.intArray)),*(obs.intArray)))
-		if len(obs.doubleArray) > 0:
-			self.sendBuffer.write(struct.pack("!%dd" % (len(obs.doubleArray)),*(obs.doubleArray)))
+		self.putAbstractType(obs)
 	
 	def putAction(self,action):
-		self.putInt(len(action.intArray))
-		self.putInt(len(action.doubleArray))
-		if len(action.intArray) > 0:
-			self.sendBuffer.write(struct.pack("!%di" % (len(action.intArray)),*(action.intArray)))
-		if len(action.doubleArray) > 0:
-			self.sendBuffer.write(struct.pack("!%dd" % (len(action.doubleArray)),*(action.doubleArray)))
+		self.putAbstractType(action)
 	
 	def putStateKey(self,key):
-		self.putInt(len(key.intArray))
-		self.putInt(len(key.doubleArray))
-		if len(key.intArray) > 0:
-			self.sendBuffer.write(struct.pack("!%di" % (len(key.intArray)),*(key.intArray)))
-		if len(key.doubleArray) > 0:
-			self.sendBuffer.write(struct.pack("!%dd" % (len(key.doubleArray)),*(key.doubleArray)))
+		self.putAbstractType(key)
 
 	def putRandomSeedKey(self,key):
-		self.putInt(len(key.intArray))
-		self.putInt(len(key.doubleArray))
-		if len(key.intArray) > 0:
-			self.sendBuffer.write(struct.pack("!%di" % (len(key.intArray)),*(key.intArray)))
-		if len(key.doubleArray) > 0:
-			self.sendBuffer.write(struct.pack("!%dd" % (len(key.doubleArray)),*(key.doubleArray)))
-	
+		self.putAbstractType(key)
+		
+	def putAbstractType(self, theItem):
+		self.putInt(len(theItem.intArray))
+		self.putInt(len(theItem.doubleArray))
+		self.putInt(len(theItem.charArray))
+		if len(theItem.intArray) > 0:
+			self.sendBuffer.write(struct.pack("!%di" % (len(theItem.intArray)),*(theItem.intArray)))
+		if len(theItem.doubleArray) > 0:
+			self.sendBuffer.write(struct.pack("!%dd" % (len(theItem.doubleArray)),*(theItem.doubleArray)))
+		if len(theItem.charArray) > 0:
+			self.sendBuffer.write(struct.pack("!%dc" % (len(theItem.charArray)),*(theItem.charArray)))
+		
 	def putRewardObservation(self,rewardObservation):
 		self.putInt(rewardObservation.terminal);
 		self.putDouble(rewardObservation.r);
 		self.putObservation(rewardObservation.o);
 	
-	def sizeOfAction(self,action):
-		size = kIntSize * 2
+	
+	def sizeOfAbstractType(self, theItem):
+		size = kIntSize * 3
 		intSize = 0
 		doubleSize = 0
-		if action != None:
-			if action.intArray != None:
-				intSize = kIntSize * len(action.intArray)
-			if action.doubleArray != None:
-				doubleSize = kDoubleSize * len(action.doubleArray)
-		return size + intSize + doubleSize
+		charSize = 0
+		if theItem != None:
+			if theItem.intArray != None:
+				intSize = kIntSize * len(theItem.intArray)
+			if theItem.doubleArray != None:
+				doubleSize = kDoubleSize * len(theItem.doubleArray)
+			if theItem.charArray != None:
+				charSize = kCharSize * len(theItem.charArray)
+		return size + intSize + doubleSize + charSize
+
+
+	def sizeOfAction(self,action):
+		return self.sizeOfAbstractType(action)
+
 	
 	def sizeOfObservation(self,observation):
-		size = kIntSize * 2
-		intSize = 0
-		doubleSize = 0
-		if observation != None:
-			if observation.intArray != None:
-				intSize = kIntSize * len(observation.intArray)
-			if observation.doubleArray != None:
-				doubleSize = kDoubleSize * len(observation.doubleArray)
-		return size + intSize + doubleSize
+		return self.sizeOfAbstractType(observation)
+
 	
 	def sizeOfRandomSeed(self,key):
-		size = kIntSize * 2
-		intSize = 0
-		doubleSize = 0
-		if key != None:
-			if key.intArray != None:
-				intSize = kIntSize * len(key.intArray)
-			if key.doubleArray != None:
-				doubleSize = kDoubleSize * len(key.doubleArray)
-		return size + intSize + doubleSize
+		return self.sizeOfAbstractType(key)
+
 	
 	def sizeOfStateKey(self,key):
-		size = kIntSize * 2
-		intSize = 0
-		doubleSize = 0
-		if key != None:
-			if key.intArray != None:
-				intSize = kIntSize * len(key.intArray)
-			if key.doubleArray != None:
-				doubleSize = kDoubleSize * len(key.doubleArray)
-		return size + intSize + doubleSize
+		return self.sizeOfAbstractType(key)
 	
 	def sizeOfRewardObservation(self,reward_observation):
 		return kIntSize + kDoubleSize + self.sizeOfObservation(reward_observation.o)
