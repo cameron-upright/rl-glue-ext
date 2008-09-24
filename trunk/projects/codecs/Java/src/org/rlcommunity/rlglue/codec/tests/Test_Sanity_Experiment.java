@@ -28,7 +28,7 @@ import org.rlcommunity.rlglue.codec.RLGlue;
 public class Test_Sanity_Experiment {
 
     public static int runTest(){
-                Glue_Test tester=new Glue_Test("Test_Sanity_Experiment");
+        Glue_Test tester=new Glue_Test("Test_Sanity_Experiment");
 
         String task_spec=RLGlue.RL_init();
         
