@@ -8,7 +8,7 @@ function connectAgent(theAgent)
     p__rlglueAgentStruct.theAgent=theAgent;
     host='localhost';
     port=4096;
-    timeout=60;
+    timeout=10;
     
     
     fprintf(1,'Connecting to rl_glue at host: %s on port %d\n', host, port);
