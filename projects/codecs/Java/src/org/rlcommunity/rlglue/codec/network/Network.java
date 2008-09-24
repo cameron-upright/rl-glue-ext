@@ -214,61 +214,65 @@ public class Network {
     }
 
     public Observation getObservation() {
-        return new Observation(getAbstractType());
+        Observation returnVal=new Observation();
+        fillAbstractType(returnVal);
+        return returnVal;
     }
 
     public Action getAction() {
-        return new Action(getAbstractType());
+        Action returnVal=new Action();
+        fillAbstractType(returnVal);
+        return returnVal;
     }
 
     public State_key getStateKey() {
-        return new State_key(getAbstractType());
+        State_key returnVal=new State_key();
+        fillAbstractType(returnVal);
+        return returnVal;
     }
 
     public Random_seed_key getRandomSeedKey() {
-        return new Random_seed_key(getAbstractType());
+        Random_seed_key returnVal=new Random_seed_key();
+        fillAbstractType(returnVal);
+        return returnVal;
     }
 
+    /*
+     * 
+     * Hmm, this method might actually make it quite expensive to make abstract types because
+     * we need to read them once, then make a copy immediately when we change them
+     * into specialized supertypes...
+     * @deprecated
+     */ 
     private final RL_abstract_type getAbstractType() {
         final int numInts = this.getInt();
-        if (debug) {
-            System.out.println("\tNetwork.java\t got numInts: " + numInts);
-        }
         final int numDoubles = this.getInt();
-        if (debug) {
-            System.out.println("\tNetwork.java\t got numDoubles: " + numDoubles);
-        }
         final int numChars = this.getInt();
-        if (debug) {
-            System.out.println("\tNetwork.java\t got numChars: " + numChars);
-        }
+
         RL_abstract_type key = new RL_abstract_type(numInts, numDoubles, numChars);
 
         key.intArray = getInts(numInts);
-//		for (int i = 0; i < numInts; ++i)
-//			key.intArray[i] = this.getInt();
-
         key.doubleArray = getDoubles(numDoubles);
-        if (debug) {
-            System.out.println("\tNetwork.java\t Done reading the ints.");
-//		for (int i = 0; i < numDoubles; ++i)
-//			key.doubleArray[i] = this.getDouble();
-        }
-        if (debug) {
-            System.out.println("\tNetwork.java\t Done reading the doubles.");        //Not implementing a getChars because each char is currently
-        //converted manually from a byte
-        }
+
         for (int i = 0; i < numChars; ++i) {
             key.charArray[i] = this.getChar();
-            if (debug) {
-                System.out.println("\tNetwork.java\t\tRead character: " + key.charArray[i]);
-            }
         }
 
-        if (debug) {
-            System.out.println("\tNetwork.java\t Done reading the chars.");
-        }
         return key;
+    }
+    
+    private final void fillAbstractType(RL_abstract_type toFill) {
+        final int numInts = getInt();
+        final int numDoubles = getInt();
+        final int numChars = getInt();
+
+        toFill.intArray = getInts(numInts);
+        toFill.doubleArray = getDoubles(numDoubles);
+        
+        toFill.charArray=new char[numChars];
+        for (int i = 0; i < numChars; ++i) {
+            toFill.charArray[i] = this.getChar();
+        }
     }
 
     /**
@@ -361,21 +365,11 @@ public class Network {
         this.putInt(numInts);
         this.putInt(numDoubles);
         this.putInt(numChars);
-
-
-//		for (int i = 0; i < numInts; ++i)
-//			this.putInt(theObject.intArray[i]);
-//                
-
         putInts(theObject.intArray);
-//		for (int i = 0; i < numDoubles; ++i)
-//			this.putDouble(theObject.doubleArray[i]);
-
         putDoubles(theObject.doubleArray);
 
         //Not implementing a putChars because each char is currently
         //converted manually from a byte
-
         for (int i = 0; i < numChars; ++i) {
             this.putChar(theObject.charArray[i]);
         }
