@@ -1,10 +1,8 @@
 function connectEnviroment(theEnviroment)
     global p__rlglueEnvStruct;
     
-    if (exist('p__rlglueEnvStruct'))
-        if exist('p__rlglueEnvStruct.network')
-            disconnectEnvironment();
-        end
+    if isfield(p__rlglueEnvStruct,'network')
+		disconnectEnvironment();
     end
     
     p__rlglueEnvStruct.theEnviroment=theEnviroment;

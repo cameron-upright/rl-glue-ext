@@ -1,10 +1,8 @@
 function connectAgent(theAgent)
     global p__rlglueAgentStruct;
     
-    if (exist('p__rlglueAgentStruct'))
-        if exist('p__rlglueAgentStruct.network')
-            disconnectAgent();
-        end
+    if isfield(p__rlglueAgentStruct,'network')
+		disconnectAgent();
     end
     
     p__rlglueAgentStruct.theAgent=theAgent;
