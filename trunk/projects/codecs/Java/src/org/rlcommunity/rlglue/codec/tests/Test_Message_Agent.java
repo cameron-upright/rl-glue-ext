@@ -28,9 +28,6 @@ import org.rlcommunity.rlglue.codec.types.Observation;
  * @author Brian Tanner
  */
 public class Test_Message_Agent implements AgentInterface {
-
-    int whichEpisode = 0;
-    
     private final Action emptyAction;
 
     public Test_Message_Agent() {
@@ -67,29 +64,9 @@ public class Test_Message_Agent implements AgentInterface {
 
         return new String(inMessage);
     }
-//The C code
-//	char tmpBuffer[1024];
-//	
-//	if(inMessage==0)
-//		return "null";
-//	if(strcmp(inMessage,"")==0)
-//		return "empty";
-//	if(strcmp(inMessage,"null")==0)
-//		return 0;
-//	if(strcmp(inMessage,"empty")==0)
-//		return "";
-//	
-//	sprintf(tmpBuffer,"%s", inMessage);
-//
-//	if(agent_responseMessage!=0){
-//		free(agent_responseMessage);
-//		agent_responseMessage=0;
-//	}
-//	agent_responseMessage=(char *)calloc(strlen(tmpBuffer)+1,sizeof(char));
-//	sprintf(agent_responseMessage,"%s",tmpBuffer);
-//	return agent_responseMessage;
+
+    
     public void agent_cleanup() {
-        // TODO Auto-generated method stub
     }
     
     public static void main(String[] args){

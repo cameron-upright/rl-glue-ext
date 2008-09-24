@@ -67,7 +67,7 @@ kRLTerm           = 35
 
 kLocalHost = "127.0.0.1"
 kDefaultPort = 4096
-kRetryTimeout = 10
+kRetryTimeout = 2
 
 class rlSocket:
 	
@@ -148,21 +148,31 @@ class Buffer:
 		adt = RL_abstract_type()
 		numInts = self.readInt()
 		numDoubles = self.readInt()
+		numChars = self.readChar()
 		if numInts > 0:
 			s = self.data.read(numInts*4)
 			adt.intArray = struct.unpack("!%di" % (numInts),s)
 		if numDoubles > 0:
 			s = self.data.read(numDoubles*8)
 			adt.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+		if numChars > 0:
+			s = self.data.read(numChars*1)
+			#Brian Tanner: I have no confidence that this will work
+			#The %d gets replaced by numChars to make something like !5c if its 5 chars
+			adt.charArray = struct.unpack("!%dc" % (numChars),s)
 		return adt
 
 	def writeADT(self,adt):
+		#Brian Tanner: I'm not confident about the changes made here.
 		self.writeInt(len(adt.intArray))
 		self.writeInt(len(adt.doubleArray))
+		self.writeInt(len(adt.charArray))
 		if len(adt.intArray) > 0:
 			self.data.write(struct.pack("!%di" % (len(adt.intArray)),*(adt.intArray)))
 		if len(adt.doubleArray) > 0:
 			self.data.write(struct.pack("!%dd" % (len(adt.doubleArray)),*(adt.doubleArray)))
+		if len(adt.charArray) > 0:
+			self.data.write(struct.pack("!%dc" % (len(adt.charArray)),*(adt.charArray)))
 
 	def readRewardObservation(self):
 		ro = Reward_observation()
@@ -199,6 +209,14 @@ class Buffer:
 	def readInt(self):
 		s = self.data.read(4)
 		return struct.unpack("!i",s)[0]
+		
+	# def readChar(self):
+	# 	"""Added by Brian Tanner on Sept 24, 2008 to accomodate the new charArray stuff"""
+	# 	s = self.data.read(1)
+	# 	#Hope this works.
+	# 	return struct.unpack("!c",s)[0]
+		
+		
 
 	def writeInt(self,i):
 		self.data.write(struct.pack("!i",i))
