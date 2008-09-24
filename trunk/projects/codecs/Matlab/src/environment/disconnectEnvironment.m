@@ -1,9 +1,9 @@
 function disconnectEnvironment(network)
     global p__rlglueEnvStruct;
     
-    if(~isempty(p__rlglueEnvStruct.network))
-        p__rlglueEnvStruct.network.close();
-        clear p__rlglueEnvStruct.network;
-    end
-    
+	if isfield(p__rlglueEnvStruct,'network')
+	    p__rlglueEnvStruct.network.close();
+		p__rlglueEnvStruct=rmfield(p__rlglueEnvStruct,'network');
+	end
+
 end
