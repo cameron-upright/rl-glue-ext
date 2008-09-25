@@ -1,0 +1,42 @@
+
+                       ---------------------------------
+                       Installing the RL-Glue Lisp codec
+                       ---------------------------------
+
+    1. Required libraries
+    2. Supported Lisp implementations
+
+-------------------------------------------------------------------------------
+
+1. Required libraries
+
+    usocket (http://www.cliki.net/usocket)
+    ieee-floats (http://www.cliki.net/ieee-floats)
+
+2. Supported Lisp implementations
+
+    The libraries used by the codec supports many Lisp implementations,
+    the details can be found on their webpage. However the makefiles
+    are prepared for the following lisp implementations.
+    
+        SBCL
+        CMUCL
+        CLISP
+        OpenMCL (not tested yet)
+
+    For any other implementation one has to install the codec manually.
+
+3. Compiling and installing
+
+    The used lisp implementation is autodetected by the makefiles.
+    If more supported lisps are found the order is SBCL, CMUCL, CLISP, OpenMCL.
+    If the default is not good, it can be overridden by the LISP environment
+    variable. Its supported values are 'sbcl' for SBCL, 'lisp' for CMUCL,
+    'clisp' for CLISP, 'ccl' for OpenMCL.
+
+    Because CLISP does not provide the 'require' function, the path to
+    the asdf.lisp file and the asd system definitions have to be specified
+    (in a space separated way) by the LISP_PATH environment varaible.
+    Because it has a default value (can be checked in rl-glue.makefile),
+    most unix user can ignore its setting.
+
