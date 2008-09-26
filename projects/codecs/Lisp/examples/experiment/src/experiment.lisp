@@ -24,7 +24,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Episode average experiment.
 
-(defclass episode-avg (rl-glue:experiment)
+(defclass episode-avg (rl-glue-clcdc:experiment)
   ((steps
     :accessor steps
     :initform '()
@@ -42,16 +42,16 @@
   "Plays NUM-EPISODES episodes and prints the averaged result."
   (assert (and (integerp num-episodes) (< 0 num-episodes)) (num-episodes))
   (with-accessors ((steps steps) (returns returns)) ep-avg
-    (let ((task-spec (apply #'rl-glue:rl-init ep-avg args)))
+    (let ((task-spec (apply #'rl-glue-clcdc:rl-init ep-avg args)))
       (format *standard-output*
               "Task spec was: ~a~%" task-spec))
     (loop repeat num-episodes do
-         (rl-glue:rl-episode ep-avg 0)
+         (rl-glue-clcdc:rl-episode ep-avg 0)
          (format *error-output* ".")
          (force-output *error-output*)
-         (push (rl-glue:rl-num-steps ep-avg) steps)
-         (push (rl-glue:rl-return ep-avg) returns))
-    (rl-glue:rl-cleanup ep-avg)
+         (push (rl-glue-clcdc:rl-num-steps ep-avg) steps)
+         (push (rl-glue-clcdc:rl-return ep-avg) returns))
+    (rl-glue-clcdc:rl-cleanup ep-avg)
     (loop
        for s in steps
        for r in returns

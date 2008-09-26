@@ -15,7 +15,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL-Glue utility package.
 
-(defpackage #:rl-glue-utils
+(defpackage #:rl-glue-clcdc-utils
   (:use #:common-lisp)
   (:export
    ;; task-spec-parser

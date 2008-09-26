@@ -13,7 +13,7 @@
 (in-package #:cl-user)
 
 (defpackage #:rl-random-agent
-  (:use #:common-lisp)
+  (:use #:common-lisp #:rl-glue-clcdc #:rl-glue-clcdc-utils)
   (:export
    #:random-agent
    #:start-random-agent))
@@ -23,7 +23,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Randomized agent for any task.
 
-(defclass random-agent (rl-glue:agent)
+(defclass random-agent (agent)
   ((task-spec
     :accessor task-spec
     :documentation "Current task specification.")
@@ -39,17 +39,17 @@
 (defun select-random-action (agent)
   (with-accessors ((task-spec task-spec) (rstate rand-state)) agent
     (let ((i-actions
-           (make-array (rl-glue-utils:num-discrete-action-dims task-spec)
+           (make-array (num-discrete-action-dims task-spec)
                        :element-type 'integer))
           (f-actions
-           (make-array (rl-glue-utils:num-continuous-action-dims task-spec)
+           (make-array (num-continuous-action-dims task-spec)
                        :element-type 'double-float)))
       (loop
          with ii = 0
          with fi = 0
-         for min in (rl-glue-utils:action-mins task-spec)
-         for max in (rl-glue-utils:action-maxs task-spec)
-         for type in (rl-glue-utils:action-types task-spec)
+         for min in (action-mins task-spec)
+         for max in (action-maxs task-spec)
+         for type in (action-types task-spec)
          do
            (ecase type
              ((#\i)
@@ -59,29 +59,29 @@
              ((#\f)
               (setf (aref f-actions fi) (+ min (random (float max) rstate)))
               (incf fi))))
-      (rl-glue:make-action :int-array i-actions :float-array f-actions))))
+      (make-action :int-array i-actions :float-array f-actions))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Interface methods.
 
-(defmethod rl-glue:agent-init ((agent random-agent) task-spec)
-  (setf (task-spec agent) (rl-glue-utils:parse-task-spec task-spec))
+(defmethod agent-init ((agent random-agent) task-spec)
+  (setf (task-spec agent) (parse-task-spec task-spec))
   agent)
 
-(defmethod rl-glue:agent-start ((agent random-agent) first-observation)
+(defmethod agent-start ((agent random-agent) first-observation)
   (select-random-action agent))
 
-(defmethod rl-glue:agent-step ((agent random-agent) reward observation)
+(defmethod agent-step ((agent random-agent) reward observation)
   (select-random-action agent))
 
-(defmethod rl-glue:agent-end ((agent random-agent) reward)
+(defmethod agent-end ((agent random-agent) reward)
   agent)
 
-(defmethod rl-glue:agent-cleanup ((agent random-agent))
+(defmethod agent-cleanup ((agent random-agent))
   (setf (task-spec agent) nil)
   agent)
 
-(defmethod rl-glue:agent-message ((agent random-agent) input-message)
+(defmethod agent-message ((agent random-agent) input-message)
   "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -89,5 +89,5 @@
 
 (defmacro start-random-agent (&rest args)
   "Starting a random agent."
-  `(rl-glue:run-agent (make-instance 'random-agent) ,@args))
+  `(run-agent (make-instance 'random-agent) ,@args))
 

@@ -58,7 +58,7 @@ asdf_operate = $(LISP_EVAL) "(asdf:operate '$(1) '$(2))"
 asdf_load = $(call asdf_operate,asdf:load-op,$(1))
 asdf_compile = $(call asdf_operate,asdf:compile-op,$(1))
 
-LISP_RL_GLUE = $(call asdf_load,rl-glue)
+LISP_RL_GLUE = $(call asdf_load,rl-glue-clcdc)
 LISP_QUIT = $(LISP_EVAL) "(quit)"
 
 ###############################################################################

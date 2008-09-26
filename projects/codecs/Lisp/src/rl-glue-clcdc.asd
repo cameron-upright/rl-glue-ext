@@ -15,13 +15,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL-Glue ASDF System
 
-(defpackage #:rl-glue-asdf
+(defpackage #:rl-glue-clcdc-asdf
   (:use #:asdf #:common-lisp))
 
-(in-package #:rl-glue-asdf)
+(in-package #:rl-glue-clcdc-asdf)
 
-(defsystem rl-glue
-  :name "RL-Glue"
+(defsystem rl-glue-clcdc
+  :name "RL-Glue Common Lisp Codec"
   :version "0.1"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"

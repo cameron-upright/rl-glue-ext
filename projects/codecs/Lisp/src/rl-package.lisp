@@ -15,7 +15,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL-Glue package interface.
 
-(defpackage #:rl-glue
+(defpackage #:rl-glue-clcdc
   (:use #:common-lisp #:ieee-floats #:usocket)
   (:export
    #:*rl-glue-path*
