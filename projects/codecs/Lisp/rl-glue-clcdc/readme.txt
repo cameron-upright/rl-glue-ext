@@ -11,7 +11,7 @@
 1. Usage of the codec
 
     We recommend to use ASDF (http://www.cliki.net/asdf)
-    to load the rl-glue package.
+    to load the rl-glue-clcdc package.
 
         (asdf:operate 'asdf:load-op 'rl-glue-clcdc)
 

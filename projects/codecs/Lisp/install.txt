@@ -31,10 +31,11 @@
 
     The sources can be turned into ASDF packages by the pack-asdf.sh script.
 
-        ./pack_asdf.sh rl-glue-clcdc
-        ./pack_asdf.sh rl-glue-utils
+        chmod +x pack-asdf.sh
+        ./pack-asdf.sh
 
-    Then then ASDF packages can be installed on the usual ways.
+    It creates the rl-glue-clcdc.tar.gz and the rl-glue-utils.tar.gz
+    ASDF packages, which can be installed on the usual way.
 
     Installation with ASDF-Install.
 
@@ -50,9 +51,10 @@
 
 3. Trying the examples
 
-    There are makefiles for the examples, which makes possible to try the codec
-    without installation. The used lisp implementation (if supported) is
-    autodetected by the makefiles. If more of them are found the order is
+    There are makefiles for the examples, which makes possible to try the
+    codec without installation (but all the required libraries should be
+    preinstalled to the system). The used lisp implementation (if supported)
+    is autodetected by the makefiles. If more of them are found the order is
     SBCL, CMUCL, CLISP, OpenMCL. If the default is not good, it can be
     overridden by the LISP environment variable. Its supported values are
     'sbcl' for SBCL, 'lisp' for CMUCL, 'clisp' for CLISP, 'ccl' for OpenMCL.
