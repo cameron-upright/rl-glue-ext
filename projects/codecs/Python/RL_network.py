@@ -151,15 +151,17 @@ class Buffer:
 		numChars = self.readChar()
 		if numInts > 0:
 			s = self.data.read(numInts*4)
-			adt.intArray = struct.unpack("!%di" % (numInts),s)
+			adt.intArray = list(struct.unpack("!%di" % (numInts),s))
 		if numDoubles > 0:
 			s = self.data.read(numDoubles*8)
-			adt.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+			adt.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
 		if numChars > 0:
 			s = self.data.read(numChars*1)
 			#Brian Tanner: I have no confidence that this will work
 			#The %d gets replaced by numChars to make something like !5c if its 5 chars
-			adt.charArray = struct.unpack("!%dc" % (numChars),s)
+			#Update, seems to work fine
+			adt.charArray = list(struct.unpack("!%dc" % (numChars),s))
+			
 		return adt
 
 	def writeADT(self,adt):

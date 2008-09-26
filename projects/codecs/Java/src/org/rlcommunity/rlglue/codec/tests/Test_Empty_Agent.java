@@ -30,7 +30,6 @@ import org.rlcommunity.rlglue.codec.types.Observation;
 public class Test_Empty_Agent implements AgentInterface {
 
     int whichEpisode = 0;
-    
     Action emptyAction=new Action(0,0,0);
     Action nonEmptyAction=new Action(7,3,1);
 

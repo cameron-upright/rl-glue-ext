@@ -7,7 +7,7 @@ subprocess.call(["killall rl_glue"],shell=True)
 javaCodecJar="JavaRLGlueCodec.jar";
 javaJarPath="../codecs/Java/products/";
 JavaCodec=javaJarPath+javaCodecJar
-
+PythonPath="../codecs/Python"
 # def append_paths_java(theProcess):
 # 	javaFullJarString=javaJarPath+javaCodeJar
 # 	for thisProcess in processList
@@ -90,43 +90,56 @@ test_rl_episode_experiment={}
 
 test_1_agent["C"]="../codecs/C/tests/test_1_agent &";
 test_1_agent["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_1_Agent &";
+test_1_agent["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python -c \"import rlglue.agent.AgentLoader\" test_1_agent &";
 
 test_empty_agent["C"]="../codecs/C/tests/test_empty_agent &";
 test_empty_agent["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Empty_Agent &";
+test_empty_agent["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python -c \"import rlglue.agent.AgentLoader\" test_empty_agent &";
 
 test_message_agent["C"]="../codecs/C/tests/test_message_agent &";
 test_message_agent["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Message_Agent &";
+test_message_agent["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python -c \"import rlglue.agent.AgentLoader\" test_message_agent &";
 
 test_1_environment["C"]="../codecs/C/tests/test_1_environment &";
 test_1_environment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_1_Environment &";
+test_1_environment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python -c \"import rlglue.environment.EnvironmentLoader\" test_1_environment &";
 
 test_empty_environment["C"]="../codecs/C/tests/test_empty_environment &";
 test_empty_environment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Empty_Environment &";
+test_empty_environment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python -c \"import rlglue.environment.EnvironmentLoader\" test_empty_environment &";
 
 test_message_environment["C"]="../codecs/C/tests/test_message_environment &";
 test_message_environment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Message_Environment &";
+test_message_environment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python -c \"import rlglue.environment.EnvironmentLoader\" test_message_environment &";
 
 test_seeds_environment["C"]="../codecs/C/tests/test_seeds_environment &";
 test_seeds_environment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Seeds_Environment &";
+test_seeds_environment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python -c \"import rlglue.environment.EnvironmentLoader\" test_seeds_environment &";
 
 #Experiment should not have & at the end
 test_sanity_experiment["C"]="../codecs/C/tests/test_sanity_experiment";
 test_sanity_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Sanity_Experiment &";
+test_sanity_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_sanity_experiment.py";
 
 test_1_experiment["C"]="../codecs/C/tests/test_1_experiment";
 test_1_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_1_Experiment &";
+test_1_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_1_experiment.py";
 
 test_message_experiment["C"]="../codecs/C/tests/test_message_experiment";
 test_message_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Message_Experiment &";
+test_message_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_message_experiment.py";
 
 test_empty_experiment["C"]="../codecs/C/tests/test_empty_experiment";
 test_empty_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Empty_Experiment &";
+test_empty_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_empty_experiment.py";
 
 test_seeds_experiment["C"]="../codecs/C/tests/test_seeds_experiment";
 test_seeds_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Seeds_Experiment &";
+test_seeds_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_seeds_experiment.py";
 
 test_rl_episode_experiment["C"]="../codecs/C/tests/test_rl_episode_experiment"
 test_rl_episode_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_RL_Episode_Experiment &";
+test_rl_episode_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_rl_episode_experiment.py";
 
 #Define the high level tests here... IE: Map actual test names/labels to which
 #agent/env/experiment should be used

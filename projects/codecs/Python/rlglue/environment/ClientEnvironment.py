@@ -84,7 +84,7 @@ class ClientEnvironment:
 
 	# () -> void
 	def onEnvSetRandomSeed(self):
-		key = network.getRandomSeedKey()
+		key = self.network.getRandomSeedKey()
 		self.env.env_set_random_seed(key)
 		self.network.clearSendBuffer()
 		self.network.putInt(Network.kEnvSetRandomSeed)
@@ -92,7 +92,7 @@ class ClientEnvironment:
 
 	# () -> void
 	def onEnvSetState(self):
-		key = network.getStateKey()
+		key = self.network.getStateKey()
 		self.env.env_set_state(key)
 		self.network.clearSendBuffer()
 		self.network.putInt(Network.kEnvSetState)

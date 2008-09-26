@@ -55,6 +55,9 @@ class Random_seed_key:
 		if numChars != None:
 			self.charArray = ['']*numChars
 
+	def sameAs(self,otherSeedKey):
+		return self.intArray==otherSeedKey.intArray and self.doubleArray==otherSeedKey.doubleArray and self.charArray==otherSeedKey.charArray
+
 class State_key:
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		self.intArray = []
@@ -66,6 +69,9 @@ class State_key:
 			self.doubleArray = [0.0]*numDoubles
 		if numChars != None:
 			self.charArray = ['']*numChars
+			
+	def sameAs(self,otherStateKey):
+		return self.intArray==otherStateKey.intArray and self.doubleArray==otherStateKey.doubleArray and self.charArray==otherStateKey.charArray
 
 class Observation_action:
 	def __init__(self,theObservation=None,theAction=None):
