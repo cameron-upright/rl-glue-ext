@@ -19,6 +19,7 @@
 import random
 import sys
 from rlglue.environment.Environment import Environment
+from rlglue.environment import EnvironmentLoader as EnvironmentLoader
 from rlglue.types import Observation
 from rlglue.types import Action
 from rlglue.types import Reward_observation
@@ -73,3 +74,5 @@ class test_empty_environment(Environment):
 	def env_message(self,inMessage):
 		return None
 	
+if __name__=="__main__":
+	EnvironmentLoader.loadEnvironment(test_empty_environment())
