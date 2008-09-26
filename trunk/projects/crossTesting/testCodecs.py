@@ -30,14 +30,14 @@ def run_test(agent, env, experiment):
 			thisProc=subprocess.Popen([cmd],shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
 			allSubProcesses.append(thisProc)
 
-	time.sleep(.35)
+	time.sleep(.45)
 	if debug:
 		print "\t\texperiment: "+experiment
 		retcode = subprocess.call([experiment],shell=True)
 	else:
 		retcode = subprocess.call([experiment],shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
 
-	time.sleep(.5)
+	time.sleep(.6)
 	for someSubProcess in allSubProcesses:
 		if debug:
 			print "Calling Kill on PID: "+str(someSubProcess.pid)
