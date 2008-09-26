@@ -1,9 +1,8 @@
 
 RL_GLUE_BASE_PATH = ../..
 RL_GLUE_PATH = $(RL_GLUE_BASE_PATH)/src
-RL_GLUE_UTILS_PATH = $(RL_GLUE_BASE_PATH)/utils
 
-include $(RL_GLUE_PATH)/rl-glue.makefile
+include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 
 ENV = mines
 ENV_PATH = $(RL_GLUE_BASE_PATH)/examples/environment

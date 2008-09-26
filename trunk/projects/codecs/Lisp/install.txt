@@ -5,6 +5,7 @@
 
     1. Required libraries
     2. Supported Lisp implementations
+    3. Trying the examples
 
 -------------------------------------------------------------------------------
 
@@ -12,31 +13,33 @@
 
     usocket (http://www.cliki.net/usocket)
     ieee-floats (http://www.cliki.net/ieee-floats)
+    cl-ppcre (http://www.cliki.net/CL-PPCRE)
 
 2. Supported Lisp implementations
 
-    The libraries used by the codec supports many Lisp implementations,
+    The libraries required by the codec supports many Lisp implementations,
     the details can be found on their webpage. However the makefiles
-    are prepared for the following lisp implementations.
-    
-        SBCL
-        CMUCL
-        CLISP
-        OpenMCL (not tested yet)
+    are prepared only for the SBCL, CMUCL, CLISP and openMCL lisp
+    implementations.
 
-    For any other implementation one has to install the codec manually.
+3. Installing
 
-3. Compiling and installing
+    The codec can be installed as a ususal ASDF package from the src directory.
 
-    The used lisp implementation is autodetected by the makefiles.
-    If more supported lisps are found the order is SBCL, CMUCL, CLISP, OpenMCL.
-    If the default is not good, it can be overridden by the LISP environment
-    variable. Its supported values are 'sbcl' for SBCL, 'lisp' for CMUCL,
-    'clisp' for CLISP, 'ccl' for OpenMCL.
+    ... more details later ...
+
+3. Trying the examples
+
+    There are makefiles for the examples, which makes possible to try the codec
+    without installation. The used lisp implementation (if supported) is
+    autodetected by the makefiles. If more of them are found the order is
+    SBCL, CMUCL, CLISP, OpenMCL. If the default is not good, it can be
+    overridden by the LISP environment variable. Its supported values are
+    'sbcl' for SBCL, 'lisp' for CMUCL, 'clisp' for CLISP, 'ccl' for OpenMCL.
 
     Because CLISP does not provide the 'require' function, the path to
     the asdf.lisp file and the asd system definitions have to be specified
     (in a space separated way) by the LISP_PATH environment varaible.
-    Because it has a default value (can be checked in rl-glue.makefile),
+    Because it has a default value (can be checked in makefile.rl-glue),
     most unix user can ignore its setting.
 

@@ -5,7 +5,6 @@
 
     1. Usage of the codec
     2. Symbols and packages
-    3. Makefile
 
 -------------------------------------------------------------------------------
 
@@ -15,10 +14,6 @@
     to load the rl-glue package.
 
         (asdf:operate 'asdf:load-op 'rl-glue)
-
-    If one needs the utilities as well, they have to be loaded separately.
-
-        (asdf:operate 'asdf:load-op 'rl-glue-utils)
 
     Detailed descriptions about the interfaces can be found in the agent,
     environment and experiment directories in the readme files.
@@ -36,18 +31,4 @@
 
         (defclass my-agent (rl-glue:agent) ...)
         (defmethod rl-glue:env-init ((env my-env)) ...)
-
-3. Makefile
-
-    There is a special makefile called rl-glue.makefile, which can be used
-    by other makefiles to support a uniform Lisp scripting functionalities
-    to RL-Glue agent, environment and experiment clients.
-
-    This makefile supports SBCL, CMUCL and CLISP at the moment.
-
-    User-definable variables in the makefile are
-    LISP : lisp executable (e.g. sbcl)
-    LISP_PATH : paths to the asdf.lisp file and
-                to the asdf systems' directory
-                (only needed for CLISP)
 

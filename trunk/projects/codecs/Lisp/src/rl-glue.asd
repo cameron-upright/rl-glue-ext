@@ -46,6 +46,10 @@
             :components
             ((:file "rl-client-experiment"))
             :depends-on ("rl-package" "rl-buffer"
-                         "rl-common" "rl-network")))
-  :depends-on ("usocket" "ieee-floats"))
+                         "rl-common" "rl-network"))
+   (:module utils
+            :components
+            ((:file "rl-utils-package")
+             (:file "task-spec-parser" :depends-on ("rl-utils-package")))))
+  :depends-on ("usocket" "ieee-floats" "cl-ppcre"))
 
