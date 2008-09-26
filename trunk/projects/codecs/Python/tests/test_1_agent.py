@@ -19,7 +19,7 @@
 import random
 import sys
 from rlglue.agent.Agent import Agent
-import rlglue.agent.AgentLoader
+from rlglue.agent import AgentLoader as AgentLoader
 from rlglue.types import Action
 from rlglue.types import Observation
 
@@ -68,3 +68,7 @@ class test_1_agent(Agent):
 		outMessage=outMessage+"|"+inMessage
 		
 		return outMessage
+
+
+if __name__=="__main__":
+	AgentLoader.loadAgent(test_1_agent())
