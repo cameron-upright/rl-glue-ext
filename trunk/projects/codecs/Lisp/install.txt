@@ -24,9 +24,24 @@
 
 3. Installing
 
-    The codec can be installed as a ususal ASDF package from the src directory.
+    The sources can be turned into ASDF packages by the pack_asdf.sh script.
 
-    ... more details later ...
+        ./pack_asdf.sh rl-glue-clcdc
+        ./pack_asdf.sh rl-glue-utils
+
+    Then then ASDF packages can be installed on the usual ways.
+
+    Installation with ASDF-Install
+
+        (asdf-install:install "/path/to/package/rl-glue-clcdc.tar.gz")
+        (asdf-install:install "/path/to/package/rl-glue-utils.tar.gz")
+
+    Manual installation
+
+        Extract the rl-glue-*.tar.gz into your lisp system source directory
+        (e.g. /usr/share/common-lisp/source) and create a symlink to the
+        rl-glue-*.asd file from the systems directory
+        (e.g. /usr/share/common-lisp/systems).
 
 3. Trying the examples
 
