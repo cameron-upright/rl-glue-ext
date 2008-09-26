@@ -137,6 +137,7 @@ class Network:
 		return struct.unpack("!d",s)[0]
 	
 	def getString(self):
+		#If you read 0 you get "" not None so that's fine
 		length = self.getInt()
 		return self.recvBuffer.read(length)
 	
@@ -147,13 +148,13 @@ class Network:
 		obs = Observation(numInts,numDoubles,numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
-			obs.intArray = struct.unpack("!%di" % (numInts),s)
+			obs.intArray = list(struct.unpack("!%di" % (numInts),s))
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			obs.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+			obs.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
 		if numChars > 0:
 			s = self.recvBuffer.read(numChars*kCharSize)
-			obs.charArray = struct.unpack("!%dc" % (numChars),s)
+			obs.charArray = list(struct.unpack("!%dc" % (numChars),s))
 		return obs
 
 	def getAction(self):
@@ -163,13 +164,13 @@ class Network:
 		action = Action(numInts,numDoubles, numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
-			action.intArray = struct.unpack("!%di" % (numInts),s)
+			action.intArray = list(struct.unpack("!%di" % (numInts),s))
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			action.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+			action.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
 		if numChars > 0:
 			s = self.recvBuffer.read(numChars*kCharSize)
-			action.charArray = struct.unpack("!%dc" % (numChars),s)
+			action.charArray = list(struct.unpack("!%dc" % (numChars),s))
 		return action
 
 	def getStateKey(self):
@@ -179,13 +180,13 @@ class Network:
 		key = State_key(numInts,numDoubles, numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
-			obs.intArray = struct.unpack("!%di" % (numInts),s)
+			key.intArray = list(struct.unpack("!%di" % (numInts),s))
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			obs.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+			key.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
 		if numChars > 0:
 			s = self.recvBuffer.read(numChars*kCharSize)
-			key.charArray = struct.unpack("!%dc" % (numChars),s)
+			key.charArray = list(struct.unpack("!%dc" % (numChars),s))
 		return key
 	
 	def getRandomSeedKey(self):
@@ -195,13 +196,13 @@ class Network:
 		key = Random_seed_key(numInts,numDoubles, numChars)
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
-			obs.intArray = struct.unpack("!%di" % (numInts),s)
+			key.intArray = list(struct.unpack("!%di" % (numInts),s))
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			obs.doubleArray = struct.unpack("!%dd" % (numDoubles),s)
+			key.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
 		if numChars > 0:
 			s = self.recvBuffer.read(numChars*kCharSize)
-			key.charArray = struct.unpack("!%dc" % (numChars),s)
+			key.charArray = list(struct.unpack("!%dc" % (numChars),s))
 		return key
 	
 		
@@ -263,15 +264,12 @@ class Network:
 
 	def sizeOfAction(self,action):
 		return self.sizeOfAbstractType(action)
-
 	
 	def sizeOfObservation(self,observation):
 		return self.sizeOfAbstractType(observation)
-
 	
 	def sizeOfRandomSeed(self,key):
 		return self.sizeOfAbstractType(key)
-
 	
 	def sizeOfStateKey(self,key):
 		return self.sizeOfAbstractType(key)
