@@ -7,8 +7,8 @@ include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 
 EXP = experiment
 EXP_PATH = $(RL_GLUE_BASE_PATH)/examples/experiment
-EXP_LISP = $(EXP_PATH)/src/$(EXP).lisp
-EXP_FASL = $(EXP_PATH)/build/$(EXP).fasl
+EXP_LISP = $(EXP_PATH)/$(EXP).lisp
+EXP_FASL = $(EXP_PATH)/$(EXP).fasl
 
 TARGET = RL_experiment
 
@@ -30,5 +30,5 @@ $(EXP_FASL): $(EXP_LISP)
 
 .PHONY: clean
 clean:
-	-rm -f $(TARGET) $(EXP_FASL) $(EXP_PATH)/build/$(EXP).lib
+	-rm -f $(TARGET) $(EXP_FASL) $(EXP_PATH)/$(EXP).lib
 
