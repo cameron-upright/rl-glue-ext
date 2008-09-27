@@ -17,7 +17,7 @@ all: $(TARGET)
 
 $(TARGET): $(ENV_FASL)
 	$(info Creating $@.)
-	$(call lisp_start_sh, $@, \
+	@$(call lisp_start_sh, $@, \
 	        $(call lisp_glue, \
 	               $(call lisp_load, "$(ENV_FASL)") \
 	               $(LISP_EVAL) "(rl-mines:start-mines \
