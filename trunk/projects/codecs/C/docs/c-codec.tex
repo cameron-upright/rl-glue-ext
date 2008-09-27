@@ -3,20 +3,18 @@
 %\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
 %\geometry{landscape}                % Activate for for rotated page geometry
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{url}
 
 \usepackage{graphics}
-\usepackage{graphicx}
 \DeclareGraphicsRule{.JPG}{eps}{*}{`jpeg2ps #1} 
-\setlength\parskip{0.15in} 
+%\setlength\parskip{0.15in} 
 
 
 %\usepackage{epstopdf}
 %\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
-\title{RL-Glue C/C++ Codec Manual}
+\title{RL-Glue C/C++ Codec Manual r $Revision$}
 \author{Brian Tanner}
-%\date{}                                           % Activate to display a given date or no date
+\date{$Date$}                                           % Activate to display a given date or no date
 
 \begin{document}
 \maketitle
@@ -30,7 +28,7 @@
 \subsection{How to Use This Document}
 \section{RL-Glue Concepts}
 
-A large part of studying and researching reinforcement learning is experimentation. When writing an agent, ensuring it makes exploratory moves to discover the world is important to achieving an optimal policy. It is similarly important that experimenters are easily able to "explore" new algorithms and ideas without the prohibitive cost of writing the necesary experimentation code. One of the functions of RL-Glue is to simplify and speed up the process of writing an experiment so that every idea can be tested. 
+A large part of studying and researching reinforcement learning is experimentation. When writing an agent, ensuring it makes exploratory moves to discover the world is important to achieving an optimal policy. It is similarly important that experimenters are easily able to "explore" new algorithms and ideas without the prohibitive cost of writing the necessary experimentation code. One of the functions of RL-Glue is to simplify and speed up the process of writing an experiment so that every idea can be tested. 
 
 
 Another important part of learning is evaluation and improvement. With agents, learning is a cycle of policy and value function evaluation and improvement.  An agent will roam the world and gain more information about the states it encounters. The agent then uses this new data to evaluate how accurate the value function was and adjusts its behaviour (policy) based on the new value function. Similiarily, in research and development it is important to look at other work being done in the field, compare your own performance and then improve. One goal for RL-Glue is to provide a consistent tool for running and comparing varied agents and environments from diverse sources. One common problem for the current RL researcher arrises when an experimenter wishes to compare their own work with previously established results. Pre-RL-Glue, the solution was often to reverse engineer code for the experiment based on the results and environment/agent descriptions provided in papers.  When an author provided their own source, there was still the issue of deciphering the original code and piecing in a new agent or environment. With RL-Glue, an author could make the necessary RL-Glue agent/environment/experiment programs  available to the public (or use a public copy of an environment from our library \footnote{\url{http://rlai.cs.ualberta.ca/RLR/index.html}} such that another author can rerun the original experiment and easily plug in their own code to compare performance.  Competitions for agents using RL-Glue have been run at the NIPS conference in recent years, further exemplifying the utility of RL-Glue to the research community.
