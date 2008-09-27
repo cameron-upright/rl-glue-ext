@@ -5,7 +5,6 @@
 
     1. Package of RL-Glue utilities
     2. Utility descriptions
-        2.1 Parser for the task specification language
 
 -------------------------------------------------------------------------------
 
@@ -22,5 +21,5 @@
 2. Utility descriptions
 
     These descriptions and dependency requirements can be found in
-    their directories.
+    the own directories of the utilities.
 

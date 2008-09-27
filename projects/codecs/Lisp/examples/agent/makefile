@@ -7,8 +7,8 @@ include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 
 AGENT = random-agent
 AGENT_PATH = $(RL_GLUE_BASE_PATH)/examples/agent
-AGENT_LISP = $(AGENT_PATH)/src/$(AGENT).lisp
-AGENT_FASL = $(AGENT_PATH)/build/$(AGENT).fasl
+AGENT_LISP = $(AGENT_PATH)/$(AGENT).lisp
+AGENT_FASL = $(AGENT_PATH)/$(AGENT).fasl
 
 TARGET = RL_agent
 
@@ -31,5 +31,5 @@ $(AGENT_FASL): $(AGENT_LISP)
 
 .PHONY: clean
 clean:
-	-rm -f $(TARGET) $(AGENT_FASL) $(AGENT_PATH)/build/$(AGENT).lib
+	-rm -f $(TARGET) $(AGENT_FASL) $(AGENT_PATH)/$(AGENT).lib
 

@@ -7,8 +7,8 @@ include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 
 ENV = mines
 ENV_PATH = $(RL_GLUE_BASE_PATH)/examples/environment
-ENV_LISP = $(ENV_PATH)/src/$(ENV).lisp
-ENV_FASL = $(ENV_PATH)/build/$(ENV).fasl
+ENV_LISP = $(ENV_PATH)/$(ENV).lisp
+ENV_FASL = $(ENV_PATH)/$(ENV).fasl
 
 TARGET = RL_environment
 
@@ -31,5 +31,5 @@ $(ENV_FASL): $(ENV_LISP)
 
 .PHONY: clean
 clean:
-	-rm -f $(TARGET) $(ENV_FASL) $(ENV_PATH)/build/$(ENV).lib
+	-rm -f $(TARGET) $(ENV_FASL) $(ENV_PATH)/$(ENV).lib
 
