@@ -27,6 +27,11 @@
 
         cd examples
         make
+        
+    Cleaning the example directories.
+
+        cd examples
+        make clean
 
 2. Descriptions of the modules
 
