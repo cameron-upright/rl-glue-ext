@@ -9,16 +9,19 @@
 %I like space between my paragraphs
 \setlength{\parskip}{10pt} 
 
-\title{RL-Glue C/C++ Codec 3.0 Manual $Revision$}
+\title{RL-Glue C/C++ Codec 3.0 Manual }
 \author{Brian Tanner}
-\date{$Date$}                                           % Activate to display a given date or no date
+\date{}                                        
 
 \begin{document}
 \maketitle
 \tableofcontents
 
-
+\begin{verbatim}
+     $Id$
+\end{verbatim}
 \section{Introduction}
+
 This document describes how to use the C/C++ RL-Glue Codec, a software library that provides socket-compatibility with the RL-Glue Reinforcement Learning software library.  
 
 For general information and motivation about the RL-Glue\footnote{\url{http://glue.rl-community.org/}} project, please refer to the documentation provided with that project.
@@ -119,6 +122,8 @@ You will see something like:
 
 This means that the SkeletonAgent is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
+You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
+
 See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in default locations.
 
 The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
@@ -198,6 +203,8 @@ You will see something like:
 
 This means that the SkeletonEnvironment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
+You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
+
 See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in default locations.
 
 The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
@@ -239,7 +246,9 @@ You will see something like:
 		Connecting to host=127.0.0.1 on port=4096...
 \end{verbatim}
 
-This means that the SkeletonExperiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
+This means that the SkeletonExperiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$!  
+
+You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
 
 See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in default locations.
 
@@ -263,11 +272,214 @@ On some platforms, you may need to add \texttt{-lrlgluenetdev}
 
 
 \section{Putting it all together}
-Explain how to run the skeletons together.
+At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples directory if you have them all built, and RL-Glue installed in the default location:
+\begin{verbatim}
+	>$ rl_glue &
+	>$ skeleton_agent/SkeletonAgent &
+	>$ skeleton_environment/SkeletonEnvironment &
+	>$ skeleton_experiment/SkeletonExperiment	
+\end{verbatim}
+
+You should see output like the following if it worked:
+\begin{verbatim}
+	>$ rl_glue &
+	RL-Glue Version 3.0-alpha-3, Build 848:852M
+	RL-Glue is listening for connections on port=4096
+
+	>$ skeleton_agent/SkeletonAgent & 
+	RL-Glue C Agent Codec Version 1.0-alpha-3, Build 192:208M
+		Connecting to host=127.0.0.1 on port=4096...
+		RL-Glue C Agent Codec :: Connected
+		RL-Glue :: Agent connected.
+
+	>$ skeleton_environment/SkeletonEnvironment & 
+	RL-Glue C Environment Codec Version 1.0-alpha-3, Build 192:208M
+		Connecting to host=127.0.0.1 on port=4096...
+		RL-Glue C Environment Codec :: Connected
+		RL-Glue :: Environment connected.
+
+	$> skeleton_experiment/SkeletonExperiment
+
+
+	Experiment starting up!
+	RL-Glue C Experiment Codec Version 1.0-alpha-3, Build 192:208M
+		Connecting to host=127.0.0.1 on port=4096...
+		RL-Glue C Experiment Codec :: Connected
+		RL-Glue :: Experiment connected.
+	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,5]:1_[i]_[0,1]:[-1,1]
+
+
+	----------Sending some sample messages----------
+	Agent responded to "what is your name?" with: 
+	my name is skeleton_agent!
+	Agent responded to "who is your daddy and what does he do?" with: 
+	I don't know how to respond to your message
+
+	Environment responded to "what is your name?" with: 
+	my name is skeleton_environment!
+	Environment responded to "who is your daddy and what does he do?" with: 
+	I don't know how to respond to your message
+
+
+	----------Running a few episodes----------
+	Episode 0	 100 steps 	0.000000 total reward	 0 natural end 
+	Episode 1	 44 steps 	-1.000000 total reward	 1 natural end 
+	Episode 2	 18 steps 	-1.000000 total reward	 1 natural end 
+	Episode 3	 100 steps 	0.000000 total reward	 0 natural end 
+	Episode 4	 50 steps 	1.000000 total reward	 1 natural end 
+	Episode 5	 1 steps 	0.000000 total reward	 0 natural end 
+	Episode 6	 28 steps 	1.000000 total reward	 1 natural end 
+
+
+	----------Stepping through an episode----------
+	First observation and action were: 10 1
+
+	----------Summary----------
+	It ran for 144 steps, total reward was: -1.000000
+	
+\end{verbatim}
+
 
 \section{Who creates and frees memory?}
-- Copy-when-keep
+Memory management can be confusing in C/C++.  It might seem especially mysterious when using RL-Glue, because sometimes the structures are passed directly 
+from function to function (in direct-call RL-Glue), but other times they are written and read through a network socket (as with this codec).
 
+\subsection{Copy-On-Keep}
+The rule of thumb to follow in RL-Glue is what we call \textit{copy-on-keep}.  Copy-on-keep means that when you are passed a dynamically allocated structure, you should
+only consider it valid within the function that it was given to you.  If you need a persistent copy of the data outside of that scope, you should make a copy: copy it if you
+need to keep it.
+
+\subsubsection{Task Spec Example}
+\begin{verbatim}
+/********************   UNSAFE   *******************/
+task_specification_t task_spec_copy=0;
+	
+void agent_init(const task_specification_t task_spec){
+        /*
+            Not making a copy, just keeping a pointer to the data 
+        */
+    task_spec_copy=task_spec;
+}
+
+action_t agent_start(observation_t this_observation) {
+        /*
+            Behavior undefined.  Who knows if the string the task_spec
+            was originally pointing to still exists?
+        */
+    printf("Task spec we saved is: %s\n",task_spec_copy);
+    ...
+\end{verbatim}
+
+\begin{verbatim}
+/********************   SAFE   *******************/
+task_specification_t task_spec_copy=0;
+	
+void agent_init(const task_specification_t task_spec){
+        /*
+            Allocating space (need length+1 for the terminator character)
+        */
+    task_spec_copy=(char *)calloc(strlen(task_spec)+1, sizeof(char));
+    strcpy(task_spec_copy,task_spec);
+}
+
+action_t agent_start(observation_t this_observation) {
+        /*
+            This is fine, because even if 
+            the task_spec was deleted, we have a copy.
+        */
+    printf("Task spec we saved is: %s\n",task_spec_copy);
+    ...
+\end{verbatim}
+
+
+\subsubsection{Observation Example (using helper library)}
+
+
+\begin{verbatim}
+/********************   UNSAFE   *******************/
+observation_t last_observation;
+action_t agent_start(observation_t this_observation) {
+        /*
+            Unsafe, points last_observation to
+            this_observation's arrays!
+        */
+    last_observation=this_observation;
+...
+\end{verbatim}
+
+\begin{verbatim}
+/********************   SAFE   *******************/
+observation_t last_observation;
+action_t agent_start(observation_t this_observation) {
+        /*
+           This helper function actually frees the
+           allocated memory inside last_observation, allocates 
+           new memory, and copies from this_observation!
+        */
+    replaceRLStruct(&this_observation, &last_observation);
+...
+\end{verbatim}
+
+These examples might make it clear why most of our samples use global variables for things that are changed often, like structures that we return, or structures keeping track of the previous action/observation etc.  
+This allows us to only worry about re-allocating the arrays inside the struct, instead of also worrying about pointers to the structs themselves.
+
+\subsection{Free Your Mess}
+When using this codec, you are responsible for cleaning up any memory that you allocate. The good news is that that you can trust that between function calls, any memory you've returned to a caller has either been
+copied or is not necessary (it is safe to free it).  Remember that in C/C++ it's not safe to return pointers to stack-based memory.
+
+The Skeleton examples do the appropriate thing in this respect: the \texttt{intArrays} that need to be dynamically allocated are allocated in the \texttt{\_init} methods, and then the memory is released in the \texttt{\_cleanup} methods.
+
+Strings seem to be more complicated for some people, so here are a couple of examples:
+
+\begin{verbatim}
+/********************   UNSAFE   *******************/
+message_t agent_message(const message_t inMessage) {
+    char theBuffer[1024];
+    sprintf(theBuffer,"this is an example response message\n");
+        /*
+            This returns the address of a local variable
+            bad idea and compiler will complain
+        */
+    return theBuffer;
+}
+\end{verbatim}
+
+\begin{verbatim}
+/****************   UNSAFE (MEMORY LEAK)   ***************/
+message_t agent_message(const message_t inMessage) {
+    char theBuffer[1024];
+    message_t returnString=0;
+    sprintf(theBuffer,"this is an example response message\n");
+    returnString=(char *)calloc(strlen(theBuffer+1),sizeof(char));
+    strcpy(returnString,theBuffer);
+        /*
+            Memory leak... every time this function is called
+            a new returnString is allocated, but nobody will
+            ever clean them up!
+        */
+    return returnString;
+}
+\end{verbatim}
+
+\begin{verbatim}
+/********************   SAFE   *******************/
+message_t agentReturnString=0; /*Global Variable */	
+message_t agent_message(const message_t inMessage) {
+    char theBuffer[1024];
+    sprintf(theBuffer,"this is an example response message\n");
+
+        /*
+            This code will free the memory on subsequent calls
+        */
+    if(agentReturnString!=0){
+        free(agentReturnString);
+        agentReturnString=0;
+    }
+    agentReturnString=(char *)calloc(strlen(theBuffer+1),sizeof(char));
+    strcpy(agentReturnString,theBuffer);
+    return agentReturnString;
+}
+\end{verbatim}
 
 
 
@@ -280,76 +492,125 @@ be handy.
 The types used by this codec are the same as the direct-compile RL-Glue library.
 
 
-\subsection{Simple Types}
+\subsubsection{Simple Types}
 The simple types are:
 
 \begin{verbatim}
-	typedef double reward_t;
-	typedef int terminal_t;
-	typedef char* message_t;
-	typedef char* task_specification_t;
+    typedef double reward_t;
+    typedef int terminal_t;
+    typedef char* message_t;
+    typedef char* task_specification_t;
 \end{verbatim}
 
 \def\rat{rl\_abstract\_type\_t}
 
-\subsection{Structure Types}
+\subsubsection{Structure Types}
 \label{sec:structure-types}
 All of the major structure types (observations, actions, random seed keys, and state keys) are typedef'd to \texttt{\rat}.
 
 \begin{verbatim}
 typedef struct
 {
-	unsigned int numInts;
-	unsigned int numDoubles;
-	unsigned int numChars;
-	int* intArray;
-	double* doubleArray;
-	char* charArray;
+    unsigned int numInts;
+    unsigned int numDoubles;
+    unsigned int numChars;
+    int* intArray;
+    double* doubleArray;
+    char* charArray;
 } rl_abstract_type_t;
 \end{verbatim}
 
 The specific names and definitions of the structure types are:
 \begin{verbatim}
-	typedef rl_abstract_type_t observation_t;
-	typedef rl_abstract_type_t action_t;
-	typedef rl_abstract_type_t random_seed_key_t;
-	typedef rl_abstract_type_t state_key_t;
+    typedef rl_abstract_type_t observation_t;
+    typedef rl_abstract_type_t action_t;
+    typedef rl_abstract_type_t random_seed_key_t;
+    typedef rl_abstract_type_t state_key_t;
 \end{verbatim}
 
 The composite structure types returned by \texttt{env\_step} are:
 \begin{verbatim}
-	typedef struct{
-	  observation_t o;
-	  action_t a;
-	} observation_action_t;
+typedef struct{
+    observation_t o;
+    action_t a;
+} observation_action_t;
 
-	typedef struct
-	{
-	  reward_t r;
-	  observation_t o;
-	  terminal_t terminal;
-	} reward_observation_t;
+typedef struct{
+    reward_t r;
+    observation_t o;
+    terminal_t terminal;
+} reward_observation_t;
 
-	typedef struct {
-	  reward_t r;
-	  observation_t o;
-	  action_t a;
-	  terminal_t terminal;
-	} reward_observation_action_terminal_t;
+typedef struct {
+    reward_t r;
+    observation_t o;
+    action_t a;
+    terminal_t terminal;
+} reward_observation_action_terminal_t;
 \end{verbatim}
 
-\subsection{Summary}
+\subsubsection{Summary}
 The type names are:
 \begin{verbatim}
-	reward_t
-	terminal_t
-	message_t
-	task_specification_t
-	observation_t
-	action_t
-	observation_action_t
-	reward_observation_t
-	reward_observation_action_t
+    reward_t
+    terminal_t
+    message_t
+    task_specification_t
+    observation_t
+    action_t
+    observation_action_t
+    reward_observation_t
+    reward_observation_action_t
+\end{verbatim}
+
+
+\subsection{Functions}
+\subsubsection{Agent Functions}
+All agents \textbf{should implement} these functions, located in \texttt{rlglue/Agent\_common.h}
+\begin{verbatim}
+    void agent_init(const task_specification_t task_spec);
+    action_t agent_start(observation_t o);
+    action_t agent_step(reward_t r, observation_t o);
+    void agent_end(reward_t r);  
+    void agent_cleanup();
+    message_t agent_message(const message_t message);
+\end{verbatim}
+
+\subsubsection{Environment Functions}
+All environments \textbf{should implement} these functions, located in \texttt{rlglue/Environment\_common.h}
+\begin{verbatim}
+    task_specification_t env_init();
+    observation_t env_start();
+    reward_observation_t env_step(action_t a);
+    void env_cleanup();
+    message_t env_message(const message_t message);
+    void env_set_state(state_key_t sk);
+    void env_set_random_seed(random_seed_key_t rsk);
+    state_key_t env_get_state();
+    random_seed_key_t env_get_random_seed();
+\end{verbatim}
+
+\subsubsection{Experiments Functions}
+All experiments \textbf{can call} these functions, located in \texttt{rlglue/RL\_glue.h}
+\begin{verbatim}
+    task_specification_t RL_init();
+    observation_action_t RL_start();
+    reward_observation_action_terminal_t RL_step();
+    void RL_cleanup();
+
+    terminal_t RL_episode(unsigned int num_steps);
+
+    message_t RL_agent_message(message_t message);
+    message_t RL_env_message(message_t message);
+
+    reward_t RL_return();
+    int RL_num_steps();
+    int RL_num_episodes();
+
+    void RL_set_state(state_key_t sk);
+    void RL_set_random_seed(random_seed_key_t rsk);
+    state_key_t RL_get_state();
+    random_seed_key_t RL_get_random_seed();
 \end{verbatim}
 
 
@@ -365,10 +626,13 @@ All of the types that existed in the 2.x codec (ex: \texttt{Observation} instead
 
 
 \section{Frequently Asked Questions}
+We're waiting to hear your questions!
 
 \section{Credits and Acknowledgements}
-Thanks to everyone for testing the code, and for helping out.
+Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.
+
+Brian Tanner has since grabbed the torch and has continued to develop the codec.
 
 \subsection{Contributing}
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
-\end{document}  
+\end{document} 
