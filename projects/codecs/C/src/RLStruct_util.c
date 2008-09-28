@@ -64,7 +64,61 @@ void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst){
 	}
 	if(src->numChars>0){
 		memcpy(dst->charArray, src->charArray,dst->numChars);
+	}	
+}
+
+/**
+Created by Brian Tanner on Sept 27, 2008.
+I thought this might be handy for people
+*/
+void clearRLStruct(rl_abstract_type_t *dst){
+	if(dst->intArray!=0){
+		free(dst->intArray);
 	}
+	dst->intArray=0;
+
+	if(dst->doubleArray!=0){
+		free(dst->doubleArray);
+	}
+	dst->doubleArray=0;
+	if(dst->charArray!=0){
+		free(dst->charArray);
+	}
+	dst->charArray=0;
+
+	dst->numInts=0;
+	dst->numDoubles=0;
+	dst->numChars=0;
 	
 }
 
+void freeRLStructPointer(rl_abstract_type_t *dst){
+	if(dst!=0){
+		clearRLStruct(dst);
+		free(dst);
+	}
+}
+
+void allocateRLStruct(rl_abstract_type_t *dst, const unsigned int numInts, const unsigned int numDoubles, const unsigned int numChars){
+	if(dst!=0){
+		clearRLStruct(dst);
+	}
+	dst->numInts=numInts;
+	dst->numDoubles=numDoubles;
+	dst->numChars=numChars;
+	
+	if(dst->numInts!=0)
+		dst->intArray=(int *)calloc(dst->numInts,sizeof(int));
+
+	if(dst->numDoubles!=0)
+		dst->doubleArray=(double *)calloc(dst->numDoubles,sizeof(double));
+
+	if(dst->numChars!=0)
+		dst->charArray=(char *)calloc(dst->numChars,sizeof(char));
+}
+
+rl_abstract_type_t *allocateRLStructPointer(const unsigned int numInts, const unsigned int numDoubles, const unsigned int numChars){
+	rl_abstract_type_t *dst=(rl_abstract_type_t *)calloc(1,sizeof(rl_abstract_type_t));
+	allocateRLStruct(dst,numInts,numDoubles,numChars);
+	return dst;
+}

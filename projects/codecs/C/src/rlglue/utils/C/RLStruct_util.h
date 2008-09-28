@@ -30,11 +30,25 @@ extern "C" {
 
 
 /**	
-*	Sept 8 2008, Brian Tanner is creating replace function
-*	This one takes a src and dst, and puts all the data from the src into the dst
-*	Freeing and reallocating if necessary
-**/
+*	Brian Tanner, Sept 2008
+*	Created some functions for people not super savvy with C that might make using this codec a little easier.
+*/
+
+/*	Copies all of the data from src to dst, freeing and allocating only if necessary*/
 void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst);
+
+/*	Frees the 3 arrays if they are not null, sets them to null, and sets numInts, numDoubles, numChars to 0*/
+void clearRLStruct(rl_abstract_type_t *dist);
+
+/*  calls clearRLStruct on dst, and then frees the pointers */
+void freeRLStructPointer(rl_abstract_type_t *dst);
+
+/*  Given a pointer to a rl_abstract_type_t, allocate arrays of the requested size and 
+    set numInts, numDoubles, numChars in the struct appropriately. */
+void allocateRLStruct(rl_abstract_type_t *dst, const unsigned int numInts, const unsigned int numDoubles, const unsigned int numChars);
+
+/* Create a new rl_abstract_type_t, allocate its arrays and its numInts/Doubles/Chars using allocateRLStruct, return the pointer */
+rl_abstract_type_t *allocateRLStructPointer(const unsigned int numInts, const unsigned int numDoubles, const unsigned int numChars);
 
 #ifdef __cplusplus
 }
