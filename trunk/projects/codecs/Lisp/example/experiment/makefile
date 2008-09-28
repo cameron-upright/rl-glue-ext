@@ -4,7 +4,7 @@ TARGETS = RL_experiment
 
 include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 
-$(TARGETS): $(RL_GLUE_BUILD_PATH)/rl-glue-examples
+$(TARGETS): $(RL_GLUE_EXAMPLES_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
 		   $(call asdf_load, rl-glue-clcdc) \

@@ -21,7 +21,7 @@ endif
 RL_GLUE_BASE_PATH = ../..
 include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 
-RL_agent: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
+RL_agent: $(RL_GLUE_TESTS_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
 	              $(call asdf_load, rl-glue-clcdc) \
@@ -32,7 +32,7 @@ RL_agent: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
 	                              $(RLGLUE_AUTORECONNECT))" ))
 	chmod +x $@
 
-RL_environment: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
+RL_environment: $(RL_GLUE_TESTS_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
 	              $(call asdf_load, rl-glue-clcdc) \
@@ -43,7 +43,7 @@ RL_environment: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
 	                              $(RLGLUE_AUTORECONNECT))" ))
 	chmod +x $@
 
-RL_experiment: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
+RL_experiment: $(RL_GLUE_TESTS_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
 	              $(call asdf_load, rl-glue-clcdc) \
