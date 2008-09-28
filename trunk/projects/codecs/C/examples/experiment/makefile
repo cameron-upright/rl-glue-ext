@@ -9,13 +9,13 @@ BUILD_PATH = ./Build
 
 EXP_OBJECTS = $(basename $(EXPERIMENT)).o
 
-CFLAGS = -I$(EXP_SRC_PATH)
-
+CFLAGS = $(EXTRA_CFLAGS) -I$(EXP_SRC_PATH)
+LDFLAGS = $(EXTRA_LDFLAGS)
 all: RL_experiment
 #Note -lrlgluenetdev is only necessary for cygwin compatibility
 
 RL_experiment: $(addprefix $(BUILD_PATH)/,$(EXP_OBJECTS)) 
-	$(CC) $^ -lrlexperiment -lrlgluenetdev -lm -o RL_experiment 
+	$(CC) $(LDFLAGS) $^ -lrlexperiment -lrlgluenetdev -lm -o RL_experiment 
 
 $(BUILD_PATH)/$(basename $(EXPERIMENT)).o: $(EXP_SRC_PATH)/$(EXPERIMENT)
 	$(CC) -c $(CFLAGS) $^ -o $@
