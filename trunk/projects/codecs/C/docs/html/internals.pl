@@ -14,5 +14,9 @@ $key = q/sec:structure-types/;
 $ref_files{$key} = "$dir".q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
+$key = q/sec:gotchas-shared-libs/;
+$ref_files{$key} = "$dir".q|C-Codec.html|; 
+$noresave{$key} = "$nosave";
+
 1;
 
