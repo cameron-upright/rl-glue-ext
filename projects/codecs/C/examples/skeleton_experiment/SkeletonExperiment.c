@@ -77,8 +77,8 @@ int main(int argc, char *argv[]) {
 	while(stepResponse.terminal!=1){
 		stepResponse=RL_step();
 		if(stepResponse.terminal!=1){
-			/*Print state,action pairs */
-			printf("(%d,%d) ",stepResponse.o.intArray[0],stepResponse.a.intArray[0]);
+			/*Could optionally print state,action pairs */
+			/*printf("(%d,%d) ",stepResponse.o.intArray[0],stepResponse.a.intArray[0]);*/
 		}
 	}
 	
