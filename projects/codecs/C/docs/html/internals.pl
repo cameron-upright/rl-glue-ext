@@ -3,15 +3,15 @@
 
 
 $key = q/sec:custom-flags/;
-$ref_files{$key} = "$dir".q|doc.html|; 
+$ref_files{$key} = "$dir".q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:agent/;
-$ref_files{$key} = "$dir".q|doc.html|; 
+$ref_files{$key} = "$dir".q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:structure-types/;
-$ref_files{$key} = "$dir".q|doc.html|; 
+$ref_files{$key} = "$dir".q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
 1;
