@@ -1,3 +1,254 @@
+-----------------------------------------
+RL-GLUE-EXTENSIONS 1.0 BETA Release :: 2008-09-28  
+-----------------------------------------
+
+2008-09-28  Brian Tanner <brian@tannerpages.com>
+
+	* [r231] configure, configure.ac,
+	  src/rlglue/utils/C/RLStruct_util.h,
+	  tests/test_rl_episode_experiment.c: Preparing the official beta-1
+	  of the C/C++ Codec.
+
+	* [r230] examples/Glue_single_C_exe, examples/agent,
+	  examples/environment, examples/experiment,
+	  examples/skeleton_agent/SkeletonAgent.c,
+	  examples/skeleton_experiment/SkeletonExperiment.c: Removing the
+	  old examples, the learning agent and the mines world. We should
+	  add them into RL-Library or something else... not necessarily in
+	  the codec though (too complicated).
+
+	* [r229] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/index.html,
+	  docs/html/internals.pl, docs/html/labels.pl: Final first draft of
+	  the documentation.
+
+	* [r228] docs/C-Codec.pdf, docs/html/C-Codec.css,
+	  docs/html/C-Codec.html, docs/html/doc.css, docs/html/doc.html,
+	  docs/html/images.log, docs/html/index.html,
+	  docs/html/internals.pl, docs/html/labels.pl, docs/makeDocs.bash:
+	  Renamed from doc.everything to C-Codec.everything.
+
+	* [r227] docs/C-Codec.pdf, docs/C-Codec.tex, docs/doc.pdf,
+	  docs/doc.tex: Changing file name because I Want better links.
+
+	* [r226] docs, docs/doc.pdf, docs/html, docs/html/WARNINGS,
+	  docs/html/doc.css, docs/html/doc.html, docs/html/images.aux,
+	  docs/html/images.log, docs/html/images.pl, docs/html/images.tex,
+	  docs/html/img1.png, docs/html/index.html, docs/html/internals.pl,
+	  docs/html/labels.pl, docs/html/nx_grp_g.png,
+	  docs/html/prev_g.png, docs/html/up_g.png: Adding up to date html
+	  to C codec docs.
+
+	* [r225] docs/doc.pdf, docs/html: Cleaning up the docs directory a
+	  bit.
+
+	* [r224] docs/doc.tex: Almost have first draft of the C/C++ Codec
+	  Doc ready.
+
+	* [r223] docs/doc.tex: Almost have first draft of the C/C++ Codec
+	  Doc ready.
+
+	* [r222] docs/doc.tex: Almost have first draft of the C/C++ Codec
+	  Doc ready.
+
+	* [r221] docs/doc.tex: Almost have first draft of the C/C++ Codec
+	  Doc ready.
+
+	* [r220] docs/doc.tex: Almost have first draft of the C/C++ Codec
+	  Doc ready.
+
+	* [r219] docs/doc.tex: Almost have first draft of the C/C++ Codec
+	  Doc ready.
+
+	* [r211] src/RLStruct_util.c, src/RL_client_experiment.c,
+	  src/rlglue/utils/C/RLStruct_util.h: Adding the tests version of
+	  the C codec after fighting some bugs during documentation.
+
+	* [r210] docs/doc.tex, docs/html, docs/html/WARNINGS,
+	  docs/html/c-codec.css, docs/html/c-codec.html,
+	  docs/html/crossref.png, docs/html/doc.css, docs/html/doc.html,
+	  docs/html/images.aux, docs/html/images.log, docs/html/images.pl,
+	  docs/html/images.tex, docs/html/img1.png, docs/html/img2.png,
+	  docs/html/img3.png, docs/html/index.html, docs/html/internals.pl,
+	  docs/html/labels.pl, docs/html/nx_grp_g.png,
+	  docs/html/prev_g.png, docs/html/up_g.png, docs/makeDocs.bash:
+	  Adding the current version of the docs to svn.
+
+	* [r209] examples/Glue_single_C_exe/Makefile,
+	  examples/agent/makefile, examples/environment/makefile,
+	  examples/experiment/makefile, examples/skeleton_agent,
+	  examples/skeleton_agent/Makefile,
+	  examples/skeleton_agent/SkeletonAgent.c,
+	  examples/skeleton_environment,
+	  examples/skeleton_environment/Makefile,
+	  examples/skeleton_environment/SkeletonEnvironment.c,
+	  examples/skeleton_experiment,
+	  examples/skeleton_experiment/Makefile,
+	  examples/skeleton_experiment/SkeletonExperiment.c: Added skeleton
+	  env/agent/exp to illustrate simple modules in the manual.
+
+	* [r208] configure, configure.ac: Added sexy configure switches
+	  like --with-rl-glue=/path/to/rl-glue that automatically add lib
+	  and header paths to CFLAGS and LDFLAGS
+
+	* [r207] configure.ac: Added some magic code from the GNU autoconf
+	  page to take out warnings when rl-glue is not in the default
+	  location.
+
+2008-09-27  Brian Tanner <brian@tannerpages.com>
+
+	* [r206] docs/c-codec, docs/c-codec.tex, docs/doc.tex: still
+	  playing
+
+	* [r205] docs/c-codec.tex: still playing
+
+	* [r204] docs, docs/c-codec, docs/c-codec.tex,
+	  docs/c-codec/WARNINGS, docs/c-codec/c-codec.css,
+	  docs/c-codec/c-codec.html, docs/c-codec/footnode.html,
+	  docs/c-codec/images.aux, docs/c-codec/images.log,
+	  docs/c-codec/images.pl, docs/c-codec/images.tex,
+	  docs/c-codec/img1.png, docs/c-codec/img2.png,
+	  docs/c-codec/img3.png, docs/c-codec/img4.png,
+	  docs/c-codec/img5.png, docs/c-codec/img6.png,
+	  docs/c-codec/img7.png, docs/c-codec/index.html,
+	  docs/c-codec/internals.pl, docs/c-codec/labels.pl,
+	  docs/c-codec/node1.html, docs/c-codec/node10.html,
+	  docs/c-codec/node11.html, docs/c-codec/node12.html,
+	  docs/c-codec/node13.html, docs/c-codec/node14.html,
+	  docs/c-codec/node15.html, docs/c-codec/node16.html,
+	  docs/c-codec/node17.html, docs/c-codec/node18.html,
+	  docs/c-codec/node19.html, docs/c-codec/node2.html,
+	  docs/c-codec/node20.html, docs/c-codec/node21.html,
+	  docs/c-codec/node22.html, docs/c-codec/node23.html,
+	  docs/c-codec/node24.html, docs/c-codec/node25.html,
+	  docs/c-codec/node26.html, docs/c-codec/node27.html,
+	  docs/c-codec/node28.html, docs/c-codec/node29.html,
+	  docs/c-codec/node3.html, docs/c-codec/node30.html,
+	  docs/c-codec/node31.html, docs/c-codec/node32.html,
+	  docs/c-codec/node33.html, docs/c-codec/node34.html,
+	  docs/c-codec/node35.html, docs/c-codec/node36.html,
+	  docs/c-codec/node37.html, docs/c-codec/node38.html,
+	  docs/c-codec/node39.html, docs/c-codec/node4.html,
+	  docs/c-codec/node40.html, docs/c-codec/node41.html,
+	  docs/c-codec/node42.html, docs/c-codec/node43.html,
+	  docs/c-codec/node44.html, docs/c-codec/node45.html,
+	  docs/c-codec/node46.html, docs/c-codec/node47.html,
+	  docs/c-codec/node48.html, docs/c-codec/node49.html,
+	  docs/c-codec/node5.html, docs/c-codec/node50.html,
+	  docs/c-codec/node51.html, docs/c-codec/node52.html,
+	  docs/c-codec/node6.html, docs/c-codec/node7.html,
+	  docs/c-codec/node8.html, docs/c-codec/node9.html: Adding the C
+	  codec docs as a test of my new config file
+
+2008-09-26  Brian Tanner <brian@tannerpages.com>
+
+	* [r193] tests/test_empty_experiment.c: Make the C empty test check
+	  field values so it's much more compelling... everyone passed.
+
+2008-09-18  Brian Tanner <brian@tannerpages.com>
+
+	* [r149] tests/Makefile.am, tests/Makefile.in,
+	  tests/test_empty_experiment.c,
+	  tests/test_rl_episode_experiment.c,
+	  tests/test_speed_experiment.c: Fixed a couple of warnings and
+	  added all the Wall, pedantic, and C99 flags to the test build
+
+	* [r148] config/config.h.in, config/ltmain.sh, configure,
+	  configure.ac, src/RL_debug.c, tests/Makefile.am,
+	  tests/Makefile.in, tests/test_speed.sh,
+	  tests/test_speed_environment.c, tests/test_speed_experiment.c:
+	  Added speed test and updated configure.ac to build it differently
+	  depending on what timing code is installed. Also upped the limits
+	  for callign a struct 'broken' in RL_debug.c
+
+2008-09-17  Brian Tanner <brian@tannerpages.com>
+
+	* [r146] tests/test_1_experiment.c: Added all of the test
+	  agents/envs/experiments to the java code and fixed a small test
+	  bug in one of the C tests
+
+	* [r141] Makefile.in, aclocal.m4, configure, configure.ac,
+	  src/Makefile.in, tests/Makefile.in, tests/test_1_experiment.c:
+	  Have all of the Java test agents implemented, some of the test
+	  environments, none of the experiments. Codec is currently working
+	  great.
+
+2008-09-16  Brian Tanner <brian@tannerpages.com>
+
+	* [r134] Makefile.in, aclocal.m4, config/config.h.in,
+	  config/ltmain.sh, configure, configure.ac, src/Makefile.am,
+	  src/Makefile.in, src/TaskSpec_Parser.c, tests/Makefile.in,
+	  tests/test_1_agent.c, tests/test_1_environment.c,
+	  tests/test_1_experiment.c, tests/test_empty_agent.c,
+	  tests/test_empty_environment.c, tests/test_empty_experiment.c,
+	  tests/test_message_agent.c, tests/test_message_environment.c,
+	  tests/test_message_experiment.c,
+	  tests/test_rl_episode_experiment.c,
+	  tests/test_sanity_experiment.c, tests/test_seeds_environment.c,
+	  tests/test_seeds_experiment.c, tests/useful_functions.c: Updated
+	  all of the tests to the new, non-memory-leaking tests and made a
+	  few other changes to maximize cygwin compatibility
+
+	* [r133] examples/Glue_single_C_exe/Makefile,
+	  examples/environment/makefile, examples/experiment/makefile:
+	  updated the link lines in other makefiles so that they work on
+	  windows
+
+	* [r132] examples/agent/makefile: Changed the order of things in
+	  the makefile to make it build in Windows. CAREFUL... order
+	  matters
+
+	* [r131] config, config/config.h.in, config/saved_svn_version.txt,
+	  configure, configure.ac, examples/experiment/src/experiment.c,
+	  src/RL_client_experiment.c, tests/test_1_experiment.c,
+	  tests/test_empty_experiment.c, tests/test_message_experiment.c,
+	  tests/test_rl_episode_experiment.c,
+	  tests/test_sanity_experiment.c, tests/test_seeds_experiment.c:
+	  Took config/saved_svn_version.txt out of subversion. I'll put it
+	  in EXTRA_DIST so it gets included. It is replaced whenever we
+	  ./configure from an SVN repository, so we don't have to worry
+	  about it not existing.
+
+2008-09-15  Brian Tanner <brian@tannerpages.com>
+
+	* [r130] Makefile.am, Makefile.in, config/saved_svn_version.txt,
+	  configure, configure.ac: added examples to EXTRA_DIST
+
+	* [r129] configure.ac: Changed 'libs' to 'lib' to just keep it less
+	  complicated because default install location is /usr/local/lib
+
+	* [r128] tests/test_seeds_environment.c, tests/useful_functions.h:
+	  Added newline in useful_functions.h and removed rogue symbol in
+	  test_seeds_environment.c to remove warnings in linux
+
+	* [r125] ChangeLog, README, config/saved_svn_version.txt,
+	  configure, configure.ac, src/RL_client_agent.c,
+	  src/RL_client_environment.c, src/RL_client_experiment.c: Updated
+	  a print statement
+
+2008-09-14  Brian Tanner <brian@tannerpages.com>
+
+	* [r123] Makefile.am, Makefile.in, bootstrap.sh,
+	  config/config.h.in, config/saved_svn_version.txt, configure,
+	  configure.ac, src/Makefile.in, src/RLStruct_util.c,
+	  src/RL_client_agent.c, src/RL_client_environment.c,
+	  src/RL_client_experiment.c, src/RL_debug.c,
+	  src/TaskSpec_Parser.c, tests/Makefile.am, tests/Makefile.in,
+	  tests/test_1_agent.c, tests/test_1_environment.c,
+	  tests/test_1_experiment.c, tests/test_empty_agent.c,
+	  tests/test_empty_environment.c, tests/test_empty_experiment.c,
+	  tests/test_message_agent.c, tests/test_message_environment.c,
+	  tests/test_message_experiment.c,
+	  tests/test_rl_episode_experiment.c,
+	  tests/test_sanity_experiment.c, tests/test_seeds_environment.c,
+	  tests/test_seeds_experiment.c, tests/useful_functions.c: Move to
+	  using config.h for configuration, fixed make distcheck by putting
+	  the test scripts into EXTRA_DIST, got the SVN version into
+	  SVN_VERSION symbol using same trick as in RL-Glue, and now print
+	  that out when we start up an agent/env/exp.
+
+
+-----------------------------------------
 RL-GLUE-EXTENSIONS 1.0 Alpha Release :: 2008-09-15  
 -----------------------------------------
 

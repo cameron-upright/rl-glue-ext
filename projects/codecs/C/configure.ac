@@ -1,6 +1,7 @@
-AC_INIT(src/RL_client_agent.c)
+AC_INIT(rlglue_codec_c,1.0-beta-1)
+AC_CONFIG_SRCDIR(src/RL_client_agent.c)
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(rlglue_codec_c,1.0-beta-1)
+AM_INIT_AUTOMAKE([1.9 tar-ustar])
 
 AC_MSG_CHECKING(if custom rl-glue path was specified)
 AC_ARG_WITH(rl-glue,

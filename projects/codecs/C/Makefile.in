@@ -178,8 +178,8 @@ sharedstatedir = @sharedstatedir@
 svnversioncommand = @svnversioncommand@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = src tests
-EXTRA_DIST = config/saved_svn_version.txt examples
+SUBDIRS = src tests examples
+EXTRA_DIST = config/saved_svn_version.txt
 all: all-recursive
 
 .SUFFIXES:

@@ -6,9 +6,11 @@ This project is licensed under the Apache 2 license. Check LICENSE-2.0.txt for m
 ----------------------------
 Documentation
 ----------------------------
-For the full RL-Glue Documentation, please visit RL-Glue's public home:
-http://glue.rl-community.org
+For the full RL-Glue Codec Documentation, please visit:
+http://glue.rl-community.org/Home/codecs/c-c-codec
 
+
+If you're not online, all of the docs are in the docs/ folder.  If the instructions below don't work, please check out the docs ;)
 
 -------------------------------------
 Super short introduction to the Codec
@@ -27,7 +29,4 @@ This will install the necessary libraries and headers to:
 	/usr/local/lib
 	/usr/local/includes/rlglue
 	
-If you don't have sudo priviledges or you would like to install them somewhere else (Ex: your home directory):
-	$>./configure --prefix=/path/to/your/home/directory         EG: /home/Users/btanner
-	$>make
-	$>make install
+If you don't have sudo priviledges check the docs for additional information.
