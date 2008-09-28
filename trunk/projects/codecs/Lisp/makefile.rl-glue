@@ -56,36 +56,61 @@ LISP += \
 	                    (append (list \#P\"$(RL_GLUE_CLCDC_PATH)/\" \
 						              \#P\"$(RL_GLUE_UTILS_PATH)/\" \
 						              \#P\"$(RL_GLUE_TESTS_PATH)/\" \
+						              \#P\"$(RL_GLUE_EXAMPLE_PATH)/\" \
 	                                  $(LISP_FORMATTED_PATH)) \
-	                            asdf:*central-registry*))"
+	                            asdf:*central-registry*))" \
+	$(LISP_EVAL) "(asdf:operate 'asdf:load-op 'asdf-binary-locations)" \
+	$(LISP_EVAL) "(setf asdf:*centralize-lisp-binaries* t)" \
+	$(LISP_EVAL) "(setf asdf:*default-toplevel-directory* \
+	                    \#P\"$(realpath $(RL_GLUE_BUILD_PATH))/\")"
 
 ###############################################################################
-### Loading systems and lisp files.
+### Load and compilation lisp forms.
 
 lisp_load = $(LISP_EVAL) "(load $(call quote,$(1)))"
 
-asdf_operate = $(LISP_EVAL) "(asdf:operate '$(1) '$(2))"
-asdf_load = $(call asdf_operate,asdf:load-op,$(1))
-asdf_compile = $(call asdf_operate,asdf:compile-op,$(1))
-
-LISP_RL_GLUE_CLCDC = $(call asdf_load,rl-glue-clcdc)
-LISP_RL_GLUE_UTILS = $(call asdf_load,rl-glue-utils)
-LISP_QUIT = $(LISP_EVAL) "(quit)"
+asdf_operate = $(LISP_EVAL) "(asdf:operate '$(strip $(1)) '$(strip $(2)))"
+asdf_load = $(call asdf_operate, asdf:load-op, $(1))
+asdf_compile = $(call asdf_operate, asdf:compile-op, $(1))
 
 ###############################################################################
-### Running Lisp and compilation.
+### Running lisp commands.
 
-lisp_run = $(LISP) $(1) $(2) $(LISP_QUIT)
-lisp_glue = $(call lisp_run,$(LISP_RL_GLUE_CLCDC),$(1))
-lisp_glue_utils = \
-	$(call lisp_run,$(LISP_RL_GLUE_CLCDC) $(LISP_RL_GLUE_UTILS),$(1))
+lisp_run = $(LISP) $(strip $(1)) $(LISP_EVAL) "(quit)"
+lisp_compile_asdf = $(call lisp_run, $(call asdf_compile, $(1)))
 
-fasl_realpath = "$(realpath $(dir $(strip $(1))))/$(notdir $(strip $(1)))"
+###############################################################################
+### Global targets.
 
-lisp_compile = \
-	$(call $(1), $(LISP_EVAL) \
-	"(compile-file $(call quote,"$(strip $(2))") \
-	               :output-file $(call quote,$(call fasl_realpath, $3)))")
+find_sources = $(shell find $(strip $(1)) -name '*.lisp' -type f)
+
+RL_GLUE_CLCDC_SOURCES = $(call find_sources, $(RL_GLUE_CLCDC_PATH))
+RL_GLUE_UTILS_SOURCES = $(call find_sources, $(RL_GLUE_UTILS_PATH))
+RL_GLUE_TESTS_SOURCES = $(call find_sources, $(RL_GLUE_TESTS_PATH))
+RL_GLUE_EXAMPLES_SOURCES = $(call find_sources, $(RL_GLUE_EXAMPLE_PATH))
+
+.PHONY: all
+all: $(TARGETS)
+
+$(RL_GLUE_BUILD_PATH)/rl-glue-clcdc: $(RL_GLUE_CLCDC_SOURCES)
+	$(call lisp_compile_asdf, rl-glue-clcdc)
+	touch $@
+
+$(RL_GLUE_BUILD_PATH)/rl-glue-utils: $(RL_GLUE_UTILS_SOURCES)
+	$(call lisp_compile_asdf, rl-glue-utils)
+	touch $@
+
+$(RL_GLUE_BUILD_PATH)/rl-glue-tests: $(RL_GLUE_BUILD_PATH)/rl-glue-clcdc \
+                                     $(RL_GLUE_BUILD_PATH)/rl-glue-utils \
+                                     $(RL_GLUE_TESTS_SOURCES)
+	$(call lisp_compile_asdf, rl-glue-tests)
+	touch $@
+
+$(RL_GLUE_BUILD_PATH)/rl-glue-examples: $(RL_GLUE_BUILD_PATH)/rl-glue-clcdc \
+                                        $(RL_GLUE_BUILD_PATH)/rl-glue-utils \
+                                        $(RL_GLUE_EXAMPLES_SOURCES)
+	$(call lisp_compile_asdf, rl-glue-examples)
+	touch $@
 
 ###############################################################################
 ### Lisp starter shell script creation.

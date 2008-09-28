@@ -28,6 +28,7 @@
    ;; rl-common
    #:int-array
    #:float-array
+   #:char-string
    #:observation
    #:make-observation
    #:action
