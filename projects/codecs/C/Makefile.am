@@ -1,2 +1,2 @@
 SUBDIRS = src tests
-EXTRA_DIST = config/saved_svn_version.txt examples README AUTHORS ChangeLog
+EXTRA_DIST = config/saved_svn_version.txt examples docs README AUTHORS ChangeLog
