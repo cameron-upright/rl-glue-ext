@@ -38,7 +38,7 @@ extern "C" {
 void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst);
 
 /*	Frees the 3 arrays if they are not null, sets them to null, and sets numInts, numDoubles, numChars to 0*/
-void clearRLStruct(rl_abstract_type_t *dist);
+void clearRLStruct(rl_abstract_type_t *dst);
 
 /*  calls clearRLStruct on dst, and then frees the pointers */
 void freeRLStructPointer(rl_abstract_type_t *dst);

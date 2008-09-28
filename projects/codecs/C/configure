@@ -2220,7 +2220,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=rlglue_codec_c
- VERSION=1.0-alpha-3
+ VERSION=1.0-beta-1
 
 
 cat >>confdefs.h <<_ACEOF
