@@ -12,8 +12,8 @@
 ;;; See the License for the specific language governing permissions and
 ;;; limitations under the License.
 ;;;
-;;; $Revision: 203 $
-;;; $Date: 2008-09-27 14:23:56 +0200 (Sat, 27 Sep 2008) $
+;;; $Revision$
+;;; $Date$
 
 (in-package #:cl-user)
 
