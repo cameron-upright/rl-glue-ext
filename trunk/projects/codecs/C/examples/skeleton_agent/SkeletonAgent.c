@@ -32,6 +32,7 @@ int randInRange(int max){
    	x = (r * (max+1));
 	return (int)x;
 }
+
 void agent_init(const task_specification_t task_spec)
 {
 	/*Seed the random number generator*/
@@ -55,7 +56,8 @@ void agent_init(const task_specification_t task_spec)
 
 action_t agent_start(observation_t this_observation) {
 	/* This agent always returns a random number, either 0 or 1 for its action */
-	int theAction=randInRange(1);
+	int theIntAction=randInRange(1);
+	this_action.intArray[0]=theIntAction;
 
 	/* In a real action you might want to store the last observation and last action*/
 	replaceRLStruct(&this_action, &last_action);
@@ -67,8 +69,8 @@ action_t agent_start(observation_t this_observation) {
 action_t agent_step(reward_t reward, observation_t this_observation) {
 	/* This agent  returns 0 or 1 randomly for its action */
 	/* This agent always returns a random number, either 0 or 1 for its action */
-	int theAction=randInRange(1);
-	this_action.intArray[0]=theAction;
+	int theIntAction=randInRange(1);
+	this_action.intArray[0]=theIntAction;
 	
 	
 	/* In a real action you might want to store the last observation and last action*/
