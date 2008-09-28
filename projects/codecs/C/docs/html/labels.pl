@@ -14,6 +14,10 @@ $key = q/sec:structure-types/;
 $external_labels{$key} = "$URL/" . q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
+$key = q/sec:gotchas-shared-libs/;
+$external_labels{$key} = "$URL/" . q|C-Codec.html|; 
+$noresave{$key} = "$nosave";
+
 1;
 
 
@@ -29,8 +33,12 @@ $key = q/sec:agent/;
 $external_latex_labels{$key} = q|2|; 
 $noresave{$key} = "$nosave";
 
+$key = q/sec:gotchas-shared-libs/;
+$external_latex_labels{$key} = q|4.1.2|; 
+$noresave{$key} = "$nosave";
+
 $key = q/sec:structure-types/;
-$external_latex_labels{$key} = q|7.1.2|; 
+$external_latex_labels{$key} = q|8.1.2|; 
 $noresave{$key} = "$nosave";
 
 1;

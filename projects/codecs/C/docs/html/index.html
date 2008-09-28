@@ -42,67 +42,69 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html43"
+<LI><A NAME="tex2html47"
   HREF="C-Codec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html44"
+<LI><A NAME="tex2html48"
   HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html45"
+<LI><A NAME="tex2html49"
   HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
-<LI><A NAME="tex2html46"
+<LI><A NAME="tex2html50"
   HREF="C-Codec.html#SECTION00023000000000000000">Installing the Codec</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html47"
+<LI><A NAME="tex2html51"
   HREF="C-Codec.html#SECTION00030000000000000000">Agents</A>
 <UL>
-<LI><A NAME="tex2html48"
+<LI><A NAME="tex2html52"
   HREF="C-Codec.html#SECTION00031000000000000000">Custom Flags for Custom Installs</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html49"
+<LI><A NAME="tex2html53"
   HREF="C-Codec.html#SECTION00040000000000000000">Environments</A>
-<LI><A NAME="tex2html50"
+<LI><A NAME="tex2html54"
   HREF="C-Codec.html#SECTION00050000000000000000">Experiments</A>
 <UL>
-<LI><A NAME="tex2html51"
+<LI><A NAME="tex2html55"
   HREF="C-Codec.html#SECTION00051000000000000000">Gotchas!</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html52"
+<LI><A NAME="tex2html56"
   HREF="C-Codec.html#SECTION00060000000000000000">Putting it all together</A>
-<LI><A NAME="tex2html53"
+<LI><A NAME="tex2html57"
   HREF="C-Codec.html#SECTION00070000000000000000">Who creates and frees memory?</A>
 <UL>
-<LI><A NAME="tex2html54"
+<LI><A NAME="tex2html58"
   HREF="C-Codec.html#SECTION00071000000000000000">Copy-On-Keep</A>
-<LI><A NAME="tex2html55"
+<LI><A NAME="tex2html59"
   HREF="C-Codec.html#SECTION00072000000000000000">Free Your Mess</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html56"
-  HREF="C-Codec.html#SECTION00080000000000000000">Codec Specification Reference</A>
-<UL>
-<LI><A NAME="tex2html57"
-  HREF="C-Codec.html#SECTION00081000000000000000">Types</A>
-<LI><A NAME="tex2html58"
-  HREF="C-Codec.html#SECTION00082000000000000000">Functions</A>
-</UL>
-<BR>
-<LI><A NAME="tex2html59"
-  HREF="C-Codec.html#SECTION00090000000000000000">Changes and 2.x Backward Compatibility</A>
-<UL>
 <LI><A NAME="tex2html60"
+  HREF="C-Codec.html#SECTION00080000000000000000">Advanced Features</A>
+<LI><A NAME="tex2html61"
+  HREF="C-Codec.html#SECTION00090000000000000000">Codec Specification Reference</A>
+<UL>
+<LI><A NAME="tex2html62"
   HREF="C-Codec.html#SECTION00091000000000000000">Types</A>
+<LI><A NAME="tex2html63"
+  HREF="C-Codec.html#SECTION00092000000000000000">Functions</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html61"
-  HREF="C-Codec.html#SECTION000100000000000000000">Frequently Asked Questions</A>
-<LI><A NAME="tex2html62"
-  HREF="C-Codec.html#SECTION000110000000000000000">Credits and Acknowledgements</A>
+<LI><A NAME="tex2html64"
+  HREF="C-Codec.html#SECTION000100000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html63"
-  HREF="C-Codec.html#SECTION000111000000000000000">Contributing</A>
+<LI><A NAME="tex2html65"
+  HREF="C-Codec.html#SECTION000101000000000000000">Types</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html66"
+  HREF="C-Codec.html#SECTION000110000000000000000">Frequently Asked Questions</A>
+<LI><A NAME="tex2html67"
+  HREF="C-Codec.html#SECTION000120000000000000000">Credits and Acknowledgements</A>
+<UL>
+<LI><A NAME="tex2html68"
+  HREF="C-Codec.html#SECTION000121000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
 <P>
@@ -116,7 +118,7 @@ This document describes how to use the C/C++ RL-Glue Codec, a software library t
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot209"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot239"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in C and/or C++.
@@ -127,8 +129,8 @@ This codec will allow you to create agents, environments, and experiment program
 Software Requirements</A>
 </H2>
 This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools<A NAME="tex2html3"
-  HREF="#foot210"><SUP>2</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html5"
-  HREF="#foot211"><SUP>3</SUP></A>). 
+  HREF="#foot240"><SUP>2</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html5"
+  HREF="#foot241"><SUP>3</SUP></A>). 
 
 <P>
 
@@ -194,7 +196,7 @@ command line switch to specify where the rl-glue root is located.
 <P>
 If you installed RL-Glue to some place other than <TT>/usr/local</TT>, say <TT>/Users/btanner/tmp/rlglue</TT>, you could do:
 <PRE>
-	&gt;$ ./configure --with-rl-glue=/Users/btanner/tmp/rlglue/lib
+	&gt;$ ./configure --with-rl-glue=/Users/btanner/tmp/rlglue
 	&gt;$ make
 	&gt;$ sudo make install
 </PRE>
@@ -292,7 +294,7 @@ It might be useful to break this down a little bit:
 <DD>Compile the SkeletonAgent.c source file.
 </DD>
 <DT><STRONG>-lrlutils</STRONG></DT>
-<DD>Link to the RLUtils library, which comes with this codec.  This library contains convenience functions for allocating and cleaning up the structure types (Section <A HREF="#sec:structure-types">7.1.2</A>).  If you 
+<DD>Link to the RLUtils library, which comes with this codec.  This library contains convenience functions for allocating and cleaning up the structure types (Section <A HREF="#sec:structure-types">8.1.2</A>).  If you 
 don't use these convenience functions, you don't need this library.
 </DD>
 <DT><STRONG>-lrlagent</STRONG></DT>
@@ -318,21 +320,35 @@ or you can export the values as environment variables.  These instructions apply
 <P>
 To do it on the command line:
 <PRE>
-&gt;$ CFLAGS=-I/Users/joe/glue LDFLAGS=-L/Users/joe/glue make
+&gt;$ CFLAGS=-I/Users/joe/glue/include LDFLAGS=-L/Users/joe/glue/lib make
 </PRE>
 
 <P>
 That might turn out to be quite a hassle while you are developing.  In that case, you can either update the <TT>Makefile</TT> to include these flags, 
 or set an environment variable.  If you are using the bash shell you can <TT>export</TT> the environment variables:
 <PRE>
-&gt;$ export CFLAGS=-I/Users/joe/glue
-&gt;$ export LDFLAGS=-L/Users/joe/glue
+&gt;$ export CFLAGS=-I/Users/joe/glue/include
+&gt;$ export LDFLAGS=-L/Users/joe/glue/lib
 &gt;$ make
 </PRE>
 
 <P>
-When you open a new terminal window, these values will be lost unless you put the appropriate <TT>export</TT> lines in your shell startup script.  But that's enough about that, because
-we're getting well off topic.
+In some cases, you may be able to compile and link your programs without incident, but you receive shared library loading errors when you try to execute them, as mentioned in Gotchas! (Section <A HREF="#sec:gotchas-shared-libs">4.1.2</A>).
+
+<P>
+In these cases, you may also have to set <TT>LD_LIBRARY_PATH</TT> (Linux) or <TT>DYLD_LIBRARY_PATH</TT> (OS X) environment variables, like:
+<PRE>
+	&gt;$ export LD_LIBRARY_PATH=/Users/joe/glue/lib
+</PRE>
+
+<P>
+In some cases (64-bit linux looks in <TT>/usr/local/lib64</TT>?) you may have to use this approach even when RL-Glue and this codec are installed in the default locations:
+<PRE>
+	&gt;$ export LD_LIBRARY_PATH=/usr/local/lib
+</PRE>
+
+<P>
+When you open a new terminal window, all of these environment variables will be lost unless you put the appropriate <TT>export</TT> lines in your shell startup script.
 
 <P>
 
@@ -467,10 +483,32 @@ On some platforms, you may need to add <TT>-lrlgluenetdev</TT>
 Gotchas!</A>
 </H2>
 
-<UL>
-<LI>If you are calling <TT>RL_step</TT>, beware that the last step (when <TT>terminal==1</TT>), the action will be empty.
-</LI>
-</UL>
+<H3><A NAME="SECTION00051100000000000000">
+Crashes and Bus Errors in Experiment Program</A>
+</H3>
+If you are running an experiment using <TT>RL_step</TT>, beware that the last step (when <TT>terminal==1</TT>), the action will be empty.  If you try to access the values of the actions in this 
+case, you may crash your program.
+
+<P>
+
+<H3><A NAME="SECTION00051200000000000000"></A>
+<A NAME="sec:gotchas-shared-libs"></A>
+<BR>
+Shared Library Loading Errors
+</H3>
+On some machines we've used, the codec installs without incident, but when the agent/environment/experiment is run, the system gives an error message similar to:
+<PRE>
+	&gt;$ ./RL_agent: error while loading shared libraries: librlagent-1:0:0.so.1:
+	cannot open shared object file: No such file or directory
+</PRE>
+
+<P>
+If this happens, the operating system might have an alternate search path, and might not be looking in <TT>/usr/local/lib</TT> for libraries. 
+You can troubleshoot this problem by doing:
+<PRE>
+	&gt;$ LD_DEBUG=libs ./RL_agent
+</PRE>
+If you see that <TT>/usr/local/lib</TT> is not in the search path, you may want to add it to your library search path using <TT>LDFLAGS</TT> or <TT>LD_LIBRARY_PATH</TT>.  See Section <A HREF="#sec:custom-flags">2.1</A> for more information.  
 
 <P>
 
@@ -483,6 +521,12 @@ At this point, we've compiled and run each of the three components, now it's tim
 	&gt;$ skeleton_agent/SkeletonAgent &amp;
 	&gt;$ skeleton_environment/SkeletonEnvironment &amp;
 	&gt;$ skeleton_experiment/SkeletonExperiment
+</PRE>
+
+<P>
+If RL-Glue is not installed in the default location, you'll have to start the <TT>rl_glue</TT> executable server using it's full path (unless it's in your <TT>PATH</TT> environment variable):
+<PRE>
+	&gt;$ /path/to/rl-glue/bin/rl_glue &amp;
 </PRE>
 
 <P>
@@ -715,6 +759,16 @@ message_t agent_message(const message_t inMessage) {
 <P>
 
 <H1><A NAME="SECTION00080000000000000000">
+Advanced Features</A>
+</H1>
+This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
+
+<P>
+Someone should write this later (Opportunity to contribute!).
+
+<P>
+
+<H1><A NAME="SECTION00090000000000000000">
 Codec Specification Reference</A>
 </H1>
 This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be an interesting section of this document, but it will
@@ -722,14 +776,14 @@ be handy.
 
 <P>
 
-<H2><A NAME="SECTION00081000000000000000">
+<H2><A NAME="SECTION00091000000000000000">
 Types</A>
 </H2>
 The types used by this codec are the same as the direct-compile RL-Glue library.
 
 <P>
 
-<H3><A NAME="SECTION00081100000000000000">
+<H3><A NAME="SECTION00091100000000000000">
 Simple Types</A>
 </H3>
 The simple types are:
@@ -744,7 +798,7 @@ The simple types are:
 
 <P>
 
-<H3><A NAME="SECTION00081200000000000000"></A>
+<H3><A NAME="SECTION00091200000000000000"></A>
 <A NAME="sec:structure-types"></A>
 <BR>
 Structure Types
@@ -797,7 +851,7 @@ typedef struct {
 
 <P>
 
-<H3><A NAME="SECTION00081300000000000000">
+<H3><A NAME="SECTION00091300000000000000">
 Summary</A>
 </H3>
 The type names are:
@@ -815,11 +869,11 @@ The type names are:
 
 <P>
 
-<H2><A NAME="SECTION00082000000000000000">
+<H2><A NAME="SECTION00092000000000000000">
 Functions</A>
 </H2>
 
-<H3><A NAME="SECTION00082100000000000000">
+<H3><A NAME="SECTION00092100000000000000">
 Agent Functions</A>
 </H3>
 All agents <B>should implement</B> these functions, located in <TT>rlglue/Agent_common.h</TT>
@@ -834,7 +888,7 @@ All agents <B>should implement</B> these functions, located in <TT>rlglue/Agent_
 
 <P>
 
-<H3><A NAME="SECTION00082200000000000000">
+<H3><A NAME="SECTION00092200000000000000">
 Environment Functions</A>
 </H3>
 All environments <B>should implement</B> these functions, located in <TT>rlglue/Environment_common.h</TT>
@@ -852,7 +906,7 @@ All environments <B>should implement</B> these functions, located in <TT>rlglue/
 
 <P>
 
-<H3><A NAME="SECTION00082300000000000000">
+<H3><A NAME="SECTION00092300000000000000">
 Experiments Functions</A>
 </H3>
 All experiments <B>can call</B> these functions, located in <TT>rlglue/RL_glue.h</TT>
@@ -879,11 +933,61 @@ All experiments <B>can call</B> these functions, located in <TT>rlglue/RL_glue.h
 
 <P>
 
-<H1><A NAME="SECTION00090000000000000000">
+<H3><A NAME="SECTION00092400000000000000">
+RLUtils Library Functions</A>
+</H3>
+You can get access to these functions by linking to libRLUtils (<TT>-lrlutils</TT>) and by including the appropriate header:
+
+<P>
+<PRE>
+#include &lt;rlglue/utils/C/RLStruct_util.h&gt;
+</PRE>
+
+<P>
+<PRE>
+/*	Copies all of the data from src to dst, freeing and allocating only if necessary*/
+void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst);
+
+/*  
+    Frees the 3 data arrays if they are not NULL, sets them to NULL, 
+    and sets numInts, numDoubles, numChars to 0
+*/
+void clearRLStruct(rl_abstract_type_t *dst);
+
+/*  calls clearRLStruct on dst, and then frees the dst pointer */
+void freeRLStructPointer(rl_abstract_type_t *dst);
+
+/*
+    Given a pointer to a rl_abstract_type_t, allocate arrays of the requested sizes,
+    set the contents of the arrays to 0, and set numInts, numDoubles,
+    numChars in the struct appropriately.
+*/
+void allocateRLStruct(rl_abstract_type_t *dst, 
+                      const unsigned int numInts,
+                      const unsigned int numDoubles,
+                      const unsigned int numChars);
+
+/*
+    Create a new rl_abstract_type_t, allocate its arrays 
+    and its numInts/Doubles/Chars using allocateRLStruct, 
+    return the pointer
+*/
+rl_abstract_type_t *allocateRLStructPointer(const unsigned int numInts,
+                                            const unsigned int numDoubles,
+                                            const unsigned int numChars);
+</PRE>
+
+<P>
+
+<H1><A NAME="SECTION000100000000000000000">
 Changes and 2.x Backward Compatibility</A>
 </H1>
+There were many changes from RL-Glue 2.x to RL-Glue 3.x.  Most of them are at the level of the API and project organization, and are addressed in the RL-Glue 
+project documentation.
 
-<H2><A NAME="SECTION00091000000000000000">
+<P>
+
+<H2><A NAME="SECTION000101000000000000000">
 Types</A>
 </H2>
 All of the types that existed in the 2.x codec (ex: <TT>Observation</TT> instead of <TT>observation_t</TT>) are still supported through a definition file called 
@@ -894,14 +998,14 @@ All of the types that existed in the 2.x codec (ex: <TT>Observation</TT> instead
 
 <P>
 
-<H1><A NAME="SECTION000100000000000000000">
+<H1><A NAME="SECTION000110000000000000000">
 Frequently Asked Questions</A>
 </H1>
 We're waiting to hear your questions!
 
 <P>
 
-<H1><A NAME="SECTION000110000000000000000">
+<H1><A NAME="SECTION000120000000000000000">
 Credits and Acknowledgements</A>
 </H1>
 Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.
@@ -911,14 +1015,14 @@ Brian Tanner has since grabbed the torch and has continued to develop the codec.
 
 <P>
 
-<H2><A NAME="SECTION000111000000000000000">
+<H2><A NAME="SECTION000121000000000000000">
 Contributing</A>
 </H2>
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
 
 <P>
 
-<H1><A NAME="SECTION000120000000000000000">
+<H1><A NAME="SECTION000130000000000000000">
 Document Information</A>
 </H1>
 <PRE>
@@ -930,7 +1034,7 @@ $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Code
 
 <P>
 
-<H1><A NAME="SECTION000130000000000000000">
+<H1><A NAME="SECTION000140000000000000000">
 About this document ...</A>
 </H1>
  <STRONG>RL-Glue C/C++ Codec 3.0 Manual </STRONG><P>
@@ -951,19 +1055,19 @@ The command line arguments were: <BR>
 The translation was initiated by Brian Tanner on 2008-09-28
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot209">... RL-Glue</A><A
+<DT><A NAME="foot239">... RL-Glue</A><A
  HREF="C-Codec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot210">... Autotools</A><A
+<DT><A NAME="foot240">... Autotools</A><A
  HREF="C-Codec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://sources.redhat.com/autobook/">http://sources.redhat.com/autobook/</A></TT>
 
 </DD>
-<DT><A NAME="foot211">... CYGWIN</A><A
+<DT><A NAME="foot241">... CYGWIN</A><A
  HREF="C-Codec.html#tex2html5"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html6"
   HREF="http://www.cygwin.com/">http://www.cygwin.com/</A></TT>
