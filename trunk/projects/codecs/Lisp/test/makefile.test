@@ -1,0 +1,59 @@
+
+TARGETS =
+TEST_PATH = $(RL_GLUE_TEST_PATH)/$(TEST)
+
+ifneq ($(AGENT),'')
+TARGETS += RL_agent
+endif
+
+ifneq ($(ENVIRONMENT),'')
+TARGETS += RL_environment
+endif
+
+ifneq ($(EXPERIMENT),'')
+TARGETS += RL_experiment
+endif
+
+ifeq ($(TARGETS),'')
+	$(error "No targets are specified!")
+endif
+
+RL_GLUE_BASE_PATH = ../..
+include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
+
+RL_agent: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
+	$(call lisp_start_sh, $@, \
+	       $(call lisp_run, \
+	              $(call asdf_load, rl-glue-clcdc) \
+	              $(call asdf_load, rl-glue-utils) \
+	              $(call asdf_load, rl-glue-tests) \
+				  $(LISP_EVAL) "(rl-glue-tests:start-$(AGENT) \
+	                              $(RLGLUE_HOST) $(RLGLUE_PORT) \
+	                              $(RLGLUE_AUTORECONNECT))" ))
+	chmod +x $@
+
+RL_environment: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
+	$(call lisp_start_sh, $@, \
+	       $(call lisp_run, \
+	              $(call asdf_load, rl-glue-clcdc) \
+	              $(call asdf_load, rl-glue-utils) \
+	              $(call asdf_load, rl-glue-tests) \
+	              $(LISP_EVAL) "(rl-glue-tests:start-$(ENVIRONMENT) \
+	                              $(RLGLUE_HOST) $(RLGLUE_PORT) \
+	                              $(RLGLUE_AUTORECONNECT))" ))
+	chmod +x $@
+
+RL_experiment: $(RL_GLUE_BUILD_PATH)/rl-glue-tests
+	$(call lisp_start_sh, $@, \
+	       $(call lisp_run, \
+	              $(call asdf_load, rl-glue-clcdc) \
+	              $(call asdf_load, rl-glue-utils) \
+	              $(call asdf_load, rl-glue-tests) \
+	              $(LISP_EVAL) "(rl-glue-tests:start-$(EXPERIMENT) \
+	                              $(RLGLUE_HOST) $(RLGLUE_PORT))" ))
+	chmod +x $@
+
+.PHONY: clean
+clean:
+	-rm -f $(TARGETS)
+
