@@ -11,7 +11,8 @@
 1. Package of RL-Glue utilities
 
     The utilities are organized under the rl-glue-utils package.
-    All of the utilities (rl-glue-utils package) can be loaded by
+    We recommend to use ASDF (http://www.cliki.net/asdf)
+    to load the rl-glue-utils package.
 
         (asdf:operate 'asdf:load-op 'rl-glue-utils)
 
