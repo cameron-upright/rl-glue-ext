@@ -35,17 +35,16 @@
 #include <rlglue/RL_glue.h>
 #include <rlglue/network/RL_network.h>
 
-static int theExperimentConnection = 0;
+int theExperimentConnection = 0;
 
-static observation_t theObservation       = {0};
-static action_t theAction                 = {0};
-static state_key_t theStateKey            = {0};
-static random_seed_key_t theRandomSeedKey = {0};
-static rlBuffer theBuffer               = {0};
-static task_specification_t theTaskSpec = 0;
+observation_t theObservation       = {0};
+action_t theAction                 = {0};
+state_key_t theStateKey            = {0};
+random_seed_key_t theRandomSeedKey = {0};
+rlBuffer theBuffer               = {0};
 
-static char* theMessage = 0;
-static unsigned int theMessageCapacity = 0;
+char* theMessage = 0;
+unsigned int theMessageCapacity = 0;
 
 void cleanupExperimentAtExit(void)
 {
@@ -110,16 +109,21 @@ task_specification_t RL_init() {
  /* Brian added Sept 8 so that RL_init returns the task spec */
  /* We'll reuse messageLength and theMessage from Agent_message*/
   offset = rlBufferRead(&theBuffer, offset, &messageLength, 1, sizeof(unsigned int));
-  if (messageLength > theMessageCapacity) {
-    free(theMessage);
+  if (messageLength >= theMessageCapacity) {
+	if(theMessage!=0){
+    	free(theMessage);
+		theMessage=0;
+	}	
+
     theMessage = (char*)calloc(messageLength+1, sizeof(char));
     theMessageCapacity = messageLength;
   }
 
   if (messageLength > 0) {
     offset = rlBufferRead(&theBuffer, offset, theMessage, messageLength, sizeof(char));
-    theMessage[messageLength] = '\0';
   }
+  /*Need to move this outside of the if statement, so that we get null termination for empty messages*/
+  theMessage[messageLength] = '\0';
 
   return theMessage;
 }
@@ -237,11 +241,6 @@ void RL_cleanup() {
     theRandomSeedKey.numDoubles = 0;
   }
 
-  if (theTaskSpec != 0) {
-    free(theTaskSpec);
-    theTaskSpec = 0;
-  }
-
   if (theMessage != 0) {
     free(theMessage);
     theMessage = 0;
@@ -315,7 +314,10 @@ message_t RL_agent_message(const message_t message) {
   offset = rlBufferRead(&theBuffer, offset, &messageLength, 1, sizeof(int));
   /* Sept 12 2008 made this >= instead of > so that we'd at least have size 1 */
   if (messageLength >= theMessageCapacity) {
-    free(theMessage);
+    if(theMessage!=0){
+    	free(theMessage);
+		theMessage=0;
+	}	
     theMessage = (char*)calloc(messageLength+1, sizeof(char));
     theMessageCapacity = messageLength;
   }
@@ -356,7 +358,10 @@ message_t RL_env_message(const message_t message) {
   offset = rlBufferRead(&theBuffer, offset, &messageLength, 1, sizeof(int));
   /* Sept 12 2008 made this >= instead of > so that we'd at least have size 1 */
   if (messageLength >= theMessageCapacity) {
-    free(theMessage);
+    if(theMessage!=0){
+    	free(theMessage);
+		theMessage=0;
+	}	
     theMessage = (char*)calloc(messageLength+1, sizeof(char));
     theMessageCapacity = messageLength;
   }
