@@ -3,15 +3,15 @@
 
 
 $key = q/sec:custom-flags/;
-$external_labels{$key} = "$URL/" . q|doc.html|; 
+$external_labels{$key} = "$URL/" . q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:agent/;
-$external_labels{$key} = "$URL/" . q|doc.html|; 
+$external_labels{$key} = "$URL/" . q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:structure-types/;
-$external_labels{$key} = "$URL/" . q|doc.html|; 
+$external_labels{$key} = "$URL/" . q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
 1;
