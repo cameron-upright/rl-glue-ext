@@ -1,0 +1,64 @@
+
+                       ---------------------------------
+                       Installing the RL-Glue Lisp codec
+                       ---------------------------------
+
+    1. Required libraries
+    2. Supported Lisp implementations
+    3. Installation
+    4. Uninstallation
+
+-------------------------------------------------------------------------------
+
+1. Required libraries
+
+    For RL-Glue CL codec.
+
+        usocket (http://www.cliki.net/usocket)
+        ieee-floats (http://www.cliki.net/ieee-floats)
+
+    For RL-Glue utilities.
+
+        cl-ppcre (http://www.cliki.net/CL-PPCRE)
+
+2. Supported Lisp implementations
+
+    The libraries required by the codec supports many Lisp implementations,
+    the details can be found on their webpage. However the makefiles
+    are prepared only for the SBCL, CMUCL, CLISP and openMCL lisp
+    implementations.
+
+3. Installation
+
+    The sources can be turned into ASDF packages by the pack-asdf.sh script.
+
+        chmod +x pack-asdf.sh (if necessary)
+        ./pack-asdf.sh
+
+    It creates the rl-glue-clcdc.tar.gz and the rl-glue-utils.tar.gz
+    ASDF packages, which can be installed on the usual way.
+
+    Installation with ASDF-Install (http://www.cliki.net/ASDF-Install).
+
+        (asdf-install:install "/path/to/package/rl-glue-clcdc.tar.gz")
+        (asdf-install:install "/path/to/package/rl-glue-utils.tar.gz")
+
+    Manual installation.
+
+        Extract the rl-glue-*.tar.gz into your lisp system source directory
+        (e.g. /usr/share/common-lisp/source) and create a symlink to the
+        rl-glue-*.asd file from the systems directory
+        (e.g. /usr/share/common-lisp/systems).
+
+4. Uninstallation
+
+    Uninstallation with ASDF-Install (http://www.cliki.net/ASDF-Install).
+
+        (asdf-install:uninstall :rl-glue-utils)
+        (asdf-install:uninstall :rl-glue-clcdc)
+
+    Manual uninstallation.
+
+        Just symply delete the folder and the symlink created during the
+        installation process.
+
