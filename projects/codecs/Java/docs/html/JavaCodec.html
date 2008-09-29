@@ -42,53 +42,53 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html44"
+<LI><A NAME="tex2html46"
   HREF="JavaCodec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html45"
-  HREF="JavaCodec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html46"
-  HREF="JavaCodec.html#SECTION00022000000000000000">Getting the Codec</A>
 <LI><A NAME="tex2html47"
+  HREF="JavaCodec.html#SECTION00021000000000000000">Software Requirements</A>
+<LI><A NAME="tex2html48"
+  HREF="JavaCodec.html#SECTION00022000000000000000">Getting the Codec</A>
+<LI><A NAME="tex2html49"
   HREF="JavaCodec.html#SECTION00023000000000000000">Installing the Codec</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html48"
-  HREF="JavaCodec.html#SECTION00030000000000000000">Agents</A>
-<LI><A NAME="tex2html49"
-  HREF="JavaCodec.html#SECTION00040000000000000000">Environments</A>
 <LI><A NAME="tex2html50"
-  HREF="JavaCodec.html#SECTION00050000000000000000">Experiments</A>
+  HREF="JavaCodec.html#SECTION00030000000000000000">Agents</A>
 <LI><A NAME="tex2html51"
-  HREF="JavaCodec.html#SECTION00060000000000000000">Putting it all together</A>
+  HREF="JavaCodec.html#SECTION00040000000000000000">Environments</A>
 <LI><A NAME="tex2html52"
-  HREF="JavaCodec.html#SECTION00070000000000000000">Who creates and frees memory?</A>
+  HREF="JavaCodec.html#SECTION00050000000000000000">Experiments</A>
 <LI><A NAME="tex2html53"
-  HREF="JavaCodec.html#SECTION00080000000000000000">Advanced Features</A>
+  HREF="JavaCodec.html#SECTION00060000000000000000">Putting it all together</A>
 <LI><A NAME="tex2html54"
+  HREF="JavaCodec.html#SECTION00070000000000000000">Who creates and frees memory?</A>
+<LI><A NAME="tex2html55"
+  HREF="JavaCodec.html#SECTION00080000000000000000">Advanced Features</A>
+<LI><A NAME="tex2html56"
   HREF="JavaCodec.html#SECTION00090000000000000000">Codec Specification Reference</A>
 <UL>
-<LI><A NAME="tex2html55"
+<LI><A NAME="tex2html57"
   HREF="JavaCodec.html#SECTION00091000000000000000">Types</A>
-<LI><A NAME="tex2html56"
+<LI><A NAME="tex2html58"
   HREF="JavaCodec.html#SECTION00092000000000000000">Functions</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html57"
+<LI><A NAME="tex2html59"
   HREF="JavaCodec.html#SECTION000100000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html58"
+<LI><A NAME="tex2html60"
   HREF="JavaCodec.html#SECTION000101000000000000000">RL-Glue Split and Package/Jar Naming Changes</A>
-<LI><A NAME="tex2html59"
+<LI><A NAME="tex2html61"
   HREF="JavaCodec.html#SECTION000102000000000000000">Agent/Environment Loading</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html60"
+<LI><A NAME="tex2html62"
   HREF="JavaCodec.html#SECTION000110000000000000000">Frequently Asked Questions</A>
-<LI><A NAME="tex2html61"
+<LI><A NAME="tex2html63"
   HREF="JavaCodec.html#SECTION000120000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html62"
+<LI><A NAME="tex2html64"
   HREF="JavaCodec.html#SECTION000121000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -103,20 +103,20 @@ This document describes how to use the Java RL-Glue Codec, a software library th
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot164"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot166"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in Java.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot165"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot167"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
 This project has a home here:
 <BR><TT><A NAME="tex2html5"
-  HREF="http://rl-glue-ext.googlecode.com/">http://rl-glue-ext.googlecode.com/</A></TT>
+  HREF="http://rl-glue-ext.googlecode.com">http://rl-glue-ext.googlecode.com</A></TT>
 <P>
 
 <H2><A NAME="SECTION00021000000000000000">
@@ -132,7 +132,7 @@ Compiling and running components with this codec requires Java 1.5 or higher. Yo
 
 <P>
 Recompiling this codec requires the Apache Ant<A NAME="tex2html6"
-  HREF="#foot166"><SUP>3</SUP></A> build system.  You probably need JUnit and Subversion installed as well. We'll try to make those optional dependencies in the future.
+  HREF="#foot168"><SUP>3</SUP></A> build system.  You probably need JUnit and Subversion installed as well. We'll try to make those optional dependencies in the future.
 The good news is that you probably <B>don't need to recompile the codec</B>.  Unlike C/C++, we can distribute a java JAR archive of the Java codec, and that is all you really need.
 
 <P>
@@ -145,90 +145,93 @@ The codec can be downloaded either as a tarball or can be checked out of the sub
 <P>
 The tarball distribution can be found here:
 <BR>
-<TT><A NAME="tex2html8"
-  HREF="http://code.google.com/p/rl-glue-ext/downloads/list">http://code.google.com/p/rl-glue-ext/downloads/list</A></TT>
+<FONT SIZE="-2"><TT><A NAME="tex2html8"
+  HREF="http://code.google.com/p/rl-glue-ext/downloads/list">http://code.google.com/p/rl-glue-ext/downloads/list</A></TT> </FONT>
 <P>
 To check the code out of subversion:
 <BR>
-<FONT SIZE="-1"><TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java Java-Codec</TT>
-</FONT>
+ <TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java Java-Codec</TT>
+
 <P>
-<FONT SIZE="-1">Technically all you really <B>need</B> is the JAR archive of the codec:
+Technically all you really <B>need</B> is the JAR archive of the codec:
 <BR>
-<FONT SIZE="-1"><TT>svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/products/JavaRLGlueCodec.jar</TT>
-</FONT></FONT>
+<FONT SIZE="-1"><TT>svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/products/JavaRLGlueCodec.jar</TT> </FONT>
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H2><A NAME="SECTION00023000000000000000">
 Installing the Codec</A>
-</H2><FONT SIZE="-1"><FONT SIZE="-1">
+</H2>
 There is no real ``installation'' for the codec per-se.  The important thing is to put the <TT>JavaRLGlueCodec.jar</TT> somewhere that is easy to get at.  If you want to be fancy, you can probably put <TT>JavaRLGlueCodec.jar</TT>
 into a directory on your Java system classpath.  For the rest of this document, we'll assume you've put <TT>JavaRLGlueCodec.jar</TT> in a subdirectory of your homedirectory called JavaCodec: <TT>~/JavaCodec/JavaRLGlueCodec.jar</TT>.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: IF someone wants to investigate the options for having a script ``install'' <TT>JavaRLGlueCodec.jar</TT> into a system classpath, we would like to have your help!
-</FONT></FONT>
+<B>POSSIBLE CONTRIBUTION</B>: IF someone wants to investigate the options for having a script ``install'' <TT>JavaRLGlueCodec.jar</TT> into a system classpath, we would like to have your help!
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION00030000000000000000"></A>
 <A NAME="sec:agent"></A>
 <BR>
 Agents
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 We have provided a skeleton agent with the codec that is a good starting point for agents that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple agent.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The pertinent file is:
-</FONT></FONT><PRE>
+The pertinent file is:
+<PRE>
 	examples/skeleton/SkeletonAgent.java
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">This agent does not learn anything and randomly chooses integer action 0 or 1.  
-</FONT></FONT>
+This agent does not learn anything and randomly chooses integer action 0 or 1.  
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You can compile and run the agent like:
-</FONT></FONT><PRE>
+You can compile and run the agent like:
+<PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonAgent.java
 	&gt;$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You will see something like:
-</FONT></FONT><PRE>
+You will see something like:
+<PRE>
      RL-Glue Java Agent Codec Version: 2.0 (Build:192:239M)
           Connecting to 127.0.0.1 on port 4096...
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">This means that the SkeletonAgent is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
-</FONT></FONT>
+This means that the SkeletonAgent is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
-</FONT></FONT>
+You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
+<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION00040000000000000000">
 Environments</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
 pattern as the agent version (Section <A HREF="#sec:agent">2</A>).  This section will be less detailed because many ideas are similar or identical.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The pertinent file is:
-</FONT></FONT><PRE>
+The pertinent file is:
+<PRE>
 	examples/skeleton_environment/SkeletonEnvironment.java
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">This environment is episodic, with 21 states, labeled <!-- MATH
+This environment is episodic, with 21 states, labeled <!-- MATH
  $\{0, 1,\ldots,19,20\}$
  -->
 <IMG
@@ -236,100 +239,107 @@ pattern as the agent version (Section <A HREF="#sec:agent">2</A>).  This section
  SRC="img1.png"
  ALT="$\{0, 1,\ldots,19,20\}$">. States {0, 20} are terminal and return rewards of {-1, +1} respectively.  The other states return reward of 0.
 There are two actions, {0, 1}.  Action 0 decrements the state number, and action 1 increments it. The environment starts in state 10.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You can compile and run the environment like:
-</FONT></FONT><PRE>
+You can compile and run the environment like:
+<PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonEnvironment.java
 	&gt;$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You will see something like:
-</FONT></FONT><PRE>
+You will see something like:
+<PRE>
      RL-Glue Java Environment Codec Version: 2.0 (Build:192:239M)
           Connecting to 127.0.0.1 on port 4096...
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">This means that the SkeletonEnvironment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
-</FONT></FONT>
+This means that the SkeletonEnvironment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
-</FONT></FONT>
+You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
+<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION00050000000000000000">
 Experiments</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
 pattern as the agent version (Section <A HREF="#sec:agent">2</A>).  This section will be less detailed because many ideas are similar or identical.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The pertinent files are:
-</FONT></FONT><PRE>
+The pertinent files are:
+<PRE>
 	examples/skeleton/SkeletonExperiment.java
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the agent and environment, and then steps through one episode using <TT>RL_step</TT>.
-</FONT></FONT>
+This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the agent and environment, and then steps through one episode using <TT>RL_step</TT>.
+
 <P>
-<FONT SIZE="-1"></FONT><PRE>
+<PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonExperiment.java
 	&gt;$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You will see something like:
-</FONT></FONT><PRE>
+You will see something like:
+<PRE>
      Experiment starting up!
      RL-Glue Java Experiment Codec Version: 2.0 (Build:192:239M)
           Connecting to 127.0.0.1 on port 4096...
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">This means that the SkeletonExperiment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096!  
-</FONT></FONT>
+This means that the SkeletonExperiment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096!  
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
-</FONT></FONT>
+You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
+<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION00060000000000000000">
 Putting it all together</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 At this point, we've compiled and run each of the three components, now it's time to run them with the <TT>rl_glue</TT> executable server.  The following will work from the examples 
 directory if you have them all built, and RL-Glue installed in the default location:
-</FONT></FONT><PRE>
+<PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ rl_glue &amp;
 	&gt;$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &amp;
 	&gt;$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &amp;
 	&gt;$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">If RL-Glue is not installed in the default location, you'll have to start the <TT>rl_glue</TT> executable server using it's full path (unless it's in your <TT>PATH</TT> environment variable):
-</FONT></FONT><PRE>
+If RL-Glue is not installed in the default location, you'll have to start the <TT>rl_glue</TT> executable server using it's full path (unless it's in your <TT>PATH</TT> environment variable):
+<PRE>
 	&gt;$ /path/to/rl-glue/bin/rl_glue &amp;
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">You should see output like the following if it worked:
-</FONT></FONT><PRE>
+You should see output like the following if it worked:
+<PRE>
 	&gt;$ rl_glue &amp; 
 	RL-Glue Version 3.0-beta-1, Build 848:856
      	RL-Glue is listening for connections on port=4096
@@ -381,48 +391,50 @@ directory if you have them all built, and RL-Glue installed in the default locat
 
 	----------Summary----------
 	It ran for 10 steps, total reward was: -1.0
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION00070000000000000000">
 Who creates and frees memory?</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 The RL-Glue technical manual has a section called <I>Who creates and frees memory?</I>.  The general approach recommended there is to make a copy of data
 you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Java codec.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION00080000000000000000">
 Advanced Features</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">Someone should write this later (Opportunity to contribute!).
-</FONT></FONT>
+Someone should write this later (Opportunity to contribute!).
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION00090000000000000000">
 Codec Specification Reference</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
 be handy.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">Instead of re-creating information that is readily available in the JavaDocs, we will give pointers were appropriate.
-</FONT></FONT>
+Instead of re-creating information that is readily available in the JavaDocs, we will give pointers were appropriate.
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H2><A NAME="SECTION00091000000000000000">
 Types</A>
-</H2><FONT SIZE="-1"></FONT>
+</H2>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H3><A NAME="SECTION00091100000000000000">
 Simple Types</A>
-</H3><FONT SIZE="-1"><FONT SIZE="-1">
+</H3>
 Unlike the C/C++ codec, we will not be using <TT>typedef</TT> statements to create special labels for the types. In Java:
-</FONT></FONT>
+
 <UL>
 <LI><I>reward</I> is <TT>double</TT>
 </LI>
@@ -432,136 +444,146 @@ Unlike the C/C++ codec, we will not be using <TT>typedef</TT> statements to crea
 </LI>
 <LI><I>task specifications</I> are <TT>String</TT>
 </LI>
-</UL><FONT SIZE="-1"></FONT>
+</UL>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H3><A NAME="SECTION00091200000000000000"></A>
 <A NAME="sec:structure-types"></A>
 <BR>
 Structure Types
-</H3><FONT SIZE="-1"><FONT SIZE="-1">
+</H3>
 All of the major structure types (observations, actions, random seed keys, and state keys) extend the <A NAME="tex2html9"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/RL_abstract_type.html"><TT>RL_Abstract_Type </TT></A>
 class.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">All of the types are listed in the <A NAME="tex2html10"
+All of the types are listed in the <A NAME="tex2html10"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/package-summary.html"><TT>org.rlcommunity.rlglue.codec.types</TT></A>
 package.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H2><A NAME="SECTION00092000000000000000">
 Functions</A>
-</H2><FONT SIZE="-1"></FONT>
+</H2>
+
 <H3><A NAME="SECTION00092100000000000000">
 Agent Functions</A>
-</H3><FONT SIZE="-1"><FONT SIZE="-1">
+</H3>
 All agents <B>should implement</B> <A NAME="tex2html11"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html"><TT>org.rlcommunity.rlglue.codec.AgentInterface</TT></A>.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H3><A NAME="SECTION00092200000000000000">
 Environment Functions</A>
-</H3><FONT SIZE="-1"><FONT SIZE="-1">
+</H3>
 All environments <B>should implement</B> <A NAME="tex2html12"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html"><TT>org.rlcommunity.rlglue.codec.EnvironmentInterface</TT></A>.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H3><A NAME="SECTION00092300000000000000">
 Experiments Functions</A>
-</H3><FONT SIZE="-1"><FONT SIZE="-1">
+</H3>
 All experiments <B>can call</B> the static methods in <A NAME="tex2html13"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlue.html"><TT>org.rlcommunity.rlglue.codec.RLGlue</TT></A>.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION000100000000000000000">
 Changes and 2.x Backward Compatibility</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the RL-Glue 
 project documentation.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H2><A NAME="SECTION000101000000000000000">
 RL-Glue Split and Package/Jar Naming Changes</A>
-</H2><FONT SIZE="-1"><FONT SIZE="-1">
+</H2>
 With the RL-Glue 3.x project, we've decided to keep the codecs separate from the main RL-Glue project.  This is so the codecs can be more agile while the main RL-Glue project stays very stable.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">Since things were changing, we took an opportunity to fix some of our long-term gripes with the Java codec.  The name of the JAR file has changed from <TT>RL-Glue.jar</TT> to <TT>JavaRLGlueCodec.jar</TT>.
-</FONT></FONT>
+Since things were changing, we took an opportunity to fix some of our long-term gripes with the Java codec.  The name of the JAR file has changed from <TT>RL-Glue.jar</TT> to <TT>JavaRLGlueCodec.jar</TT>.
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The JAR file is now distributed in:
+The JAR file is now distributed in:
 <BR>
 <TT>rl-glue-ext/projects/codecs/java/products/JavaRLGlueCodec.jar</TT>
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">In the previous incarnation of the Java codec, the classes were in a very shallow heirarchy: <TT>rlglue.RLGlue</TT>, <TT>RLGlue.types</TT>, etc.  For the updated release, we've moved to a richer package description that
+In the previous incarnation of the Java codec, the classes were in a very shallow heirarchy: <TT>rlglue.RLGlue</TT>, <TT>RLGlue.types</TT>, etc.  For the updated release, we've moved to a richer package description that
 is more in line with other Java projects in the Reinforcement Learning community.  The new package hierarchy is:
 <BR>
 <A NAME="tex2html14"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/overview-summary.html"><TT>org.rlcommunity.rlglue</TT></A>
-</FONT></FONT>
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">We've also moved a few of the class/interfaces around.  The most notable change is that instead of <TT>Agent</TT> and <TT>Environment</TT> interfaces, we now have <TT>AgentInterface</TT> and <TT>EnvironmentInterface</TT>.
-Also, instead of these interfaces being in their own package, they are now in: <A NAME="tex2html15"
+We've also moved a few of the class/interfaces around.  The most notable change is that instead of <TT>Agent</TT> and <TT>Environment</TT> interfaces, we now have 
+<A NAME="tex2html15"
+  HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html"><TT>AgentInterface</TT></A>
+and 
+<A NAME="tex2html16"
+  HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html"><TT>EnvironmentInterface</TT></A>.
+Also, instead of these interfaces being in their own package, they are now in: <A NAME="tex2html17"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/package-summary.html"><TT>org.rlcommunity.rlglue.codec</TT></A>. 
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">Updating existing code might seem like a lot of work, but it's easier than it seems.  The main changes from the user end are:
+Updating existing code might seem like a lot of work, but it's easier than it seems.  The main changes from the user end are:
 1) Using the right jar (JavaRLGlueCodec.jar instead of RL-Glue.jar)  (Not necessary if you are using RL-Viz)
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">2) Change classes that implement <TT>Agent</TT> and <TT>Environment</TT> to <TT>AgentInterface</TT> and <TT>EnvironmentInterface</TT>
-</FONT></FONT>
+2) Change classes that implement <TT>Agent</TT> and <TT>Environment</TT> to <TT>AgentInterface</TT> and <TT>EnvironmentInterface</TT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">3) Change package imports.  Find and replace:
-</FONT></FONT><PRE>
+3) Change package imports.  Find and replace:
+<PRE>
 rlglue.RLGlue                    ==&gt;    org.rlcommunity.rlglue.codec.RLGlue
 rlglue.types.                    ==&gt;    org.rlcommunity.rlglue.codec.types.
 rlglue.agent.Agent               ==&gt;    org.rlcommunity.rlglue.codec.AgentInterface
 rlglue.environment.Environment   ==&gt;    org.rlcommunity.rlglue.codec.EnvironmentInterface
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">Those three things should cover most of it.  If someone makes a very strong case, we can probably create a codec that is completely compatible with the old naming conventions.  However, I assure you that I uploaded
+Those three things should cover most of it.  If someone makes a very strong case, we can probably create a codec that is completely compatible with the old naming conventions.  However, I assure you that I uploaded
 several tens of thousands of lines of code for the RL-Viz, RL-Library, and BT-AgentLib projects in only about 30 minutes total.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: If we've missed anything, or there is an easier way, please let us know!
-</FONT></FONT>
+<B>POSSIBLE CONTRIBUTION</B>: If we've missed anything, or there is an easier way, please let us know!
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H2><A NAME="SECTION000102000000000000000">
 Agent/Environment Loading</A>
-</H2><FONT SIZE="-1"><FONT SIZE="-1">
+</H2>
 Historically, there have been a few different approaches for loading agents and environments.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">For all these examples, lets pretend that the <TT>JavaRLGlue.jar</TT> path and JAR are in an environment variable called CODECJAR.  We could actually do that (with a bash shell) like:
-</FONT></FONT><PRE>
+For all these examples, lets pretend that the <TT>JavaRLGlue.jar</TT> path and JAR are in an environment variable called CODECJAR.  We could actually do that (with a bash shell) like:
+<PRE>
 	export CODECJAR=/path/to/JavaRLGlueCodec.jar
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The first (original) method was to call the main() method of the AgentLoader/EnvironmentLoader class, passing it the name of the 
+The first (original) method was to call the main() method of the AgentLoader/EnvironmentLoader class, passing it the name of the 
 Agent/Env class you wanted to load.  Hopefully you remembered to put it in your classpath.  This approach inevitably lead to lots of typing to load an agent, as frustrating run-time failures when paths weren't set right.
 Here is an example of how that looks:
-</FONT></FONT><PRE>
+<PRE>
 	java -classpath $CODECJAR:/to/Agent/classes org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The second method was to bypass the AgentLoader and go through <A NAME="tex2html16"
+The second method was to bypass the AgentLoader and go through <A NAME="tex2html18"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlueCore.html"><TT>RLGlueCore</TT></A>, 
 which is contains the default <TT>main</TT> method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
-</FONT></FONT><PRE>
+<PRE>
 	java -classpath /to/Agent/classes -jar $CODECJAR myAgent
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">The <B>new and improved</B> method is to put a <TT>main</TT> method inside your agent/environment that calls the applicable loader so that the agent/env can load itself.  So, in your agent (for example) you'd have code like:
-</FONT></FONT><PRE>
+The <B>new and improved</B> method is to put a <TT>main</TT> method inside your agent/environment that calls the applicable loader so that the agent/env can load itself.  So, in your agent (for example) you'd have code like:
+<PRE>
 	import org.rlcommunity.rlglue.codec.util.AgentLoader;
 	/* rest of agent here */
 	//This would be inside MyAgent.java
@@ -569,55 +591,59 @@ which is contains the default <TT>main</TT> method in the JAR.  This method is a
 	        AgentLoader theLoader=new AgentLoader(new MyAgent());
 	        theLoader.run();
 	}
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">So, for the price of that tiny bit of code inside your agent, you can now run the agent class directly:
-</FONT></FONT><PRE>
+So, for the price of that tiny bit of code inside your agent, you can now run the agent class directly:
+<PRE>
 	java -classpath $CODECJAR:/to/Agent/classes myAgent
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">We feel that this is a useful step forward, and will be encouraging this approach.
-</FONT></FONT>
+We feel that this is a useful step forward, and will be encouraging this approach.
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION000110000000000000000">
 Frequently Asked Questions</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 We're waiting to hear your questions!
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION000120000000000000000">
 Credits and Acknowledgements</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
+</H1>
 Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"><FONT SIZE="-1">Brian Tanner has since grabbed the torch and has continued to develop the codec.
-</FONT></FONT>
+Brian Tanner has since grabbed the torch and has continued to develop the codec.
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H2><A NAME="SECTION000121000000000000000">
 Contributing</A>
-</H2><FONT SIZE="-1"><FONT SIZE="-1">
+</H2>
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
-</FONT></FONT>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION000130000000000000000">
 Document Information</A>
-</H1><FONT SIZE="-1"></FONT><PRE>
-Revision Number: $Rev: 239 $
+</H1>
+<PRE>
+Revision Number: $Rev: 240 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-09-28 22:55:51 -0600 (Sun, 28 Sep 2008) $
+Last Updated   : $Date: 2008-09-29 15:32:39 -0600 (Mon, 29 Sep 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/docs/JavaCodec.tex $
-</PRE><FONT SIZE="-1"></FONT>
+</PRE>
+
 <P>
-<FONT SIZE="-1"></FONT>
+
 <H1><A NAME="SECTION000140000000000000000">
 About this document ...</A>
-</H1><FONT SIZE="-1"><FONT SIZE="-1">
- </FONT></FONT><STRONG>RL-Glue Java Codec 2.0 Manual </STRONG><P>
+</H1>
+ <STRONG>RL-Glue Java Codec 2.0 Manual </STRONG><P>
 This document was generated using the
 <A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002-2-1 (1.71)
 <P>
@@ -632,22 +658,22 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>JavaCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Java Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2008-09-29<FONT SIZE="-1"></FONT>
+The translation was initiated by Brian Tanner on 2008-09-29
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot164">... RL-Glue</A><A
+<DT><A NAME="foot166">... RL-Glue</A><A
  HREF="JavaCodec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot165">... Apache-2.0</A><A
+<DT><A NAME="foot167">... Apache-2.0</A><A
  HREF="JavaCodec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot166">... Ant</A><A
+<DT><A NAME="foot168">... Ant</A><A
  HREF="JavaCodec.html#tex2html6"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html7"
   HREF="http://ant.apache.org/">http://ant.apache.org/</A></TT>
