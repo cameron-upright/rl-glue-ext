@@ -7,7 +7,7 @@ function failures=test_rl_episode_experiment()
         terminal=RL_episode(0);
     
          	[failures,totalTests]=check_fail(terminal~=1,failures,totalTests);
-         	[failures,totalTests]=check_fail(RL_num_steps()~=6,failures,totalTests);
+         	[failures,totalTests]=check_fail(RL_num_steps()~=5,failures,totalTests);
 
         terminal=RL_episode(1);
         
@@ -20,6 +20,11 @@ function failures=test_rl_episode_experiment()
          	[failures,totalTests]=check_fail(terminal~=0,failures,totalTests);
          	[failures,totalTests]=check_fail(RL_num_steps()~=2,failures,totalTests);
 
+        terminal=RL_episode(4);
+        
+         	[failures,totalTests]=check_fail(terminal~=0,failures,totalTests);
+         	[failures,totalTests]=check_fail(RL_num_steps()~=4,failures,totalTests);
+
         terminal=RL_episode(5);
         
          	[failures,totalTests]=check_fail(terminal~=0,failures,totalTests);
@@ -28,12 +33,12 @@ function failures=test_rl_episode_experiment()
             terminal=RL_episode(6);
         
          	[failures,totalTests]=check_fail(terminal~=1,failures,totalTests);
-         	[failures,totalTests]=check_fail(RL_num_steps()~=6,failures,totalTests);
+         	[failures,totalTests]=check_fail(RL_num_steps()~=5,failures,totalTests);
             
             terminal=RL_episode(7);
         
          	[failures,totalTests]=check_fail(terminal~=1,failures,totalTests);
-         	[failures,totalTests]=check_fail(RL_num_steps()~=6,failures,totalTests);
+         	[failures,totalTests]=check_fail(RL_num_steps()~=5,failures,totalTests);
 
 
 

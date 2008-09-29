@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import subprocess,os,signal,time
+import subprocess,os,signal,time,sys
 
 totalTests=0
 subprocess.call(["killall rl_glue"],shell=True)
@@ -26,19 +26,20 @@ def run_test(agent, env, experiment):
 			thisProc=subprocess.Popen([cmd],shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
 			allSubProcesses.append(thisProc)
 
-	time.sleep(.45)
+	time.sleep(.65)
 	if debug:
 		print "\t\texperiment: "+experiment
 		retcode = subprocess.call([experiment],shell=True)
 	else:
 		retcode = subprocess.call([experiment],shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
 
-	time.sleep(.6)
+	time.sleep(.65)
 	for someSubProcess in allSubProcesses:
 		if debug:
 			print "Calling Kill on PID: "+str(someSubProcess.pid)
 		os.kill(someSubProcess.pid, signal.SIGKILL)
 		
+	time.sleep(.2)
 
 	if retcode!= 0:
 		print "\t\tNonzero return code: "+str(retcode)
@@ -141,14 +142,40 @@ test_rl_episode_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/t
 #agent/env/experiment should be used
 tests={}
 
-tests["test_sanity"]=[test_1_agent,test_1_environment,test_sanity_experiment];
-tests["test_1"]=[test_1_agent,test_1_environment,test_1_experiment];
-tests["test_empty"] = [test_empty_agent,test_empty_environment,test_empty_experiment];
-tests["test_message"] = [test_message_agent,test_message_environment,test_message_experiment];
-tests["test_rl_episode"] = [test_1_agent,test_1_environment,test_rl_episode_experiment];
-tests["test_seeds"] = [test_1_agent,test_seeds_environment,test_seeds_experiment];
+test_sanity=[test_1_agent,test_1_environment,test_sanity_experiment];
+test_1=[test_1_agent,test_1_environment,test_1_experiment];
+test_empty = [test_empty_agent,test_empty_environment,test_empty_experiment];
+test_message = [test_message_agent,test_message_environment,test_message_experiment];
+test_rl_episode = [test_1_agent,test_1_environment,test_rl_episode_experiment];
+test_seeds = [test_1_agent,test_seeds_environment,test_seeds_experiment];
 
-print "Running Codec Test Suites"
+if len(sys.argv)>1:
+	for arg in sys.argv:
+		if arg=="sanity":
+			tests["test_sanity"]=test_sanity;
+		if arg=="1":
+			tests["test_1"]=test_1;
+		if arg=="empty":
+			tests["test_empty"]=test_empty;
+		if arg=="message":
+			tests["test_message"]=test_message;
+		if arg=="rl_episode":
+			tests["test_rl_episode"]=test_rl_episode;
+		if arg=="seeds":
+			tests["test_seeds"]=test_seeds;
+else:
+	tests["test_sanity"]=test_sanity;
+	tests["test_1"]=test_1;
+	tests["test_empty"]=test_empty;
+	tests["test_message"]=test_message;
+	tests["test_rl_episode"]=test_rl_episode;
+	tests["test_seeds"]=test_seeds;
+			
+
+print "Running Codec Test Suites: "
+for testNames in tests:
+	print"\t"+testNames
+	
 totalErrors=run_all_tests(tests)
 print "Total Errors = "+str(totalErrors)+" on a total of: "+str(totalTests)+" tests"
 
