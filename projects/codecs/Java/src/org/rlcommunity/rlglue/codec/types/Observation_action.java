@@ -27,6 +27,8 @@ public class Observation_action {
     public Action a;
 
     public Observation_action() {
+        o=new Observation();
+        a=new Action();
     }
 
     public Observation_action(Observation theObservation, Action theAction) {

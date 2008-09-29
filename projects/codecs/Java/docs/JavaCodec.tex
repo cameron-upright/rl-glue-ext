@@ -4,12 +4,13 @@
 \usepackage{url}
 \usepackage{verbatim}
 \usepackage{fullpage}
+\usepackage{html}
 %I don't like my paragraphs indented because we have lots of 1-line paragraphs with URLs or code after them
 \setlength{\parindent}{0in} 
 %I like space between my paragraphs
 \setlength{\parskip}{10pt} 
 
-\title{RL-Glue C/C++ Codec 3.0 Manual }
+\title{RL-Glue Java Codec 2.0 Manual }
 \author{Brian Tanner}
 \date{}                                        
 
@@ -19,22 +20,30 @@
 
 \section{Introduction}
 
-This document describes how to use the C/C++ RL-Glue Codec, a software library that provides socket-compatibility with the RL-Glue Reinforcement Learning software library.  
+This document describes how to use the Java RL-Glue Codec, a software library that provides socket-compatibility with the RL-Glue Reinforcement Learning software library.  
 
 For general information and motivation about the RL-Glue\footnote{\url{http://glue.rl-community.org/}} project, please refer to the documentation provided with that project.
 
-This codec will allow you to create agents, environments, and experiment programs in C and/or C++.
+This codec will allow you to create agents, environments, and experiment programs in Java.
 
 This software project is licensed under the Apache-2.0\footnote{\url{http://www.apache.org/licenses/LICENSE-2.0.html}} license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 This project has a home here:\\
-\url{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/}
+\url{http://rl-glue-ext.googlecode.com/}
 
 
 
 \subsection{Software Requirements}
-This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools\footnote{\url{http://sources.redhat.com/autobook/}}, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN\footnote{\url{http://www.cygwin.com/}}). 
+To run agents, environments, and experiments created with this codec, you will need to have RL-Glue (or a surrogate) installed on your computer.
+
+Compiling and running components with this codec requires Java 1.5 or higher. You can find out what version you have by doing the following at the command-line:
+\begin{verbatim}
+	>$ java -version
+\end{verbatim}
+
+Recompiling this codec requires the Apache Ant\footnote{\url{http://ant.apache.org/}} build system.  You probably need JUnit and Subversion installed as well. We'll try to make those optional dependencies in the future.
+The good news is that you probably \textbf{don't need to recompile the codec}.  Unlike C/C++, we can distribute a java JAR archive of the Java codec, and that is all you really need.
 
 \subsection{Getting the Codec}
 The codec can be downloaded either as a tarball or can be checked out of the subversion repository where it is hosted.
@@ -44,58 +53,16 @@ The tarball distribution can be found here:\newline
 
 
 To check the code out of subversion:\newline
-\texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C C-Codec}
+\small{\texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java Java-Codec}}
+
+Technically all you really \textbf{need} is the JAR archive of the codec:\newline
+\footnotesize{\texttt{svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/products/JavaRLGlueCodec.jar}}
 
 \subsection{Installing the Codec}
-The codec package was made with autotools, which means that you shouldn't have to do much work to get it installed.  
+There is no real ``installation'' for the codec per-se.  The important thing is to put the \texttt{JavaRLGlueCodec.jar} somewhere that is easy to get at.  If you want to be fancy, you can probably put \texttt{JavaRLGlueCodec.jar}
+into a directory on your Java system classpath.  For the rest of this document, we'll assume you've put \texttt{JavaRLGlueCodec.jar} in a subdirectory of your homedirectory called JavaCodec: \texttt{\~{}/JavaCodec/JavaRLGlueCodec.jar}.
 
-\subsubsection{Simple Codec Install}
-If you are working on your own machine, it is usually easiest to install the headers and libraries into \texttt{/usr/local}, which is the default installation location but requires \textit{sudo} or \textit{root} access.
-
-The steps are:
-\begin{verbatim}
-	>$ ./configure
-	>$ make
-	>$ sudo make install
-\end{verbatim}
-
-Provided everything goes well, the headers have now been installed to \texttt{/usr/local/include} and the libs to \texttt{/usr/local/lib}.
-
-\subsubsection{Install Codec when RL-Glue is in a custom location}
-
-If \texttt{configure} can't find RL-Glue installed on your machine, it will give you an error like the following:
-\begin{verbatim}
-checking for rlConnect in -lrlgluenetdev... no
-configure: error: RL-Glue library not found.
-You must have RL-Glue installed to use this codec. 
-	
-If you have not downloaded it please see http://glue.rl-community.org/
-If you do have it installed in a non-standard location you may need to use the 
---with-rl-glue=/path/to/rlglue 
-command line switch to specify where the rl-glue root is located.
-\end{verbatim}
-
-If you installed RL-Glue to some place other than \texttt{/usr/local}, say \texttt{/Users/btanner/tmp/rlglue}, you could do:
-\begin{verbatim}
-	>$ ./configure --with-rl-glue=/Users/btanner/tmp/rlglue
-	>$ make
-	>$ sudo make install
-\end{verbatim}
-
-\subsubsection{Install Codec To Custom Location (without \textit{root} access)}
-If you don't have \textit{sudo} or \textit{root} access on the target machine, you can install the codec in your home directory (or other directory you have access to).
-If you install to a custom location, you will need set your \texttt{CFLAGS} and \texttt{LDFLAGS} variables appropriately when compiling your agents, environments, and experiments. See Section \ref{sec:custom-flags} for more information.
-
-For example, maybe we want to install the codec to \texttt{/Users/btanner/tmp/rlglue}.  This will \textbf{not} clobber RL-Glue if it is already installed to this location, it will install beside it.  The commands are:
-\begin{verbatim}
-	>$ ./configure --prefix=/Users/btanner/tmp/rlglue
-	>$ make
-	>$ make install
-\end{verbatim}
-
-Provided everything goes well, the headers and libraries have been respectively installed to\newline
-\texttt{/Users/btanner/tmp/rlglue/include} and \texttt{/Users/btanner/tmp/rlglue/lib}.
-
+\textbf{POSSIBLE CONTRIBUTION}: IF someone wants to investigate the options for having a script ``install'' \texttt{JavaRLGlueCodec.jar} into a system classpath, we would like to have your help!
 
 
 
@@ -104,32 +71,29 @@ Provided everything goes well, the headers and libraries have been respectively 
 We have provided a skeleton agent with the codec that is a good starting point for agents that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple agent.
 
-The pertinent files are:
+The pertinent file is:
 \begin{verbatim}
-	examples/skeleton_agent/SkeletonAgent.c
-	examples/skeleton_agent/Makefile
+	examples/skeleton/SkeletonAgent.java
 \end{verbatim}
 
 This agent does not learn anything and randomly chooses integer action $0$ or $1$.  
 
-If RL-Glue and this codec have been installed in the default location, \texttt{/usr/local}, then you can compile and run the agent like:
+You can compile and run the agent like:
 \begin{verbatim}
-	>$ cd examples/skeleton_agent
-	>$ make
-	>$ ./SkeletonAgent
+	>$ cd examples/skeleton
+	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonAgent.java
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
-	RL-Glue C Agent Codec Version 1.0-alpha-3, Build 192:208M
-		Connecting to host=127.0.0.1 on port=4096...
+     RL-Glue Java Agent Codec Version: 2.0 (Build:192:239M)
+          Connecting to 127.0.0.1 on port 4096...
 \end{verbatim}
 
 This means that the SkeletonAgent is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
 You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
-
-See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in default locations.
 
 The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
@@ -137,91 +101,38 @@ Please open it up and take a look.
 \textbf{POSSIBLE CONTRIBUTION}: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
-We will spend a little bit talking about how to compile the agent, because not everyone is comfortable with using a \texttt{Makefile}.  To compile
-the agent from the command line, you could do:
-\begin{verbatim}
-	>$ cc SkeletonAgent.c -lrlutils -lrlagent -o SkeletonAgent
-\end{verbatim}
 
-On some platforms, you may need to add \texttt{-lrlgluenetdev}
-
-It might be useful to break this down a little bit:
-\begin{description}
-\item [cc] The C compiler.  You could also use \texttt{gcc} or \texttt{g++}, etc.
-\item [SkeletonAgent.c] Compile the SkeletonAgent.c source file.
-\item [-lrlutils] Link to the RLUtils library, which comes with this codec.  This library contains convenience functions for allocating and cleaning up the structure types (Section \ref{sec:structure-types}).  If you 
-don't use these convenience functions, you don't need this library.
-\item [-lrlagent] Link to the RLAgent library of the codec.  This is where the main agent loop is defined. The main agent loop connects to the \texttt{rl\_glue} executable server and dispatches commands sent by the glue.
-\item [-lrlgluenetdev] Link to the RLGlueNetDev library from the RL-Glue project.  This library is automatically linked through \texttt{rlagent} on most platform (except notably Cygwin).  
-RLGlueNetDev provides implementations of the low level network code that is used by all three parts of the codec, as well as the \texttt{rl\_glue} executable server.
-\end{description}
-
-%Find a place for this
-\subsection{Custom Flags for Custom Installs}
-\label{sec:custom-flags}
-If RL-Glue \textbf{or} this codec have been installed in a custom location (for example: \texttt{/Users/joe/glue}), then you will
-need to set the header search path in \texttt{CFLAGS} and the library search path in \texttt{LDFLAGS}.  You can either do this each time you call make, 
-or you can export the values as environment variables.  These instructions apply to agents, environments, and experiment programs.
-
-To do it on the command line:
-\begin{verbatim}
->$ CFLAGS=-I/Users/joe/glue/include LDFLAGS=-L/Users/joe/glue/lib make
-\end{verbatim}
-
-That might turn out to be quite a hassle while you are developing.  In that case, you can either update the \texttt{Makefile} to include these flags, 
-or set an environment variable.  If you are using the bash shell you can \texttt{export} the environment variables:
-\begin{verbatim}
->$ export CFLAGS=-I/Users/joe/glue/include
->$ export LDFLAGS=-L/Users/joe/glue/lib
->$ make
-\end{verbatim}
-
-In some cases, you may be able to compile and link your programs without incident, but you receive shared library loading errors when you try to execute them, as mentioned in Gotchas! (Section \ref{sec:gotchas-shared-libs}).
-
-In these cases, you may also have to set \texttt{LD\_LIBRARY\_PATH} (Linux) or \texttt{DYLD\_LIBRARY\_PATH} (OS X) environment variables, like:
-\begin{verbatim}
-	>$ export LD_LIBRARY_PATH=/Users/joe/glue/lib
-\end{verbatim}
-
-In some cases (64-bit linux looks in \texttt{/usr/local/lib64}?) you may have to use this approach even when RL-Glue and this codec are installed in the default locations:
-\begin{verbatim}
-	>$ export LD_LIBRARY_PATH=/usr/local/lib
-\end{verbatim}
-
-When you open a new terminal window, all of these environment variables will be lost unless you put the appropriate \texttt{export} lines in your shell startup script.
 
 \section{Environments}
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
 pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
 
-The pertinent files are:
+The pertinent file is:
 \begin{verbatim}
-	examples/skeleton_environment/SkeletonEnvironment.c
-	examples/skeleton_environment/Makefile
+	examples/skeleton_environment/SkeletonEnvironment.java
 \end{verbatim}
 
 This environment is episodic, with 21 states, labeled $\{0, 1,\ldots,19,20\}$. States $\{0, 20\}$ are terminal and return rewards of $\{-1, +1\}$ respectively.  The other states return reward of $0$.
 There are two actions, $\{0, 1\}$.  Action $0$ decrements the state number, and action $1$ increments it. The environment starts in state 10.
 
-If RL-Glue and this codec have been installed in the default location, \texttt{/usr/local}, then you can compile and run the environment like:
+You can compile and run the environment like:
 \begin{verbatim}
-	>$ cd examples/skeleton_environment
-	>$ make
-	>$ ./SkeletonEnvironment
+	>$ cd examples/skeleton
+	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonEnvironment.java
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
-	RL-Glue C Environment Codec Version 1.0-alpha-3, Build 192:208M
-		Connecting to host=127.0.0.1 on port=4096...
+     RL-Glue Java Environment Codec Version: 2.0 (Build:192:239M)
+          Connecting to 127.0.0.1 on port 4096...
 \end{verbatim}
 
 This means that the SkeletonEnvironment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
 You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
 
-See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in default locations.
 
 The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
@@ -229,12 +140,6 @@ Please open it up and take a look.
 \textbf{POSSIBLE CONTRIBUTION}: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
-Compiling the environment is almost identical to compiling the skeleton agent, except you need to link to the \texttt{RLEnvironment} library instead of \texttt{RLAgent}.
-\begin{verbatim}
-	>$ cc SkeletonEnvironment.c -lrlutils -lrlenvironment -o SkeletonEnvironment
-\end{verbatim}
-
-On some platforms, you may need to add \texttt{-lrlgluenetdev}
 
 \section{Experiments}
 We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
@@ -243,30 +148,28 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent files are:
 \begin{verbatim}
-	examples/skeleton_experiment/SkeletonExperiment.c
-	examples/skeleton_experiment/Makefile
+	examples/skeleton/SkeletonExperiment.java
 \end{verbatim}
 
 This experiment runs \texttt{RL\_Episode} a few times, sends some messages to the agent and environment, and then steps through one episode using \texttt{RL\_step}.
 
-If RL-Glue and this codec have been installed in the default location, \texttt{/usr/local}, then you can compile and run the experiment like:
 \begin{verbatim}
-	>$ cd examples/skeleton_experiment
-	>$ make
-	>$ ./SkeletonExperiment
+	>$ cd examples/skeleton
+	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonExperiment.java
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
-	RL-Glue C Experiment Codec Version 1.0-alpha-3, Build 192:208M
-		Connecting to host=127.0.0.1 on port=4096...
+     Experiment starting up!
+     RL-Glue Java Experiment Codec Version: 2.0 (Build:192:239M)
+          Connecting to 127.0.0.1 on port 4096...
 \end{verbatim}
 
 This means that the SkeletonExperiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$!  
 
 You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
 
-See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in default locations.
 
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
@@ -274,40 +177,15 @@ Please open it up and take a look.
 \textbf{POSSIBLE CONTRIBUTION}: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
-Compiling the experiment is almost identical to compiling the skeleton agent, except you need to link to the \texttt{RLExperiment} library instead of \texttt{RLAgent}.
-\begin{verbatim}
-	>$ cc SkeletonExperiment.c -lrlutils -lrlexperiment -o SkeletonExperiment
-\end{verbatim}
-
-On some platforms, you may need to add \texttt{-lrlgluenetdev}
-
-\subsection{Gotchas!}
-\subsubsection{Crashes and Bus Errors in Experiment Program}
-If you are running an experiment using \texttt{RL\_step}, beware that the last step (when \texttt{terminal==1}), the action will be empty.  If you try to access the values of the actions in this 
-case, you may crash your program.
-
-\subsubsection{Shared Library Loading Errors}
-\label{sec:gotchas-shared-libs}
-On some machines we've used, the codec installs without incident, but when the agent/environment/experiment is run, the system gives an error message similar to:
-\begin{verbatim}
-	>$ ./RL_agent: error while loading shared libraries: librlagent-1:0:0.so.1:
-	cannot open shared object file: No such file or directory
-\end{verbatim}
-
-If this happens, the operating system might have an alternate search path, and might not be looking in \texttt{/usr/local/lib} for libraries. 
-You can troubleshoot this problem by doing:
-\begin{verbatim}
-	>$ LD_DEBUG=libs ./RL_agent
-\end{verbatim}
-If you see that \texttt{/usr/local/lib} is not in the search path, you may want to add it to your library search path using \texttt{LDFLAGS} or \texttt{LD\_LIBRARY\_PATH}.  See Section \ref{sec:custom-flags} for more information.  
-
 \section{Putting it all together}
-At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples directory if you have them all built, and RL-Glue installed in the default location:
+At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples 
+directory if you have them all built, and RL-Glue installed in the default location:
 \begin{verbatim}
+	>$ cd examples/skeleton
 	>$ rl_glue &
-	>$ skeleton_agent/SkeletonAgent &
-	>$ skeleton_environment/SkeletonEnvironment &
-	>$ skeleton_experiment/SkeletonExperiment	
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
 \end{verbatim}
 
 If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using it's full path (unless it's in your \texttt{PATH} environment variable):
@@ -317,204 +195,64 @@ If RL-Glue is not installed in the default location, you'll have to start the \t
 
 You should see output like the following if it worked:
 \begin{verbatim}
-	>$ rl_glue &
-	RL-Glue Version 3.0-alpha-3, Build 848:852M
-	RL-Glue is listening for connections on port=4096
+	>$ rl_glue & 
+	RL-Glue Version 3.0-beta-1, Build 848:856
+     	RL-Glue is listening for connections on port=4096
 
-	>$ skeleton_agent/SkeletonAgent & 
-	RL-Glue C Agent Codec Version 1.0-alpha-3, Build 192:208M
-		Connecting to host=127.0.0.1 on port=4096...
-		RL-Glue C Agent Codec :: Connected
-		RL-Glue :: Agent connected.
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &
+	RL-Glue Java Agent Codec Version: 2.0 (Build:192:239M)
+	     Connecting to 127.0.0.1 on port 4096...
+	     Agent Codec Connected
+	     RL-Glue :: Agent connected.
+	
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &
+	RL-Glue Java Environment Codec Version: 2.0 (Build:192:239M)
+	     Connecting to 127.0.0.1 on port 4096...
+	     Environment Codec Connected
+	     RL-Glue :: Environment connected.
 
-	>$ skeleton_environment/SkeletonEnvironment & 
-	RL-Glue C Environment Codec Version 1.0-alpha-3, Build 192:208M
-		Connecting to host=127.0.0.1 on port=4096...
-		RL-Glue C Environment Codec :: Connected
-		RL-Glue :: Environment connected.
-
-	$> skeleton_experiment/SkeletonExperiment
-
-
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
 	Experiment starting up!
-	RL-Glue C Experiment Codec Version 1.0-alpha-3, Build 192:208M
-		Connecting to host=127.0.0.1 on port=4096...
-		RL-Glue C Experiment Codec :: Connected
-		RL-Glue :: Experiment connected.
-	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,5]:1_[i]_[0,1]:[-1,1]
+
+	RL-Glue Java Experiment Codec Version: 2.0 (Build:192:239M)
+	     Connecting to 127.0.0.1 on port 4096...
+	     Experiment Codec Connected
+	     RL-Glue :: Experiment connected.
+
+	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
 
 
 	----------Sending some sample messages----------
-	Agent responded to "what is your name?" with: 
-	my name is skeleton_agent!
-	Agent responded to "who is your daddy and what does he do?" with: 
-	I don't know how to respond to your message
+	Agent responded to "what is your name?" with: my name is skeleton_agent, Java edition!
+	Agent responded to "who is your daddy and what does he do?" with: I don't know how to respond to your message
 
-	Environment responded to "what is your name?" with: 
-	my name is skeleton_environment!
-	Environment responded to "who is your daddy and what does he do?" with: 
-	I don't know how to respond to your message
+	Environment responded to "what is your name?" with: my name is skeleton_environment, Java edition!
+	Environment responded to "who is your daddy and what does he do?" with: I don't know how to respond to your message
 
 
 	----------Running a few episodes----------
-	Episode 0	 100 steps 	0.000000 total reward	 0 natural end 
-	Episode 1	 44 steps 	-1.000000 total reward	 1 natural end 
-	Episode 2	 18 steps 	-1.000000 total reward	 1 natural end 
-	Episode 3	 100 steps 	0.000000 total reward	 0 natural end 
-	Episode 4	 50 steps 	1.000000 total reward	 1 natural end 
-	Episode 5	 1 steps 	0.000000 total reward	 0 natural end 
-	Episode 6	 28 steps 	1.000000 total reward	 1 natural end 
+	Episode 0	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 1	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 2	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 3	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 4	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 5	 1 steps 	0.0 total reward	 0 natural end
+	Episode 6	 10 steps 	-1.0 total reward	 1 natural end
 
 
 	----------Stepping through an episode----------
-	First observation and action were: 10 1
+	First observation and action were: 10 and: 0
+
 
 	----------Summary----------
-	It ran for 144 steps, total reward was: -1.000000
-	
+	It ran for 10 steps, total reward was: -1.0
+
 \end{verbatim}
 
 
 \section{Who creates and frees memory?}
-Memory management can be confusing in C/C++.  It might seem especially mysterious when using RL-Glue, because sometimes the structures are passed directly 
-from function to function (in direct-call RL-Glue), but other times they are written and read through a network socket (as with this codec).
-
-\subsection{Copy-On-Keep}
-The rule of thumb to follow in RL-Glue is what we call \textit{copy-on-keep}.  Copy-on-keep means that when you are passed a dynamically allocated structure, you should
-only consider it valid within the function that it was given to you.  If you need a persistent copy of the data outside of that scope, you should make a copy: copy it if you
-need to keep it.
-
-\subsubsection{Task Spec Example}
-\begin{verbatim}
-/********************   UNSAFE   *******************/
-task_specification_t task_spec_copy=0;
-	
-void agent_init(const task_specification_t task_spec){
-        /*
-            Not making a copy, just keeping a pointer to the data 
-        */
-    task_spec_copy=task_spec;
-}
-
-action_t agent_start(observation_t this_observation) {
-        /*
-            Behavior undefined.  Who knows if the string the task_spec
-            was originally pointing to still exists?
-        */
-    printf("Task spec we saved is: %s\n",task_spec_copy);
-    ...
-\end{verbatim}
-
-\begin{verbatim}
-/********************   SAFE   *******************/
-task_specification_t task_spec_copy=0;
-	
-void agent_init(const task_specification_t task_spec){
-        /*
-            Allocating space (need length+1 for the terminator character)
-        */
-    task_spec_copy=(char *)calloc(strlen(task_spec)+1, sizeof(char));
-    strcpy(task_spec_copy,task_spec);
-}
-
-action_t agent_start(observation_t this_observation) {
-        /*
-            This is fine, because even if 
-            the task_spec was deleted, we have a copy.
-        */
-    printf("Task spec we saved is: %s\n",task_spec_copy);
-    ...
-\end{verbatim}
-
-
-\subsubsection{Observation Example (using helper library)}
-
-
-\begin{verbatim}
-/********************   UNSAFE   *******************/
-observation_t last_observation;
-action_t agent_start(observation_t this_observation) {
-        /*
-            Unsafe, points last_observation to
-            this_observation's arrays!
-        */
-    last_observation=this_observation;
-...
-\end{verbatim}
-
-\begin{verbatim}
-/********************   SAFE   *******************/
-observation_t last_observation;
-action_t agent_start(observation_t this_observation) {
-        /*
-           This helper function actually frees the
-           allocated memory inside last_observation, allocates 
-           new memory, and copies from this_observation!
-        */
-    replaceRLStruct(&this_observation, &last_observation);
-...
-\end{verbatim}
-
-These examples might make it clear why most of our samples use global variables for things that are changed often, like structures that we return, or structures keeping track of the previous action/observation etc.  
-This allows us to only worry about re-allocating the arrays inside the struct, instead of also worrying about pointers to the structs themselves.
-
-\subsection{Free Your Mess}
-When using this codec, you are responsible for cleaning up any memory that you allocate. The good news is that that you can trust that between function calls, any memory you've returned to a caller has either been
-copied or is not necessary (it is safe to free it).  Remember that in C/C++ it's not safe to return pointers to stack-based memory.
-
-The Skeleton examples do the appropriate thing in this respect: the \texttt{intArrays} that need to be dynamically allocated are allocated in the \texttt{\_init} methods, and then the memory is released in the \texttt{\_cleanup} methods.
-
-Strings seem to be more complicated for some people, so here are a couple of examples:
-
-\begin{verbatim}
-/********************   UNSAFE   *******************/
-message_t agent_message(const message_t inMessage) {
-    char theBuffer[1024];
-    sprintf(theBuffer,"this is an example response message\n");
-        /*
-            This returns the address of a local variable
-            bad idea and compiler will complain
-        */
-    return theBuffer;
-}
-\end{verbatim}
-
-\begin{verbatim}
-/****************   UNSAFE (MEMORY LEAK)   ***************/
-message_t agent_message(const message_t inMessage) {
-    char theBuffer[1024];
-    message_t returnString=0;
-    sprintf(theBuffer,"this is an example response message\n");
-    returnString=(char *)calloc(strlen(theBuffer+1),sizeof(char));
-    strcpy(returnString,theBuffer);
-        /*
-            Memory leak... every time this function is called
-            a new returnString is allocated, but nobody will
-            ever clean them up!
-        */
-    return returnString;
-}
-\end{verbatim}
-
-\begin{verbatim}
-/********************   SAFE   *******************/
-message_t agentReturnString=0; /*Global Variable */	
-message_t agent_message(const message_t inMessage) {
-    char theBuffer[1024];
-    sprintf(theBuffer,"this is an example response message\n");
-
-        /*
-            This code will free the memory on subsequent calls
-        */
-    if(agentReturnString!=0){
-        free(agentReturnString);
-        agentReturnString=0;
-    }
-    agentReturnString=(char *)calloc(strlen(theBuffer+1),sizeof(char));
-    strcpy(agentReturnString,theBuffer);
-    return agentReturnString;
-}
-\end{verbatim}
+The RL-Glue technical manual has a section called \textit{Who creates and frees memory?}.  The general approach recommended there is to make a copy of data
+you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Java codec.
 
 
 \section{Advanced Features}
@@ -523,188 +261,117 @@ This section will explain how to set custom target IP addresses (to connect over
 Someone should write this later (Opportunity to contribute!).
 
 \section{Codec Specification Reference}
-This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be an interesting section of this document, but it will
+This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
 be handy.
 
+Instead of re-creating information that is readily available in the JavaDocs, we will give pointers were appropriate.
+
 \subsection{Types}
-The types used by this codec are the same as the direct-compile RL-Glue library.
 
 
 \subsubsection{Simple Types}
-The simple types are:
+Unlike the C/C++ codec, we will not be using \texttt{typedef} statements to create special labels for the types. In Java:
+\begin{itemize}
+	\item \textit{reward} is \texttt{double}
+	\item \textit{terminal} is \texttt{int} (1 for terminal, 0 for non-terminal) We hope to replace these with boolean eventually.
+	\item \textit{messages} are \texttt{String}
+	\item \textit{task specifications} are \texttt{String}
+\end{itemize}
 
-\begin{verbatim}
-    typedef double reward_t;
-    typedef int terminal_t;
-    typedef char* message_t;
-    typedef char* task_specification_t;
-\end{verbatim}
-
-\def\rat{rl\_abstract\_type\_t}
+\def\rat{RL\_Abstract\_Type}
 
 \subsubsection{Structure Types}
 \label{sec:structure-types}
-All of the major structure types (observations, actions, random seed keys, and state keys) are typedef'd to \texttt{\rat}.
+All of the major structure types (observations, actions, random seed keys, and state keys) extend the \htmladdnormallink{\texttt{\rat}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/RL_abstract_type.html} class.
 
-\begin{verbatim}
-typedef struct
-{
-    unsigned int numInts;
-    unsigned int numDoubles;
-    unsigned int numChars;
-    int* intArray;
-    double* doubleArray;
-    char* charArray;
-} rl_abstract_type_t;
-\end{verbatim}
-
-The specific names and definitions of the structure types are:
-\begin{verbatim}
-    typedef rl_abstract_type_t observation_t;
-    typedef rl_abstract_type_t action_t;
-    typedef rl_abstract_type_t random_seed_key_t;
-    typedef rl_abstract_type_t state_key_t;
-\end{verbatim}
-
-The composite structure types returned by \texttt{env\_step} are:
-\begin{verbatim}
-typedef struct{
-    observation_t o;
-    action_t a;
-} observation_action_t;
-
-typedef struct{
-    reward_t r;
-    observation_t o;
-    terminal_t terminal;
-} reward_observation_t;
-
-typedef struct {
-    reward_t r;
-    observation_t o;
-    action_t a;
-    terminal_t terminal;
-} reward_observation_action_terminal_t;
-\end{verbatim}
-
-\subsubsection{Summary}
-The type names are:
-\begin{verbatim}
-    reward_t
-    terminal_t
-    message_t
-    task_specification_t
-    observation_t
-    action_t
-    observation_action_t
-    reward_observation_t
-    reward_observation_action_t
-\end{verbatim}
-
+All of the types are listed in the \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.types}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/package-summary.html} package.
 
 \subsection{Functions}
 \subsubsection{Agent Functions}
-All agents \textbf{should implement} these functions, located in \texttt{rlglue/Agent\_common.h}
-\begin{verbatim}
-    void agent_init(const task_specification_t task_spec);
-    action_t agent_start(observation_t o);
-    action_t agent_step(reward_t r, observation_t o);
-    void agent_end(reward_t r);  
-    void agent_cleanup();
-    message_t agent_message(const message_t message);
-\end{verbatim}
+All agents \textbf{should implement} \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.AgentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html}.
 
 \subsubsection{Environment Functions}
-All environments \textbf{should implement} these functions, located in \texttt{rlglue/Environment\_common.h}
-\begin{verbatim}
-    task_specification_t env_init();
-    observation_t env_start();
-    reward_observation_t env_step(action_t a);
-    void env_cleanup();
-    message_t env_message(const message_t message);
-    void env_set_state(state_key_t sk);
-    void env_set_random_seed(random_seed_key_t rsk);
-    state_key_t env_get_state();
-    random_seed_key_t env_get_random_seed();
-\end{verbatim}
+All environments \textbf{should implement} \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.EnvironmentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html}.
 
 \subsubsection{Experiments Functions}
-All experiments \textbf{can call} these functions, located in \texttt{rlglue/RL\_glue.h}
-\begin{verbatim}
-    task_specification_t RL_init();
-    observation_action_t RL_start();
-    reward_observation_action_terminal_t RL_step();
-    void RL_cleanup();
-
-    terminal_t RL_episode(unsigned int num_steps);
-
-    message_t RL_agent_message(message_t message);
-    message_t RL_env_message(message_t message);
-
-    reward_t RL_return();
-    int RL_num_steps();
-    int RL_num_episodes();
-
-    void RL_set_state(state_key_t sk);
-    void RL_set_random_seed(random_seed_key_t rsk);
-    state_key_t RL_get_state();
-    random_seed_key_t RL_get_random_seed();
-\end{verbatim}
-
-\subsubsection{RLUtils Library Functions}
-You can get access to these functions by linking to libRLUtils (\texttt{-lrlutils}) and by including the appropriate header:
-
-\begin{verbatim}
-#include <rlglue/utils/C/RLStruct_util.h>
-\end{verbatim}
-
-\begin{verbatim}
-/*	Copies all of the data from src to dst, freeing and allocating only if necessary*/
-void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst);
-
-/*  
-    Frees the 3 data arrays if they are not NULL, sets them to NULL, 
-    and sets numInts, numDoubles, numChars to 0
-*/
-void clearRLStruct(rl_abstract_type_t *dst);
-
-/*  calls clearRLStruct on dst, and then frees the dst pointer */
-void freeRLStructPointer(rl_abstract_type_t *dst);
-
-/*
-    Given a pointer to a rl_abstract_type_t, allocate arrays of the requested sizes,
-    set the contents of the arrays to 0, and set numInts, numDoubles,
-    numChars in the struct appropriately.
-*/
-void allocateRLStruct(rl_abstract_type_t *dst, 
-                      const unsigned int numInts,
-                      const unsigned int numDoubles,
-                      const unsigned int numChars);
-
-/*
-    Create a new rl_abstract_type_t, allocate its arrays 
-    and its numInts/Doubles/Chars using allocateRLStruct, 
-    return the pointer
-*/
-rl_abstract_type_t *allocateRLStructPointer(const unsigned int numInts,
-                                            const unsigned int numDoubles,
-                                            const unsigned int numChars);
-\end{verbatim}
-
-
+All experiments \textbf{can call} the static methods in \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.RLGlue}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlue.html}.
 
 \section{Changes and 2.x Backward Compatibility}
-There were many changes from RL-Glue 2.x to RL-Glue 3.x.  Most of them are at the level of the API and project organization, and are addressed in the RL-Glue 
+There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the RL-Glue 
 project documentation.
 
-\subsection{Types}
-All of the types that existed in the 2.x codec (ex: \texttt{Observation} instead of \texttt{observation\_t}) are still supported through a definition file called 
-\texttt{legacy\_types.h}.  If you don't want to update your old agents to the new types, you can use the old names by doing the following in your source files:
+\subsection{RL-Glue Split and Package/Jar Naming Changes}
+With the RL-Glue 3.x project, we've decided to keep the codecs separate from the main RL-Glue project.  This is so the codecs can be more agile while the main RL-Glue project stays very stable.
+
+Since things were changing, we took an opportunity to fix some of our long-term gripes with the Java codec.  The name of the JAR file has changed from \texttt{RL-Glue.jar} to \texttt{JavaRLGlueCodec.jar}.
+
+The JAR file is now distributed in:\newline
+\texttt{rl-glue-ext/projects/codecs/java/products/JavaRLGlueCodec.jar}
+
+In the previous incarnation of the Java codec, the classes were in a very shallow heirarchy: \texttt{rlglue.RLGlue}, \texttt{RLGlue.types}, etc.  For the updated release, we've moved to a richer package description that
+is more in line with other Java projects in the Reinforcement Learning community.  The new package hierarchy is:\newline
+\htmladdnormallink{\texttt{org.rlcommunity.rlglue}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/overview-summary.html}
+
+We've also moved a few of the class/interfaces around.  The most notable change is that instead of \texttt{Agent} and \texttt{Environment} interfaces, we now have \texttt{AgentInterface} and \texttt{EnvironmentInterface}.
+Also, instead of these interfaces being in their own package, they are now in: \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/package-summary.html}. 
+
+Updating existing code might seem like a lot of work, but it's easier than it seems.  The main changes from the user end are:
+1) Using the right jar (JavaRLGlueCodec.jar instead of RL-Glue.jar)  (Not necessary if you are using RL-Viz)
+
+2) Change classes that implement \texttt{Agent} and \texttt{Environment} to \texttt{AgentInterface} and \texttt{EnvironmentInterface}
+
+3) Change package imports.  Find and replace:
 \begin{verbatim}
-	#include<rlglue/legacy_types.h>
+rlglue.RLGlue                    ==>    org.rlcommunity.rlglue.codec.RLGlue
+rlglue.types.                    ==>    org.rlcommunity.rlglue.codec.types.
+rlglue.agent.Agent               ==>    org.rlcommunity.rlglue.codec.AgentInterface
+rlglue.environment.Environment   ==>    org.rlcommunity.rlglue.codec.EnvironmentInterface
+\end{verbatim}
+
+Those three things should cover most of it.  If someone makes a very strong case, we can probably create a codec that is completely compatible with the old naming conventions.  However, I assure you that I uploaded
+several tens of thousands of lines of code for the RL-Viz, RL-Library, and BT-AgentLib projects in only about 30 minutes total.
+
+\textbf{POSSIBLE CONTRIBUTION}: If we've missed anything, or there is an easier way, please let us know!
+
+\subsection{Agent/Environment Loading}
+Historically, there have been a few different approaches for loading agents and environments.
+
+For all these examples, lets pretend that the \texttt{JavaRLGlue.jar} path and JAR are in an environment variable called CODECJAR.  We could actually do that (with a bash shell) like:
+\begin{verbatim}
+	export CODECJAR=/path/to/JavaRLGlueCodec.jar
 \end{verbatim}
 
 
+The first (original) method was to call the main() method of the AgentLoader/EnvironmentLoader class, passing it the name of the 
+Agent/Env class you wanted to load.  Hopefully you remembered to put it in your classpath.  This approach inevitably lead to lots of typing to load an agent, as frustrating run-time failures when paths weren't set right.
+Here is an example of how that looks:
+\begin{verbatim}
+	java -classpath $CODECJAR:/to/Agent/classes org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
+\end{verbatim}
+
+The second method was to bypass the AgentLoader and go through \htmladdnormallink{\texttt{RLGlueCore}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlueCore.html}, 
+which is contains the default \texttt{main} method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
+\begin{verbatim}
+	java -classpath /to/Agent/classes -jar $CODECJAR myAgent
+\end{verbatim}
+
+The \textbf{new and improved} method is to put a \texttt{main} method inside your agent/environment that calls the applicable loader so that the agent/env can load itself.  So, in your agent (for example) you'd have code like:
+\begin{verbatim}
+	import org.rlcommunity.rlglue.codec.util.AgentLoader;
+	/* rest of agent here */
+	//This would be inside MyAgent.java
+	public static void main(String[] args){
+	        AgentLoader theLoader=new AgentLoader(new MyAgent());
+	        theLoader.run();
+	}
+\end{verbatim}
+
+So, for the price of that tiny bit of code inside your agent, you can now run the agent class directly:
+\begin{verbatim}
+	java -classpath $CODECJAR:/to/Agent/classes myAgent
+\end{verbatim}
+
+We feel that this is a useful step forward, and will be encouraging this approach.
 
 \section{Frequently Asked Questions}
 We're waiting to hear your questions!

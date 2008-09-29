@@ -24,6 +24,13 @@ import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
+/**
+ * This is the definition of an RLGlue 'engine'.  The network codec is one such engine.
+ * <p>If you want to create your own network codec, or a 'direct-compile' RL-Glue 
+ * engine (like the one in RL-Viz), you should implement this interface.
+ * @since 2.0
+ * @author btanner
+ */
 public interface RLGlueInterface {
 	public   String RL_init();
 	public   Observation_action RL_start();

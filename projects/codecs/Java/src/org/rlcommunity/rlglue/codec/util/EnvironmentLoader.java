@@ -22,6 +22,7 @@ limitations under the License.
 package org.rlcommunity.rlglue.codec.util;
 
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
+import org.rlcommunity.rlglue.codec.RLGlueCore;
 import org.rlcommunity.rlglue.codec.network.ClientEnvironment;
 import org.rlcommunity.rlglue.codec.network.Network;
 
@@ -37,7 +38,6 @@ public class EnvironmentLoader implements Runnable {
 
     String host = Network.kDefaultHost;
     int port = Network.kDefaultPort;
-    int autoReconnect = 0;
     final EnvironmentInterface theEnvironment;
     ClientEnvironment theClient = null;
 
@@ -65,16 +65,18 @@ public class EnvironmentLoader implements Runnable {
     }
 
     public void run() {
-        System.out.print("Connecting to " + host + " on port " + port + "...");
+        String ImplementationVersion=RLGlueCore.getImplementationVersion();
+        String SpecVersion=RLGlueCore.getSpecVersion();
+
+        System.out.println("RL-Glue Java Environment Codec Version: "+SpecVersion+" ("+ImplementationVersion+")");
+        System.out.println("\tConnecting to " + host + " on port " + port + "...");
 
         theClient = new ClientEnvironment(theEnvironment);
         try {
-            do {
                 theClient.connect(host, port, Network.kRetryTimeout);
-                System.out.println("Connected");
+                System.out.println("\tEnvironment Codec Connected");
                 theClient.runEnvironmentEventLoop();
                 theClient.close();
-            } while (autoReconnect == 1);
         } catch (Exception e) {
             System.err.println("EnvironmentLoader run(" + theEnvironment.getClass() + ") threw Exception: " + e);
         }

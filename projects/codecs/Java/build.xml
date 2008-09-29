@@ -24,7 +24,6 @@
     </target>
 
     <target name="jar" depends="compile,get.svn.version" >
-	 <echo message="it is getting called " />
         <mkdir dir="${dist.dir}" />
         <jar destfile="${result.jar}" basedir="${classes.dir}" >
             <manifest>

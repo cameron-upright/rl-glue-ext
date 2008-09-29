@@ -34,10 +34,9 @@ public class Random_seed_key extends RL_abstract_type
 	}
 
 	/**
-         * For backwards compatibility wiht RL-Glue 2.x
+         * For backwards compatibility with RL-Glue 2.x
          * @param numInts
          * @param numDoubles
-         * @param numChars
          */
         public Random_seed_key(int numInts, int numDoubles)
 	{

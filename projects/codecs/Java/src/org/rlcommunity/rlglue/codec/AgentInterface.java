@@ -29,9 +29,12 @@ import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 
 /**
- * Replaces org.rlcommunity.rlglue.codec.AgentInterface
  * 
- * Note that agent_freeze no longer exists as per RL-Glue 3.x spec.
+ * This is the interface that all agents should implement.
+ * <p> Changes
+ * <ul>
+ * <li>Agent_freeze no longer exists as per RL-Glue 3.x spec.
+ * </ul>
  * @author btanner
  */public interface AgentInterface
 {

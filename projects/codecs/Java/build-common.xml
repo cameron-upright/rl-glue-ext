@@ -132,7 +132,7 @@ We'll try and rely on minimal variables from above.
     <mkdir dir="${docs.dir}"/>
 <!--    <javadoc sourcepath="${src.dir}" destdir="${docs.dir}" access="private"/>-->
 
-<javadoc packagenames="org.rlcommunity.rlglue.*"
+<javadoc packagenames="org.rlcommunity.rlglue.codec.*"
          sourcepath="${src.dir}"
          excludepackagenames="org.rlcommunity.rlglue.codec.tests.*"
          defaultexcludes="yes"

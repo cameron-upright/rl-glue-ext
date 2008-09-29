@@ -180,11 +180,11 @@ public class Network {
     }
 
     /**
-     * @since 1.0
+     * @since 2.0
      * Pull a char off the buffer.  Slightly tricky because chars are unicode
      * (more than a byte) in Java, but only 1 byte in our network protocol.
      * <p>Thanks: http://bytes.com/forum/thread17160.html
-     * @return
+     * @return ascii character encoded by the next byte.
      */
     public char getChar() {
         byte b = recvBuffer.get();
@@ -195,7 +195,7 @@ public class Network {
      * Used for getting task spec and env/agent messages. UNLIKE the
      * charArrays in observations/actions/etc, these strings are null
      * terminated?
-     * @return
+     * @return Return a String from the network buffer
      */
     public String getString() {
         String returnString = "";
@@ -321,8 +321,8 @@ public class Network {
      * Brian Tanner adding this for RL-Glue 3.x compatibility
      * Converts unicode (> 1 byte) char to 1 byte network char protocol
      * <p>Thanks http://bytes.com/forum/thread17160.html
-     * @since 1.0
-     * @param value
+     * @since 2.0
+     * @param c character to put into the buffer as byte
      */
     public void putChar(char c) {
         this.ensureSendCapacityRemains(Network.kCharSize);
