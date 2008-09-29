@@ -1,6 +1,6 @@
 /*
 Copyright 2007 Brian Tanner
-http://rl-glue.googlecode.com/
+http://rl-glue-ext.googlecode.com/
 brian@tannerpages.com
 http://brian.tannerpages.com
 Licensed under the Apache License, Version 2.0 (the "License");
