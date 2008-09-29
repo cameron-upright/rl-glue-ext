@@ -28,7 +28,7 @@ Make a Tag for the release
 NOTE: PICK A NAME FOR THE RELEASE AND USE THAT INSTEAD OF rl-glue-extensions-1.0-alpha
 
 #We could probably automate this somehow
-$> svn cp https://rl-glue-ext.googlecode.com/svn/trunk https://rl-glue-ext.googlecode.com/svn/tags/releases/l-glue-extensions-1.0-alpha
+$> svn cp https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C https://rl-glue-ext.googlecode.com/svn/tags/releases/rl-glue-codec-c-1.0-alpha
 
 Upload the release to Google Code
 -------------------------------------
