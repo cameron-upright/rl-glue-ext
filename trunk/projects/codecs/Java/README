@@ -1,3 +1,0 @@
-The current offering of the Java codec is in this repository as a NetBeans 6.1 project.  Before it is released, it will also be available to be built with an Ant script, so no special IDE will be needed to rebuild it.
-
-Bear in mind also that you don't ever need to rebuild the Java code unless you are changing the codec: there is a downloadable Jar with everything built ready to use.
