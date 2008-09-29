@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2008.2.22)  28 SEP 2008 16:18
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2008.2.22)  29 SEP 2008 15:43
 entering extended mode
 **./images.tex
 (./images.tex
@@ -45,6 +45,9 @@ Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks14
 \verbatim@line=\toks15
 \verbatim@in@stream=\read1
+) (/sw/share/texmf-dist/tex/latex/preprint/fullpage.sty
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip43
 ) (/sw/share/texmf-dist/tex/latex/graphics/color.sty
 Package: color 1999/02/16 v1.0i Standard LaTeX Color (DPC)
 (/sw/share/texmf-dist/tex/latex/graphics/color.cfg
@@ -61,22 +64,22 @@ Package: inputenc 2004/02/05 v1.0d Input encoding file
 (./images.aux)
 \openout1 = `images.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 131.
-LaTeX Font Info:    ... okay on input line 131.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 131.
-LaTeX Font Info:    ... okay on input line 131.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 131.
-LaTeX Font Info:    ... okay on input line 131.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 131.
-LaTeX Font Info:    ... okay on input line 131.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 131.
-LaTeX Font Info:    ... okay on input line 131.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 131.
-LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
 
 latex2htmlLength hsize=349.0pt
 
-latex2htmlLength vsize=629.40024pt
+latex2htmlLength vsize=650.43001pt
 
 latex2htmlLength hoffset=0.0pt
 
@@ -92,29 +95,29 @@ latex2htmlLength headsep=0.0pt
 
 latex2htmlLength parskip=10.0pt
 
-latex2htmlLength oddsidemargin=54.0pt
+latex2htmlLength oddsidemargin=0.0pt
 
-latex2htmlLength evensidemargin=54.0pt
+latex2htmlLength evensidemargin=0.0pt
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 165.
+(Font)              <10.95> on input line 164.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 165.
+(Font)              <8> on input line 164.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 165.
-l2hSize :tex2html_wrap_inline219:8.7125pt::8.7125pt::78.41405pt.
+(Font)              <6> on input line 164.
+l2hSize :tex2html_wrap_inline191:8.7125pt::8.7125pt::78.41405pt.
 [1
 
 
 
 ] (./images.aux) ) 
 Here is how much of TeX's memory you used:
- 804 strings out of 94501
- 10336 string characters out of 1176137
- 54532 words of memory out of 1500000
- 4019 multiletter control sequences out of 10000+50000
+ 824 strings out of 94501
+ 10670 string characters out of 1176137
+ 54589 words of memory out of 1500000
+ 4035 multiletter control sequences out of 10000+50000
  6379 words of font info for 23 fonts, out of 1200000 for 2000
  580 hyphenation exceptions out of 8191
  21i,5n,19p,180b,145s stack positions out of 5000i,500n,6000p,200000b,5000s
 
-Output written on images.dvi (1 page, 472 bytes).
+Output written on images.dvi (1 page, 460 bytes).
