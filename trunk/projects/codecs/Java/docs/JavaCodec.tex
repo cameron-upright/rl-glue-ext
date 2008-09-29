@@ -30,7 +30,7 @@ This software project is licensed under the Apache-2.0\footnote{\url{http://www.
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 This project has a home here:\\
-\url{http://rl-glue-ext.googlecode.com/}
+\url{http://rl-glue-ext.googlecode.com}
 
 
 
@@ -49,14 +49,14 @@ The good news is that you probably \textbf{don't need to recompile the codec}.  
 The codec can be downloaded either as a tarball or can be checked out of the subversion repository where it is hosted.
 
 The tarball distribution can be found here:\newline
-\url{http://code.google.com/p/rl-glue-ext/downloads/list}
+\tiny \url{http://code.google.com/p/rl-glue-ext/downloads/list} \normalsize
 
 
 To check the code out of subversion:\newline
-\small{\texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java Java-Codec}}
+ \texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java Java-Codec}
 
 Technically all you really \textbf{need} is the JAR archive of the codec:\newline
-\footnotesize{\texttt{svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/products/JavaRLGlueCodec.jar}}
+\footnotesize \texttt{svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/products/JavaRLGlueCodec.jar} \normalsize
 
 \subsection{Installing the Codec}
 There is no real ``installation'' for the codec per-se.  The important thing is to put the \texttt{JavaRLGlueCodec.jar} somewhere that is easy to get at.  If you want to be fancy, you can probably put \texttt{JavaRLGlueCodec.jar}
@@ -312,11 +312,17 @@ In the previous incarnation of the Java codec, the classes were in a very shallo
 is more in line with other Java projects in the Reinforcement Learning community.  The new package hierarchy is:\newline
 \htmladdnormallink{\texttt{org.rlcommunity.rlglue}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/overview-summary.html}
 
-We've also moved a few of the class/interfaces around.  The most notable change is that instead of \texttt{Agent} and \texttt{Environment} interfaces, we now have \texttt{AgentInterface} and \texttt{EnvironmentInterface}.
+We've also moved a few of the class/interfaces around.  The most notable change is that instead of \texttt{Agent} and \texttt{Environment} interfaces, we now have 
+\htmladdnormallink{\texttt{AgentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html} and 
+\htmladdnormallink{\texttt{EnvironmentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html}.
 Also, instead of these interfaces being in their own package, they are now in: \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/package-summary.html}. 
+
+
 
 Updating existing code might seem like a lot of work, but it's easier than it seems.  The main changes from the user end are:
 1) Using the right jar (JavaRLGlueCodec.jar instead of RL-Glue.jar)  (Not necessary if you are using RL-Viz)
+
+
 
 2) Change classes that implement \texttt{Agent} and \texttt{Environment} to \texttt{AgentInterface} and \texttt{EnvironmentInterface}
 
