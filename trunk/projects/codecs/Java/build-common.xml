@@ -57,7 +57,6 @@ We'll try and rely on minimal variables from above.
 <target name="rl-clean" >
     <delete dir="${build.dir}"/>
     <delete file="${result.jar}"/>
-    <delete dir="${docs.dir}"/>
     <delete dir="${test.raw}"/>
     <delete dir="${test.reports}"/>
 </target>
@@ -140,7 +139,7 @@ We'll try and rely on minimal variables from above.
          author="true"
          version="true"
          use="true"
-         windowtitle="RL-Glue Java Codec ${svn.revision.version}" />
+         windowtitle="RL-Glue Java Codec {RLGlueCodec.spec.version}" />
 	</target>
 
 
