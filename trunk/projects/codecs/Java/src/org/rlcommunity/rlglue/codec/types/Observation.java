@@ -29,10 +29,9 @@ public class Observation extends RL_abstract_type {
 	}
 
 	/**
-         * For backwards compatibility wiht RL-Glue 2.x
+         * For backwards compatibility with RL-Glue 2.x
          * @param numInts
          * @param numDoubles
-         * @param numChars
          */
         public Observation(int numInts, int numDoubles)
 	{

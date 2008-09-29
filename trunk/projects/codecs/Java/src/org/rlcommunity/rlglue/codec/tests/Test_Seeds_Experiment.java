@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Brian Tanner
- * http://bt-recordbook.googlecode.com/
+ * http://rl-glue.ext.googlecode.com/
  * brian@tannerpages.com
  * http://brian.tannerpages.com
  * 

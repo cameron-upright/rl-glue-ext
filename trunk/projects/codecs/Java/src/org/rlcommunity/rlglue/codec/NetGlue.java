@@ -31,9 +31,44 @@ import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
+/**
+ * This is the network connection for an experiment program that will talk to the 
+ * C/C++ rl_glue executable over sockets.
+ * @since 2.0
+ * @author btanner
+ */
 public class NetGlue implements RLGlueInterface {
 
     private Network network;
+    private String host;
+    private int port;
+
+    /**
+     * @since 2.0
+     * Sets default host and port
+     */
+    public NetGlue() {
+        this(Network.kDefaultHost, Network.kDefaultPort);
+    }
+
+    /**
+     * @since 2.0
+     * Custom host, default port
+     */
+    public NetGlue(String host) {
+        this(host, Network.kDefaultPort);
+
+    }
+
+    /**
+     * Specify custom host and port to connect to rl_glue 
+     * @since 2.0
+     */
+    public NetGlue(String host, int port) {
+        this.host = host;
+        this.port = port;
+
+    }
 
     public synchronized String RL_init() {
         forceConnection();
@@ -105,7 +140,7 @@ public class NetGlue implements RLGlueInterface {
         sendEmpty(Network.kRLNumEpisodes, "RL_num_episodes");
 
         int numEpisodes = network.getInt();
-        
+
         return numEpisodes;
     }
 
@@ -148,13 +183,19 @@ public class NetGlue implements RLGlueInterface {
      */
     private void forceConnection() {
         if (network == null) {
+            String ImplementationVersion = RLGlueCore.getImplementationVersion();
+            String SpecVersion = RLGlueCore.getSpecVersion();
+
+            System.out.println("RL-Glue Java Experiment Codec Version: " + SpecVersion + " (" + ImplementationVersion + ")");
+            System.out.println("\tConnecting to " + host + " on port " + port + "...");
+
             network = new Network();
 
-            // Connect
-            network.connect(Network.kDefaultHost,
-                    Network.kDefaultPort,
-                    Network.kRetryTimeout);
 
+
+            // Connect
+            network.connect(host, port, Network.kRetryTimeout);
+            System.out.println("\tExperiment Codec Connected");
             network.clearSendBuffer();
             network.putInt(Network.kExperimentConnection);
             network.putInt(0);

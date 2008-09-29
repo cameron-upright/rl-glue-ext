@@ -26,7 +26,11 @@ import org.rlcommunity.rlglue.codec.util.AgentLoader;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 
 /**
- *
+ * This is the executable class from the JavaRLGlueCodec JAR.
+ * <p>It can be used to load agents and environments (although that approach is
+ * no longer the best way :: see Agent/Environment Loading in the Java Codec Manual).
+ * <p>It will also tell you exactly what version and build of the codec you are using if you
+ * do<br>java -jar JavaRLGlueCodec --version
  * @author Brian Tanner
  */
 public class RLGlueCore {
@@ -37,6 +41,7 @@ public class RLGlueCore {
         System.out.println("--------------------------------");
         System.out.println("-v or --version will print out the interface version");
         System.out.println("-e ENVIRONMENTCLASSNAME or --environment ENVIRONMENTCLASSNAME will load class ENVIRONMENTCLASSNAME (make sure it's in the class path)");
+        System.out.println("-a AGENTCLASSNAME or --agent AGENTCLASSNAME will load class AGENTCLASSNAME (make sure it's in the class path)");
     }
 
     private static void printVersion() {
@@ -59,7 +64,6 @@ public class RLGlueCore {
             EnvironmentLoader.loadEnvironment(args[1]);
         }
         if (args[0].equalsIgnoreCase("-a") || args[0].equalsIgnoreCase("--agent")) {
-            System.out.println("Loading agent...");
             AgentLoader.loadAgent(args[1]).run();
         }
 
@@ -72,10 +76,6 @@ public class RLGlueCore {
      * 
      */
     public static String getSpecVersion() {
-        System.out.println("Package is: "+RLGlueCore.class.getPackage());
-        Package thisPackage=RLGlueCore.class.getPackage();
-        System.out.println(thisPackage+" \t:\t"+thisPackage.getSpecificationTitle()+"\t:\t"+thisPackage.getSpecificationVersion());
-        System.out.println(thisPackage+" \t:\t"+thisPackage.getImplementationTitle()+"\t:\t"+thisPackage.getImplementationVersion());
         String specAsString = RLGlueCore.class.getPackage().getSpecificationVersion();
         return specAsString;
     }

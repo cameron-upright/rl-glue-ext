@@ -22,6 +22,7 @@ limitations under the License.
 package org.rlcommunity.rlglue.codec.util;
 
 import org.rlcommunity.rlglue.codec.AgentInterface;
+import org.rlcommunity.rlglue.codec.RLGlueCore;
 import org.rlcommunity.rlglue.codec.network.ClientAgent;
 import org.rlcommunity.rlglue.codec.network.Network;
 
@@ -37,7 +38,7 @@ public class AgentLoader implements Runnable {
 
     String host = Network.kDefaultHost;
     int port = Network.kDefaultPort;
-    int autoReconnect = 0;
+
     AgentInterface theAgent = null;
     ClientAgent theClient = null;
 
@@ -45,7 +46,7 @@ public class AgentLoader implements Runnable {
         this.theAgent = theAgent;
     }
 
-    public AgentLoader(String hostString, String portString, String reconnectString, AgentInterface theAgent) {
+    public AgentLoader(String hostString, String portString, AgentInterface theAgent) {
         this.theAgent = theAgent;
 
         if (hostString != null) {
@@ -57,20 +58,11 @@ public class AgentLoader implements Runnable {
         } catch (Exception e) {
             port = Network.kDefaultPort;
         }
-
-        try {
-            autoReconnect = Integer.parseInt(reconnectString);
-        } catch (Exception e) {
-            autoReconnect = 0;
-        }
-
-
-
     }
 
     /**
      * Loads the class agentClassName as an rl-glue agent.
-     * @param envClassName
+     * @param agentClassName
      */
     public static AgentLoader loadAgent(String agentClassName) {
         AgentInterface agent = null;
@@ -78,15 +70,13 @@ public class AgentLoader implements Runnable {
 
         String hostString = System.getenv("RLGLUE_HOST");
         String portString = System.getenv("RLGLUE_PORT");
-        String reconnectString = System.getenv("RLGLUE_AUTORECONNECT");
 
         try {
             agent = (AgentInterface) Class.forName(agentClassName).newInstance();
-            System.out.println("Agent dynamically loaded...");
         } catch (Exception ex) {
             System.err.println("loadAgent(" + agentClassName + ") threw Exception: " + ex);
         }
-        AgentLoader theLoader = new AgentLoader(hostString, portString, reconnectString, agent);
+        AgentLoader theLoader = new AgentLoader(hostString, portString, agent);
         return theLoader;
     }
 
@@ -95,16 +85,18 @@ public class AgentLoader implements Runnable {
     }
 
     public void run() {
-        System.out.print("Connecting to " + host + " on port " + port + "...");
+        String ImplementationVersion=RLGlueCore.getImplementationVersion();
+        String SpecVersion=RLGlueCore.getSpecVersion();
+        
+        System.out.println("RL-Glue Java Agent Codec Version: "+SpecVersion+" ("+ImplementationVersion+")");
+        System.out.println("\tConnecting to " + host + " on port " + port + "...");
         ClientAgent theClient = new ClientAgent(theAgent);
 
         try {
-            do {
                 theClient.connect(host, port, Network.kRetryTimeout);
-                System.out.println("Connected");
+                System.out.println("\tAgent Codec Connected");
                 theClient.runAgentEventLoop();
                 theClient.close();
-            } while (autoReconnect == 1);
         } catch (Exception e) {
             System.err.println("AgentLoader run(" + theAgent.getClass() + ") threw Exception: " + e);
         }
@@ -115,9 +107,7 @@ public class AgentLoader implements Runnable {
 
         String envVars = "The following environment variables are used by the agent to control its function:\n" +
                 "RLGLUE_HOST  : If set the agent will use this ip or hostname to connect to rather than " + Network.kDefaultHost + "\n" +
-                "RLGLUE_PORT  : If set the agent will use this port to connect on rather than " + Network.kDefaultPort + "\n" +
-                "RLGLUE_AUTORECONNECT  : If set the agent will reconnect to the glue after an experiment has finished\n";
-
+                "RLGLUE_PORT  : If set the agent will use this port to connect on rather than " + Network.kDefaultPort + "\n";
         if (args.length < 1) {
             System.out.println(usage);
             System.out.println(envVars);

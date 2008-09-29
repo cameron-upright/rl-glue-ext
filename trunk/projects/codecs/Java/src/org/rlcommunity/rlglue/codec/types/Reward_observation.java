@@ -28,12 +28,27 @@ public class Reward_observation {
     public int terminal;
 
     public Reward_observation() {
+        r=0;
+        o=new Observation();
+        terminal=0;
     }
+    
 
     public Reward_observation(double reward, Observation observation, int terminal) {
+        this(reward,observation,terminal==1);
+    }
+
+   /**
+     * @since 2.0 Want to move towards using terminal as a boolean not an int.
+     */
+    public Reward_observation(double reward, Observation observation, boolean terminal) {
         this.r = reward;
         this.o = observation;
-        this.terminal = terminal;
+        if(terminal){
+            this.terminal = 1;
+        }else{
+            this.terminal = 0;
+        }
     }
 
     /**
@@ -45,6 +60,15 @@ public class Reward_observation {
         this.r = src.r;
         this.terminal = src.terminal;
     }
+    
+   /**
+     * @since 2.0 Want to move towards using terminal as a boolean not an int.
+     * @return boolean representation of whether the episode is over.
+     */
+    public boolean isTerminal(){
+        return terminal==1;
+    }
+
 
     public Reward_observation duplicate() {
         return new Reward_observation(this);

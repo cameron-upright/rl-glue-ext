@@ -31,6 +31,10 @@ import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
+/**
+ * This is the interface that all environments should implement.
+ * @author btanner
+ */
 public interface EnvironmentInterface
 {
     String env_init();

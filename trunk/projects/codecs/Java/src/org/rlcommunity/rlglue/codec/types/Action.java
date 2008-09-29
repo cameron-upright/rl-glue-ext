@@ -33,10 +33,9 @@ public class Action extends RL_abstract_type
 	}
 
 	/**
-         * For backwards compatibility wiht RL-Glue 2.x
+         * For backwards compatibility with RL-Glue 2.x
          * @param numInts
          * @param numDoubles
-         * @param numChars
          */
         public Action(int numInts, int numDoubles)
 	{
