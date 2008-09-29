@@ -29,7 +29,7 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <BR>
 <BR>
 <!--End of Navigation Panel-->
-<H1 ALIGN="CENTER">RL-Glue C/C++ Codec 3.0 Manual </H1>
+<H1 ALIGN="CENTER">RL-Glue C/C++ Codec 1.0 Manual </H1>
 <DIV>
 
 <P ALIGN="CENTER"><STRONG>Brian Tanner</STRONG></P>
@@ -42,69 +42,53 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html50"
+<LI><A NAME="tex2html36"
   HREF="C-Codec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html51"
+<LI><A NAME="tex2html37"
   HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html52"
+<LI><A NAME="tex2html38"
   HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
-<LI><A NAME="tex2html53"
+<LI><A NAME="tex2html39"
   HREF="C-Codec.html#SECTION00023000000000000000">Installing the Codec</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html54"
+<LI><A NAME="tex2html40"
   HREF="C-Codec.html#SECTION00030000000000000000">Agents</A>
 <UL>
-<LI><A NAME="tex2html55"
+<LI><A NAME="tex2html41"
   HREF="C-Codec.html#SECTION00031000000000000000">Custom Flags for Custom Installs</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html56"
+<LI><A NAME="tex2html42"
   HREF="C-Codec.html#SECTION00040000000000000000">Environments</A>
-<LI><A NAME="tex2html57"
+<LI><A NAME="tex2html43"
   HREF="C-Codec.html#SECTION00050000000000000000">Experiments</A>
 <UL>
-<LI><A NAME="tex2html58"
+<LI><A NAME="tex2html44"
   HREF="C-Codec.html#SECTION00051000000000000000">Gotchas!</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html59"
+<LI><A NAME="tex2html45"
   HREF="C-Codec.html#SECTION00060000000000000000">Putting it all together</A>
-<LI><A NAME="tex2html60"
-  HREF="C-Codec.html#SECTION00070000000000000000">Who creates and frees memory?</A>
-<UL>
-<LI><A NAME="tex2html61"
-  HREF="C-Codec.html#SECTION00071000000000000000">Copy-On-Keep</A>
-<LI><A NAME="tex2html62"
-  HREF="C-Codec.html#SECTION00072000000000000000">Free Your Mess</A>
-</UL>
-<BR>
-<LI><A NAME="tex2html63"
+<LI><A NAME="tex2html46"
+  HREF="C-Codec.html#SECTION00070000000000000000">Codec Specification, Memory Allocation, Types, and Function Prototypes</A>
+<LI><A NAME="tex2html47"
   HREF="C-Codec.html#SECTION00080000000000000000">Advanced Features</A>
-<LI><A NAME="tex2html64"
-  HREF="C-Codec.html#SECTION00090000000000000000">Codec Specification Reference</A>
+<LI><A NAME="tex2html48"
+  HREF="C-Codec.html#SECTION00090000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html65"
+<LI><A NAME="tex2html49"
   HREF="C-Codec.html#SECTION00091000000000000000">Types</A>
-<LI><A NAME="tex2html66"
-  HREF="C-Codec.html#SECTION00092000000000000000">Functions</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html67"
-  HREF="C-Codec.html#SECTION000100000000000000000">Changes and 2.x Backward Compatibility</A>
+<LI><A NAME="tex2html50"
+  HREF="C-Codec.html#SECTION000100000000000000000">Frequently Asked Questions</A>
+<LI><A NAME="tex2html51"
+  HREF="C-Codec.html#SECTION000110000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html68"
-  HREF="C-Codec.html#SECTION000101000000000000000">Types</A>
-</UL>
-<BR>
-<LI><A NAME="tex2html69"
-  HREF="C-Codec.html#SECTION000110000000000000000">Frequently Asked Questions</A>
-<LI><A NAME="tex2html70"
-  HREF="C-Codec.html#SECTION000120000000000000000">Credits and Acknowledgements</A>
-<UL>
-<LI><A NAME="tex2html71"
-  HREF="C-Codec.html#SECTION000121000000000000000">Contributing</A>
+<LI><A NAME="tex2html52"
+  HREF="C-Codec.html#SECTION000111000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
 <P>
@@ -118,28 +102,32 @@ This document describes how to use the C/C++ RL-Glue Codec, a software library t
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot241"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot180"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in C and/or C++.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot242"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot181"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
 This project has a home here:
 <BR><TT><A NAME="tex2html5"
-  HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/">http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/</A></TT>
+  HREF="http://rl-glue-ext.googlecode.com">http://rl-glue-ext.googlecode.com</A></TT>
+<P>
+This document should be used in combinations with the technical manual for RL-Glue 3.0.  The RL-Glue 3.0 technical manual explains the data types, function prototypes, etc. for the main C/C++ RL-Glue implementation that is used
+by this codec.  The RL-Glue 3.0 technical manual can be found in the <TT>docs</TT> section of the RL-Glue project.
+
 <P>
 
 <H2><A NAME="SECTION00021000000000000000">
 Software Requirements</A>
 </H2>
 This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools<A NAME="tex2html6"
-  HREF="#foot243"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
-  HREF="#foot244"><SUP>4</SUP></A>). 
+  HREF="#foot182"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
+  HREF="#foot183"><SUP>4</SUP></A>). 
 
 <P>
 
@@ -156,7 +144,7 @@ The tarball distribution can be found here:
 <P>
 To check the code out of subversion:
 <BR>
-<TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C</TT>
+<TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C C-Codec</TT>
 
 <P>
 
@@ -249,7 +237,7 @@ The pertinent files are:
 </PRE>
 
 <P>
-This agent is not particularly interesting, it does not learn anything and randomly chooses integer action 0 or 1.  
+This agent does not learn anything and randomly chooses integer action 0 or 1.  
 
 <P>
 If RL-Glue and this codec have been installed in the default location, <TT>/usr/local</TT>, then you can compile and run the agent like:
@@ -303,8 +291,8 @@ It might be useful to break this down a little bit:
 <DD>Compile the SkeletonAgent.c source file.
 </DD>
 <DT><STRONG>-lrlutils</STRONG></DT>
-<DD>Link to the RLUtils library, which comes with this codec.  This library contains convenience functions for allocating and cleaning up the structure types (Section <A HREF="#sec:structure-types">8.1.2</A>).  If you 
-don't use these convenience functions, you don't need this library.
+<DD>Link to the RLUtils library, which comes with the RL-Glue project.  That library contains convenience functions for allocating and cleaning up the structure types.  If you 
+don't use these convenience functions, you don't need this library.  See the RL-Glue 3.0 technical manual for more information about RLUtils.
 </DD>
 <DT><STRONG>-lrlagent</STRONG></DT>
 <DD>Link to the RLAgent library of the codec.  This is where the main agent loop is defined. The main agent loop connects to the <TT>rl_glue</TT> executable server and dispatches commands sent by the glue.
@@ -376,7 +364,7 @@ The pertinent files are:
 </PRE>
 
 <P>
-This environment is not particularly interesting. It is episodic, with 21 states, labeled <!-- MATH
+This environment is episodic, with 21 states, labeled <!-- MATH
  $\{0, 1,\ldots,19,20\}$
  -->
 <IMG
@@ -507,7 +495,7 @@ Shared Library Loading Errors
 </H3>
 On some machines we've used, the codec installs without incident, but when the agent/environment/experiment is run, the system gives an error message similar to:
 <PRE>
-	&gt;$ ./RL_agent: error while loading shared libraries: librlagent-1:0:0.so.1:
+	&gt;$ ./SkeletonAgent: error while loading shared libraries: librlagent-1:0:0.so.1:
 	cannot open shared object file: No such file or directory
 </PRE>
 
@@ -600,170 +588,15 @@ You should see output like the following if it worked:
 <P>
 
 <H1><A NAME="SECTION00070000000000000000">
-Who creates and frees memory?</A>
+Codec Specification, Memory Allocation, Types, and Function Prototypes</A>
 </H1>
-Memory management can be confusing in C/C++.  It might seem especially mysterious when using RL-Glue, because sometimes the structures are passed directly 
-from function to function (in direct-call RL-Glue), but other times they are written and read through a network socket (as with this codec).
+There is some important information about memory management practices in RL-Glue, as well as detailed information about the C/C++ RL-Glue type definitions available in the 
+RL-Glue 3.0 technical manual.  We've opted to not duplicate those 6 pages of useful information here : but you really should go read them.
 
 <P>
-
-<H2><A NAME="SECTION00071000000000000000">
-Copy-On-Keep</A>
-</H2>
-The rule of thumb to follow in RL-Glue is what we call <I>copy-on-keep</I>.  Copy-on-keep means that when you are passed a dynamically allocated structure, you should
-only consider it valid within the function that it was given to you.  If you need a persistent copy of the data outside of that scope, you should make a copy: copy it if you
-need to keep it.
-
-<P>
-
-<H3><A NAME="SECTION00071100000000000000">
-Task Spec Example</A>
-</H3>
-<PRE>
-/********************   UNSAFE   *******************/
-task_specification_t task_spec_copy=0;
-	
-void agent_init(const task_specification_t task_spec){
-        /*
-            Not making a copy, just keeping a pointer to the data 
-        */
-    task_spec_copy=task_spec;
-}
-
-action_t agent_start(observation_t this_observation) {
-        /*
-            Behavior undefined.  Who knows if the string the task_spec
-            was originally pointing to still exists?
-        */
-    printf("Task spec we saved is: %s\n",task_spec_copy);
-    ...
-</PRE>
-
-<P>
-<PRE>
-/********************   SAFE   *******************/
-task_specification_t task_spec_copy=0;
-	
-void agent_init(const task_specification_t task_spec){
-        /*
-            Allocating space (need length+1 for the terminator character)
-        */
-    task_spec_copy=(char *)calloc(strlen(task_spec)+1, sizeof(char));
-    strcpy(task_spec_copy,task_spec);
-}
-
-action_t agent_start(observation_t this_observation) {
-        /*
-            This is fine, because even if 
-            the task_spec was deleted, we have a copy.
-        */
-    printf("Task spec we saved is: %s\n",task_spec_copy);
-    ...
-</PRE>
-
-<P>
-
-<H3><A NAME="SECTION00071200000000000000">
-Observation Example (using helper library)</A>
-</H3>
-
-<P>
-<PRE>
-/********************   UNSAFE   *******************/
-observation_t last_observation;
-action_t agent_start(observation_t this_observation) {
-        /*
-            Unsafe, points last_observation to
-            this_observation's arrays!
-        */
-    last_observation=this_observation;
-...
-</PRE>
-
-<P>
-<PRE>
-/********************   SAFE   *******************/
-observation_t last_observation;
-action_t agent_start(observation_t this_observation) {
-        /*
-           This helper function actually frees the
-           allocated memory inside last_observation, allocates 
-           new memory, and copies from this_observation!
-        */
-    replaceRLStruct(&amp;this_observation, &amp;last_observation);
-...
-</PRE>
-
-<P>
-These examples might make it clear why most of our samples use global variables for things that are changed often, like structures that we return, or structures keeping track of the previous action/observation etc.  
-This allows us to only worry about re-allocating the arrays inside the struct, instead of also worrying about pointers to the structs themselves.
-
-<P>
-
-<H2><A NAME="SECTION00072000000000000000">
-Free Your Mess</A>
-</H2>
-When using this codec, you are responsible for cleaning up any memory that you allocate. The good news is that that you can trust that between function calls, any memory you've returned to a caller has either been
-copied or is not necessary (it is safe to free it).  Remember that in C/C++ it's not safe to return pointers to stack-based memory.
-
-<P>
-The Skeleton examples do the appropriate thing in this respect: the <TT>intArrays</TT> that need to be dynamically allocated are allocated in the <TT>_init</TT> methods, and then the memory is released in the <TT>_cleanup</TT> methods.
-
-<P>
-Strings seem to be more complicated for some people, so here are a couple of examples:
-
-<P>
-<PRE>
-/********************   UNSAFE   *******************/
-message_t agent_message(const message_t inMessage) {
-    char theBuffer[1024];
-    sprintf(theBuffer,"this is an example response message\n");
-        /*
-            This returns the address of a local variable
-            bad idea and compiler will complain
-        */
-    return theBuffer;
-}
-</PRE>
-
-<P>
-<PRE>
-/****************   UNSAFE (MEMORY LEAK)   ***************/
-message_t agent_message(const message_t inMessage) {
-    char theBuffer[1024];
-    message_t returnString=0;
-    sprintf(theBuffer,"this is an example response message\n");
-    returnString=(char *)calloc(strlen(theBuffer+1),sizeof(char));
-    strcpy(returnString,theBuffer);
-        /*
-            Memory leak... every time this function is called
-            a new returnString is allocated, but nobody will
-            ever clean them up!
-        */
-    return returnString;
-}
-</PRE>
-
-<P>
-<PRE>
-/********************   SAFE   *******************/
-message_t agentReturnString=0; /*Global Variable */	
-message_t agent_message(const message_t inMessage) {
-    char theBuffer[1024];
-    sprintf(theBuffer,"this is an example response message\n");
-
-        /*
-            This code will free the memory on subsequent calls
-        */
-    if(agentReturnString!=0){
-        free(agentReturnString);
-        agentReturnString=0;
-    }
-    agentReturnString=(char *)calloc(strlen(theBuffer+1),sizeof(char));
-    strcpy(agentReturnString,theBuffer);
-    return agentReturnString;
-}
-</PRE>
+The main thing to realize is that agents, environments, and experiment programs are completely interchangeable between <I>direct-compile</I> (RL-Glue project) and <I>socket-communication</I>
+(this codec).  An agent written for either one will be compiled the same way, the only difference is what library it is linked to.  So, 95% of the technical manual from the RL-Glue project applies 
+perfectly to people using this codec! 
 
 <P>
 
@@ -778,217 +611,6 @@ Someone should write this later (Opportunity to contribute!).
 <P>
 
 <H1><A NAME="SECTION00090000000000000000">
-Codec Specification Reference</A>
-</H1>
-This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be an interesting section of this document, but it will
-be handy.
-
-<P>
-
-<H2><A NAME="SECTION00091000000000000000">
-Types</A>
-</H2>
-The types used by this codec are the same as the direct-compile RL-Glue library.
-
-<P>
-
-<H3><A NAME="SECTION00091100000000000000">
-Simple Types</A>
-</H3>
-The simple types are:
-
-<P>
-<PRE>
-    typedef double reward_t;
-    typedef int terminal_t;
-    typedef char* message_t;
-    typedef char* task_specification_t;
-</PRE>
-
-<P>
-
-<H3><A NAME="SECTION00091200000000000000"></A>
-<A NAME="sec:structure-types"></A>
-<BR>
-Structure Types
-</H3>
-All of the major structure types (observations, actions, random seed keys, and state keys) are typedef'd to <TT>rl_abstract_type_t </TT>.
-
-<P>
-<PRE>
-typedef struct
-{
-    unsigned int numInts;
-    unsigned int numDoubles;
-    unsigned int numChars;
-    int* intArray;
-    double* doubleArray;
-    char* charArray;
-} rl_abstract_type_t;
-</PRE>
-
-<P>
-The specific names and definitions of the structure types are:
-<PRE>
-    typedef rl_abstract_type_t observation_t;
-    typedef rl_abstract_type_t action_t;
-    typedef rl_abstract_type_t random_seed_key_t;
-    typedef rl_abstract_type_t state_key_t;
-</PRE>
-
-<P>
-The composite structure types returned by <TT>env_step</TT> are:
-<PRE>
-typedef struct{
-    observation_t o;
-    action_t a;
-} observation_action_t;
-
-typedef struct{
-    reward_t r;
-    observation_t o;
-    terminal_t terminal;
-} reward_observation_t;
-
-typedef struct {
-    reward_t r;
-    observation_t o;
-    action_t a;
-    terminal_t terminal;
-} reward_observation_action_terminal_t;
-</PRE>
-
-<P>
-
-<H3><A NAME="SECTION00091300000000000000">
-Summary</A>
-</H3>
-The type names are:
-<PRE>
-    reward_t
-    terminal_t
-    message_t
-    task_specification_t
-    observation_t
-    action_t
-    observation_action_t
-    reward_observation_t
-    reward_observation_action_t
-</PRE>
-
-<P>
-
-<H2><A NAME="SECTION00092000000000000000">
-Functions</A>
-</H2>
-
-<H3><A NAME="SECTION00092100000000000000">
-Agent Functions</A>
-</H3>
-All agents <B>should implement</B> these functions, located in <TT>rlglue/Agent_common.h</TT>
-<PRE>
-    void agent_init(const task_specification_t task_spec);
-    action_t agent_start(observation_t o);
-    action_t agent_step(reward_t r, observation_t o);
-    void agent_end(reward_t r);  
-    void agent_cleanup();
-    message_t agent_message(const message_t message);
-</PRE>
-
-<P>
-
-<H3><A NAME="SECTION00092200000000000000">
-Environment Functions</A>
-</H3>
-All environments <B>should implement</B> these functions, located in <TT>rlglue/Environment_common.h</TT>
-<PRE>
-    task_specification_t env_init();
-    observation_t env_start();
-    reward_observation_t env_step(action_t a);
-    void env_cleanup();
-    message_t env_message(const message_t message);
-    void env_set_state(state_key_t sk);
-    void env_set_random_seed(random_seed_key_t rsk);
-    state_key_t env_get_state();
-    random_seed_key_t env_get_random_seed();
-</PRE>
-
-<P>
-
-<H3><A NAME="SECTION00092300000000000000">
-Experiments Functions</A>
-</H3>
-All experiments <B>can call</B> these functions, located in <TT>rlglue/RL_glue.h</TT>
-<PRE>
-    task_specification_t RL_init();
-    observation_action_t RL_start();
-    reward_observation_action_terminal_t RL_step();
-    void RL_cleanup();
-
-    terminal_t RL_episode(unsigned int num_steps);
-
-    message_t RL_agent_message(message_t message);
-    message_t RL_env_message(message_t message);
-
-    reward_t RL_return();
-    int RL_num_steps();
-    int RL_num_episodes();
-
-    void RL_set_state(state_key_t sk);
-    void RL_set_random_seed(random_seed_key_t rsk);
-    state_key_t RL_get_state();
-    random_seed_key_t RL_get_random_seed();
-</PRE>
-
-<P>
-
-<H3><A NAME="SECTION00092400000000000000">
-RLUtils Library Functions</A>
-</H3>
-You can get access to these functions by linking to libRLUtils (<TT>-lrlutils</TT>) and by including the appropriate header:
-
-<P>
-<PRE>
-#include &lt;rlglue/utils/C/RLStruct_util.h&gt;
-</PRE>
-
-<P>
-<PRE>
-/*	Copies all of the data from src to dst, freeing and allocating only if necessary*/
-void replaceRLStruct(const rl_abstract_type_t *src, rl_abstract_type_t *dst);
-
-/*  
-    Frees the 3 data arrays if they are not NULL, sets them to NULL, 
-    and sets numInts, numDoubles, numChars to 0
-*/
-void clearRLStruct(rl_abstract_type_t *dst);
-
-/*  calls clearRLStruct on dst, and then frees the dst pointer */
-void freeRLStructPointer(rl_abstract_type_t *dst);
-
-/*
-    Given a pointer to a rl_abstract_type_t, allocate arrays of the requested sizes,
-    set the contents of the arrays to 0, and set numInts, numDoubles,
-    numChars in the struct appropriately.
-*/
-void allocateRLStruct(rl_abstract_type_t *dst, 
-                      const unsigned int numInts,
-                      const unsigned int numDoubles,
-                      const unsigned int numChars);
-
-/*
-    Create a new rl_abstract_type_t, allocate its arrays 
-    and its numInts/Doubles/Chars using allocateRLStruct, 
-    return the pointer
-*/
-rl_abstract_type_t *allocateRLStructPointer(const unsigned int numInts,
-                                            const unsigned int numDoubles,
-                                            const unsigned int numChars);
-</PRE>
-
-<P>
-
-<H1><A NAME="SECTION000100000000000000000">
 Changes and 2.x Backward Compatibility</A>
 </H1>
 There were many changes from RL-Glue 2.x to RL-Glue 3.x.  Most of them are at the level of the API and project organization, and are addressed in the RL-Glue 
@@ -996,7 +618,7 @@ project documentation.
 
 <P>
 
-<H2><A NAME="SECTION000101000000000000000">
+<H2><A NAME="SECTION00091000000000000000">
 Types</A>
 </H2>
 All of the types that existed in the 2.x codec (ex: <TT>Observation</TT> instead of <TT>observation_t</TT>) are still supported through a definition file called 
@@ -1007,14 +629,14 @@ All of the types that existed in the 2.x codec (ex: <TT>Observation</TT> instead
 
 <P>
 
-<H1><A NAME="SECTION000110000000000000000">
+<H1><A NAME="SECTION000100000000000000000">
 Frequently Asked Questions</A>
 </H1>
 We're waiting to hear your questions!
 
 <P>
 
-<H1><A NAME="SECTION000120000000000000000">
+<H1><A NAME="SECTION000110000000000000000">
 Credits and Acknowledgements</A>
 </H1>
 Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.
@@ -1024,29 +646,29 @@ Brian Tanner has since grabbed the torch and has continued to develop the codec.
 
 <P>
 
-<H2><A NAME="SECTION000121000000000000000">
+<H2><A NAME="SECTION000111000000000000000">
 Contributing</A>
 </H2>
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
 
 <P>
 
-<H1><A NAME="SECTION000130000000000000000">
+<H1><A NAME="SECTION000120000000000000000">
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 229 $
+Revision Number: $Rev: 236 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-09-28 16:54:09 -0600 (Sun, 28 Sep 2008) $
+Last Updated   : $Date: 2008-09-28 18:26:48 -0600 (Sun, 28 Sep 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.tex $
 </PRE>
 
 <P>
 
-<H1><A NAME="SECTION000140000000000000000">
+<H1><A NAME="SECTION000130000000000000000">
 About this document ...</A>
 </H1>
- <STRONG>RL-Glue C/C++ Codec 3.0 Manual </STRONG><P>
+ <STRONG>RL-Glue C/C++ Codec 1.0 Manual </STRONG><P>
 This document was generated using the
 <A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002-2-1 (1.71)
 <P>
@@ -1064,25 +686,25 @@ The command line arguments were: <BR>
 The translation was initiated by Brian Tanner on 2008-09-28
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot241">... RL-Glue</A><A
+<DT><A NAME="foot180">... RL-Glue</A><A
  HREF="C-Codec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot242">... Apache-2.0</A><A
+<DT><A NAME="foot181">... Apache-2.0</A><A
  HREF="C-Codec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot243">... Autotools</A><A
+<DT><A NAME="foot182">... Autotools</A><A
  HREF="C-Codec.html#tex2html6"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html7"
   HREF="http://sources.redhat.com/autobook/">http://sources.redhat.com/autobook/</A></TT>
 
 </DD>
-<DT><A NAME="foot244">... CYGWIN</A><A
+<DT><A NAME="foot183">... CYGWIN</A><A
  HREF="C-Codec.html#tex2html8"><SUP>4</SUP></A></DT>
 <DD><TT><A NAME="tex2html9"
   HREF="http://www.cygwin.com/">http://www.cygwin.com/</A></TT>
