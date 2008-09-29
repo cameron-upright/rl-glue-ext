@@ -29,13 +29,13 @@ We'll try and rely on minimal variables from above.
 <path id="junit.classpath" location="${junit.jar}"/>
 <path id="test.build.classpath" location="${test.classes.dir}"/>
 <path id="result.jar.classpath" location="${result.jar}"/>
-
+<!--
 <taskdef resource="net/sf/antcontrib/antlib.xml">
   <classpath>
     <pathelement location="${rl.viz.system.directory}/libs/ant-contrib-1.0b3.jar"/>
   </classpath>
 </taskdef>
-
+-->
 <target name="get.svn.version" description="Get the current subversion revision number of the project">
     <exec executable="svnversion"
           failifexecutionfails="no"
@@ -96,7 +96,6 @@ We'll try and rely on minimal variables from above.
     <javac srcdir="${test.dir}" destdir="${test.classes.dir}">
         <classpath>
             <path refid="junit.classpath" />
-            <path refid="rlvizlib.classpath" />
             <path refid="result.jar.classpath" />
         </classpath>
     </javac>
@@ -106,7 +105,6 @@ We'll try and rely on minimal variables from above.
 	<mkdir dir="${test.raw}" />
    <junit printsummary="withOutAndErr" showoutput="yes" >
         <classpath>
-            <path refid="rlvizlib.classpath"/>
             <path refid="junit.classpath" /> 
 			<path refid="result.jar.classpath" />
 			<path refid="test.build.classpath" />
@@ -130,12 +128,20 @@ We'll try and rely on minimal variables from above.
 </target>
 
 
-<target name="rl-javadoc">
+<target name="rl-javadoc" depends="get.svn.version">
     <mkdir dir="${docs.dir}"/>
-    <javadoc sourcepath="${src.dir}" destdir="${docs.dir}" classpathref="rlvizlib.classpath" access="private"/>
-</target>
+<!--    <javadoc sourcepath="${src.dir}" destdir="${docs.dir}" access="private"/>-->
 
-
+<javadoc packagenames="org.rlcommunity.rlglue.*"
+         sourcepath="${src.dir}"
+         excludepackagenames="org.rlcommunity.rlglue.codec.tests.*"
+         defaultexcludes="yes"
+         destdir="${docs.dir}"
+         author="true"
+         version="true"
+         use="true"
+         windowtitle="RL-Glue Java Codec ${svn.revision.version}" />
+	</target>
 
 
 </project>
