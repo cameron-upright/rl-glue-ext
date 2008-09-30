@@ -1,0 +1,402 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphics}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{html}
+%I don't like my paragraphs indented because we have lots of 1-line paragraphs with URLs or code after them
+\setlength{\parindent}{0in} 
+%I like space between my paragraphs
+\setlength{\parskip}{10pt} 
+
+\title{RL-Glue Java Codec 2.0 Manual }
+\author{Brian Tanner}
+\date{}                                        
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+
+This document describes how to use the Java RL-Glue Codec, a software library that provides socket-compatibility with the RL-Glue Reinforcement Learning software library.  
+
+For general information and motivation about the RL-Glue\footnote{\url{http://glue.rl-community.org/}} project, please refer to the documentation provided with that project.
+
+This codec will allow you to create agents, environments, and experiment programs in Java.
+
+This software project is licensed under the Apache-2.0\footnote{\url{http://www.apache.org/licenses/LICENSE-2.0.html}} license. We're not lawyers, but our intention is that this code 
+should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
+
+This project has a home here:\\
+\url{http://rl-glue-ext.googlecode.com}
+
+
+
+\subsection{Software Requirements}
+To run agents, environments, and experiments created with this codec, you will need to have RL-Glue (or a surrogate) installed on your computer.
+
+Compiling and running components with this codec requires Java 1.5 or higher. You can find out what version you have by doing the following at the command-line:
+\begin{verbatim}
+	>$ java -version
+\end{verbatim}
+
+Recompiling this codec requires the Apache Ant\footnote{\url{http://ant.apache.org/}} build system.  You probably need JUnit and Subversion installed as well. We'll try to make those optional dependencies in the future.
+The good news is that you probably \textbf{don't need to recompile the codec}.  Unlike C/C++, we can distribute a java JAR archive of the Java codec, and that is all you really need.
+
+\subsection{Getting the Codec}
+The codec can be downloaded either as a tarball or can be checked out of the subversion repository where it is hosted.
+
+The tarball distribution can be found here:\newline
+\tiny \url{http://code.google.com/p/rl-glue-ext/downloads/list} \normalsize
+
+
+To check the code out of subversion:\newline
+ \texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java Java-Codec}
+
+Technically all you really \textbf{need} is the JAR archive of the codec:\newline
+\footnotesize \texttt{svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/products/JavaRLGlueCodec.jar} \normalsize
+
+\subsection{Installing the Codec}
+There is no real ``installation'' for the codec per-se.  The important thing is to put the \texttt{JavaRLGlueCodec.jar} somewhere that is easy to get at.  If you want to be fancy, you can probably put \texttt{JavaRLGlueCodec.jar}
+into a directory on your Java system classpath.  For the rest of this document, we'll assume you've put \texttt{JavaRLGlueCodec.jar} in a subdirectory of your homedirectory called JavaCodec: \texttt{\~{}/JavaCodec/JavaRLGlueCodec.jar}.
+
+\textbf{POSSIBLE CONTRIBUTION}: IF someone wants to investigate the options for having a script ``install'' \texttt{JavaRLGlueCodec.jar} into a system classpath, we would like to have your help!
+
+
+
+\section{Agents}
+\label{sec:agent}
+We have provided a skeleton agent with the codec that is a good starting point for agents that you may write in the future.
+It implements all the required functions and provides a good example of how to compile a simple agent.
+
+The pertinent file is:
+\begin{verbatim}
+	examples/skeleton/SkeletonAgent.java
+\end{verbatim}
+
+This agent does not learn anything and randomly chooses integer action $0$ or $1$.  
+
+You can compile and run the agent like:
+\begin{verbatim}
+	>$ cd examples/skeleton
+	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonAgent.java
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent
+\end{verbatim}
+
+You will see something like:
+\begin{verbatim}
+     RL-Glue Java Agent Codec Version: 2.0 (Build:192:239M)
+          Connecting to 127.0.0.1 on port 4096...
+\end{verbatim}
+
+This means that the SkeletonAgent is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
+
+You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
+
+The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+Please open it up and take a look.
+
+\textbf{POSSIBLE CONTRIBUTION}: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
+or just that it should do some fancier things, let us know and we'll be happy to do it!
+
+
+
+\section{Environments}
+We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
+It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
+pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
+
+The pertinent file is:
+\begin{verbatim}
+	examples/skeleton_environment/SkeletonEnvironment.java
+\end{verbatim}
+
+This environment is episodic, with 21 states, labeled $\{0, 1,\ldots,19,20\}$. States $\{0, 20\}$ are terminal and return rewards of $\{-1, +1\}$ respectively.  The other states return reward of $0$.
+There are two actions, $\{0, 1\}$.  Action $0$ decrements the state number, and action $1$ increments it. The environment starts in state 10.
+
+You can compile and run the environment like:
+\begin{verbatim}
+	>$ cd examples/skeleton
+	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonEnvironment.java
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment
+\end{verbatim}
+
+You will see something like:
+\begin{verbatim}
+     RL-Glue Java Environment Codec Version: 2.0 (Build:192:239M)
+          Connecting to 127.0.0.1 on port 4096...
+\end{verbatim}
+
+This means that the SkeletonEnvironment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
+
+You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
+
+
+The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+Please open it up and take a look.
+
+\textbf{POSSIBLE CONTRIBUTION}: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
+or just that it should do some fancier things, let us know and we'll be happy to do it!
+
+
+\section{Experiments}
+We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
+It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
+pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
+
+The pertinent files are:
+\begin{verbatim}
+	examples/skeleton/SkeletonExperiment.java
+\end{verbatim}
+
+This experiment runs \texttt{RL\_Episode} a few times, sends some messages to the agent and environment, and then steps through one episode using \texttt{RL\_step}.
+
+\begin{verbatim}
+	>$ cd examples/skeleton
+	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonExperiment.java
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
+\end{verbatim}
+
+You will see something like:
+\begin{verbatim}
+     Experiment starting up!
+     RL-Glue Java Experiment Codec Version: 2.0 (Build:192:239M)
+          Connecting to 127.0.0.1 on port 4096...
+\end{verbatim}
+
+This means that the SkeletonExperiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$!  
+
+You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
+
+
+The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+Please open it up and take a look.
+
+\textbf{POSSIBLE CONTRIBUTION}: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
+or just that it should do some fancier things, let us know and we'll be happy to do it!
+
+\section{Putting it all together}
+At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples 
+directory if you have them all built, and RL-Glue installed in the default location:
+\begin{verbatim}
+	>$ cd examples/skeleton
+	>$ rl_glue &
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
+\end{verbatim}
+
+If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using it's full path (unless it's in your \texttt{PATH} environment variable):
+\begin{verbatim}
+	>$ /path/to/rl-glue/bin/rl_glue &
+\end{verbatim}
+
+You should see output like the following if it worked:
+\begin{verbatim}
+	>$ rl_glue & 
+	RL-Glue Version 3.0-beta-1, Build 848:856
+     	RL-Glue is listening for connections on port=4096
+
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &
+	RL-Glue Java Agent Codec Version: 2.0 (Build:192:239M)
+	     Connecting to 127.0.0.1 on port 4096...
+	     Agent Codec Connected
+	     RL-Glue :: Agent connected.
+	
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &
+	RL-Glue Java Environment Codec Version: 2.0 (Build:192:239M)
+	     Connecting to 127.0.0.1 on port 4096...
+	     Environment Codec Connected
+	     RL-Glue :: Environment connected.
+
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
+	Experiment starting up!
+
+	RL-Glue Java Experiment Codec Version: 2.0 (Build:192:239M)
+	     Connecting to 127.0.0.1 on port 4096...
+	     Experiment Codec Connected
+	     RL-Glue :: Experiment connected.
+
+	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
+
+
+	----------Sending some sample messages----------
+	Agent responded to "what is your name?" with: my name is skeleton_agent, Java edition!
+	Agent responded to "who is your daddy and what does he do?" with: I don't know how to respond to your message
+
+	Environment responded to "what is your name?" with: my name is skeleton_environment, Java edition!
+	Environment responded to "who is your daddy and what does he do?" with: I don't know how to respond to your message
+
+
+	----------Running a few episodes----------
+	Episode 0	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 1	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 2	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 3	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 4	 10 steps 	-1.0 total reward	 1 natural end
+	Episode 5	 1 steps 	0.0 total reward	 0 natural end
+	Episode 6	 10 steps 	-1.0 total reward	 1 natural end
+
+
+	----------Stepping through an episode----------
+	First observation and action were: 10 and: 0
+
+
+	----------Summary----------
+	It ran for 10 steps, total reward was: -1.0
+
+\end{verbatim}
+
+
+\section{Who creates and frees memory?}
+The RL-Glue technical manual has a section called \textit{Who creates and frees memory?}.  The general approach recommended there is to make a copy of data
+you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Java codec.
+
+
+\section{Advanced Features}
+This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
+
+Someone should write this later (Opportunity to contribute!).
+
+\section{Codec Specification Reference}
+This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
+be handy.
+
+Instead of re-creating information that is readily available in the JavaDocs, we will give pointers were appropriate.
+
+\subsection{Types}
+
+
+\subsubsection{Simple Types}
+Unlike the C/C++ codec, we will not be using \texttt{typedef} statements to create special labels for the types. In Java:
+\begin{itemize}
+	\item \textit{reward} is \texttt{double}
+	\item \textit{terminal} is \texttt{int} (1 for terminal, 0 for non-terminal) We hope to replace these with boolean eventually.
+	\item \textit{messages} are \texttt{String}
+	\item \textit{task specifications} are \texttt{String}
+\end{itemize}
+
+\def\rat{RL\_Abstract\_Type}
+
+\subsubsection{Structure Types}
+\label{sec:structure-types}
+All of the major structure types (observations, actions, random seed keys, and state keys) extend the \htmladdnormallink{\texttt{\rat}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/RL_abstract_type.html} class.
+
+All of the types are listed in the \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.types}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/package-summary.html} package.
+
+\subsection{Functions}
+\subsubsection{Agent Functions}
+All agents \textbf{should implement} \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.AgentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html}.
+
+\subsubsection{Environment Functions}
+All environments \textbf{should implement} \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.EnvironmentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html}.
+
+\subsubsection{Experiments Functions}
+All experiments \textbf{can call} the static methods in \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.RLGlue}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlue.html}.
+
+\section{Changes and 2.x Backward Compatibility}
+There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the RL-Glue 
+project documentation.
+
+\subsection{RL-Glue Split and Package/Jar Naming Changes}
+With the RL-Glue 3.x project, we've decided to keep the codecs separate from the main RL-Glue project.  This is so the codecs can be more agile while the main RL-Glue project stays very stable.
+
+Since things were changing, we took an opportunity to fix some of our long-term gripes with the Java codec.  The name of the JAR file has changed from \texttt{RL-Glue.jar} to \texttt{JavaRLGlueCodec.jar}.
+
+The JAR file is now distributed in:\newline
+\texttt{rl-glue-ext/projects/codecs/java/products/JavaRLGlueCodec.jar}
+
+In the previous incarnation of the Java codec, the classes were in a very shallow heirarchy: \texttt{rlglue.RLGlue}, \texttt{RLGlue.types}, etc.  For the updated release, we've moved to a richer package description that
+is more in line with other Java projects in the Reinforcement Learning community.  The new package hierarchy is:\newline
+\htmladdnormallink{\texttt{org.rlcommunity.rlglue}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/overview-summary.html}
+
+We've also moved a few of the class/interfaces around.  The most notable change is that instead of \texttt{Agent} and \texttt{Environment} interfaces, we now have 
+\htmladdnormallink{\texttt{AgentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html} and 
+\htmladdnormallink{\texttt{EnvironmentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html}.
+Also, instead of these interfaces being in their own package, they are now in: \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/package-summary.html}. 
+
+
+
+Updating existing code might seem like a lot of work, but it's easier than it seems.  The main changes from the user end are:
+1) Using the right jar (JavaRLGlueCodec.jar instead of RL-Glue.jar)  (Not necessary if you are using RL-Viz)
+
+
+
+2) Change classes that implement \texttt{Agent} and \texttt{Environment} to \texttt{AgentInterface} and \texttt{EnvironmentInterface}
+
+3) Change package imports.  Find and replace:
+\begin{verbatim}
+rlglue.RLGlue                    ==>    org.rlcommunity.rlglue.codec.RLGlue
+rlglue.types.                    ==>    org.rlcommunity.rlglue.codec.types.
+rlglue.agent.Agent               ==>    org.rlcommunity.rlglue.codec.AgentInterface
+rlglue.environment.Environment   ==>    org.rlcommunity.rlglue.codec.EnvironmentInterface
+\end{verbatim}
+
+Those three things should cover most of it.  If someone makes a very strong case, we can probably create a codec that is completely compatible with the old naming conventions.  However, I assure you that I uploaded
+several tens of thousands of lines of code for the RL-Viz, RL-Library, and BT-AgentLib projects in only about 30 minutes total.
+
+\textbf{POSSIBLE CONTRIBUTION}: If we've missed anything, or there is an easier way, please let us know!
+
+\subsection{Agent/Environment Loading}
+Historically, there have been a few different approaches for loading agents and environments.
+
+For all these examples, lets pretend that the \texttt{JavaRLGlue.jar} path and JAR are in an environment variable called CODECJAR.  We could actually do that (with a bash shell) like:
+\begin{verbatim}
+	export CODECJAR=/path/to/JavaRLGlueCodec.jar
+\end{verbatim}
+
+
+The first (original) method was to call the main() method of the AgentLoader/EnvironmentLoader class, passing it the name of the 
+Agent/Env class you wanted to load.  Hopefully you remembered to put it in your classpath.  This approach inevitably lead to lots of typing to load an agent, as frustrating run-time failures when paths weren't set right.
+Here is an example of how that looks:
+\begin{verbatim}
+	java -classpath $CODECJAR:/to/Agent/classes org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
+\end{verbatim}
+
+The second method was to bypass the AgentLoader and go through \htmladdnormallink{\texttt{RLGlueCore}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlueCore.html}, 
+which is contains the default \texttt{main} method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
+\begin{verbatim}
+	java -classpath /to/Agent/classes -jar $CODECJAR myAgent
+\end{verbatim}
+
+The \textbf{new and improved} method is to put a \texttt{main} method inside your agent/environment that calls the applicable loader so that the agent/env can load itself.  So, in your agent (for example) you'd have code like:
+\begin{verbatim}
+	import org.rlcommunity.rlglue.codec.util.AgentLoader;
+	/* rest of agent here */
+	//This would be inside MyAgent.java
+	public static void main(String[] args){
+	        AgentLoader theLoader=new AgentLoader(new MyAgent());
+	        theLoader.run();
+	}
+\end{verbatim}
+
+So, for the price of that tiny bit of code inside your agent, you can now run the agent class directly:
+\begin{verbatim}
+	java -classpath $CODECJAR:/to/Agent/classes myAgent
+\end{verbatim}
+
+We feel that this is a useful step forward, and will be encouraging this approach.
+
+\section{Frequently Asked Questions}
+We're waiting to hear your questions!
+
+\section{Credits and Acknowledgements}
+Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.
+
+Brian Tanner has since grabbed the torch and has continued to develop the codec.
+
+\subsection{Contributing}
+If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
+
+
+\section*{Document Information}
+\begin{verbatim}
+Revision Number: $Rev$
+Last Updated By: $Author$
+Last Updated   : $Date$
+$URL$
+\end{verbatim}
+
+\end{document} 
