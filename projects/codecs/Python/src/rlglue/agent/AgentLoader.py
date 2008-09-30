@@ -30,7 +30,7 @@ def loadAgent(theAgent, host=Network.kLocalHost, port=Network.kDefaultPort):
 	client = ClientAgent(theAgent)
 
 	print "RL-Glue Python Agent Codec Version: 2.0 (Build "+theSVNVersion+")"
-	print "\tConnecting to " + host + " on port " + str(port) + "...",
+	print "\tConnecting to " + host + " on port " + str(port) + "..."
 	sys.stdout.flush()
 
 	client.connect(host, port, Network.kRetryTimeout)

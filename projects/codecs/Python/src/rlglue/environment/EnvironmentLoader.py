@@ -31,7 +31,7 @@ def loadEnvironment(theEnvironment, host=Network.kLocalHost, port=Network.kDefau
 	client = ClientEnvironment(theEnvironment)
 
 	print "RL-Glue Python Environment Codec Version: 2.0 (Build "+theSVNVersion+")"
-	print "\tConnecting to " + host + " on port " + str(port) + "...",
+	print "\tConnecting to " + host + " on port " + str(port) + "..."
 	sys.stdout.flush()
 
 	client.connect(host, port, Network.kRetryTimeout)
