@@ -1,7 +1,7 @@
 # 
 # Copyright (C) 2007, Mark Lee
 # 
-#http://rl-glue.googlecode.com/
+#http://rl-glue-ext.googlecode.com/
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,16 +20,23 @@ import sys
 import os
 import rlglue.network.Network as Network
 from ClientEnvironment import ClientEnvironment
+from rlglue import update_svn_version
 
+from rlglue.update_svn_version import update_svn_version
+from rlglue.get_svn_version import get_svn_glue_version
 
 def loadEnvironment(theEnvironment, host=Network.kLocalHost, port=Network.kDefaultPort):
+	update_svn_version()
+	theSVNVersion=get_svn_glue_version()
 	client = ClientEnvironment(theEnvironment)
 
-	print "Connecting to " + host + " on port " + str(port) + "...",
+	print "RL-Glue Python Environment Codec Version: 2.0 (Build "+theSVNVersion+")"
+	print "\tConnecting to " + host + " on port " + str(port) + "...",
 	sys.stdout.flush()
 
 	client.connect(host, port, Network.kRetryTimeout)
-	print "Connected"
+	print "\t Environment Codec Connected"
+
 	client.runEnvironmentEventLoop()
 	client.close()
 

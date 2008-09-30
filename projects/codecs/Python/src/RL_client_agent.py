@@ -3,7 +3,7 @@
 # 
 # Copyright (C) 2007, Mark Lee
 # 
-#http://rl-glue.googlecode.com/
+#http://rl-glue-ext.googlecode.com/
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -88,8 +88,7 @@ def runAgentEventLoop(sock):
 			sys.stderr.write(kUnknownMessage % (agentState))
 		sock.sendPacket(buf,agentState)
 
-first = True
-isDaemon = False
+
 port = kDefaultPort
 host = kLocalHost
 
@@ -99,12 +98,8 @@ if os.environ.has_key('RLGLUE_HOST'):
 if os.environ.has_key('RLGLUE_PORT'):
 	port = int(os.environ['RLGLUE_PORT'])
 
-if os.environ.has_key('RLGLUE_AUTORECONNECT'):
-	isDaemon = int(os.environ['RLGLUE_AUTORECONNECT']) != 0
-
-while isDaemon or first:
-	first = False
-	sock = waitForConnection(host,port,kRetryTimeout)
-	sock.sendPacket(None,kAgentConnection)
-	runAgentEventLoop(sock)
-	sock.close()
+print "RL_client_agent is called"
+sock = waitForConnection(host,port,kRetryTimeout)
+sock.sendPacket(None,kAgentConnection)
+runAgentEventLoop(sock)
+sock.close()

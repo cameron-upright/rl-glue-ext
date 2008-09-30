@@ -1,7 +1,7 @@
 # 
 # Copyright (C) 2007, Mark Lee
 # 
-#http://rl-glue.googlecode.com/
+#http://rl-glue-ext.googlecode.com/
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ sock = None
 
 def connectSocket():
 	global sock
-	isDaemon = False
 	port = kDefaultPort
 	host = kLocalHost
 
@@ -35,9 +34,6 @@ def connectSocket():
 
 	if os.environ.has_key('RLGLUE_PORT'):
 		port = int(os.environ['RLGLUE_PORT'])
-
-	if os.environ.has_key('RLGLUE_AUTORECONNECT'):
-		isDaemon = int(os.environ['RLGLUE_AUTORECONNECT']) != 0
 
 	sock = waitForConnection(host,port,kRetryTimeout)
 	sock.sendPacket(None,kExperimentConnection)

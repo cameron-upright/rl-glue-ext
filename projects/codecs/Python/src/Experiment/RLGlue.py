@@ -9,7 +9,6 @@ sock = None
 def RL_init():
 	global sock
 	first = True
-	isDaemon = False
 	port = kDefaultPort
 	host = kLocalHost
 
@@ -18,9 +17,6 @@ def RL_init():
 
 	if os.environ.has_key('RLGLUE_PORT'):
 		port = int(os.environ['RLGLUE_PORT'])
-
-	if os.environ.has_key('RLGLUE_AUTORECONNECT'):
-		isDaemon = int(os.environ['RLGLUE_AUTORECONNECT']) != 0
 
 	sock = waitForConnection(host,port,kRetryTimeout)
 	sock.sendPacket(None,kExperimentConnection)

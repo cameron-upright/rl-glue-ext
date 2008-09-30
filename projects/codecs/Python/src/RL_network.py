@@ -1,7 +1,7 @@
 # 
 # Copyright (C) 2007, Mark Lee
 # 
-#http://rl-glue.googlecode.com/
+#http://rl-glue-ext.googlecode.com/
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 # limitations under the License.
 #
 
+#
+#The rlSocket and Buffer classes are defined in here
+#
 import socket
 import struct
 import array
