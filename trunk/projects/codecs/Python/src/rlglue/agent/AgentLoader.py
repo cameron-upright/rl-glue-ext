@@ -1,7 +1,7 @@
 # 
 # Copyright (C) 2007, Mark Lee
 # 
-#http://rl-glue.googlecode.com/
+#http://rl-glue-ext.googlecode.com/
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,15 +21,20 @@ import os
 import rlglue.network.Network as Network
 from ClientAgent import ClientAgent
 
+from rlglue.update_svn_version import update_svn_version
+from rlglue.get_svn_version import get_svn_glue_version
 
 def loadAgent(theAgent, host=Network.kLocalHost, port=Network.kDefaultPort):
+	update_svn_version()
+	theSVNVersion=get_svn_glue_version()
 	client = ClientAgent(theAgent)
 
-	print "Connecting to " + host + " on port " + str(port) + "...",
+	print "RL-Glue Python Agent Codec Version: 2.0 (Build "+theSVNVersion+")"
+	print "\tConnecting to " + host + " on port " + str(port) + "...",
 	sys.stdout.flush()
 
 	client.connect(host, port, Network.kRetryTimeout)
-	print "Connected"
+	print "\t Agent Codec Connected"
 	client.runAgentEventLoop()
 	client.close()
 
