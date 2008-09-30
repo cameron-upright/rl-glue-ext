@@ -38,8 +38,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = src
-DIST_COMMON = $(librlutils_la_include_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+DIST_COMMON = $(libtaskspecutils_la_include_HEADERS) \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -54,7 +54,7 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" \
-	"$(DESTDIR)$(librlutils_la_includedir)"
+	"$(DESTDIR)$(libtaskspecutils_la_includedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 librlagent_la_LIBADD =
@@ -71,10 +71,10 @@ am_librlexperiment_la_OBJECTS =  \
 	librlexperiment_la-RL_client_experiment.lo \
 	librlexperiment_la-RL_debug.lo
 librlexperiment_la_OBJECTS = $(am_librlexperiment_la_OBJECTS)
-librlutils_la_LIBADD =
-am_librlutils_la_OBJECTS = librlutils_la-TaskSpec_Parser.lo \
-	librlutils_la-RLStruct_util.lo
-librlutils_la_OBJECTS = $(am_librlutils_la_OBJECTS)
+libtaskspecutils_la_LIBADD =
+am_libtaskspecutils_la_OBJECTS =  \
+	libtaskspecutils_la-TaskSpec_Parser.lo
+libtaskspecutils_la_OBJECTS = $(am_libtaskspecutils_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/config
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
@@ -87,11 +87,11 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(librlagent_la_SOURCES) $(librlenvironment_la_SOURCES) \
-	$(librlexperiment_la_SOURCES) $(librlutils_la_SOURCES)
+	$(librlexperiment_la_SOURCES) $(libtaskspecutils_la_SOURCES)
 DIST_SOURCES = $(librlagent_la_SOURCES) $(librlenvironment_la_SOURCES) \
-	$(librlexperiment_la_SOURCES) $(librlutils_la_SOURCES)
-librlutils_la_includeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(librlutils_la_include_HEADERS)
+	$(librlexperiment_la_SOURCES) $(libtaskspecutils_la_SOURCES)
+libtaskspecutils_la_includeHEADERS_INSTALL = $(INSTALL_HEADER)
+HEADERS = $(libtaskspecutils_la_include_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -202,12 +202,12 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 CODEC_RELEASE = 1:0:0
 CODEC_VERSION = 1:0:0
-lib_LTLIBRARIES = librlutils.la librlagent.la librlenvironment.la librlexperiment.la
-librlutils_la_SOURCES = TaskSpec_Parser.c RLStruct_util.c rlglue/utils/C/TaskSpec_Parser.h rlglue/utils/C/RLStruct_util.h 
-librlutils_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE) -no-missing
-librlutils_la_includedir = $(includedir)/rlglue/utils/C
-librlutils_la_include_HEADERS = rlglue/utils/C/TaskSpec_Parser.h rlglue/utils/C/RLStruct_util.h
-librlutils_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99 -g
+lib_LTLIBRARIES = libtaskspecutils.la librlagent.la librlenvironment.la librlexperiment.la
+libtaskspecutils_la_SOURCES = TaskSpec_Parser.c rlglue/utils/C/TaskSpec_Parser.h
+libtaskspecutils_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE) -no-missing
+libtaskspecutils_la_includedir = $(includedir)/rlglue/utils/C
+libtaskspecutils_la_include_HEADERS = rlglue/utils/C/TaskSpec_Parser.h
+libtaskspecutils_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99 -g
 librlagent_la_SOURCES = RL_client_agent.c RL_debug.c
 librlagent_la_LDFLAGS = -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 librlagent_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99 -g
@@ -283,8 +283,8 @@ librlenvironment.la: $(librlenvironment_la_OBJECTS) $(librlenvironment_la_DEPEND
 	$(LINK) -rpath $(libdir) $(librlenvironment_la_LDFLAGS) $(librlenvironment_la_OBJECTS) $(librlenvironment_la_LIBADD) $(LIBS)
 librlexperiment.la: $(librlexperiment_la_OBJECTS) $(librlexperiment_la_DEPENDENCIES) 
 	$(LINK) -rpath $(libdir) $(librlexperiment_la_LDFLAGS) $(librlexperiment_la_OBJECTS) $(librlexperiment_la_LIBADD) $(LIBS)
-librlutils.la: $(librlutils_la_OBJECTS) $(librlutils_la_DEPENDENCIES) 
-	$(LINK) -rpath $(libdir) $(librlutils_la_LDFLAGS) $(librlutils_la_OBJECTS) $(librlutils_la_LIBADD) $(LIBS)
+libtaskspecutils.la: $(libtaskspecutils_la_OBJECTS) $(libtaskspecutils_la_DEPENDENCIES) 
+	$(LINK) -rpath $(libdir) $(libtaskspecutils_la_LDFLAGS) $(libtaskspecutils_la_OBJECTS) $(libtaskspecutils_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -298,8 +298,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlenvironment_la-RL_debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlexperiment_la-RL_client_experiment.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlexperiment_la-RL_debug.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlutils_la-RLStruct_util.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librlutils_la-TaskSpec_Parser.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libtaskspecutils_la-TaskSpec_Parser.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -364,19 +363,12 @@ librlexperiment_la-RL_debug.lo: RL_debug.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlexperiment_la_CFLAGS) $(CFLAGS) -c -o librlexperiment_la-RL_debug.lo `test -f 'RL_debug.c' || echo '$(srcdir)/'`RL_debug.c
 
-librlutils_la-TaskSpec_Parser.lo: TaskSpec_Parser.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlutils_la_CFLAGS) $(CFLAGS) -MT librlutils_la-TaskSpec_Parser.lo -MD -MP -MF "$(DEPDIR)/librlutils_la-TaskSpec_Parser.Tpo" -c -o librlutils_la-TaskSpec_Parser.lo `test -f 'TaskSpec_Parser.c' || echo '$(srcdir)/'`TaskSpec_Parser.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/librlutils_la-TaskSpec_Parser.Tpo" "$(DEPDIR)/librlutils_la-TaskSpec_Parser.Plo"; else rm -f "$(DEPDIR)/librlutils_la-TaskSpec_Parser.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TaskSpec_Parser.c' object='librlutils_la-TaskSpec_Parser.lo' libtool=yes @AMDEPBACKSLASH@
+libtaskspecutils_la-TaskSpec_Parser.lo: TaskSpec_Parser.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libtaskspecutils_la_CFLAGS) $(CFLAGS) -MT libtaskspecutils_la-TaskSpec_Parser.lo -MD -MP -MF "$(DEPDIR)/libtaskspecutils_la-TaskSpec_Parser.Tpo" -c -o libtaskspecutils_la-TaskSpec_Parser.lo `test -f 'TaskSpec_Parser.c' || echo '$(srcdir)/'`TaskSpec_Parser.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libtaskspecutils_la-TaskSpec_Parser.Tpo" "$(DEPDIR)/libtaskspecutils_la-TaskSpec_Parser.Plo"; else rm -f "$(DEPDIR)/libtaskspecutils_la-TaskSpec_Parser.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TaskSpec_Parser.c' object='libtaskspecutils_la-TaskSpec_Parser.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlutils_la_CFLAGS) $(CFLAGS) -c -o librlutils_la-TaskSpec_Parser.lo `test -f 'TaskSpec_Parser.c' || echo '$(srcdir)/'`TaskSpec_Parser.c
-
-librlutils_la-RLStruct_util.lo: RLStruct_util.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlutils_la_CFLAGS) $(CFLAGS) -MT librlutils_la-RLStruct_util.lo -MD -MP -MF "$(DEPDIR)/librlutils_la-RLStruct_util.Tpo" -c -o librlutils_la-RLStruct_util.lo `test -f 'RLStruct_util.c' || echo '$(srcdir)/'`RLStruct_util.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/librlutils_la-RLStruct_util.Tpo" "$(DEPDIR)/librlutils_la-RLStruct_util.Plo"; else rm -f "$(DEPDIR)/librlutils_la-RLStruct_util.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='RLStruct_util.c' object='librlutils_la-RLStruct_util.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librlutils_la_CFLAGS) $(CFLAGS) -c -o librlutils_la-RLStruct_util.lo `test -f 'RLStruct_util.c' || echo '$(srcdir)/'`RLStruct_util.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libtaskspecutils_la_CFLAGS) $(CFLAGS) -c -o libtaskspecutils_la-TaskSpec_Parser.lo `test -f 'TaskSpec_Parser.c' || echo '$(srcdir)/'`TaskSpec_Parser.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -387,22 +379,22 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-librlutils_la_includeHEADERS: $(librlutils_la_include_HEADERS)
+install-libtaskspecutils_la_includeHEADERS: $(libtaskspecutils_la_include_HEADERS)
 	@$(NORMAL_INSTALL)
-	test -z "$(librlutils_la_includedir)" || $(mkdir_p) "$(DESTDIR)$(librlutils_la_includedir)"
-	@list='$(librlutils_la_include_HEADERS)'; for p in $$list; do \
+	test -z "$(libtaskspecutils_la_includedir)" || $(mkdir_p) "$(DESTDIR)$(libtaskspecutils_la_includedir)"
+	@list='$(libtaskspecutils_la_include_HEADERS)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  f=$(am__strip_dir) \
-	  echo " $(librlutils_la_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(librlutils_la_includedir)/$$f'"; \
-	  $(librlutils_la_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(librlutils_la_includedir)/$$f"; \
+	  echo " $(libtaskspecutils_la_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libtaskspecutils_la_includedir)/$$f'"; \
+	  $(libtaskspecutils_la_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libtaskspecutils_la_includedir)/$$f"; \
 	done
 
-uninstall-librlutils_la_includeHEADERS:
+uninstall-libtaskspecutils_la_includeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(librlutils_la_include_HEADERS)'; for p in $$list; do \
+	@list='$(libtaskspecutils_la_include_HEADERS)'; for p in $$list; do \
 	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(librlutils_la_includedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(librlutils_la_includedir)/$$f"; \
+	  echo " rm -f '$(DESTDIR)$(libtaskspecutils_la_includedir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(libtaskspecutils_la_includedir)/$$f"; \
 	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
@@ -485,7 +477,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(librlutils_la_includedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libtaskspecutils_la_includedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -533,7 +525,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-librlutils_la_includeHEADERS
+install-data-am: install-libtaskspecutils_la_includeHEADERS
 
 install-exec-am: install-libLTLIBRARIES
 
@@ -562,7 +554,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
-	uninstall-librlutils_la_includeHEADERS
+	uninstall-libtaskspecutils_la_includeHEADERS
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libLTLIBRARIES clean-libtool ctags distclean \
@@ -570,13 +562,14 @@ uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am \
-	install-libLTLIBRARIES install-librlutils_la_includeHEADERS \
-	install-man install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-info-am uninstall-libLTLIBRARIES \
-	uninstall-librlutils_la_includeHEADERS
+	install-libLTLIBRARIES \
+	install-libtaskspecutils_la_includeHEADERS install-man \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-info-am uninstall-libLTLIBRARIES \
+	uninstall-libtaskspecutils_la_includeHEADERS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
