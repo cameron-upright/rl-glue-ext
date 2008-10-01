@@ -19,6 +19,7 @@
 
 #Brian Tanner thinks we should be able to use inheritance here to make
 #this not suck so bad.
+import copy
 
 class RL_Abstract_Type:
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
@@ -34,14 +35,27 @@ class RL_Abstract_Type:
 
 	def sameAs(self,otherAbstractType):
 		return self.intArray==otherAbstractType.intArray and self.doubleArray==otherAbstractType.doubleArray and self.charArray==otherAbstractType.charArray
+
+	#this coolness added by btanner sept 30/2008
+	#it allows the subclasses to be used like myAction=Action.fromAbstractType(someAbstractType)
+	@classmethod
+	def fromAbstractType(cls, theAbstractType):	
+		retStruct=cls()
+		retStruct.intArray=copy.deepcopy(theAbstractType.intArray)
+		retStruct.doubleArray=copy.deepcopy(theAbstractType.doubleArray)
+		retStruct.charArray=copy.deepcopy(theAbstractType.charArray)
+		return retStruct
 	
 class Action(RL_Abstract_Type):
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
+	
+	    
 
 class Observation(RL_Abstract_Type):
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
+
 
 class Random_seed_key(RL_Abstract_Type):
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
