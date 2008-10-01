@@ -11,10 +11,13 @@ function connectEnviroment(theEnviroment)
     timeout=60;
     
     
-    fprintf(1,'Connecting to rl_glue at host: %s on port %d\n', host, port);
+    fprintf(1,'RL-Glue Matlab Environment Codec Version: %s (%s)\n',RL_get_codec_version(),RL_get_svn_version());
+    fprintf(1,'\tConnecting to rl_glue at host: %s on port %d\n', host, port);
 
     p__rlglueEnvStruct.network=org.rlcommunity.rlglue.codec.network.Network;
     p__rlglueEnvStruct.network.connect(host,port,timeout);
+
+    fprintf(1,'\tEnvironment Codec Connected\n');
 
     p__rlglueEnvStruct.network.clearSendBuffer();
     p__rlglueEnvStruct.network.putInt(org.rlcommunity.rlglue.codec.network.Network.kEnvironmentConnection);

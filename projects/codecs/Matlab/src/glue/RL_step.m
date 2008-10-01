@@ -14,5 +14,4 @@ function roat=RL_step()
     roat.r = reward;
     roat.o = o;
     roat.a = a;
-    roat.o
 end

@@ -2,6 +2,10 @@
 # Associate internals original text with physical files.
 
 
+$key = q/sec:env/;
+$ref_files{$key} = "$dir".q|MatlabCodec.html|; 
+$noresave{$key} = "$nosave";
+
 $key = q/sec:agent/;
 $ref_files{$key} = "$dir".q|MatlabCodec.html|; 
 $noresave{$key} = "$nosave";
