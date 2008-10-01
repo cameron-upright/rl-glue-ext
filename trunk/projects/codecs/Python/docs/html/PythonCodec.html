@@ -139,113 +139,106 @@ The codec can be downloaded either as a tarball or can be checked out of the sub
 <P>
 The tarball distribution can be found here:
 <BR>
-<FONT SIZE="-2"><TT><A NAME="tex2html6"
-  HREF="http://code.google.com/p/rl-glue-ext/downloads/list">http://code.google.com/p/rl-glue-ext/downloads/list</A></TT> </FONT>
+<TT><A NAME="tex2html6"
+  HREF="http://code.google.com/p/rl-glue-ext/downloads/list">http://code.google.com/p/rl-glue-ext/downloads/list</A></TT>
 <P>
 To check the code out of subversion:
 <BR>
- <TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python Python-Codec</TT>
-
+<FONT SIZE="-1"><TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python Python-Codec</TT>
+</FONT>
 <P>
 
 <H2><A NAME="SECTION00023000000000000000">
 Installing the Codec</A>
-</H2>
+</H2><FONT SIZE="-1">
 There is no real ``installation'' for the codec per-se.  The important thing is to put the source code somewhere that is easy to get at.
-
+</FONT>
 <P>
-For the rest of this document, we'll assume you've put this project in a subdirectory of your home directory called PythonCodec, 
+<FONT SIZE="-1">For the rest of this document, we'll assume you've put this project in a subdirectory of your home directory called PythonCodec, 
 so the <TT>src</TT> directory is at: <TT>~/PythonCodec/src</TT>.
-
+</FONT>
 <P>
-Python will want to know where the codec source files are, so we'll frequently use code like:
-<PRE>
+<FONT SIZE="-1">Python will want to know where the codec source files are, so we'll frequently use code like:
+</FONT><PRE>
 	&gt;$ PYTHONPATH=~/PythonCodec/src python do_something_with_codec.py
 </PRE>
-
 <P>
-You can make your life easier by adding the path to the codec source to your <TT>PYTHONPATH</TT> environment variable, something like (in Bash):
-<PRE>
+<FONT SIZE="-1">You can make your life easier by adding the path to the codec source to your <TT>PYTHONPATH</TT> environment variable, something like (in Bash):
+</FONT><PRE>
 	&gt;$ export PYTHONPATH=~/PythonCodec/src:$PYTHONPATH
 </PRE>
-
 <P>
-Now your commands can be just:
-<PRE>
+<FONT SIZE="-1">Now your commands can be just:
+</FONT><PRE>
 	&gt;$ python do_something_with_codec.py
 </PRE>
-
 <P>
-To be as general as possible, our examples will use the long version.
-
+<FONT SIZE="-1">To be as general as possible, our examples will use the long version.
+</FONT>
 <P>
-<B>POSSIBLE CONTRIBUTION</B>: IF someone wants to investigate the options for having a script ``install'' the python modules into a system classpath, or distribute 
+<FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: IF someone wants to investigate the options for having a script ``install'' the python modules into a system classpath, or distribute 
 ``compiled'' Python modules, we would like to have your help!
-
+</FONT>
 <P>
 
 <H1><A NAME="SECTION00030000000000000000"></A>
 <A NAME="sec:agent"></A>
 <BR>
 Agents
-</H1>
+</H1><FONT SIZE="-1">
 We have provided a skeleton agent with the codec that is a good starting point for agents that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple agent.
-
+</FONT>
 <P>
-The pertinent file is:
-<PRE>
+<FONT SIZE="-1">The pertinent file is:
+</FONT><PRE>
 	examples/skeleton/skeleton_agent.py
 </PRE>
-
 <P>
-This agent does not learn anything and randomly chooses integer action 0 or 1.  
-
+<FONT SIZE="-1">This agent does not learn anything and randomly chooses integer action 0 or 1.  
+</FONT>
 <P>
-You can compile and run the agent like:
-<PRE>
+<FONT SIZE="-1">You can compile and run the agent like:
+</FONT><PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ PYTHONPATH=~/PythonCodec/src python skeleton_agent.py
 </PRE>
-
 <P>
-You will see something like:
-<PRE>
+<FONT SIZE="-1">You will see something like:
+</FONT><PRE>
      RL-Glue Python Agent Codec Version: 2.0 (Build 250)
           Connecting to 127.0.0.1 on port 4096...
 </PRE>
-
 <P>
-This means that the skeleton_agent is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
-
+<FONT SIZE="-1">This means that the skeleton_agent is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
+</FONT>
 <P>
-You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
-
+<FONT SIZE="-1">You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
+</FONT>
 <P>
-The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+<FONT SIZE="-1">The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
-
+</FONT>
 <P>
-<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
+<FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
-
+</FONT>
 <P>
 
 <H1><A NAME="SECTION00040000000000000000">
 Environments</A>
-</H1>
+</H1><FONT SIZE="-1">
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
 pattern as the agent version (Section <A HREF="#sec:agent">2</A>).  This section will be less detailed because many ideas are similar or identical.
-
+</FONT>
 <P>
-The pertinent file is:
-<PRE>
+<FONT SIZE="-1">The pertinent file is:
+</FONT><PRE>
 	examples/skeleton_environment/skeleton_environment.py
 </PRE>
-
 <P>
-This environment is episodic, with 21 states, labeled <!-- MATH
+<FONT SIZE="-1">This environment is episodic, with 21 states, labeled <!-- MATH
  $\{0, 1,\ldots,19,20\}$
  -->
 <IMG
@@ -253,105 +246,98 @@ This environment is episodic, with 21 states, labeled <!-- MATH
  SRC="img1.png"
  ALT="$\{0, 1,\ldots,19,20\}$">. States {0, 20} are terminal and return rewards of {-1, +1} respectively.  The other states return reward of 0.
 There are two actions, {0, 1}.  Action 0 decrements the state number, and action 1 increments it. The environment starts in state 10.
-
+</FONT>
 <P>
-You can compile and run the environment like:
-<PRE>
+<FONT SIZE="-1">You can compile and run the environment like:
+</FONT><PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ PYTHONPATH=~/PythonCodec/src python skeleton_environment.py
 </PRE>
-
 <P>
-You will see something like:
-<PRE>
+<FONT SIZE="-1">You will see something like:
+</FONT><PRE>
      RL-Glue Python Environment Codec Version: 2.0 (Build 250)
           Connecting to 127.0.0.1 on port 4096...
 </PRE>
-
 <P>
-This means that the skeleton_environment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
-
+<FONT SIZE="-1">This means that the skeleton_environment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
+</FONT>
 <P>
-You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
-
+<FONT SIZE="-1">You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
+</FONT>
 <P>
-The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+<FONT SIZE="-1">The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
-
+</FONT>
 <P>
-<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
+<FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
-
+</FONT>
 <P>
 
 <H1><A NAME="SECTION00050000000000000000">
 Experiments</A>
-</H1>
+</H1><FONT SIZE="-1">
 We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
 pattern as the agent version (Section <A HREF="#sec:agent">2</A>).  This section will be less detailed because many ideas are similar or identical.
-
+</FONT>
 <P>
-The pertinent files are:
-<PRE>
+<FONT SIZE="-1">The pertinent files are:
+</FONT><PRE>
 	examples/skeleton/skeleton_experiment.py
 </PRE>
-
 <P>
-This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the agent and environment, and then steps through one episode using <TT>RL_step</TT>.
-
+<FONT SIZE="-1">This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the agent and environment, and then steps through one episode using <TT>RL_step</TT>.
+</FONT>
 <P>
 <PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ PYTHONPATH=~/PythonCodec/src python skeleton_experiment.py
 </PRE>
-
 <P>
-You will see something like:
-<PRE>
+<FONT SIZE="-1">You will see something like:
+</FONT><PRE>
      Experiment starting up!
      RL-Glue Python Experiment Codec Version: 2.0 (Build 250)
           Connecting to 127.0.0.1 on port 4096...
 </PRE>
-
 <P>
-This means that the skeleton_experiment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096!  
-
+<FONT SIZE="-1">This means that the skeleton_experiment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096!  
+</FONT>
 <P>
-You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
-
+<FONT SIZE="-1">You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
+</FONT>
 <P>
-The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
+<FONT SIZE="-1">The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
-
+</FONT>
 <P>
-<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
+<FONT SIZE="-1"><B>POSSIBLE CONTRIBUTION</B>: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
-
+</FONT>
 <P>
 
 <H1><A NAME="SECTION00060000000000000000">
 Putting it all together</A>
-</H1>
+</H1><FONT SIZE="-1">
 At this point, we've compiled and run each of the three components, now it's time to run them with the <TT>rl_glue</TT> executable server.  The following will work from the examples 
 directory if you have them all built, and RL-Glue installed in the default location:
-<PRE>
+</FONT><PRE>
 	&gt;$ cd examples/skeleton
 	&gt;$ rl_glue &amp;
 	&gt;$ PYTHONPATH=~/PythonCodec/src python skeleton_agent.py &amp;
 	&gt;$ PYTHONPATH=~/PythonCodec/src python skeleton_environment.py &amp;
 	&gt;$ PYTHONPATH=~/PythonCodec/src python skeleton_experiment.py &amp;
 </PRE>
-
 <P>
-If RL-Glue is not installed in the default location, you'll have to start the <TT>rl_glue</TT> executable server using it's full path (unless it's in your <TT>PATH</TT> environment variable):
-<PRE>
+<FONT SIZE="-1">If RL-Glue is not installed in the default location, you'll have to start the <TT>rl_glue</TT> executable server using it's full path (unless it's in your <TT>PATH</TT> environment variable):
+</FONT><PRE>
 	&gt;$ /path/to/rl-glue/bin/rl_glue &amp;
 </PRE>
-
 <P>
-You should see output like the following if it worked:
-<PRE>
+<FONT SIZE="-1">You should see output like the following if it worked:
+</FONT><PRE>
 	&gt;$ rl_glue &amp;
 RL-Glue Version 3.0-beta-1, Build 848:856
 RL-Glue is listening for connections on port=4096
@@ -407,50 +393,48 @@ First observation and action were: 10 and: 1
 ----------Summary----------
 It ran for 66 steps, total reward was: -1.0
 </PRE>
-
 <P>
 
 <H1><A NAME="SECTION00070000000000000000">
 Who creates and frees memory?</A>
-</H1>
+</H1><FONT SIZE="-1">
 The RL-Glue technical manual has a section called <I>Who creates and frees memory?</I>.  The general approach recommended there is to make a copy of data
 you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Python codec.
-
+</FONT>
 <P>
 
 <H1><A NAME="SECTION00080000000000000000">
 Advanced Features</A>
-</H1>
+</H1><FONT SIZE="-1">
 This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
-
+</FONT>
 <P>
-Someone should write this later (Opportunity to contribute!).
-
+<FONT SIZE="-1">Someone should write this later (Opportunity to contribute!).
+</FONT>
 <P>
 
 <H1><A NAME="SECTION00090000000000000000">
 Codec Specification Reference</A>
-</H1>
+</H1><FONT SIZE="-1">
 This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
 be handy.
-
+</FONT>
 <P>
-Instead of re-creating information that is readily available in the PythonDocs, we will give pointers were appropriate.
-
+<FONT SIZE="-1">Instead of re-creating information that is readily available in the PythonDocs, we will give pointers were appropriate.
+</FONT>
 <P>
 
 <H2><A NAME="SECTION00091000000000000000">
 Types</A>
 </H2>
-
 <P>
 
 <H3><A NAME="SECTION00091100000000000000">
 Simple Types</A>
-</H3>
+</H3><FONT SIZE="-1">
 Unlike the C/C++ codec, we will not be using <TT>typedef</TT> statements to create special labels for the types. Since Python is loosely typed, these things aren't so hard and 
 fast:
-
+</FONT>
 <UL>
 <LI><I>reward</I> is <TT>double</TT>
 </LI>
@@ -461,19 +445,18 @@ fast:
 <LI><I>task specifications</I> are <TT>strings</TT>
 </LI>
 </UL>
-
 <P>
 
 <H3><A NAME="SECTION00091200000000000000"></A>
 <A NAME="sec:structure-types"></A>
 <BR>
 Structure Types
-</H3>
+</H3><FONT SIZE="-1">
 All of the major structure types (observations, actions, random seed keys, and state keys) extend the <TT>RL_Abstract_Type </TT> class, which has there lists: for integers, doubles, and chars.
-
+</FONT>
 <P>
-The class is defined as:
-<PRE>
+<FONT SIZE="-1">The class is defined as:
+</FONT><PRE>
     class RL_Abstract_Type:
         def __init__(self,numInts=None,numDoubles=None,numChars=None):
             self.intArray = []
@@ -491,20 +474,18 @@ The class is defined as:
             self.doubleArray==otherAbstractType.doubleArray and 
             self.charArray==otherAbstractType.charArray
 </PRE>
-
 <P>
-The other types that inherit from <TT>RL_Abstract_Type </TT> but add no specialization are:
-<PRE>
+<FONT SIZE="-1">The other types that inherit from <TT>RL_Abstract_Type </TT> but add no specialization are:
+</FONT><PRE>
 class Action(RL_Abstract_Type)
 class Observation(RL_Abstract_Type)
 class Random_seed_key(RL_Abstract_Type)
 class State_key(RL_Abstract_Type)
 </PRE>
-
 <P>
-The structure of the composite types are listed below.  Note that this code is not accurate in terms of the available constructors, 
+<FONT SIZE="-1">The structure of the composite types are listed below.  Note that this code is not accurate in terms of the available constructors, 
 it is just meant to illustrate the member names.
-<PRE>
+</FONT><PRE>
 class Observation_action:
     def __init__(self,theObservation,theAction):
         self.o = theObservation
@@ -523,38 +504,36 @@ class Reward_observation_action_terminal:
         self.a = theAction
         self.terminal = terminal
 </PRE>
-
 <P>
-The full definition are available in <A NAME="tex2html7"
+<FONT SIZE="-1">The full definition are available in <A NAME="tex2html7"
   HREF="http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/types.py"><TT>types.py</TT></A>.
-
+</FONT>
 <H2><A NAME="SECTION00092000000000000000">
 Functions</A>
 </H2>
-
 <H3><A NAME="SECTION00092100000000000000">
 Agent Functions</A>
-</H3>
+</H3><FONT SIZE="-1">
 All agents <B>should implement</B> <A NAME="tex2html8"
   HREF="http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/agent/Agent.py"><TT>rlglue.agent.Agent</TT></A>.
-
+</FONT>
 <P>
 
 <H3><A NAME="SECTION00092200000000000000">
 Environment Functions</A>
-</H3>
+</H3><FONT SIZE="-1">
 All environments <B>should implement</B> <A NAME="tex2html9"
   HREF="http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/environment/Environment.py"><TT>rlglue.environment.Environment</TT></A>.
-
+</FONT>
 <P>
 
 <H3><A NAME="SECTION00092300000000000000">
 Experiments Functions</A>
-</H3>
+</H3><FONT SIZE="-1">
 All experiments <B>can call</B> the methods in <A NAME="tex2html10"
   HREF="http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/RLGlue.py"><TT>rlglue.RLGlue</TT></A>.
 In this case we'll include their prototypes, because the source file is full of implementation details.
-
+</FONT>
 <P>
 <PRE>
 	# () -&gt; string
@@ -599,33 +578,31 @@ In this case we'll include their prototypes, because the source file is full of 
 	# () -&gt; Random_seed_key
 	def RL_get_random_seed():
 </PRE>
-
 <P>
 
 <H1><A NAME="SECTION000100000000000000000">
 Changes and 2.x Backward Compatibility</A>
-</H1>
+</H1><FONT SIZE="-1">
 There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the RL-Glue 
 project documentation.
-
+</FONT>
 <P>
 
 <H2><A NAME="SECTION000101000000000000000">
 Agent/Environment Loading</A>
-</H2>
+</H2><FONT SIZE="-1">
 Historically, there was a different approach for loading agents and environments.
-
+</FONT>
 <P>
-The old strategy was:
-<PRE>
+<FONT SIZE="-1">The old strategy was:
+</FONT><PRE>
 PYTHONPATH=~/PythonCodec/src:/agent/src/path python -c \
     \"import rlglue.agent.AgentLoader\" agentName
 </PRE>
-
 <P>
-That didn't seem as easy as it should be, so we changed things for this release, much like we did in the Java codec. Now, Python agents and environments can become 
+<FONT SIZE="-1">That didn't seem as easy as it should be, so we changed things for this release, much like we did in the Java codec. Now, Python agents and environments can become 
 self loading by adding a bit of code at the bottom of their source files, like:
-<PRE>
+</FONT><PRE>
 #skeleton_agent.py
 #top of file
 from rlglue.agent import AgentLoader as AgentLoader
@@ -636,70 +613,65 @@ from rlglue.agent import AgentLoader as AgentLoader
 if __name__=="__main__":
      AgentLoader.loadAgent(skeleton_agent())
 </PRE>
-
 <P>
-Now, (as you recall) we can load the agent like:
-<PRE>
+<FONT SIZE="-1">Now, (as you recall) we can load the agent like:
+</FONT><PRE>
 PYTHONPATH=~/PythonCodec/src python agentfile.py
 </PRE>
-
 <P>
-See <TT>skeleton_environment</TT> for instructions about how to do a similar thing for environments.
-
+<FONT SIZE="-1">See <TT>skeleton_environment</TT> for instructions about how to do a similar thing for environments.
+</FONT>
 <P>
-We feel that this is a useful step forward, and will be encouraging this approach.
-
+<FONT SIZE="-1">We feel that this is a useful step forward, and will be encouraging this approach.
+</FONT>
 <P>
-However, if you love the old way, you can still do it like:
-
+<FONT SIZE="-1">However, if you love the old way, you can still do it like:
+</FONT>
 <P>
 <PRE>
 PYTHONPATH=~/PythonCodec/src:/agent/src/path python -c \
     \"import rlglue.agent.AgentLoaderScript\" agentName
 </PRE>
-
 <P>
 
 <H1><A NAME="SECTION000110000000000000000">
 Frequently Asked Questions</A>
-</H1>
+</H1><FONT SIZE="-1">
 We're waiting to hear your questions!
-
+</FONT>
 <P>
 
 <H1><A NAME="SECTION000120000000000000000">
 Credits and Acknowledgements</A>
-</H1>
+</H1><FONT SIZE="-1">
 Mark Lee originally wrote the Python codec.  Thanks Mark.
-
+</FONT>
 <P>
-Brian Tanner has since grabbed the torch and has continued to develop the codec.
-
+<FONT SIZE="-1">Brian Tanner has since grabbed the torch and has continued to develop the codec.
+</FONT>
 <P>
 
 <H2><A NAME="SECTION000121000000000000000">
 Contributing</A>
-</H2>
+</H2><FONT SIZE="-1">
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
-
+</FONT>
 <P>
 
 <H1><A NAME="SECTION000130000000000000000">
 Document Information</A>
-</H1>
-<PRE>
-Revision Number: $Rev: 258 $
+</H1><PRE>
+Revision Number: $Rev: 260 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-09-30 13:45:08 -0600 (Tue, 30 Sep 2008) $
+Last Updated   : $Date: 2008-09-30 19:34:45 -0600 (Tue, 30 Sep 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python/docs/PythonCodec.tex $
 </PRE>
-
 <P>
 
 <H1><A NAME="SECTION000140000000000000000">
 About this document ...</A>
-</H1>
- <STRONG>RL-Glue Python Codec 2.0 Manual </STRONG><P>
+</H1><FONT SIZE="-1">
+ </FONT><STRONG>RL-Glue Python Codec 2.0 Manual </STRONG><P>
 This document was generated using the
 <A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002-2-1 (1.71)
 <P>
