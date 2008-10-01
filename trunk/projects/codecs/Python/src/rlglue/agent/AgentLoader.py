@@ -22,14 +22,16 @@ import rlglue.network.Network as Network
 from ClientAgent import ClientAgent
 
 from rlglue.update_svn_version import update_svn_version
-from rlglue.get_svn_version import get_svn_glue_version
+from rlglue.versions import get_svn_codec_version
+from rlglue.versions import get_codec_version
 
 def loadAgent(theAgent, host=Network.kLocalHost, port=Network.kDefaultPort):
 	update_svn_version()
-	theSVNVersion=get_svn_glue_version()
+	theSVNVersion=get_svn_codec_version()
+	theCodecVersion=get_codec_version()
 	client = ClientAgent(theAgent)
 
-	print "RL-Glue Python Agent Codec Version: 2.0 (Build "+theSVNVersion+")"
+	print "RL-Glue Python Agent Codec Version: "+theCodecVersion+" (Build "+theSVNVersion+")"
 	print "\tConnecting to " + host + " on port " + str(port) + "..."
 	sys.stdout.flush()
 
