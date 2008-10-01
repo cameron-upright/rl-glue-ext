@@ -58,13 +58,13 @@ public class SkeletonExperiment {
         String responseMessage = RLGlue.RL_agent_message("what is your name?");
         System.out.println("Agent responded to \"what is your name?\" with: " + responseMessage);
 
-        responseMessage = RLGlue.RL_agent_message("who is your daddy and what does he do?");
-        System.out.println("Agent responded to \"who is your daddy and what does he do?\" with: " + responseMessage + "\n");
+        responseMessage = RLGlue.RL_agent_message("If at first you don't succeed; call it version 1.0");
+        System.out.println("Agent responded to \"If at first you don't succeed; call it version 1.0  \" with: " + responseMessage + "\n");
 
         responseMessage = RLGlue.RL_env_message("what is your name?");
         System.out.println("Environment responded to \"what is your name?\" with: " + responseMessage);
-        responseMessage = RLGlue.RL_env_message("who is your daddy and what does he do?");
-        System.out.println("Environment responded to \"who is your daddy and what does he do?\" with: " + responseMessage);
+        responseMessage = RLGlue.RL_env_message("If at first you don't succeed; call it version 1.0");
+        System.out.println("Environment responded to \"If at first you don't succeed; call it version 1.0  \" with: " + responseMessage);
 
         System.out.println("\n\n----------Running a few episodes----------");
         runEpisode(100);

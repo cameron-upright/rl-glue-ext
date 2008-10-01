@@ -7,7 +7,7 @@ subprocess.call(["killall rl_glue"],shell=True)
 javaCodecJar="JavaRLGlueCodec.jar";
 javaJarPath="../codecs/Java/products/";
 JavaCodec=javaJarPath+javaCodecJar
-PythonPath="../codecs/Python"
+PythonPath="../codecs/Python/src"
 
 def run_test(agent, env, experiment):
 	global totalTests
