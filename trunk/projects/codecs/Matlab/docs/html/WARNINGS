@@ -1,4 +1,5 @@
 No implementation found for style `url'
 
-The MatlabCodec.aux file was not found, so sections will not be numbered 
-and cross-references will be shown as icons.
+MatlabCodec.tex is newer than MatlabCodec.aux: Please rerun latex.
+
+Substitution of arg to newlabelxx delayed.
