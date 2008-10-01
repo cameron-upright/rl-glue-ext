@@ -33,6 +33,7 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <DIV>
 
 <P ALIGN="CENTER"><STRONG>Brian Tanner</STRONG></P>
+<P ALIGN="LEFT"><SMALL>brian@tannerpages.com</SMALL></P>
 </DIV>
 <BR>
 
@@ -42,53 +43,53 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html46"
+<LI><A NAME="tex2html47"
   HREF="JavaCodec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html47"
-  HREF="JavaCodec.html#SECTION00021000000000000000">Software Requirements</A>
 <LI><A NAME="tex2html48"
-  HREF="JavaCodec.html#SECTION00022000000000000000">Getting the Codec</A>
+  HREF="JavaCodec.html#SECTION00021000000000000000">Software Requirements</A>
 <LI><A NAME="tex2html49"
+  HREF="JavaCodec.html#SECTION00022000000000000000">Getting the Codec</A>
+<LI><A NAME="tex2html50"
   HREF="JavaCodec.html#SECTION00023000000000000000">Installing the Codec</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html50"
-  HREF="JavaCodec.html#SECTION00030000000000000000">Agents</A>
 <LI><A NAME="tex2html51"
-  HREF="JavaCodec.html#SECTION00040000000000000000">Environments</A>
+  HREF="JavaCodec.html#SECTION00030000000000000000">Agents</A>
 <LI><A NAME="tex2html52"
-  HREF="JavaCodec.html#SECTION00050000000000000000">Experiments</A>
+  HREF="JavaCodec.html#SECTION00040000000000000000">Environments</A>
 <LI><A NAME="tex2html53"
-  HREF="JavaCodec.html#SECTION00060000000000000000">Putting it all together</A>
+  HREF="JavaCodec.html#SECTION00050000000000000000">Experiments</A>
 <LI><A NAME="tex2html54"
-  HREF="JavaCodec.html#SECTION00070000000000000000">Who creates and frees memory?</A>
+  HREF="JavaCodec.html#SECTION00060000000000000000">Putting it all together</A>
 <LI><A NAME="tex2html55"
-  HREF="JavaCodec.html#SECTION00080000000000000000">Advanced Features</A>
+  HREF="JavaCodec.html#SECTION00070000000000000000">Who creates and frees memory?</A>
 <LI><A NAME="tex2html56"
+  HREF="JavaCodec.html#SECTION00080000000000000000">Advanced Features</A>
+<LI><A NAME="tex2html57"
   HREF="JavaCodec.html#SECTION00090000000000000000">Codec Specification Reference</A>
 <UL>
-<LI><A NAME="tex2html57"
-  HREF="JavaCodec.html#SECTION00091000000000000000">Types</A>
 <LI><A NAME="tex2html58"
+  HREF="JavaCodec.html#SECTION00091000000000000000">Types</A>
+<LI><A NAME="tex2html59"
   HREF="JavaCodec.html#SECTION00092000000000000000">Functions</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html59"
+<LI><A NAME="tex2html60"
   HREF="JavaCodec.html#SECTION000100000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html60"
-  HREF="JavaCodec.html#SECTION000101000000000000000">RL-Glue Split and Package/Jar Naming Changes</A>
 <LI><A NAME="tex2html61"
+  HREF="JavaCodec.html#SECTION000101000000000000000">RL-Glue Split and Package/Jar Naming Changes</A>
+<LI><A NAME="tex2html62"
   HREF="JavaCodec.html#SECTION000102000000000000000">Agent/Environment Loading</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html62"
-  HREF="JavaCodec.html#SECTION000110000000000000000">Frequently Asked Questions</A>
 <LI><A NAME="tex2html63"
+  HREF="JavaCodec.html#SECTION000110000000000000000">Frequently Asked Questions</A>
+<LI><A NAME="tex2html64"
   HREF="JavaCodec.html#SECTION000120000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html64"
+<LI><A NAME="tex2html65"
   HREF="JavaCodec.html#SECTION000121000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -103,14 +104,14 @@ This document describes how to use the Java RL-Glue Codec, a software library th
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot165"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot166"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in Java.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot166"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot167"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -132,7 +133,7 @@ Compiling and running components with this codec requires Java 1.5 or higher. Yo
 
 <P>
 Recompiling this codec requires the Apache Ant<A NAME="tex2html6"
-  HREF="#foot167"><SUP>3</SUP></A> build system.  You probably need JUnit and Subversion installed as well. We'll try to make those optional dependencies in the future.
+  HREF="#foot168"><SUP>3</SUP></A> build system.  You probably need JUnit and Subversion installed as well. We'll try to make those optional dependencies in the future.
 The good news is that you probably <B>don't need to recompile the codec</B>.  Unlike C/C++, we can distribute a java JAR archive of the Java codec, and that is all you really need.
 
 <P>
@@ -496,8 +497,8 @@ All experiments <B>can call</B> the static methods in <A NAME="tex2html13"
 <H1><A NAME="SECTION000100000000000000000">
 Changes and 2.x Backward Compatibility</A>
 </H1>
-There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the RL-Glue 
-project documentation.
+There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the <A NAME="tex2html14"
+  HREF="http://rl-glue.googlecode.com/svn/trunk/docs/html/index.html">RL-Glue overview documentation</A>.
 
 <P>
 
@@ -518,16 +519,16 @@ The JAR file is now distributed in:
 In the previous incarnation of the Java codec, the classes were in a very shallow heirarchy: <TT>rlglue.RLGlue</TT>, <TT>RLGlue.types</TT>, etc.  For the updated release, we've moved to a richer package description that
 is more in line with other Java projects in the Reinforcement Learning community.  The new package hierarchy is:
 <BR>
-<A NAME="tex2html14"
+<A NAME="tex2html15"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/overview-summary.html"><TT>org.rlcommunity.rlglue</TT></A>
 <P>
 We've also moved a few of the class/interfaces around.  The most notable change is that instead of <TT>Agent</TT> and <TT>Environment</TT> interfaces, we now have 
-<A NAME="tex2html15"
+<A NAME="tex2html16"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html"><TT>AgentInterface</TT></A>
 and 
-<A NAME="tex2html16"
+<A NAME="tex2html17"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html"><TT>EnvironmentInterface</TT></A>.
-Also, instead of these interfaces being in their own package, they are now in: <A NAME="tex2html17"
+Also, instead of these interfaces being in their own package, they are now in: <A NAME="tex2html18"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/package-summary.html"><TT>org.rlcommunity.rlglue.codec</TT></A>. 
 
 <P>
@@ -575,7 +576,7 @@ Here is an example of how that looks:
 </PRE>
 
 <P>
-The second method was to bypass the AgentLoader and go through <A NAME="tex2html18"
+The second method was to bypass the AgentLoader and go through <A NAME="tex2html19"
   HREF="http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlueCore.html"><TT>RLGlueCore</TT></A>, 
 which is contains the default <TT>main</TT> method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
 <PRE>
@@ -662,19 +663,19 @@ The command line arguments were: <BR>
 The translation was initiated by Brian Tanner on 2008-10-01
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot165">... RL-Glue</A><A
+<DT><A NAME="foot166">... RL-Glue</A><A
  HREF="JavaCodec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot166">... Apache-2.0</A><A
+<DT><A NAME="foot167">... Apache-2.0</A><A
  HREF="JavaCodec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot167">... Ant</A><A
+<DT><A NAME="foot168">... Ant</A><A
  HREF="JavaCodec.html#tex2html6"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html7"
   HREF="http://ant.apache.org/">http://ant.apache.org/</A></TT>
