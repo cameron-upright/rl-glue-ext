@@ -303,7 +303,7 @@ int main(int argc, char** argv) {
     host = inet_ntoa(*(struct in_addr*)host_ent->h_addr);
   }
 
-  fprintf(stdout, "RL-Glue C Environment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,SVN_VERSION,host, port);
+  fprintf(stdout, "RL-Glue C Environment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
 	fflush(stdout);
 
 

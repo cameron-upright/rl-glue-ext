@@ -24,6 +24,7 @@
 #endif
 
 #include <assert.h>
+#include <string.h>
 #include <rlglue/RL_common.h>
 #include <stdio.h>
 
@@ -71,4 +72,16 @@ void __rlglue_print_abstract_type(const rl_abstract_type_t *theStruct){
 			printf("\t%c",theStruct->charArray[i]);
 	}
 	printf("\n");
+}
+
+/*This is an easier trick to get the version */
+char svnVersionString[1024];
+char* __rlglue_get_svn_version(){
+	int howMuchToCopy=0;
+	char *theVersion="$Revision$";
+	howMuchToCopy=strlen(theVersion+11) - 2;
+	assert(howMuchToCopy>0);
+	memcpy(svnVersionString,  theVersion+11, howMuchToCopy);
+    svnVersionString[howMuchToCopy] = '\0';
+	return svnVersionString;
 }
