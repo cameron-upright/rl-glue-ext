@@ -6,11 +6,11 @@ This project is licensed under the Apache 2 license. Check LICENSE-2.0.txt for m
 ----------------------------
 Documentation
 ----------------------------
+You should probably check out the instructions in:
+docs/C-Codec.pdf
+
 For the full RL-Glue Codec Documentation, please visit:
-http://glue.rl-community.org/Home/codecs/c-c-codec
-
-
-If you're not online, all of the docs are in the docs/ folder.  If the instructions below don't work, please check out the docs ;)
+http://glue.rl-community.org/Home/Extensions/c-c-codec
 
 -------------------------------------
 Super short introduction to the Codec
