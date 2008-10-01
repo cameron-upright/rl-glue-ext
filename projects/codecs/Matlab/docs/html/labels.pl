@@ -17,5 +17,13 @@ $noresave{$key} = "$nosave";
 # labels from external_latex_labels array.
 
 
+$key = q/sec:agent/;
+$external_latex_labels{$key} = q|3|; 
+$noresave{$key} = "$nosave";
+
+$key = q/sec:structure-types/;
+$external_latex_labels{$key} = q|8.1.2|; 
+$noresave{$key} = "$nosave";
+
 1;
 

@@ -10,11 +10,13 @@ function connectAgent(theAgent)
     port=4096;
     timeout=10;
     
-    
-    fprintf(1,'Connecting to rl_glue at host: %s on port %d\n', host, port);
+    fprintf(1,'RL-Glue Matlab Agent Codec Version: 1.0 (%s)\n',RL_get_svn_version());
+    fprintf(1,'\tConnecting to rl_glue at host: %s on port %d\n', host, port);
 
     p__rlglueAgentStruct.network=org.rlcommunity.rlglue.codec.network.Network;
     p__rlglueAgentStruct.network.connect(host,port,timeout);
+    
+    fprintf(1,'\tAgent Codec Connected\n');
 
     p__rlglueAgentStruct.network.clearSendBuffer();
     p__rlglueAgentStruct.network.putInt(org.rlcommunity.rlglue.codec.network.Network.kAgentConnection);
