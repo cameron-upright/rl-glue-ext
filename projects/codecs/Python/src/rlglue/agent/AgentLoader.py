@@ -26,7 +26,6 @@ from rlglue.versions import get_svn_codec_version
 from rlglue.versions import get_codec_version
 
 def loadAgent(theAgent, host=Network.kLocalHost, port=Network.kDefaultPort):
-	update_svn_version()
 	theSVNVersion=get_svn_codec_version()
 	theCodecVersion=get_codec_version()
 	client = ClientAgent(theAgent)
