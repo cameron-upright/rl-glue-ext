@@ -1,4 +1,8 @@
 
-def get_svn_glue_version():
+def get_svn_codec_version():
 	SVN_GLUE_VERSION="$Revision$"
-	return SVN_GLUE_VERSION
+	justTheNumber=SVN_GLUE_VERSION[11:len(SVN_GLUE_VERSION)-2]
+	return justTheNumber
+
+def get_codec_version():
+	return "2.0-RC1"

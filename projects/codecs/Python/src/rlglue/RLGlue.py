@@ -24,8 +24,9 @@ from rlglue.types import Random_seed_key
 from rlglue.types import Reward_observation_action_terminal
 from rlglue.types import State_key
 
-from rlglue.update_svn_version import update_svn_version
-from rlglue.get_svn_version import get_svn_glue_version
+
+from rlglue.versions import get_svn_codec_version
+from rlglue.versions import get_codec_version
 
 network = None
 
@@ -34,12 +35,12 @@ def forceConnection():
 	global network
 	if network == None:
 		
-		update_svn_version()
-		theSVNVersion=get_svn_glue_version()
+		theSVNVersion=get_svn_codec_version()
+		theCodecVersion=get_codec_version()
 		host=Network.kLocalHost
 		port = Network.kDefaultPort
 		
-		print "RL-Glue Python Experiment Codec Version: 2.0 (Build "+theSVNVersion+")"
+		print "RL-Glue Python Experiment Codec Version: "+theCodecVersion+" (Build "+theSVNVersion+")"
 		print "\tConnecting to " + host + " on port " + str(port) + "..."
 		sys.stdout.flush()
 		

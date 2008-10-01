@@ -22,15 +22,15 @@ import rlglue.network.Network as Network
 from ClientEnvironment import ClientEnvironment
 from rlglue import update_svn_version
 
-from rlglue.update_svn_version import update_svn_version
-from rlglue.get_svn_version import get_svn_glue_version
+from rlglue.versions import get_svn_codec_version
+from rlglue.versions import get_codec_version
 
 def loadEnvironment(theEnvironment, host=Network.kLocalHost, port=Network.kDefaultPort):
-	update_svn_version()
-	theSVNVersion=get_svn_glue_version()
+	theSVNVersion=get_svn_codec_version()
+	theCodecVersion=get_codec_version()
 	client = ClientEnvironment(theEnvironment)
 
-	print "RL-Glue Python Environment Codec Version: 2.0 (Build "+theSVNVersion+")"
+	print "RL-Glue Python Environment Codec Version: "+theCodecVersion+" (Build "+theSVNVersion+")"
 	print "\tConnecting to " + host + " on port " + str(port) + "..."
 	sys.stdout.flush()
 
