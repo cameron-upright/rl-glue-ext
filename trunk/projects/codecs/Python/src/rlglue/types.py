@@ -19,7 +19,8 @@
 
 #Brian Tanner thinks we should be able to use inheritance here to make
 #this not suck so bad.
-class Action:
+
+class RL_Abstract_Type:
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
 		self.intArray = []
 		self.doubleArray = []
@@ -31,48 +32,25 @@ class Action:
 		if numChars != None:
 			self.charArray = ['']*numChars
 
-class Observation:
+	def sameAs(self,otherAbstractType):
+		return self.intArray==otherAbstractType.intArray and self.doubleArray==otherAbstractType.doubleArray and self.charArray==otherAbstractType.charArray
+	
+class Action(RL_Abstract_Type):
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
-		self.intArray = []
-		self.doubleArray = []
-		self.charArray = []
-		if numInts != None:
-			self.intArray = [0]*numInts
-		if numDoubles != None:
-			self.doubleArray = [0.0]*numDoubles
-		if numChars != None:
-			self.charArray = ['']*numChars
+		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
 
-class Random_seed_key:
+class Observation(RL_Abstract_Type):
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
-		self.intArray = []
-		self.doubleArray = []
-		self.charArray = []
-		if numInts != None:
-			self.intArray = [0]*numInts
-		if numDoubles != None:
-			self.doubleArray = [0.0]*numDoubles
-		if numChars != None:
-			self.charArray = ['']*numChars
+		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
 
-	def sameAs(self,otherSeedKey):
-		return self.intArray==otherSeedKey.intArray and self.doubleArray==otherSeedKey.doubleArray and self.charArray==otherSeedKey.charArray
-
-class State_key:
+class Random_seed_key(RL_Abstract_Type):
 	def __init__(self,numInts=None,numDoubles=None,numChars=None):
-		self.intArray = []
-		self.doubleArray = []
-		self.charArray = []
-		if numInts != None:
-			self.intArray = [0]*numInts
-		if numDoubles != None:
-			self.doubleArray = [0.0]*numDoubles
-		if numChars != None:
-			self.charArray = ['']*numChars
+		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
+
+class State_key(RL_Abstract_Type):
+	def __init__(self,numInts=None,numDoubles=None,numChars=None):
+		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
 			
-	def sameAs(self,otherStateKey):
-		return self.intArray==otherStateKey.intArray and self.doubleArray==otherStateKey.doubleArray and self.charArray==otherStateKey.charArray
-
 class Observation_action:
 	def __init__(self,theObservation=None,theAction=None):
 		if theObservation != None:

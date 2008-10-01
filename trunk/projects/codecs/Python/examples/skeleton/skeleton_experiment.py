@@ -44,13 +44,13 @@ print "\n\n----------Sending some sample messages----------"
 responseMessage = RLGlue.RL_agent_message("what is your name?")
 print "Agent responded to \"what is your name?\" with: " + responseMessage
 
-responseMessage = RLGlue.RL_agent_message("who is your daddy and what does he do?")
-print "Agent responded to \"who is your daddy and what does he do?\" with: " + responseMessage + "\n"
+responseMessage = RLGlue.RL_agent_message("If at first you don't succeed; call it version 1.0")
+print "Agent responded to \"If at first you don't succeed; call it version 1.0  \" with: " + responseMessage + "\n"
 
 responseMessage = RLGlue.RL_env_message("what is your name?")
 print "Environment responded to \"what is your name?\" with: " + responseMessage
-responseMessage = RLGlue.RL_env_message("who is your daddy and what does he do?")
-print "Environment responded to \"who is your daddy and what does he do?\" with: " + responseMessage
+responseMessage = RLGlue.RL_env_message("If at first you don't succeed; call it version 1.0")
+print "Environment responded to \"If at first you don't succeed; call it version 1.0  \" with: " + responseMessage
 
 print "\n\n----------Running a few episodes----------"
 runEpisode(100)
