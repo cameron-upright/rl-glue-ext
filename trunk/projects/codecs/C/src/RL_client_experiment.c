@@ -78,7 +78,7 @@ static void forceConnection()
       host = inet_ntoa(*(struct in_addr*)host_ent->h_addr);
     }
 
-  	fprintf(stdout, "RL-Glue C Experiment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,SVN_VERSION,host, port);
+  	fprintf(stdout, "RL-Glue C Experiment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
 	fflush(stdout);
     theExperimentConnection = rlWaitForConnection(host, port, kRetryTimeout);
 	fprintf(stderr, "\tRL-Glue C Experiment Codec :: Connected\n");
