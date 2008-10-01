@@ -1,5 +1,5 @@
 # 
-# Copyright (C) 2007, Mark Lee
+# Copyright (C) 2008, Brian Tanner
 # 
 #http://rl-glue-ext.googlecode.com/
 #
