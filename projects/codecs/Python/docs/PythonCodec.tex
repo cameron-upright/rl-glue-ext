@@ -10,7 +10,7 @@
 %I like space between my paragraphs
 \setlength{\parskip}{10pt} 
 
-\title{RL-Glue Java Codec 2.0 Manual }
+\title{RL-Glue Python Codec 2.0 Manual }
 \author{Brian Tanner}
 \date{}                                        
 
@@ -20,11 +20,11 @@
 
 \section{Introduction}
 
-This document describes how to use the Java RL-Glue Codec, a software library that provides socket-compatibility with the RL-Glue Reinforcement Learning software library.  
+This document describes how to use the Python RL-Glue Codec, a software library that provides socket-compatibility with the RL-Glue Reinforcement Learning software library.  
 
 For general information and motivation about the RL-Glue\footnote{\url{http://glue.rl-community.org/}} project, please refer to the documentation provided with that project.
 
-This codec will allow you to create agents, environments, and experiment programs in Java.
+This codec will allow you to create agents, environments, and experiment programs in Python.
 
 This software project is licensed under the Apache-2.0\footnote{\url{http://www.apache.org/licenses/LICENSE-2.0.html}} license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
@@ -35,15 +35,12 @@ This project has a home here:\\
 
 
 \subsection{Software Requirements}
-To run agents, environments, and experiments created with this codec, you will need to have RL-Glue (or a surrogate) installed on your computer.
+To run agents, environments, and experiments created with this codec, you will need to have RL-Glue installed on your computer.
 
-Compiling and running components with this codec requires Java 1.5 or higher. You can find out what version you have by doing the following at the command-line:
-\begin{verbatim}
-	>$ java -version
-\end{verbatim}
+Compiling and running components with this codec requires Python.
 
-Recompiling this codec requires the Apache Ant\footnote{\url{http://ant.apache.org/}} build system.  You probably need JUnit and Subversion installed as well. We'll try to make those optional dependencies in the future.
-The good news is that you probably \textbf{don't need to recompile the codec}.  Unlike C/C++, we can distribute a java JAR archive of the Java codec, and that is all you really need.
+\textbf{Possible Contribution: }Someone with Python experience could help us find out what version of Python is required to use this codec, and could help us update the codec
+to be as robust as possible to older versions.
 
 \subsection{Getting the Codec}
 The codec can be downloaded either as a tarball or can be checked out of the subversion repository where it is hosted.
@@ -53,16 +50,34 @@ The tarball distribution can be found here:\newline
 
 
 To check the code out of subversion:\newline
- \texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java Java-Codec}
-
-Technically all you really \textbf{need} is the JAR archive of the codec:\newline
-\footnotesize \texttt{svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/products/JavaRLGlueCodec.jar} \normalsize
+ \texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python Python-Codec}
 
 \subsection{Installing the Codec}
-There is no real ``installation'' for the codec per-se.  The important thing is to put the \texttt{JavaRLGlueCodec.jar} somewhere that is easy to get at.  If you want to be fancy, you can probably put \texttt{JavaRLGlueCodec.jar}
-into a directory on your Java system classpath.  For the rest of this document, we'll assume you've put \texttt{JavaRLGlueCodec.jar} in a subdirectory of your homedirectory called JavaCodec: \texttt{\~{}/JavaCodec/JavaRLGlueCodec.jar}.
+There is no real ``installation'' for the codec per-se.  The important thing is to put the source code somewhere that is easy to get at.
 
-\textbf{POSSIBLE CONTRIBUTION}: IF someone wants to investigate the options for having a script ``install'' \texttt{JavaRLGlueCodec.jar} into a system classpath, we would like to have your help!
+For the rest of this document, we'll assume you've put this project in a subdirectory of your home directory called PythonCodec, 
+so the \texttt{src} directory is at: \texttt{\~{}/PythonCodec/src}.
+
+Python will want to know where the codec source files are, so we'll frequently use code like:
+\begin{verbatim}
+	>$ PYTHONPATH=~/PythonCodec/src python do_something_with_codec.py
+\end{verbatim}
+
+You can make your life easier by adding the path to the codec source to your \texttt{PYTHONPATH} environment variable, something like (in Bash):
+\begin{verbatim}
+	>$ export PYTHONPATH=~/PythonCodec/src:$PYTHONPATH
+\end{verbatim}
+
+Now your commands can be just:
+\begin{verbatim}
+	>$ python do_something_with_codec.py
+\end{verbatim}
+
+To be as general as possible, our examples will use the long version.
+
+
+\textbf{POSSIBLE CONTRIBUTION}: IF someone wants to investigate the options for having a script ``install'' the python modules into a system classpath, or distribute 
+``compiled'' Python modules, we would like to have your help!
 
 
 
@@ -73,7 +88,7 @@ It implements all the required functions and provides a good example of how to c
 
 The pertinent file is:
 \begin{verbatim}
-	examples/skeleton/SkeletonAgent.java
+	examples/skeleton/skeleton_agent.py
 \end{verbatim}
 
 This agent does not learn anything and randomly chooses integer action $0$ or $1$.  
@@ -81,17 +96,16 @@ This agent does not learn anything and randomly chooses integer action $0$ or $1
 You can compile and run the agent like:
 \begin{verbatim}
 	>$ cd examples/skeleton
-	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonAgent.java
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent
+	>$ PYTHONPATH=~/PythonCodec/src python skeleton_agent.py
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
-     RL-Glue Java Agent Codec Version: 2.0 (Build:192:239M)
+     RL-Glue Python Agent Codec Version: 2.0 (Build 250)
           Connecting to 127.0.0.1 on port 4096...
 \end{verbatim}
 
-This means that the SkeletonAgent is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
+This means that the skeleton\_agent is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
 You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
 
@@ -102,7 +116,6 @@ Please open it up and take a look.
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
 
-
 \section{Environments}
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
@@ -110,7 +123,7 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent file is:
 \begin{verbatim}
-	examples/skeleton_environment/SkeletonEnvironment.java
+	examples/skeleton_environment/skeleton_environment.py
 \end{verbatim}
 
 This environment is episodic, with 21 states, labeled $\{0, 1,\ldots,19,20\}$. States $\{0, 20\}$ are terminal and return rewards of $\{-1, +1\}$ respectively.  The other states return reward of $0$.
@@ -119,17 +132,16 @@ There are two actions, $\{0, 1\}$.  Action $0$ decrements the state number, and 
 You can compile and run the environment like:
 \begin{verbatim}
 	>$ cd examples/skeleton
-	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonEnvironment.java
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment
+	>$ PYTHONPATH=~/PythonCodec/src python skeleton_environment.py
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
-     RL-Glue Java Environment Codec Version: 2.0 (Build:192:239M)
+     RL-Glue Python Environment Codec Version: 2.0 (Build 250)
           Connecting to 127.0.0.1 on port 4096...
 \end{verbatim}
 
-This means that the SkeletonEnvironment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
+This means that the skeleton\_environment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
 You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
 
@@ -148,25 +160,24 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent files are:
 \begin{verbatim}
-	examples/skeleton/SkeletonExperiment.java
+	examples/skeleton/skeleton_experiment.py
 \end{verbatim}
 
 This experiment runs \texttt{RL\_Episode} a few times, sends some messages to the agent and environment, and then steps through one episode using \texttt{RL\_step}.
 
 \begin{verbatim}
 	>$ cd examples/skeleton
-	>$ javac -classpath ~/JavaCodec/JavaRLGlueCodec.jar SkeletonExperiment.java
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
+	>$ PYTHONPATH=~/PythonCodec/src python skeleton_experiment.py
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
      Experiment starting up!
-     RL-Glue Java Experiment Codec Version: 2.0 (Build:192:239M)
+     RL-Glue Python Experiment Codec Version: 2.0 (Build 250)
           Connecting to 127.0.0.1 on port 4096...
 \end{verbatim}
 
-This means that the SkeletonExperiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$!  
+This means that the skeleton\_experiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$!  
 
 You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
 
@@ -183,9 +194,9 @@ directory if you have them all built, and RL-Glue installed in the default locat
 \begin{verbatim}
 	>$ cd examples/skeleton
 	>$ rl_glue &
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
+	>$ PYTHONPATH=~/PythonCodec/src python skeleton_agent.py &
+	>$ PYTHONPATH=~/PythonCodec/src python skeleton_environment.py &
+	>$ PYTHONPATH=~/PythonCodec/src python skeleton_experiment.py &
 \end{verbatim}
 
 If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using it's full path (unless it's in your \texttt{PATH} environment variable):
@@ -195,64 +206,66 @@ If RL-Glue is not installed in the default location, you'll have to start the \t
 
 You should see output like the following if it worked:
 \begin{verbatim}
-	>$ rl_glue & 
-	RL-Glue Version 3.0-beta-1, Build 848:856
-     	RL-Glue is listening for connections on port=4096
+	>$ rl_glue &
+RL-Glue Version 3.0-beta-1, Build 848:856
+RL-Glue is listening for connections on port=4096
 
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &
-	RL-Glue Java Agent Codec Version: 2.0 (Build:192:239M)
-	     Connecting to 127.0.0.1 on port 4096...
-	     Agent Codec Connected
-	     RL-Glue :: Agent connected.
-	
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &
-	RL-Glue Java Environment Codec Version: 2.0 (Build:192:239M)
-	     Connecting to 127.0.0.1 on port 4096...
-	     Environment Codec Connected
-	     RL-Glue :: Environment connected.
+>$ PYTHONPATH=~/PythonCodec/src python skeleton_agent.py &
+RL-Glue Python Agent Codec Version: 2.0 (Build 250)
+     Connecting to 127.0.0.1 on port 4096...
+     Agent Codec Connected
+     RL-Glue :: Agent connected.
 
-	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonExperiment
-	Experiment starting up!
+>$ PYTHONPATH=~/PythonCodec/src python skeleton_environment.py &
+RL-Glue Python Environment Codec Version: 2.0 (Build 250)
+     Connecting to 127.0.0.1 on port 4096...
+     Environment Codec Connected
+     RL-Glue :: Environment connected.
 
-	RL-Glue Java Experiment Codec Version: 2.0 (Build:192:239M)
-	     Connecting to 127.0.0.1 on port 4096...
-	     Experiment Codec Connected
-	     RL-Glue :: Experiment connected.
+>$ PYTHONPATH=~/PythonCodec/src python skeleton_experiment.py &
+Experiment starting up!
+RL-Glue Python Experiment Codec Version: 2.0 (Build 250)
+     Connecting to 127.0.0.1 on port 4096...
+     RL-Glue :: Experiment connected.
 
-	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
+RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
 
 
-	----------Sending some sample messages----------
-	Agent responded to "what is your name?" with: my name is skeleton_agent, Java edition!
-	Agent responded to "who is your daddy and what does he do?" with: I don't know how to respond to your message
+----------Sending some sample messages----------
+Agent responded to "what is your name?" 
+with: my name is skeleton_agent, Python edition!
+Agent responded to "If at first you don't succeed; call it version 1.0" 
+with: I don't know how to respond to your message
 
-	Environment responded to "what is your name?" with: my name is skeleton_environment, Java edition!
-	Environment responded to "who is your daddy and what does he do?" with: I don't know how to respond to your message
-
-
-	----------Running a few episodes----------
-	Episode 0	 10 steps 	-1.0 total reward	 1 natural end
-	Episode 1	 10 steps 	-1.0 total reward	 1 natural end
-	Episode 2	 10 steps 	-1.0 total reward	 1 natural end
-	Episode 3	 10 steps 	-1.0 total reward	 1 natural end
-	Episode 4	 10 steps 	-1.0 total reward	 1 natural end
-	Episode 5	 1 steps 	0.0 total reward	 0 natural end
-	Episode 6	 10 steps 	-1.0 total reward	 1 natural end
+Environment responded to "what is your name?" 
+with: my name is skeleton_environment, Python edition!
+Environment responded to "If at first you don't succeed; call it version 1.0" 
+with: I don't know how to respond to your message
 
 
-	----------Stepping through an episode----------
-	First observation and action were: 10 and: 0
+----------Running a few episodes----------
+Episode 0	 42 steps 	1.0 total reward	 1 natural end
+Episode 1	 28 steps 	1.0 total reward	 1 natural end
+
+Episode 2	 96 steps 	-1.0 total reward	 1 natural end
+Episode 3	 52 steps 	1.0 total reward	 1 natural end
+Episode 4	 100 steps 	0.0 total reward	 0 natural end
+Episode 5	 1 steps 	0.0 total reward	 0 natural end
+Episode 6	 82 steps 	1.0 total reward	 1 natural end
 
 
-	----------Summary----------
-	It ran for 10 steps, total reward was: -1.0
+----------Stepping through an episode----------
+First observation and action were: 10 and: 1
 
+
+----------Summary----------
+It ran for 66 steps, total reward was: -1.0
 \end{verbatim}
 
 
 \section{Who creates and frees memory?}
 The RL-Glue technical manual has a section called \textit{Who creates and frees memory?}.  The general approach recommended there is to make a copy of data
-you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Java codec.
+you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Python codec.
 
 
 \section{Advanced Features}
@@ -264,126 +277,183 @@ Someone should write this later (Opportunity to contribute!).
 This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
 be handy.
 
-Instead of re-creating information that is readily available in the JavaDocs, we will give pointers were appropriate.
+Instead of re-creating information that is readily available in the PythonDocs, we will give pointers were appropriate.
 
 \subsection{Types}
 
 
 \subsubsection{Simple Types}
-Unlike the C/C++ codec, we will not be using \texttt{typedef} statements to create special labels for the types. In Java:
+Unlike the C/C++ codec, we will not be using \texttt{typedef} statements to create special labels for the types. Since Python is loosely typed, these things aren't so hard and 
+fast:
 \begin{itemize}
 	\item \textit{reward} is \texttt{double}
 	\item \textit{terminal} is \texttt{int} (1 for terminal, 0 for non-terminal) We hope to replace these with boolean eventually.
-	\item \textit{messages} are \texttt{String}
-	\item \textit{task specifications} are \texttt{String}
+	\item \textit{messages} are \texttt{strings}
+	\item \textit{task specifications} are \texttt{strings}
 \end{itemize}
 
 \def\rat{RL\_Abstract\_Type}
 
 \subsubsection{Structure Types}
 \label{sec:structure-types}
-All of the major structure types (observations, actions, random seed keys, and state keys) extend the \htmladdnormallink{\texttt{\rat}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/RL_abstract_type.html} class.
+All of the major structure types (observations, actions, random seed keys, and state keys) extend the \texttt{\rat} class, which has there lists: for integers, doubles, and chars.
 
-All of the types are listed in the \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.types}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/types/package-summary.html} package.
+The class is defined as:
+\begin{verbatim}
+    class RL_Abstract_Type:
+        def __init__(self,numInts=None,numDoubles=None,numChars=None):
+            self.intArray = []
+            self.doubleArray = []
+            self.charArray = []
+            if numInts != None:
+                 self.intArray = [0]*numInts
+            if numDoubles != None:
+                 self.doubleArray = [0.0]*numDoubles
+            if numChars != None:
+                 self.charArray = ['']*numChars
 
+        def sameAs(self,otherAbstractType):
+            return self.intArray==otherAbstractType.intArray and
+            self.doubleArray==otherAbstractType.doubleArray and 
+            self.charArray==otherAbstractType.charArray
+\end{verbatim}
+
+The other types that inherit from \texttt{\rat} but add no specialization are:
+\begin{verbatim}
+class Action(RL_Abstract_Type)
+class Observation(RL_Abstract_Type)
+class Random_seed_key(RL_Abstract_Type)
+class State_key(RL_Abstract_Type)
+\end{verbatim}
+
+The structure of the composite types are listed below.  Note that this code is not accurate in terms of the available constructors, 
+it is just meant to illustrate the member names.
+\begin{verbatim}
+class Observation_action:
+    def __init__(self,theObservation,theAction):
+        self.o = theObservation
+        self.a = theAction
+
+class Reward_observation:
+    def __init__(self,reward, theObservation, terminal):
+        self.r = reward
+        self.o = theObservation
+        self.terminal = terminal
+
+class Reward_observation_action_terminal:
+    def __init__(self,reward, theObservation, theAction, terminal):
+        self.r = reward
+        self.o = theObservation
+        self.a = theAction
+        self.terminal = terminal
+\end{verbatim}
+
+The full definition are available in \htmladdnormallink{\texttt{types.py}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/types.py}.
 \subsection{Functions}
 \subsubsection{Agent Functions}
-All agents \textbf{should implement} \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.AgentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html}.
+All agents \textbf{should implement} \htmladdnormallink{\texttt{rlglue.agent.Agent}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/agent/Agent.py}.
 
 \subsubsection{Environment Functions}
-All environments \textbf{should implement} \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.EnvironmentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html}.
+All environments \textbf{should implement} \htmladdnormallink{\texttt{rlglue.environment.Environment}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/environment/Environment.py}.
 
 \subsubsection{Experiments Functions}
-All experiments \textbf{can call} the static methods in \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec.RLGlue}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlue.html}.
+All experiments \textbf{can call} the methods in \htmladdnormallink{\texttt{rlglue.RLGlue}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/src/rlglue/RLGlue.py}.
+In this case we'll include their prototypes, because the source file is full of implementation details.
+
+\begin{verbatim}
+	# () -> string
+	def RL_init():
+
+	# () -> Observation_action
+	def RL_start():
+
+	# () -> Reward_observation_action_terminal
+	def RL_step():
+
+	# () -> void
+	def RL_cleanup():
+
+	# (string) -> string
+	def RL_agent_message(message):
+
+	# (string) -> string
+	def RL_env_message(message):
+
+	# () -> double
+	def RL_return():
+
+	# () -> int
+	def RL_num_steps():
+
+	# () -> int
+	def RL_num_episodes():
+
+	# (int) -> int
+	def RL_episode(num_steps):
+
+	# (State_key) -> void
+	def RL_set_state(sk):
+
+	# (Random_seed_key) -> void
+	def RL_set_random_seed(rsk):
+
+	# () -> State_key
+	def RL_get_state():
+
+	# () -> Random_seed_key
+	def RL_get_random_seed():
+\end{verbatim}
 
 \section{Changes and 2.x Backward Compatibility}
 There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the RL-Glue 
 project documentation.
 
-\subsection{RL-Glue Split and Package/Jar Naming Changes}
-With the RL-Glue 3.x project, we've decided to keep the codecs separate from the main RL-Glue project.  This is so the codecs can be more agile while the main RL-Glue project stays very stable.
-
-Since things were changing, we took an opportunity to fix some of our long-term gripes with the Java codec.  The name of the JAR file has changed from \texttt{RL-Glue.jar} to \texttt{JavaRLGlueCodec.jar}.
-
-The JAR file is now distributed in:\newline
-\texttt{rl-glue-ext/projects/codecs/java/products/JavaRLGlueCodec.jar}
-
-In the previous incarnation of the Java codec, the classes were in a very shallow heirarchy: \texttt{rlglue.RLGlue}, \texttt{RLGlue.types}, etc.  For the updated release, we've moved to a richer package description that
-is more in line with other Java projects in the Reinforcement Learning community.  The new package hierarchy is:\newline
-\htmladdnormallink{\texttt{org.rlcommunity.rlglue}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/overview-summary.html}
-
-We've also moved a few of the class/interfaces around.  The most notable change is that instead of \texttt{Agent} and \texttt{Environment} interfaces, we now have 
-\htmladdnormallink{\texttt{AgentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/AgentInterface.html} and 
-\htmladdnormallink{\texttt{EnvironmentInterface}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/EnvironmentInterface.html}.
-Also, instead of these interfaces being in their own package, they are now in: \htmladdnormallink{\texttt{org.rlcommunity.rlglue.codec}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/package-summary.html}. 
-
-
-
-Updating existing code might seem like a lot of work, but it's easier than it seems.  The main changes from the user end are:
-1) Using the right jar (JavaRLGlueCodec.jar instead of RL-Glue.jar)  (Not necessary if you are using RL-Viz)
-
-
-
-2) Change classes that implement \texttt{Agent} and \texttt{Environment} to \texttt{AgentInterface} and \texttt{EnvironmentInterface}
-
-3) Change package imports.  Find and replace:
-\begin{verbatim}
-rlglue.RLGlue                    ==>    org.rlcommunity.rlglue.codec.RLGlue
-rlglue.types.                    ==>    org.rlcommunity.rlglue.codec.types.
-rlglue.agent.Agent               ==>    org.rlcommunity.rlglue.codec.AgentInterface
-rlglue.environment.Environment   ==>    org.rlcommunity.rlglue.codec.EnvironmentInterface
-\end{verbatim}
-
-Those three things should cover most of it.  If someone makes a very strong case, we can probably create a codec that is completely compatible with the old naming conventions.  However, I assure you that I uploaded
-several tens of thousands of lines of code for the RL-Viz, RL-Library, and BT-AgentLib projects in only about 30 minutes total.
-
-\textbf{POSSIBLE CONTRIBUTION}: If we've missed anything, or there is an easier way, please let us know!
 
 \subsection{Agent/Environment Loading}
-Historically, there have been a few different approaches for loading agents and environments.
+Historically, there was a different approach for loading agents and environments.
 
-For all these examples, lets pretend that the \texttt{JavaRLGlue.jar} path and JAR are in an environment variable called CODECJAR.  We could actually do that (with a bash shell) like:
+The old strategy was:
 \begin{verbatim}
-	export CODECJAR=/path/to/JavaRLGlueCodec.jar
+PYTHONPATH=~/PythonCodec/src:/agent/src/path python -c \
+    \"import rlglue.agent.AgentLoader\" agentName
 \end{verbatim}
 
-
-The first (original) method was to call the main() method of the AgentLoader/EnvironmentLoader class, passing it the name of the 
-Agent/Env class you wanted to load.  Hopefully you remembered to put it in your classpath.  This approach inevitably lead to lots of typing to load an agent, as frustrating run-time failures when paths weren't set right.
-Here is an example of how that looks:
+That didn't seem as easy as it should be, so we changed things for this release, much like we did in the Java codec. Now, Python agents and environments can become 
+self loading by adding a bit of code at the bottom of their source files, like:
 \begin{verbatim}
-	java -classpath $CODECJAR:/to/Agent/classes org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
+#skeleton_agent.py
+#top of file
+from rlglue.agent import AgentLoader as AgentLoader
+
+...
+
+#bottom of file
+if __name__=="__main__":
+     AgentLoader.loadAgent(skeleton_agent())
 \end{verbatim}
 
-The second method was to bypass the AgentLoader and go through \htmladdnormallink{\texttt{RLGlueCore}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlueCore.html}, 
-which is contains the default \texttt{main} method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
+Now, (as you recall) we can load the agent like:
 \begin{verbatim}
-	java -classpath /to/Agent/classes -jar $CODECJAR myAgent
+PYTHONPATH=~/PythonCodec/src python agentfile.py
 \end{verbatim}
 
-The \textbf{new and improved} method is to put a \texttt{main} method inside your agent/environment that calls the applicable loader so that the agent/env can load itself.  So, in your agent (for example) you'd have code like:
-\begin{verbatim}
-	import org.rlcommunity.rlglue.codec.util.AgentLoader;
-	/* rest of agent here */
-	//This would be inside MyAgent.java
-	public static void main(String[] args){
-	        AgentLoader theLoader=new AgentLoader(new MyAgent());
-	        theLoader.run();
-	}
-\end{verbatim}
-
-So, for the price of that tiny bit of code inside your agent, you can now run the agent class directly:
-\begin{verbatim}
-	java -classpath $CODECJAR:/to/Agent/classes myAgent
-\end{verbatim}
+See \texttt{skeleton\_environment} for instructions about how to do a similar thing for environments.
 
 We feel that this is a useful step forward, and will be encouraging this approach.
+
+However, if you love the old way, you can still do it like:
+
+\begin{verbatim}
+PYTHONPATH=~/PythonCodec/src:/agent/src/path python -c \
+    \"import rlglue.agent.AgentLoaderScript\" agentName
+\end{verbatim}
+
 
 \section{Frequently Asked Questions}
 We're waiting to hear your questions!
 
 \section{Credits and Acknowledgements}
-Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.
+Mark Lee originally wrote the Python codec.  Thanks Mark.
 
 Brian Tanner has since grabbed the torch and has continued to develop the codec.
 

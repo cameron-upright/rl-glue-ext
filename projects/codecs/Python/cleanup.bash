@@ -3,3 +3,4 @@
 rm -f src/*.pyc
 rm -f src/**/*.pyc
 rm -f src/**/**/*.pyc
+rm -f examples/skeleton/*.pyc
