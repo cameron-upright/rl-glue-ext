@@ -3,7 +3,7 @@ function returnMessage=skeleton_agent_message(theMessageJavaObject)
     inMessage=char(theMessageJavaObject);
 
 	if strcmp(inMessage,'what is your name?')==1
-		returnMessage='my name is skeleton_agent, Java edition!';
+		returnMessage='my name is skeleton_agent, Matlab edition!';
     else
 		returnMessage='I don\''t know how to respond to your message';
 end
