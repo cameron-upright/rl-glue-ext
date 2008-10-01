@@ -106,13 +106,18 @@ The pertinent file is:
 	examples/skeleton_agent/skeleton_agent_cleanup.m
 \end{verbatim}
 
+You may realize that this feels like many files to create a simple agent. You're right.  Usually, in Matlab, it's important to have each of your public functions in a separate file 
+so that you can easily call the functions from the global Matlab scope.  In Section \ref{sec:env} we'll show how you can create agents and environments using a single file because of 
+our function pointer strategy.
+
+
 This agent does not learn anything and randomly chooses integer action $0$ or $1$.  
 
 You can compile and run the agent like:
 \begin{verbatim}
 	>$ cd examples/skeleton_agent/
-	>$ theAgent=skeleton_agent_construct()
-	>$ runAgent(theAgent)
+	>$ theAgent=skeleton_agent_construct();
+	>$ runAgent(theAgent);
 \end{verbatim}
 
 \htmladdnormallink{\texttt{skeleton\_agent\_construct()}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/examples/skeleton\_agent/skeleton\_agent\_construct.m} creates a struct with function pointers to the other \texttt{skeleton\_agent} methods.  \htmladdnormallink{\texttt{runAgent(theAgent)}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/agent/runAgent.m} then
@@ -122,10 +127,10 @@ Alternatively, for a more interactive experience, you can run the agent manually
 \begin{verbatim}
 	>$ cd examples/skeleton_agent/
 	>$ theAgent=skeleton_agent_construct()
-	>$ connectAgent(theAgent)
-	>$ runAgentLoop(theAgent)     %run one step
-	>$ runAgentLoop(theAgent)     %run one step
-	>$ runAgentLoop(theAgent)     %run one step
+	>$ connectAgent(theAgent);
+	>$ runAgentLoop(theAgent);    %run one step
+	>$ runAgentLoop(theAgent);    %run one step
+	>$ runAgentLoop(theAgent);    %run one step
 	   ...
 \end{verbatim}
 
@@ -136,11 +141,15 @@ You will see something like:
 	>> runAgent(theAgent)
 	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision$)
 	    Connecting to rl_glue at host: localhost on port 4096
-{verbatim}
+\end{verbatim}
 
 This means that the skeleton\_agent is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
-You can kill the process by pressing \texttt{CTRL-C} on your keyboard.  Don't forget to \texttt{disconnectAgent()}.
+You can kill the process by pressing \texttt{CTRL-c} on your keyboard, and then starting  \texttt{rl\_glue} on your local machine (this will cause Matlab to come back from Java, and 
+process your kill command).  Don't forget to \texttt{disconnectAgent()}.
+
+We're sorry that killing an agent (or environment) is so kludgy.  This is the first version of the Matlab codec, so there are some kinks to get out.  We welcome your expertise in helping 
+make this codec better!
 
 The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
@@ -150,6 +159,8 @@ or just that it should do some fancier things, let us know and we'll be happy to
 
 
 \section{Environments}
+\label{sec:env}
+
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
 pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
@@ -157,7 +168,7 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent file is:
 \begin{verbatim}
-	examples/skeleton_environment/skeleton_environment.py
+	examples/skeleton_environment/skeleton_environment.m
 \end{verbatim}
 
 This environment is episodic, with 21 states, labeled $\{0, 1,\ldots,19,20\}$. States $\{0, 20\}$ are terminal and return rewards of $\{-1, +1\}$ respectively.  The other states return reward of $0$.
@@ -165,20 +176,21 @@ There are two actions, $\{0, 1\}$.  Action $0$ decrements the state number, and 
 
 You can compile and run the environment like:
 \begin{verbatim}
-	>$ cd examples/skeleton
-	>$ PYTHONPATH=~/MatlabCodec/src python skeleton_environment.py
+	>$ cd examples/skeleton_environment
+	>$ theEnv=skeleton_environment();
+	>$ runEnvironment(theEnv);
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
-     RL-Glue Matlab Environment Codec Version: 2.0 (Build 250)
-          Connecting to 127.0.0.1 on port 4096...
-\end{verbatim}
+	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision$)
+	    Connecting to rl_glue at host: localhost on port 4096
+	\end{verbatim}
 
 This means that the skeleton\_environment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
-You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
-
+You can kill the process by pressing \texttt{CTRL-c} on your keyboard, and then starting  \texttt{rl\_glue} on your local machine (this will cause Matlab to come back from Java, and 
+process your kill command).  Don't forget to \texttt{disconnectEnvironment()}.
 
 The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
@@ -194,27 +206,27 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent files are:
 \begin{verbatim}
-	examples/skeleton/skeleton_experiment.py
+	examples/skeleton_experiment/skeleton_experiment.m
 \end{verbatim}
 
 This experiment runs \texttt{RL\_Episode} a few times, sends some messages to the agent and environment, and then steps through one episode using \texttt{RL\_step}.
 
 \begin{verbatim}
 	>$ cd examples/skeleton
-	>$ PYTHONPATH=~/MatlabCodec/src python skeleton_experiment.py
+	>$ skeleton_experiment();
 \end{verbatim}
 
 You will see something like:
 \begin{verbatim}
-     Experiment starting up!
-     RL-Glue Matlab Experiment Codec Version: 2.0 (Build 250)
-          Connecting to 127.0.0.1 on port 4096...
+	Experiment starting up!
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision$)
+	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
 \end{verbatim}
 
 This means that the skeleton\_experiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$!  
 
-You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
-
+You can kill the process by pressing \texttt{CTRL-c} on your keyboard, and then starting  \texttt{rl\_glue} on your local machine (this will cause Matlab to come back from Java, and 
+process your kill command).  Don't forget to \texttt{disconnectGlue()}.
 
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
@@ -223,14 +235,23 @@ Please open it up and take a look.
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
 \section{Putting it all together}
-At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples 
-directory if you have them all built, and RL-Glue installed in the default location:
+At this point, we've run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  As mentioned elsewhere in this document, in Matlab we can 
+only run ONE of the agent, experiment, or environment at a time.  So, for this example we'll run the \texttt{Java SkeletonAgent} and \texttt{Java SkeletonEnvironment} with the \texttt{Matlab skeleton\_experiment}.  You could really run any agent and environment of your choice.
+
+The following will work if you have RL-Glue installed in the default location, and the Java codec downloaded and saved to the location described in the Java codec manual.
+
+For this, we'll use a separate terminal window in addition to the Matlab interpreter.  In a separate terminal window, do:
 \begin{verbatim}
-	>$ cd examples/skeleton
+	>$ cd /path/to/Java/codec/examples/skeleton
 	>$ rl_glue &
-	>$ PYTHONPATH=~/MatlabCodec/src python skeleton_agent.py &
-	>$ PYTHONPATH=~/MatlabCodec/src python skeleton_environment.py &
-	>$ PYTHONPATH=~/MatlabCodec/src python skeleton_experiment.py &
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgent &
+	>$ java -classpath ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonEnvironment &
+\end{verbatim}
+
+In the Matlab interpreter:
+\begin{verbatim}
+	>$ cd examples/skeleton_experiment
+	>$ skeleton_experiment();
 \end{verbatim}
 
 If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using it's full path (unless it's in your \texttt{PATH} environment variable):
@@ -238,62 +259,42 @@ If RL-Glue is not installed in the default location, you'll have to start the \t
 	>$ /path/to/rl-glue/bin/rl_glue &
 \end{verbatim}
 
-You should see output like the following if it worked:
+In the Matlab window, you should see the following if it worked:
 \begin{verbatim}
-	>$ rl_glue &
-RL-Glue Version 3.0-beta-1, Build 848:856
-RL-Glue is listening for connections on port=4096
-
->$ PYTHONPATH=~/MatlabCodec/src python skeleton_agent.py &
-RL-Glue Matlab Agent Codec Version: 2.0 (Build 250)
-     Connecting to 127.0.0.1 on port 4096...
-     Agent Codec Connected
-     RL-Glue :: Agent connected.
-
->$ PYTHONPATH=~/MatlabCodec/src python skeleton_environment.py &
-RL-Glue Matlab Environment Codec Version: 2.0 (Build 250)
-     Connecting to 127.0.0.1 on port 4096...
-     Environment Codec Connected
-     RL-Glue :: Environment connected.
-
->$ PYTHONPATH=~/MatlabCodec/src python skeleton_experiment.py &
-Experiment starting up!
-RL-Glue Matlab Experiment Codec Version: 2.0 (Build 250)
-     Connecting to 127.0.0.1 on port 4096...
-     RL-Glue :: Experiment connected.
-
-RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
+	>> skeleton_experiment()
+	Experiment starting up!
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision$)
+	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
+	    Experiment Codec Connected
+	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
 
 
-----------Sending some sample messages----------
-Agent responded to "what is your name?" 
-with: my name is skeleton_agent, Matlab edition!
-Agent responded to "If at first you don't succeed; call it version 1.0" 
-with: I don't know how to respond to your message
+	----------Sending some sample messages----------
+	Agent responded to 'what is your name?' with: my name is skeleton_agent, Java edition!
+	Agent responded to 'If at first you do't succeed; call it version 1.0  ' 
+	with: I don't know how to respond to your message
 
-Environment responded to "what is your name?" 
-with: my name is skeleton_environment, Matlab edition!
-Environment responded to "If at first you don't succeed; call it version 1.0" 
-with: I don't know how to respond to your message
+	Environment responded to 'what is your name?' with: my name is skeleton_environment, Java edition!
+	Environment responded to 'If at first you don't succeed; call it version 1.0  ' 
+	with: I don't know how to respond to your message
 
 
-----------Running a few episodes----------
-Episode 0	 42 steps 	1.0 total reward	 1 natural end
-Episode 1	 28 steps 	1.0 total reward	 1 natural end
-
-Episode 2	 96 steps 	-1.0 total reward	 1 natural end
-Episode 3	 52 steps 	1.0 total reward	 1 natural end
-Episode 4	 100 steps 	0.0 total reward	 0 natural end
-Episode 5	 1 steps 	0.0 total reward	 0 natural end
-Episode 6	 82 steps 	1.0 total reward	 1 natural end
-
-
-----------Stepping through an episode----------
-First observation and action were: 10 and: 1
+	----------Running a few episodes----------
+	Episode 0	 10 steps 	 -1.000000 total reward	 natural end 1
+	Episode 1	 10 steps 	 -1.000000 total reward	 natural end 1
+	Episode 2	 10 steps 	 -1.000000 total reward	 natural end 1
+	Episode 3	 10 steps 	 -1.000000 total reward	 natural end 1
+	Episode 4	 10 steps 	 -1.000000 total reward	 natural end 1
+	Episode 5	 1 steps 	 0.000000 total reward	 natural end 0
+	Episode 6	 10 steps 	 -1.000000 total reward	 natural end 1
 
 
-----------Summary----------
-It ran for 66 steps, total reward was: -1.0
+	----------Stepping through an episode----------
+	First observation and action were: 10 and: 0
+
+
+	----------Summary----------
+	It ran for 10, total reward was: -1.000000
 \end{verbatim}
 
 
@@ -322,174 +323,59 @@ fast:
 \begin{itemize}
 	\item \textit{reward} is \texttt{double}
 	\item \textit{terminal} is \texttt{int} (1 for terminal, 0 for non-terminal) We hope to replace these with boolean eventually.
-	\item \textit{messages} are \texttt{strings}
-	\item \textit{task specifications} are \texttt{strings}
+	\item \textit{messages} come as Java \texttt{strings} and can be returned as Matlab strings
+	\item \textit{task specifications} come as Java \texttt{strings} and can be returned as Matlab strings
 \end{itemize}
 
 \def\rat{RL\_Abstract\_Type}
 
 \subsubsection{Structure Types}
 \label{sec:structure-types}
-All of the major structure types (observations, actions, random seed keys, and state keys) extend the \texttt{\rat} class, which has there lists: for integers, doubles, and chars.
+All of the major structure types (observations, actions, random seed keys, and state keys) come off the network as the appropriate object from the Java codec.
+The \htmladdnormallink{Java codec manual}{http://glue.rl-community.org/Home/Extensions/java-codec} should have all the information required to understand those objects.
 
-The class is defined as:
+So in a given Matlab method, like \newline
+\texttt{function theAction=skeleton\_agent\_step(theReward, theObservation)}, 
+\texttt{theObservation} is actually of type: \texttt{org.rlcommunity.rlglue.codec.types.Observation}.
+
+Java and Matlab play very well together, so you can do things like:
 \begin{verbatim}
-    class RL_Abstract_Type:
-        def __init__(self,numInts=None,numDoubles=None,numChars=None):
-            self.intArray = []
-            self.doubleArray = []
-            self.charArray = []
-            if numInts != None:
-                 self.intArray = [0]*numInts
-            if numDoubles != None:
-                 self.doubleArray = [0.0]*numDoubles
-            if numChars != None:
-                 self.charArray = ['']*numChars
+	>> testObs=org.rlcommunity.rlglue.codec.types.Observation();
+	>> testObs.intArray=[1 2 3 4];
+	>> testObs.doubleArray=[0.1 0.5];
+	>> testObs.charArray='fun things!';
+	>> testObs.toString()
 
-        def sameAs(self,otherAbstractType):
-            return self.intArray==otherAbstractType.intArray and
-            self.doubleArray==otherAbstractType.doubleArray and 
-            self.charArray==otherAbstractType.charArray
+	ans =
+
+	numInts: 4
+	numDoubles: 2
+	numChars: 11
+	 1 2 3 4 0.1 0.5 f u n   t h i n g s !
 \end{verbatim}
 
-The other types that inherit from \texttt{\rat} but add no specialization are:
-\begin{verbatim}
-class Action(RL_Abstract_Type)
-class Observation(RL_Abstract_Type)
-class Random_seed_key(RL_Abstract_Type)
-class State_key(RL_Abstract_Type)
-\end{verbatim}
-
-The structure of the composite types are listed below.  Note that this code is not accurate in terms of the available constructors, 
-it is just meant to illustrate the member names.
-\begin{verbatim}
-class Observation_action:
-    def __init__(self,theObservation,theAction):
-        self.o = theObservation
-        self.a = theAction
-
-class Reward_observation:
-    def __init__(self,reward, theObservation, terminal):
-        self.r = reward
-        self.o = theObservation
-        self.terminal = terminal
-
-class Reward_observation_action_terminal:
-    def __init__(self,reward, theObservation, theAction, terminal):
-        self.r = reward
-        self.o = theObservation
-        self.a = theAction
-        self.terminal = terminal
-\end{verbatim}
-
-The full definition are available in \htmladdnormallink{\texttt{types.py}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/rlglue/types.py}.
 \subsection{Functions}
 \subsubsection{Agent Functions}
-All agents \textbf{should implement} \htmladdnormallink{\texttt{rlglue.agent.Agent}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/rlglue/agent/Agent.py}.
+All agent constructor functions \textbf{should set} the same functions as our \htmladdnormallink{Skeleton agent}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/examples/skeleton_agent/skeleton_agent_construct.m}.
+
+Useful utility methods for connecting, disconnecting, and running with the \texttt{rl\_glue} executable server are in the \htmladdnormallink{\texttt{agent}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/agent} directory of the Matlab codec source.
 
 \subsubsection{Environment Functions}
-All environments \textbf{should implement} \htmladdnormallink{\texttt{rlglue.environment.Environment}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/rlglue/environment/Environment.py}.
+All environment constructor functions \textbf{should set} the same functions as our \htmladdnormallink{Skeleton environment}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/examples/skeleton_environment/skeleton_environment.m}.
+
+Useful utility methods for connecting, disconnecting, and running with the \texttt{rl\_glue} executable server are in the \htmladdnormallink{\texttt{environment}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/environment} directory of the Matlab codec source.
 
 \subsubsection{Experiments Functions}
-All experiments \textbf{can call} the methods in \htmladdnormallink{\texttt{rlglue.RLGlue}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/rlglue/RLGlue.py}.
+All experiments \textbf{can call} the methods in the  \htmladdnormallink{\texttt{glue}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/glue} directory.
 In this case we'll include their prototypes, because the source file is full of implementation details.
-
-\begin{verbatim}
-	# () -> string
-	def RL_init():
-
-	# () -> Observation_action
-	def RL_start():
-
-	# () -> Reward_observation_action_terminal
-	def RL_step():
-
-	# () -> void
-	def RL_cleanup():
-
-	# (string) -> string
-	def RL_agent_message(message):
-
-	# (string) -> string
-	def RL_env_message(message):
-
-	# () -> double
-	def RL_return():
-
-	# () -> int
-	def RL_num_steps():
-
-	# () -> int
-	def RL_num_episodes():
-
-	# (int) -> int
-	def RL_episode(num_steps):
-
-	# (State_key) -> void
-	def RL_set_state(sk):
-
-	# (Random_seed_key) -> void
-	def RL_set_random_seed(rsk):
-
-	# () -> State_key
-	def RL_get_state():
-
-	# () -> Random_seed_key
-	def RL_get_random_seed():
-\end{verbatim}
-
-\section{Changes and 2.x Backward Compatibility}
-There were many API/Interface changes from RL-Glue 2.x to RL-Glue 3.x.  For those that are at the level of the API and project organization, please refer to the the RL-Glue 
-project documentation.
-
-
-\subsection{Agent/Environment Loading}
-Historically, there was a different approach for loading agents and environments.
-
-The old strategy was:
-\begin{verbatim}
-PYTHONPATH=~/MatlabCodec/src:/agent/src/path python -c \
-    \"import rlglue.agent.AgentLoader\" agentName
-\end{verbatim}
-
-That didn't seem as easy as it should be, so we changed things for this release, much like we did in the Java codec. Now, Matlab agents and environments can become 
-self loading by adding a bit of code at the bottom of their source files, like:
-\begin{verbatim}
-#skeleton_agent.py
-#top of file
-from rlglue.agent import AgentLoader as AgentLoader
-
-...
-
-#bottom of file
-if __name__=="__main__":
-     AgentLoader.loadAgent(skeleton_agent())
-\end{verbatim}
-
-Now, (as you recall) we can load the agent like:
-\begin{verbatim}
-PYTHONPATH=~/MatlabCodec/src python agentfile.py
-\end{verbatim}
-
-See \texttt{skeleton\_environment} for instructions about how to do a similar thing for environments.
-
-We feel that this is a useful step forward, and will be encouraging this approach.
-
-However, if you love the old way, you can still do it like:
-
-\begin{verbatim}
-PYTHONPATH=~/MatlabCodec/src:/agent/src/path python -c \
-    \"import rlglue.agent.AgentLoaderScript\" agentName
-\end{verbatim}
 
 
 \section{Frequently Asked Questions}
 We're waiting to hear your questions!
 
 \section{Credits and Acknowledgements}
-Mark Lee originally wrote the Matlab codec.  Thanks Mark.
+Brian Tanner wrote the Matlab codec. Yay me.
 
-Brian Tanner has since grabbed the torch and has continued to develop the codec.
 
 \subsection{Contributing}
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
