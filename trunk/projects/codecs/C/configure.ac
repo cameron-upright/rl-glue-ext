@@ -1,4 +1,4 @@
-AC_INIT(C_Codec,2.0-RC1)
+AC_INIT(C-Codec,2.0-RC1)
 AC_CONFIG_SRCDIR(src/RL_client_agent.c)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE([1.9 tar-ustar])
