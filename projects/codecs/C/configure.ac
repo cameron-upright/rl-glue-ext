@@ -1,4 +1,4 @@
-AC_INIT(rlglue_codec_c,1.0-beta-1)
+AC_INIT(C_Codec,2.0-RC1)
 AC_CONFIG_SRCDIR(src/RL_client_agent.c)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE([1.9 tar-ustar])
@@ -28,13 +28,6 @@ AC_CHECK_FUNCS([isnan isinf gettimeofday])
 
 AC_CONFIG_HEADERS(config/config.h)
 
-AC_PATH_PROG(svnversioncommand, svnversion)
-if test "X$svnversioncommand" = "X" || test `$svnversioncommand -n '.'` = "exported"; then
-AC_DEFINE_UNQUOTED(SVN_VERSION, ["`cat config/saved_svn_version.txt`"], [repository svn version])
-else
-AC_DEFINE_UNQUOTED(SVN_VERSION, ["`svnversion -n`"], [repository svn version])
-`svnversion -n > config/saved_svn_version.txt`
-fi
 
 
 AC_PROG_CC
