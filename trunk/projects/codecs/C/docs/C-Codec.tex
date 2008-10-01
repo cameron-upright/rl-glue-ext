@@ -98,6 +98,25 @@ Provided everything goes well, the headers and libraries have been respectively 
 \texttt{/Users/btanner/tmp/rlglue/include} and \texttt{/Users/btanner/tmp/rlglue/lib}.
 
 
+\subsection{Uninstall}
+If you decide that you don't want the RL-Glue C codec on your machine anymore, you can easily uninstall it.  The procedures varies a tiny bit depending on if you installed it to the default location, or somewhere custom.
+
+\subsubsection{Codec Installed To Default Location}
+\begin{verbatim}
+	>$ ./configure
+	>$ sudo make uninstall
+\end{verbatim}
+
+This will remove all of the headers and libraries from \texttt{/usr/local}.
+
+\subsubsection{Codec Installed To Custom Location}
+You'll need to make sure that either you haven't reconfigured the directory you downloaded from, or, if you removed/changed that already, you have to run configure again the exact same way as when you installed it.  For example:
+\begin{verbatim}
+	>$ ./configure --prefix=/Users/btanner/tmp/rlglue
+	>$ make uninstall
+\end{verbatim}
+
+That's it!  This will remove all of the headers and libraries from \texttt{/Users/btanner/tmp/rlglue}.
 
 
 \section{Agents}

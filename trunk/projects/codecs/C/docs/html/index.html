@@ -42,52 +42,54 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html36"
+<LI><A NAME="tex2html39"
   HREF="C-Codec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html37"
+<LI><A NAME="tex2html40"
   HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html38"
+<LI><A NAME="tex2html41"
   HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
-<LI><A NAME="tex2html39"
+<LI><A NAME="tex2html42"
   HREF="C-Codec.html#SECTION00023000000000000000">Installing the Codec</A>
+<LI><A NAME="tex2html43"
+  HREF="C-Codec.html#SECTION00024000000000000000">Uninstall</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html40"
+<LI><A NAME="tex2html44"
   HREF="C-Codec.html#SECTION00030000000000000000">Agents</A>
 <UL>
-<LI><A NAME="tex2html41"
+<LI><A NAME="tex2html45"
   HREF="C-Codec.html#SECTION00031000000000000000">Custom Flags for Custom Installs</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html42"
+<LI><A NAME="tex2html46"
   HREF="C-Codec.html#SECTION00040000000000000000">Environments</A>
-<LI><A NAME="tex2html43"
+<LI><A NAME="tex2html47"
   HREF="C-Codec.html#SECTION00050000000000000000">Experiments</A>
 <UL>
-<LI><A NAME="tex2html44"
+<LI><A NAME="tex2html48"
   HREF="C-Codec.html#SECTION00051000000000000000">Gotchas!</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html45"
+<LI><A NAME="tex2html49"
   HREF="C-Codec.html#SECTION00060000000000000000">Putting it all together</A>
-<LI><A NAME="tex2html46"
+<LI><A NAME="tex2html50"
   HREF="C-Codec.html#SECTION00070000000000000000">Codec Specification, Memory Allocation, Types, and Function Prototypes</A>
-<LI><A NAME="tex2html47"
+<LI><A NAME="tex2html51"
   HREF="C-Codec.html#SECTION00080000000000000000">Advanced Features</A>
-<LI><A NAME="tex2html48"
+<LI><A NAME="tex2html52"
   HREF="C-Codec.html#SECTION00090000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html49"
+<LI><A NAME="tex2html53"
   HREF="C-Codec.html#SECTION00091000000000000000">Types</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html50"
+<LI><A NAME="tex2html54"
   HREF="C-Codec.html#SECTION000100000000000000000">Frequently Asked Questions</A>
-<LI><A NAME="tex2html51"
+<LI><A NAME="tex2html55"
   HREF="C-Codec.html#SECTION000110000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html52"
+<LI><A NAME="tex2html56"
   HREF="C-Codec.html#SECTION000111000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -102,14 +104,14 @@ This document describes how to use the C/C++ RL-Glue Codec, a software library t
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot180"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot189"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in C and/or C++.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot181"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot190"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -126,8 +128,8 @@ by this codec.  The RL-Glue 3.0 technical manual can be found in the <TT>docs</T
 Software Requirements</A>
 </H2>
 This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools<A NAME="tex2html6"
-  HREF="#foot182"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
-  HREF="#foot183"><SUP>4</SUP></A>). 
+  HREF="#foot191"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
+  HREF="#foot192"><SUP>4</SUP></A>). 
 
 <P>
 
@@ -218,6 +220,40 @@ For example, maybe we want to install the codec to <TT>/Users/btanner/tmp/rlglue
 Provided everything goes well, the headers and libraries have been respectively installed to
 <BR>
 <TT>/Users/btanner/tmp/rlglue/include</TT> and <TT>/Users/btanner/tmp/rlglue/lib</TT>.
+
+<P>
+
+<H2><A NAME="SECTION00024000000000000000">
+Uninstall</A>
+</H2>
+If you decide that you don't want the RL-Glue C codec on your machine anymore, you can easily uninstall it.  The procedures varies a tiny bit depending on if you installed it to the default location, or somewhere custom.
+
+<P>
+
+<H3><A NAME="SECTION00024100000000000000">
+Codec Installed To Default Location</A>
+</H3>
+<PRE>
+	&gt;$ ./configure
+	&gt;$ sudo make uninstall
+</PRE>
+
+<P>
+This will remove all of the headers and libraries from <TT>/usr/local</TT>.
+
+<P>
+
+<H3><A NAME="SECTION00024200000000000000">
+Codec Installed To Custom Location</A>
+</H3>
+You'll need to make sure that either you haven't reconfigured the directory you downloaded from, or, if you removed/changed that already, you have to run configure again the exact same way as when you installed it.  For example:
+<PRE>
+	&gt;$ ./configure --prefix=/Users/btanner/tmp/rlglue
+	&gt;$ make uninstall
+</PRE>
+
+<P>
+That's it!  This will remove all of the headers and libraries from <TT>/Users/btanner/tmp/rlglue</TT>.
 
 <P>
 
@@ -657,9 +693,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 237 $
+Revision Number: $Rev: 264 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-09-28 21:56:36 -0600 (Sun, 28 Sep 2008) $
+Last Updated   : $Date: 2008-09-30 19:59:43 -0600 (Tue, 30 Sep 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.tex $
 </PRE>
 
@@ -683,28 +719,28 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>C-Codec.tex -split 0 -dir html -mkdir -title 'RL-Glue C/C++ Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2008-09-29
+The translation was initiated by Brian Tanner on 2008-10-01
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot180">... RL-Glue</A><A
+<DT><A NAME="foot189">... RL-Glue</A><A
  HREF="C-Codec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot181">... Apache-2.0</A><A
+<DT><A NAME="foot190">... Apache-2.0</A><A
  HREF="C-Codec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot182">... Autotools</A><A
+<DT><A NAME="foot191">... Autotools</A><A
  HREF="C-Codec.html#tex2html6"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html7"
   HREF="http://sources.redhat.com/autobook/">http://sources.redhat.com/autobook/</A></TT>
 
 </DD>
-<DT><A NAME="foot183">... CYGWIN</A><A
+<DT><A NAME="foot192">... CYGWIN</A><A
  HREF="C-Codec.html#tex2html8"><SUP>4</SUP></A></DT>
 <DD><TT><A NAME="tex2html9"
   HREF="http://www.cygwin.com/">http://www.cygwin.com/</A></TT>
@@ -719,7 +755,7 @@ The translation was initiated by Brian Tanner on 2008-09-29
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2008-09-29
+2008-10-01
 </ADDRESS>
 </BODY>
 </HTML>
