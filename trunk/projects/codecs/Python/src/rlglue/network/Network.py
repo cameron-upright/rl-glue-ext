@@ -32,6 +32,7 @@ from rlglue.types import Observation
 from rlglue.types import State_key
 from rlglue.types import Random_seed_key
 from rlglue.types import Reward_observation
+from rlglue.types import RL_Abstract_Type
 
 # RL-Glue needs to know what type of object is trying to connect.
 kExperimentConnection  = 1
@@ -145,69 +146,35 @@ class Network:
 		length = self.getInt()
 		return self.recvBuffer.read(length)
 	
-	def getObservation(self):
+	
+	def getAbstractType(self):
 		numInts = self.getInt()
 		numDoubles = self.getInt()		
 		numChars = self.getInt()		
-		obs = Observation(numInts,numDoubles,numChars)
+		returnStruct=RL_Abstract_Type()
+		
 		if numInts > 0:
 			s = self.recvBuffer.read(numInts*kIntSize)
-			obs.intArray = list(struct.unpack("!%di" % (numInts),s))
+			returnStruct.intArray = list(struct.unpack("!%di" % (numInts),s))
 		if numDoubles > 0:
 			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			obs.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
+			returnStruct.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
 		if numChars > 0:
 			s = self.recvBuffer.read(numChars*kCharSize)
-			obs.charArray = list(struct.unpack("!%dc" % (numChars),s))
-		return obs
+			returnStruct.charArray = list(struct.unpack("!%dc" % (numChars),s))
+		return returnStruct
+		
+	def getObservation(self):
+		return Observation.fromAbstractType(self.getAbstractType())
 
 	def getAction(self):
-		numInts = self.getInt()
-		numDoubles = self.getInt()		
-		numChars = self.getInt()		
-		action = Action(numInts,numDoubles, numChars)
-		if numInts > 0:
-			s = self.recvBuffer.read(numInts*kIntSize)
-			action.intArray = list(struct.unpack("!%di" % (numInts),s))
-		if numDoubles > 0:
-			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			action.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
-		if numChars > 0:
-			s = self.recvBuffer.read(numChars*kCharSize)
-			action.charArray = list(struct.unpack("!%dc" % (numChars),s))
-		return action
+		return Action.fromAbstractType(self.getAbstractType())
 
 	def getStateKey(self):
-		numInts = self.getInt()
-		numDoubles = self.getInt()		
-		numChars = self.getInt()		
-		key = State_key(numInts,numDoubles, numChars)
-		if numInts > 0:
-			s = self.recvBuffer.read(numInts*kIntSize)
-			key.intArray = list(struct.unpack("!%di" % (numInts),s))
-		if numDoubles > 0:
-			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			key.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
-		if numChars > 0:
-			s = self.recvBuffer.read(numChars*kCharSize)
-			key.charArray = list(struct.unpack("!%dc" % (numChars),s))
-		return key
+		return State_key.fromAbstractType(self.getAbstractType())
 	
 	def getRandomSeedKey(self):
-		numInts = self.getInt()
-		numDoubles = self.getInt()		
-		numChars = self.getInt()		
-		key = Random_seed_key(numInts,numDoubles, numChars)
-		if numInts > 0:
-			s = self.recvBuffer.read(numInts*kIntSize)
-			key.intArray = list(struct.unpack("!%di" % (numInts),s))
-		if numDoubles > 0:
-			s = self.recvBuffer.read(numDoubles*kDoubleSize)
-			key.doubleArray = list(struct.unpack("!%dd" % (numDoubles),s))
-		if numChars > 0:
-			s = self.recvBuffer.read(numChars*kCharSize)
-			key.charArray = list(struct.unpack("!%dc" % (numChars),s))
-		return key
+		return Random_seed_key.fromAbstractType(self.getAbstractType())
 	
 		
 	def putInt(self,value):
