@@ -20,10 +20,16 @@
 (defpackage #:rl-glue-tests
   (:use #:common-lisp #:rl-glue-clcdc #:rl-glue-utils)
   (:export
+   ;; test-1
    #:start-test-1-agent
    #:start-test-1-environment
    #:start-test-1-experiment
+   ;; test-empty
    #:start-test-empty-agent
    #:start-test-empty-environment
-   #:start-test-empty-experiment))
+   #:start-test-empty-experiment
+   ;; test-message
+   #:start-test-message-agent
+   #:start-test-message-environment
+   #:start-test-message-experiment))
 
