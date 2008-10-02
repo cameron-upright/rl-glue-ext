@@ -32,7 +32,7 @@ tests the message transmitting mechanism."))
   (make-observation))
 
 (defmethod env-step ((env test-message-environment) action)
-  (values 0 (make-observation) nil))
+  (values 0.0d0 (make-observation) nil))
 
 (defmethod env-cleanup ((env test-message-environment))
   env)

@@ -62,7 +62,8 @@
               (setf (aref i-actions ii) (+ min (random max rstate)))
               (incf ii))
              ((#\f)
-              (setf (aref f-actions fi) (+ min (random (float max) rstate)))
+              (setf (aref f-actions fi)
+                    (+ min (random (coerce max 'double-float) rstate)))
               (incf fi))))
       (make-action :int-array i-actions :float-array f-actions))))
 

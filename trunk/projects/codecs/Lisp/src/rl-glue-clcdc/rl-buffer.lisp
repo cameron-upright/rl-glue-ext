@@ -206,7 +206,7 @@ of the encoded value in bytes."
     (float-decoder (buffer-read +bytes-per-float+ buffer))))
 
 (defun buffer-write-float (float buffer &key (adjust-p t))
-  (check-type float number)
+  (check-type float double-float)
   (when adjust-p (auto-adjust buffer +bytes-per-float+))
   (buffer-write +bytes-per-float+
                 (float-encoder (float float))

@@ -50,7 +50,7 @@ second episodes and a non-empty one in the other cases."))
   (get-test-empty-observation env))
 
 (defmethod env-step ((env test-empty-environment) action)
-  (values 0 (get-test-empty-observation env) nil))
+  (values 0.0d0 (get-test-empty-observation env) nil))
 
 (defmethod env-cleanup ((env test-empty-environment))
   env)
