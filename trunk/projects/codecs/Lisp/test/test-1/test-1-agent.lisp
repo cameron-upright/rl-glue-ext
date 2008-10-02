@@ -20,7 +20,6 @@
 (defclass test-1-agent (agent)
   ((step-count
     :accessor step-count
-    :initform 0
     :documentation "Step counter."))
   (:documentation "Test agent which mostly sends back what it recieves."))
 

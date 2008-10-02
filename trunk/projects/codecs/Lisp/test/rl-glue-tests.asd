@@ -43,6 +43,12 @@
             ((:file "test-empty-agent")
              (:file "test-empty-environment")
              (:file "test-empty-experiment"))
+            :depends-on ("rl-tests-common"))
+   (:module test-message
+            :components
+            ((:file "test-message-agent")
+             (:file "test-message-environment")
+             (:file "test-message-experiment"))
             :depends-on ("rl-tests-common")))
   :depends-on ("rl-glue-clcdc" "rl-glue-utils"))
 
