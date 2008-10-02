@@ -18,48 +18,6 @@
 (in-package #:rl-glue-tests)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Test experiment.
-
-(defclass test-experiment (experiment)
-  ((test-name
-    :reader test-name
-    :initarg :test-name
-    :initform (error "Must specify test name!")
-    :documentation "Name of the test.")
-   (test-failed
-    :accessor test-failed
-    :initform 0
-    :documentation "Counter of failed tests.")
-   (test-count
-    :accessor test-count
-    :initform 0
-    :documentation "Counter of passed tests."))
-  (:documentation "Base of test experiments."))
-
-(defmacro check (exp compare expected-form got-form)
-  (let ((expected (gensym)) (got (gensym)))
-    `(let ((,expected ,expected-form) (,got ,got-form))
-       (with-accessors ((test-count test-count) (test-failed test-failed)) ,exp
-         (incf test-count)
-         (unless (funcall ,compare ,expected ,got)
-           (format t "Failed #~a, expected ~a, got ~a~%"
-                   test-count ,expected ,got)
-           (format t "            ~a <> ~a~%" ',expected-form ',got-form)
-           (incf test-failed))))))
-
-(defun summarize-stat (exp)
-  "Prints a summary and returns the number of failed checks."
-  (with-accessors ((test-name test-name)
-                   (test-failed test-failed)
-                   (test-count test-count)) exp
-    (if (plusp test-failed)
-        (format t "Failed ~a / ~a checks in ~a~%"
-                test-failed test-count test-name)
-        (format t "Passed all ~a checks in ~a~%"
-                test-count test-name))
-    test-failed))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Common purpose test functions.
 
 (defun gen-adt-array (size type gen-fn)
@@ -100,4 +58,76 @@ from the input one used during testing."
                (format nil "~{~a.~}" (loop repeat (mod step-count 3)
                                         collect step-count))
                "|" input-message))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Test experiment.
+
+(defclass test-experiment (experiment)
+  ((test-name
+    :reader test-name
+    :initarg :test-name
+    :initform (error "Must specify test name!")
+    :documentation "Name of the test.")
+   (test-failed
+    :accessor test-failed
+    :initform 0
+    :documentation "Counter of failed tests.")
+   (test-count
+    :accessor test-count
+    :initform 0
+    :documentation "Counter of passed tests."))
+  (:documentation "Base of test experiments."))
+
+(defmacro check (exp compare expected-form got-form)
+  (let ((expected (gensym)) (got (gensym)))
+    `(let ((,expected ,expected-form) (,got ,got-form))
+       (with-accessors ((test-count test-count) (test-failed test-failed)) ,exp
+         (incf test-count)
+         (unless (funcall ,compare ,expected ,got)
+           (format t "Failed #~a, expected ~a, got ~a~%"
+                   test-count ,expected ,got)
+           (format t "            ~a <> ~a~%" ',expected-form ',got-form)
+           (incf test-failed))))))
+
+(defmacro check-adt-array (exp exp-size array eq-fn gen-fn)
+  "Checks an array of an ADT according to the GEN-FN generator function."
+  `(progn
+     (check ,exp #'= ,exp-size (length ,array))
+     (when (plusp (length ,array))
+       (loop for i from 0 to (1- (length ,array))
+          do (check ,exp ,eq-fn (funcall ,gen-fn i) (aref ,array i))))))
+
+(defmacro check-adt (exp adt exp-ints exp-floats exp-chars)
+  "Checks whether the ADT contains the expected number of elements and their 
+values are generated according to the fill-adt function."
+  `(progn
+     (check-adt-array ,exp
+                      ,exp-ints
+                      (int-array ,adt)
+                      #'=
+                      #'(lambda (i) i))
+     (check-adt-array ,exp
+                      ,exp-floats
+                      (float-array ,adt)
+                      #'=
+                      #'(lambda (i) (float (/ i ,exp-floats))))
+     (check-adt-array ,exp
+                      ,exp-chars
+                      (char-string ,adt)
+                      #'char=
+                      #'(lambda (i)
+                          (code-char (+ (char-code #\a) i))))
+     ,adt))
+
+(defun summarize-stat (exp)
+  "Prints a summary and returns the number of failed checks."
+  (with-accessors ((test-name test-name)
+                   (test-failed test-failed)
+                   (test-count test-count)) exp
+    (if (plusp test-failed)
+        (format t "Failed ~a / ~a checks in ~a~%"
+                test-failed test-count test-name)
+        (format t "Passed all ~a checks in ~a~%"
+                test-count test-name))
+    test-failed))
 
