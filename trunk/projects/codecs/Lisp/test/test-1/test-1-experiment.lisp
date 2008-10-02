@@ -22,23 +22,24 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Implementation.
 
+(defmacro check-test-1-adt (exp adt exp-i0)
+  "Checks the ADT values during test-1 test."
+  `(progn
+     (check ,exp #'= 1 (length (int-array ,adt)))
+     (check ,exp #'= 0 (length (float-array ,adt)))
+     (check ,exp #'= 0 (length (char-string ,adt)))
+     (check ,exp #'= ,exp-i0 (aref (int-array ,adt) 0))))
+
 (defun check-test-1 (exp exp-i0 exp-terminal-p
                      msg exp-agent-msg exp-env-msg)
-  "Performs 12 (or 4 if EXP-I0 is nil) checks
-during a step for the test-1 test."
+  "Performs checks during a step for the test-1 test."
   (multiple-value-bind (reward observation terminal-p action) (rl-step exp)
     (check exp #'string= exp-env-msg (rl-env-message exp msg))
     (check exp #'string= exp-agent-msg (rl-agent-message exp msg))
     (check exp #'eq exp-terminal-p terminal-p)
     (when exp-i0
-      (check exp #'= 1 (length (int-array observation)))
-      (check exp #'= 0 (length (float-array observation)))
-      (check exp #'= 0 (length (char-string observation)))
-      (check exp #'= exp-i0 (aref (int-array observation) 0))
-      (check exp #'= 1 (length (int-array action)))
-      (check exp #'= 0 (length (float-array action)))
-      (check exp #'= 0 (length (char-string action)))
-      (check exp #'= exp-i0 (aref (int-array action) 0)))
+      (check-test-1-adt exp observation exp-i0)
+      (check-test-1-adt exp action exp-i0))
     (check exp #'= 1.0 reward)))
 
 (defun run-test-1-experiment (exp &rest args)

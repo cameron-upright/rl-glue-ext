@@ -22,5 +22,8 @@
   (:export
    #:start-test-1-agent
    #:start-test-1-environment
-   #:start-test-1-experiment))
+   #:start-test-1-experiment
+   #:start-test-empty-agent
+   #:start-test-empty-environment
+   #:start-test-empty-experiment))
 
