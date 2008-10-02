@@ -40,7 +40,7 @@
     (when exp-i0
       (check-test-1-adt exp observation exp-i0)
       (check-test-1-adt exp action exp-i0))
-    (check exp #'= 1.0 reward)))
+    (check exp #'= 1.0d0 reward)))
 
 (defun run-test-1-experiment (exp &rest args)
   "Runs the experiment of test-1 test."

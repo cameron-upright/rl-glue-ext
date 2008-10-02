@@ -39,7 +39,7 @@
     (let ((observation (fill-adt (make-observation) :ints 1)))
       (setf (aref (int-array observation) 0) step-count)
       (incf step-count)
-      (values 1.0 observation (= step-count 5)))))
+      (values 1.0d0 observation (= step-count 5)))))
 
 (defmethod env-cleanup ((env test-1-environment))
   env)

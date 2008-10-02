@@ -93,7 +93,7 @@
                  2
                  :element-type 'float
                  :initial-contents
-                 (list 4.5 3.4d0))
+                 (list 4.5d0 3.4d0))
    :char-string "Can I do it successfully?"))
 
 (defun pos-type (mines row col)
@@ -119,9 +119,9 @@
 (defun get-reward (mines)
   "Returns the (reward,terminal) pair for the current position."
   (let ((postype (pos-type mines (agent-row mines) (agent-col mines))))
-    (cond ((= postype (goal mines)) (values 10 t))
-          ((= postype (mine mines)) (values -10 t))
-          (t (values -1 nil)))))
+    (cond ((= postype (goal mines)) (values 10.0d0 t))
+          ((= postype (mine mines)) (values -10.0d0 t))
+          (t (values -1.0d0 nil)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Interface methods.
