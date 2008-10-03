@@ -49,6 +49,14 @@
             ((:file "test-message-agent")
              (:file "test-message-environment")
              (:file "test-message-experiment"))
-            :depends-on ("rl-tests-common")))
+            :depends-on ("rl-tests-common"))
+   (:module test-rl-episode
+            :components
+            ((:file "test-rl-episode-experiment"))
+            :depends-on ("test-1"))
+   (:module test-sanity
+            :components
+            ((:file "test-sanity-experiment"))
+            :depends-on ("test-1")))
   :depends-on ("rl-glue-clcdc" "rl-glue-utils"))
 
