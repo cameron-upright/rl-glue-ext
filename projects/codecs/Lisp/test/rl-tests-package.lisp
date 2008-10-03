@@ -31,5 +31,9 @@
    ;; test-message
    #:start-test-message-agent
    #:start-test-message-environment
-   #:start-test-message-experiment))
+   #:start-test-message-experiment
+   ;; test-rl-episode
+   #:start-test-rl-episode-experiment
+   ;; test-sanity
+   #:start-test-sanity-experiment))
 

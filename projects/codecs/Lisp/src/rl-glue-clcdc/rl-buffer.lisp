@@ -40,6 +40,7 @@
 
 (defun char-encoder (ch)
   "Returns the code of CH."
+  (check-type ch character)
   (char-code ch))
 
 (defun char-decoder (code)
@@ -55,6 +56,7 @@
 
   (defun integer-encoder (int)
     "Returns the code of INT."
+    (check-type int integer)
     (assert (<= int max-sint) (int) "Too big integer to encode: ~D" int)
     (assert (>= int min-sint) (int) "Too little integer to encode: ~D" int)
     int)
@@ -67,6 +69,8 @@
 
 (defun float-encoder (float)
   "Returns the code of FLOAT."
+  (check-type float number)
+  (assert (eq (type-of float) 'double-float) (float))
   (ieee-floats:encode-float64 float))
 
 (defun float-decoder (code)
@@ -182,7 +186,6 @@ of the encoded value in bytes."
     (char-decoder (buffer-read +bytes-per-char+ buffer))))
 
 (defun buffer-write-char (ch buffer &key (adjust-p t))
-  (check-type ch character)
   (when adjust-p (auto-adjust buffer +bytes-per-char+))
   (buffer-write +bytes-per-char+
                 (char-encoder ch)
@@ -194,7 +197,6 @@ of the encoded value in bytes."
     (integer-decoder (buffer-read +bytes-per-integer+ buffer))))
 
 (defun buffer-write-int (integer buffer &key (adjust-p t))
-  (check-type integer integer)
   (when adjust-p (auto-adjust buffer +bytes-per-integer+))
   (buffer-write +bytes-per-integer+
                 (integer-encoder integer)
@@ -206,7 +208,6 @@ of the encoded value in bytes."
     (float-decoder (buffer-read +bytes-per-float+ buffer))))
 
 (defun buffer-write-float (float buffer &key (adjust-p t))
-  (check-type float double-float)
   (when adjust-p (auto-adjust buffer +bytes-per-float+))
   (buffer-write +bytes-per-float+
                 (float-encoder (float float))

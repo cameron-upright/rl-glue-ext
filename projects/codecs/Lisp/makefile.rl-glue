@@ -1,45 +1,52 @@
 
-LISP ?= $(shell \
-	      which sbcl || \
-	      which lisp || \
-	      which clisp || \
-	      which ccl)
+LISP_IMPL ?= $(shell \
+	            (which sbcl >/dev/null 2>&1 && echo sbcl) || \
+	            (which lisp >/dev/null 2>&1 && echo cmucl) || \
+	            (which clisp >/dev/null 2>&1 && echo clisp) || \
+	            (which ccl >/dev/null 2>&1 && echo openmcl))
 
-LISP_PATH ?= \
-	/usr/share/common-lisp/source/asdf/ \
-	/usr/share/common-lisp/systems/
+ifeq ($(origin LISP_EXEC_LOCK), undefined)
 
-LISP_EXEC = $(basename $(notdir $(LISP)))
-LISP_FORMATTED_PATH = $(patsubst %,\#P\"%\",$(LISP_PATH))
-LISP_IMPL := $(LISP_EXEC)
-
-ifeq ($(LISP_EXEC),sbcl) # SBCL
-LISP += --noinform
+ifeq ($(LISP_IMPL), sbcl)
+LISP_PATH ?= $(shell which sbcl)
+LISP_EXEC = $(LISP_PATH) --noinform
 LISP_EVAL = --eval
-LISP += $(LISP_EVAL) "(require 'asdf)"
+LISP_EXEC += $(LISP_EVAL) "(require 'asdf)"
 else
-ifeq ($(LISP_EXEC),lisp) # CMUCL
-LISP += -quiet
+ifeq ($(LISP_IMPL), cmucl)
+LISP_PATH ?= $(shell which lisp)
+LISP_EXEC = $(LISP_PATH) -quiet
 LISP_EVAL = -eval
-LISP += $(LISP_EVAL) "(require 'asdf)"
+LISP_EXEC += $(LISP_EVAL) "(require 'asdf)"
 else
-ifeq ($(LISP_EXEC),clisp) # CLISP
-LISP += -q -q -K full
+ifeq ($(LISP_IMPL), clisp)
+LISP_PATH ?= $(shell which clisp)
+LISP_EXEC = $(LISP_PATH) -q -q -K full
 LISP_EVAL = -x
-LISP += $(LISP_EVAL) "(setf custom:*load-paths* \
-	                        (append custom:*load-paths* \
-	                                (list $(LISP_FORMATTED_PATH))))"
-LISP += $(LISP_EVAL) "(require \"asdf\")"
+LISP_EXEC += $(LISP_EVAL) "(setf custom:*load-paths* \
+	                         (append custom:*load-paths* \
+	                                 (list $(LISP_FMT_ASDF_DIRS))))"
+LISP_EXEC += $(LISP_EVAL) "(require \"asdf\")"
 else
-ifeq ($(LISP_EXEC),ccl) # openMCL
+ifeq ($(LISP_IMPL), openmcl)
+LISP_PATH ?= $(shell which ccl)
+LISP_EXEC = $(LISP_PATH)
 LISP_EVAL = --eval
-LISP += $(LISP_EVAL) "(require 'asdf)"
+LISP_EXEC += $(LISP_EVAL) "(require 'asdf)"
 else
 $(error Not supported lisp implementation : $(LISP_EXEC))
 endif
 endif
 endif
 endif
+
+endif # lisp exec lock
+
+LISP_ASDF_DIRS ?= \
+	/usr/share/common-lisp/source/asdf/ \
+	/usr/share/common-lisp/systems/
+
+LISP_FMT_ASDF_DIRS = $(patsubst %,\#P\"%\",$(LISP_ASDF_DIRS))
 
 RL_GLUE_SRC_PATH ?= $(RL_GLUE_BASE_PATH)/src
 RL_GLUE_TESTS_PATH ?= $(RL_GLUE_BASE_PATH)/test
@@ -63,23 +70,26 @@ asdf_load = $(LISP_EVAL) \
 ###############################################################################
 ### Initializing ASDF central registry.
 
-LISP += \
+ifeq ($(origin LISP_EXEC_LOCK), undefined)
+
+LISP_EXEC += \
 	$(LISP_EVAL) "(setf asdf:*central-registry* \
 	                    (append (list \#P\"$(RL_GLUE_CLCDC_PATH)/\" \
 						              \#P\"$(RL_GLUE_UTILS_PATH)/\" \
 						              \#P\"$(RL_GLUE_TESTS_PATH)/\" \
 						              \#P\"$(RL_GLUE_EXAMPLE_PATH)/\" \
-	                                  $(LISP_FORMATTED_PATH)) \
+	                                  $(LISP_FMT_ASDF_DIRS)) \
 	                            asdf:*central-registry*))" \
 	$(call asdf_load, asdf-binary-locations) \
 	$(LISP_EVAL) "(setf asdf:*centralize-lisp-binaries* t)" \
 	$(LISP_EVAL) "(setf asdf:*default-toplevel-directory* \
 	                    \#P\"$(realpath $(RL_GLUE_BUILD_PATH))/\")"
+endif
 
 ###############################################################################
 ### Running lisp commands.
 
-lisp_run = $(LISP) $(strip $(1)) $(LISP_EVAL) "(quit)"
+lisp_run = $(LISP_EXEC) $(strip $(1)) $(LISP_EVAL) "(quit)"
 lisp_compile_asdf = $(call lisp_run, $(call asdf_compile, $(1)))
 
 ###############################################################################
@@ -100,6 +110,8 @@ RL_GLUE_CLCDC_TARGET = $(call make_target, rl-glue-clcdc)
 RL_GLUE_UTILS_TARGET = $(call make_target, rl-glue-utils)
 RL_GLUE_TESTS_TARGET = $(call make_target, rl-glue-tests)
 RL_GLUE_EXAMPLES_TARGET = $(call make_target, rl-glue-examples)
+
+LISP_EXEC_LOCK ?= 1
 
 .PHONY: all
 all: $(TARGETS)

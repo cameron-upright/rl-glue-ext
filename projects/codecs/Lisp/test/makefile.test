@@ -1,17 +1,25 @@
 
 TARGETS =
+CLEAN_TARGETS =
 TEST_PATH = $(RL_GLUE_TEST_PATH)/$(TEST)
 
-ifneq ($(AGENT),'')
+ifneq ($(AGENT),)
 TARGETS += RL_agent
+CLEAN_TARGETS += RL_agent
 endif
 
-ifneq ($(ENVIRONMENT),'')
+ifneq ($(ENVIRONMENT),)
 TARGETS += RL_environment
+CLEAN_TARGETS += RL_environment
 endif
 
-ifneq ($(EXPERIMENT),'')
+ifneq ($(EXPERIMENT),)
 TARGETS += RL_experiment
+CLEAN_TARGETS += RL_experiment
+endif
+
+ifneq ($(DEPENDENCIES),)
+TARGETS += $(DEPENDENCIES)
 endif
 
 ifeq ($(TARGETS),'')
@@ -53,7 +61,10 @@ RL_experiment: $(RL_GLUE_TESTS_TARGET)
 	                              $(RLGLUE_HOST) $(RLGLUE_PORT))" ))
 	chmod +x $@
 
+.DEFAULT:
+	$(MAKE) -C $(dir $@)
+
 .PHONY: clean
 clean:
-	-rm -f $(TARGETS)
+	-rm -f $(CLEAN_TARGETS)
 
