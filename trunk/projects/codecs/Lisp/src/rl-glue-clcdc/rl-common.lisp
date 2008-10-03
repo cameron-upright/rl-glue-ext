@@ -64,6 +64,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Generic functions.
 
+(defgeneric rl-equalp (object-1 object-2)
+  (:documentation "Compares two RL objects."))
+
 (defgeneric rl-read (object byte-stream)
   (:documentation "Reads an object from BYTE-STREAM."))
 
@@ -72,6 +75,16 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ADT read / write.
+
+(defmethod rl-equalp ((object-1 t) (object-2 t))
+  "By default it works than the equalp function."
+  (equalp object-1 object-2))
+
+(defmethod rl-equalp ((object-1 rl-abstract-type) (object-2 rl-abstract-type))
+  "Compares two RL abstract data type objects."
+  (and (equalp (int-array object-1) (int-array object-2))
+       (equalp (float-array object-1) (float-array object-2))
+       (string= (char-string object-1) (char-string object-2))))
 
 (defmethod rl-read ((object rl-abstract-type) buffer)
   "Reads an ADT object from the buffer."
@@ -100,11 +113,11 @@
       (buffer-write-int float-num buffer)
       (buffer-write-int char-num buffer)
       (when (plusp int-num)
-        (buffer-write-seq int-array #'buffer-write-int
-                          buffer :size int-num))
+        (buffer-write-seq int-array +bytes-per-integer+
+                          #'buffer-write-int buffer :size int-num))
       (when (plusp float-num)
-        (buffer-write-seq float-array #'buffer-write-float
-                          buffer :size float-num))
+        (buffer-write-seq float-array +bytes-per-float+
+                          #'buffer-write-float buffer :size float-num))
       (when (plusp char-num)
         (buffer-write-string char-string buffer :write-size-p nil))))
   object)

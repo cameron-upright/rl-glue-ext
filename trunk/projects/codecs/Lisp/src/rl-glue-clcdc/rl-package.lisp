@@ -37,6 +37,7 @@
    #:make-random-seed-key
    #:state-key
    #:make-state-key
+   #:rl-equalp
    ;; rl-client-agent
    #:agent
    #:agent-init

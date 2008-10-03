@@ -57,6 +57,16 @@
    (:module test-sanity
             :components
             ((:file "test-sanity-experiment"))
+            :depends-on ("test-1"))
+   (:module test-seeds
+            :components
+            ((:file "test-seeds-environment")
+             (:file "test-seeds-experiment"))
+            :depends-on ("test-1"))
+   (:module test-speed
+            :components
+            ((:file "test-speed-environment")
+             (:file "test-speed-experiment"))
             :depends-on ("test-1")))
   :depends-on ("rl-glue-clcdc" "rl-glue-utils"))
 

@@ -35,5 +35,11 @@
    ;; test-rl-episode
    #:start-test-rl-episode-experiment
    ;; test-sanity
-   #:start-test-sanity-experiment))
+   #:start-test-sanity-experiment
+   ;; test-seeds
+   #:start-test-seeds-environment
+   #:start-test-seeds-experiment
+   ;; test-speed
+   #:start-test-speed-environment
+   #:start-test-speed-experiment))
 
