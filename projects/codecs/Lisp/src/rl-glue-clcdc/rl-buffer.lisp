@@ -137,9 +137,11 @@ If not, it automatically adjust the buffer."
     (let* ((buff-size (size buffer))
            (buff-capab (length bytes))
            (free-size (- buff-capab buff-size)))
+      (assert (<= 0 free-size))
       (when (< free-size size)
         (setf bytes (adjust-array bytes
-                                  (+ buff-capab (- size free-size) size)
+                                  (+ buff-capab
+                                     (ceiling (+ (- size free-size) size)))
                                   :element-type (ubyte-type))))))
   buffer)
 
@@ -227,15 +229,16 @@ of the encoded value in bytes."
                do (setf (elt seq i) (funcall reader-fn buffer :buffchk-p nil)))
             seq)))))
 
-(defun buffer-write-seq (seq writer-fn buffer
+(defun buffer-write-seq (seq elem-size writer-fn buffer
                          &key size write-size-p)
-  (let ((size (or size (length seq))))
+  (let* ((elem-num (or size (length seq)))
+         (byte-num (* elem-size elem-num)))
     (if write-size-p
         (progn
-          (auto-adjust buffer (+ +bytes-per-integer+ size))
-          (buffer-write-int size buffer :adjust-p nil))
-        (auto-adjust buffer size))
-    (when (plusp size)
+          (auto-adjust buffer (+ +bytes-per-integer+ byte-num))
+          (buffer-write-int elem-num buffer :adjust-p nil))
+        (auto-adjust buffer byte-num))
+    (when (plusp elem-num)
       (loop for elem across seq
          do (funcall writer-fn elem buffer :adjust-p nil))))
   seq)
@@ -246,7 +249,7 @@ of the encoded value in bytes."
 
 (defun buffer-write-string (string buffer &key (write-size-p t))
   (check-type string string)
-  (buffer-write-seq string #'buffer-write-char buffer
+  (buffer-write-seq string +bytes-per-char+ #'buffer-write-char buffer
                     :write-size-p write-size-p))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -284,17 +287,16 @@ of the encoded value in bytes."
 
 (defun buffer-recv (buffer stream)
   "Receiving the size and the bytes to BUFFER from STREAM."
-  (with-accessors ((buffsize size)) buffer
-    ;; receiving header
-    (let ((state (read-int stream))
-          (size (read-int stream)))
-      ;; receiving buffer content
-      (buffer-clear buffer)
-      (setf buffsize size)
-      (auto-adjust buffer buffsize)
-      (loop
-         repeat size
-         for idx from 0
-         do (setf (aref (bytes buffer) idx) (read-byte stream)))
-      state)))
+  ;; receiving header
+  (let ((state (read-int stream))
+        (size (read-int stream)))
+    ;; receiving buffer content
+    (buffer-clear buffer)
+    (auto-adjust buffer size)
+    (loop
+       repeat size
+       for idx from 0
+       do (setf (aref (bytes buffer) idx) (read-byte stream)))
+    (setf (size buffer) size)
+    state))
 
