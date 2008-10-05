@@ -25,7 +25,6 @@ http://rl-glue-ext.googlecode.com/
 
 package org.rlcommunity.rlglue.codec.types;
 
-import com.sun.tools.javac.tree.Tree.ForeachLoop;
 
 /**
  * Common superclass for all of the Java RL-Glue types.

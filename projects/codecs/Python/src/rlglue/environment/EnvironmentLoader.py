@@ -20,7 +20,7 @@ import sys
 import os
 import rlglue.network.Network as Network
 from ClientEnvironment import ClientEnvironment
-from rlglue import update_svn_version
+
 
 from rlglue.versions import get_svn_codec_version
 from rlglue.versions import get_codec_version
