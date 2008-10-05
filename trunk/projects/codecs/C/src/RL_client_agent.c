@@ -275,7 +275,7 @@ int main(int argc, char** argv) {
   rlBufferCreate(&theBuffer, 4096);
   
     theConnection = rlWaitForConnection(host, port, kRetryTimeout);
-	fprintf(stderr, "\tRL-Glue C Agent Codec :: Connected\n");
+	fprintf(stdout, "\tRL-Glue C Agent Codec :: Connected\n");
     rlBufferClear(&theBuffer);
     rlSendBufferData(theConnection, &theBuffer, kAgentConnection);
     runAgentEventLoop(theConnection);
