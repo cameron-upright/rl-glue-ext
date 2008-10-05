@@ -1,0 +1,3 @@
+This example is meant to simulate getting an existing code-base (like a game engine) integrated with RL-Glue as an environment, but creating a simple specialized codec.
+
+It's easier than it sounds.
