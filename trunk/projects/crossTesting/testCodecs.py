@@ -13,7 +13,7 @@ def run_test(agent, env, experiment):
 	global totalTests
 	debug=False
 	totalTests+=1
-	#If there are errors, a time.sleep 1 here might help
+	#If there are errors, a time. Sleep  1 here might help
 	allSubProcesses=[]
 	cmds = ["rl_glue &",agent,env]
 	for cmd in cmds:
