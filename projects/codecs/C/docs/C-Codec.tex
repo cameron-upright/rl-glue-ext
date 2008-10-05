@@ -199,17 +199,21 @@ or set an environment variable.  If you are using the bash shell you can \texttt
 
 In some cases, you may be able to compile and link your programs without incident, but you receive shared library loading errors when you try to execute them, as mentioned in Gotchas! (Section \ref{sec:gotchas-shared-libs}).
 
-In these cases, you may also have to set \texttt{LD\_LIBRARY\_PATH} (Linux) or \texttt{DYLD\_LIBRARY\_PATH} (OS X) environment variables, like:
+The reason for these errors is that the search path of the loader does not include \texttt{/usr/local/lib}.  This problem has both temporary and permanent fixes.
+
+To temporarily fix the problem, you can set \texttt{LD\_LIBRARY\_PATH} (Linux) or \texttt{DYLD\_LIBRARY\_PATH} (OS X) environment variables, like:
 \begin{verbatim}
 	>$ export LD_LIBRARY_PATH=/Users/joe/glue/lib
 \end{verbatim}
 
-In some cases (64-bit linux looks in \texttt{/usr/local/lib64}?) you may have to use this approach even when RL-Glue and this codec are installed in the default locations:
+In some cases (64-bit linux) you may have to use this approach even when RL-Glue and this codec are installed in the default locations:
 \begin{verbatim}
 	>$ export LD_LIBRARY_PATH=/usr/local/lib
 \end{verbatim}
 
 When you open a new terminal window, all of these environment variables will be lost unless you put the appropriate \texttt{export} lines in your shell startup script.
+
+The permanent solution requires \texttt{root} or \texttt{sudo} access to the machine.  You can  edit the file \texttt{/etc/ld.so.conf} and add a line like: \texttt{/usr/local/lib} to the file.  Then, if you call \texttt{sudo ldconfig}, the loader will know to look there for libraries in the future.
 
 \section{Environments}
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
@@ -315,7 +319,10 @@ On some machines we've used, the codec installs without incident, but when the a
 	cannot open shared object file: No such file or directory
 \end{verbatim}
 
-If this happens, the operating system might have an alternate search path, and might not be looking in \texttt{/usr/local/lib} for libraries. 
+So far this has only happened on 64-bit Linux, both a machine at the University
+and a personal install of 64-bit Ubuntu, Hardy Heron.
+
+The reason for the error is that \texttt{/usr/local/lib} is not in the the loader's search path.  If this happens, the operating system might have an alternate search path, and might not be looking in \texttt{/usr/local/lib} for libraries. 
 You can troubleshoot this problem by doing:
 \begin{verbatim}
 	>$ LD_DEBUG=libs ./RL_agent
