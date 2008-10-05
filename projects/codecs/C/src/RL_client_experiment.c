@@ -81,7 +81,7 @@ static void forceConnection()
   	fprintf(stdout, "RL-Glue C Experiment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
 	fflush(stdout);
     theExperimentConnection = rlWaitForConnection(host, port, kRetryTimeout);
-	fprintf(stderr, "\tRL-Glue C Experiment Codec :: Connected\n");
+	fprintf(stdout, "\tRL-Glue C Experiment Codec :: Connected\n");
     /* Send the connection type */
     atexit(cleanupExperimentAtExit);
     rlBufferCreate(&theBuffer, 65536);
