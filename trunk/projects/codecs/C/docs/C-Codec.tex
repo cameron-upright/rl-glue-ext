@@ -462,6 +462,11 @@ in the 2008 RL-Competition, and also the project to connect the Stella Atari emu
 
 We support a path for integrating these projects with RL-Glue that involves customizing this C/C++ codec, rather than trying too hard to link to it.  We have provided an example in: \texttt{examples/custom\_integrated\_env}.
 
+The relevant files are:\newline
+\htmladdnormallink{\texttt{TheGame.h}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/TheGame.h} \newline
+\htmladdnormallink{\texttt{TheGame.c}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/TheGame.c} \newline
+\htmladdnormallink{\texttt{Custom\_Integrated\_Env\_Codec.c}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/Custom\_Integrated\_Env\_Codec.c} \newline
+
 The idea in the example is that you have a game (called \texttt{TheGame}) which was never meant to be used
 with RL-Glue.  To integrate it, a copy of \texttt{src/RL\_client\_environment.c} was modified to work 
 specifically with \texttt{TheGame}.  For example, all of the calls to \texttt{env\_init}, \texttt{env\_start}, \texttt{env\_step}, etc. were replaced with calls to functions defined in \texttt{TheGame}.  The input and output to those \texttt{TheGame} functions need to be wrapped up a little
