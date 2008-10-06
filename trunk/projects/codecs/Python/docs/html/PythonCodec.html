@@ -42,51 +42,58 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html38"
+<LI><A NAME="tex2html45"
   HREF="PythonCodec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html39"
+<LI><A NAME="tex2html46"
   HREF="PythonCodec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html40"
+<LI><A NAME="tex2html47"
   HREF="PythonCodec.html#SECTION00022000000000000000">Getting the Codec</A>
-<LI><A NAME="tex2html41"
+<LI><A NAME="tex2html48"
   HREF="PythonCodec.html#SECTION00023000000000000000">Installing the Codec</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html42"
+<LI><A NAME="tex2html49"
   HREF="PythonCodec.html#SECTION00030000000000000000">Agents</A>
-<LI><A NAME="tex2html43"
+<LI><A NAME="tex2html50"
   HREF="PythonCodec.html#SECTION00040000000000000000">Environments</A>
-<LI><A NAME="tex2html44"
+<LI><A NAME="tex2html51"
   HREF="PythonCodec.html#SECTION00050000000000000000">Experiments</A>
-<LI><A NAME="tex2html45"
+<LI><A NAME="tex2html52"
   HREF="PythonCodec.html#SECTION00060000000000000000">Putting it all together</A>
-<LI><A NAME="tex2html46"
+<LI><A NAME="tex2html53"
   HREF="PythonCodec.html#SECTION00070000000000000000">Who creates and frees memory?</A>
-<LI><A NAME="tex2html47"
+<LI><A NAME="tex2html54"
   HREF="PythonCodec.html#SECTION00080000000000000000">Advanced Features</A>
-<LI><A NAME="tex2html48"
+<LI><A NAME="tex2html55"
   HREF="PythonCodec.html#SECTION00090000000000000000">Codec Specification Reference</A>
 <UL>
-<LI><A NAME="tex2html49"
+<LI><A NAME="tex2html56"
   HREF="PythonCodec.html#SECTION00091000000000000000">Types</A>
-<LI><A NAME="tex2html50"
+<LI><A NAME="tex2html57"
   HREF="PythonCodec.html#SECTION00092000000000000000">Functions</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html51"
+<LI><A NAME="tex2html58"
   HREF="PythonCodec.html#SECTION000100000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html52"
+<LI><A NAME="tex2html59"
   HREF="PythonCodec.html#SECTION000101000000000000000">Agent/Environment Loading</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html53"
+<LI><A NAME="tex2html60"
   HREF="PythonCodec.html#SECTION000110000000000000000">Frequently Asked Questions</A>
-<LI><A NAME="tex2html54"
+<UL>
+<LI><A NAME="tex2html61"
+  HREF="PythonCodec.html#SECTION000111000000000000000">Where can I get more help?</A>
+<LI><A NAME="tex2html62"
+  HREF="PythonCodec.html#SECTION000112000000000000000">What's up with the Task Spec Parser?</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html63"
   HREF="PythonCodec.html#SECTION000120000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html55"
+<LI><A NAME="tex2html64"
   HREF="PythonCodec.html#SECTION000121000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -101,14 +108,14 @@ This document describes how to use the Python RL-Glue Codec, a software library 
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot145"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot152"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in Python.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot146"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot153"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -666,6 +673,52 @@ We're waiting to hear your questions!
 
 <P>
 
+<H2><A NAME="SECTION000111000000000000000">
+Where can I get more help?</A>
+</H2>
+
+<H3><A NAME="SECTION000111100000000000000">
+Online FAQ</A>
+</H3>
+We suggest checking out the online RL-Glue C/C++ Codec FAQ:
+<BR>
+<TT><A NAME="tex2html12"
+  HREF="http://glue.rl-community.org/Home/Extensions/python-codec#TOC-Frequently-Asked-Questions">http://glue.rl-community.org/Home/Extensions/python-codec#TOC-Frequently-Asked-Questions</A></TT>
+<P>
+The online FAQ may be more current than this document, which may have been distributed some time ago.
+
+<P>
+
+<H3><A NAME="SECTION000111200000000000000">
+Google Group / Mailing List</A>
+</H3>
+First, you should join the RL-Glue Google Group Mailing List:
+<BR>
+<TT><A NAME="tex2html13"
+  HREF="http://groups.google.com/group/rl-glue">http://groups.google.com/group/rl-glue</A></TT>
+<P>
+We're happy to answer any questions about RL-Glue.  Of course, try to search through previous messages first in case your question has been answered before.
+
+<P>
+
+<H2><A NAME="SECTION000112000000000000000">
+What's up with the Task Spec Parser?</A>
+</H2>
+We've distributed the existing task spec parser from the previous version of RL-Glue with this codec. 
+However, it is not officially supported as we are trying to ratify a new and improved task 
+specification language.
+
+<P>
+We will release an updated codec with certified task spec parser once the new language has been 
+ratified.
+
+<P>
+For more information, please go here:
+<BR>
+<TT><A NAME="tex2html14"
+  HREF="http://glue.rl-community.org/Home/rl-glue/task-spec-language">http://glue.rl-community.org/Home/rl-glue/task-spec-language</A></TT>
+<P>
+
 <H1><A NAME="SECTION000120000000000000000">
 Credits and Acknowledgements</A>
 </H1>
@@ -687,9 +740,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 293 $
+Revision Number: $Rev: 294 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-10-01 16:45:57 -0600 (Wed, 01 Oct 2008) $
+Last Updated   : $Date: 2008-10-01 21:24:00 -0600 (Wed, 01 Oct 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python/docs/PythonCodec.tex $
 </PRE>
 
@@ -713,16 +766,16 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>PythonCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Python Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2008-10-01
+The translation was initiated by Brian Tanner on 2008-10-05
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot145">... RL-Glue</A><A
+<DT><A NAME="foot152">... RL-Glue</A><A
  HREF="PythonCodec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot146">... Apache-2.0</A><A
+<DT><A NAME="foot153">... Apache-2.0</A><A
  HREF="PythonCodec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
@@ -737,7 +790,7 @@ The translation was initiated by Brian Tanner on 2008-10-01
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2008-10-01
+2008-10-05
 </ADDRESS>
 </BODY>
 </HTML>
