@@ -20,21 +20,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Common RL types.
 
+(defparameter +empty-integer-array+ (make-array 0 :element-type 'integer))
+(defparameter +empty-float-array+ (make-array 0 :element-type 'double-float))
+(declaim (simple-vector +empty-integer-array+ +empty-float-array+))
+
 (defclass rl-abstract-type ()
   ((int-array
     :accessor int-array
     :initarg :int-array
-    :initform (make-array 0 :element-type 'integer)
+    :initform +empty-integer-array+
+    :type simple-vector
     :documentation "Array of integer numbers.")
    (float-array
     :accessor float-array
     :initarg :float-array
-    :initform (make-array 0 :element-type 'double-float)
+    :initform +empty-float-array+
+    :type simple-vector
     :documentation "Array of floating point numbers.")
    (char-string
     :accessor char-string
     :initarg :char-string
-    :initform (make-string 0)
+    :initform ""
+    :type string
     :documentation "Character string."))
   (:documentation "General RL-Glue data representation."))
 
@@ -65,12 +72,15 @@
 ;;; Generic functions.
 
 (defgeneric rl-equalp (object-1 object-2)
+  (declare #.*optimize-settings*)
   (:documentation "Compares two RL objects."))
 
 (defgeneric rl-read (object byte-stream)
+  (declare #.*optimize-settings*)
   (:documentation "Reads an object from BYTE-STREAM."))
 
 (defgeneric rl-write (object byte-stream)
+  (declare #.*optimize-settings*)
   (:documentation "Writes an object to BYTE-STREAM."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -78,19 +88,23 @@
 
 (defmethod rl-equalp ((object-1 t) (object-2 t))
   "By default it works than the equalp function."
+  (declare #.*optimize-settings*)
   (equalp object-1 object-2))
 
 (defmethod rl-equalp ((object-1 rl-abstract-type) (object-2 rl-abstract-type))
   "Compares two RL abstract data type objects."
+  (declare #.*optimize-settings*)
   (and (equalp (int-array object-1) (int-array object-2))
        (equalp (float-array object-1) (float-array object-2))
        (string= (char-string object-1) (char-string object-2))))
 
 (defmethod rl-read ((object rl-abstract-type) buffer)
   "Reads an ADT object from the buffer."
+  (declare #.*optimize-settings*)
   (let ((int-num (buffer-read-int buffer))
         (float-num (buffer-read-int buffer))
         (char-num (buffer-read-int buffer)))
+    (declare (type (integer 0 *) int-num float-num char-num))
     (setf (int-array object)
           (buffer-read-seq 'array #'make-array +bytes-per-integer+
                            #'buffer-read-int buffer :size int-num))
@@ -103,12 +117,14 @@
 
 (defmethod rl-write ((object rl-abstract-type) buffer)
   "Writes an ADT object to the buffer."
+  (declare #.*optimize-settings*)
   (with-accessors ((int-array int-array)
                    (float-array float-array)
                    (char-string char-string)) object
     (let ((int-num (length int-array))
           (float-num (length float-array))
           (char-num (length char-string)))
+      (declare (type (integer 0 *) int-num float-num char-num))
       (buffer-write-int int-num buffer)
       (buffer-write-int float-num buffer)
       (buffer-write-int char-num buffer)
@@ -129,9 +145,13 @@
   (let ((typ type))
     `(progn
        (setf (symbol-function (intern ,(format nil "RL-READ-~a" typ)))
-             (lambda (buffer) (rl-read (make-instance ',typ) buffer)))
+             (lambda (buffer)
+               (declare #.*optimize-settings*)
+               (rl-read (make-instance ',typ) buffer)))
        (setf (symbol-function (intern ,(format nil "RL-WRITE-~a" typ)))
-             (lambda (,typ buffer) (rl-write ,typ buffer))))))
+             (lambda (,typ buffer)
+               (declare #.*optimize-settings*)
+               (rl-write ,typ buffer))))))
 
 (make-rl-read-write observation)
 (make-rl-read-write action)
@@ -139,29 +159,37 @@
 (make-rl-read-write state-key)
 
 (defun rl-read-reward (buffer)
+  (declare #.*optimize-settings*)
   (buffer-read-float buffer))
 
 (defun rl-write-reward (reward buffer)
+  (declare #.*optimize-settings*)
   (buffer-write-float reward buffer))
 
 (defun rl-read-message (buffer)
+  (declare #.*optimize-settings*)
   (buffer-read-string buffer))
 
 (defun rl-write-message (message buffer)
+  (declare #.*optimize-settings*)
   (buffer-write-string message buffer))
 
 (defun rl-read-task-spec (buffer)
+  (declare #.*optimize-settings*)
   (buffer-read-string buffer))
 
 (defun rl-write-task-spec (task-spec buffer)
+  (declare #.*optimize-settings*)
   (buffer-write-string task-spec buffer))
 
 (defun rl-read-terminal (buffer)
+  (declare #.*optimize-settings*)
   (ecase (buffer-read-int buffer)
     ((0) nil)
     ((1) t)))
 
 (defun rl-write-terminal (terminal buffer)
+  (declare #.*optimize-settings*)
   (let ((boolint (if terminal 1 0)))
     (buffer-write-int boolint buffer)))
 

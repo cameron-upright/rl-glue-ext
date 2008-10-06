@@ -55,6 +55,9 @@ PARAMETERS:
                     (key parameter, default is rl-glue:+k-retry-timeout+)
 RETURNS:
     task specification [string]"
+  (declare #.*optimize-settings*)
+  (forced-format "RL-Glue Lisp Experiment Codec Version ~a, Build ~a~%"
+                 (get-codec-version) (get-svn-codec-version))
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (setf socket (rl-wait-for-connection host
                                          port
@@ -79,6 +82,7 @@ PARAMETERS:
 RETURNS:
     first observation [rl-glue:observation]
     first action [rl-glue:action]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-start+)
@@ -104,6 +108,7 @@ RETURNS:
     observation after the step [rl-glue:observation]
     terminal flag after the step [boolean]
     next action (nil on terminal state) [rl-glue:action]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-step+)
@@ -124,6 +129,7 @@ PARAMETERS:
 
 RETURNS:
     used experiment [rl-glue:experiment]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-cleanup+)
@@ -143,6 +149,7 @@ PARAMETERS:
 
 RETURNS:
     cummulated total reward [double-float]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-return+)
@@ -159,6 +166,7 @@ PARAMETERS:
 
 RETURNS:
     number of steps [0 <= integer]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-numsteps+)
@@ -175,6 +183,7 @@ PARAMETERS:
 
 RETURNS:
     number of episodes [0 <= integer]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-numepisodes+)
@@ -199,6 +208,7 @@ PARAMETERS:
                     [optional parameter, default is no limit]
 RETURNS:
     terminal flag after the step [boolean]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (buffer-write-int max-num-steps buffer)
@@ -217,6 +227,7 @@ PARAMETERS:
 
 RETURNS:
     state key [rl-glue:state-key]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-getstate+)
@@ -234,6 +245,7 @@ PARAMETERS:
 
 RETURNS:
     state key has been set [rl-glue:state-key]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-write-state-key state-key buffer)
@@ -252,6 +264,7 @@ PARAMETERS:
 
 RETURNS:
     random seed key [rl-glue:random-seed-key]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-getrandomseed+)
@@ -270,6 +283,7 @@ PARAMETERS:
 
 RETURNS:
     random seed key has been set [rl-glue:random-seed-key]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-write-random-seed-key random-seed-key buffer)
@@ -289,6 +303,7 @@ PARAMETERS:
 
 RETURNS:
     recieved message [string]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-write-message message buffer)
@@ -308,6 +323,7 @@ PARAMETERS:
 
 RETURNS:
     recieved message [string]"
+  (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-write-message message buffer)

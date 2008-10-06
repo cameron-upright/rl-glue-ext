@@ -34,6 +34,7 @@
   :description "Software protocol for connecting RL agents and environments."
   :components
   ((:file "rl-package")
+   (:file "rl-version" :depends-on ("rl-package"))
    (:file "rl-buffer" :depends-on ("rl-package"))
    (:file "rl-common" :depends-on ("rl-package" "rl-buffer"))
    (:file "rl-network" :depends-on ("rl-package" "rl-buffer"))
@@ -41,16 +42,16 @@
             :components
             ((:file "rl-client-agent"))
             :depends-on ("rl-package" "rl-buffer"
-                         "rl-common" "rl-network"))
+                         "rl-common" "rl-network" "rl-version"))
    (:module environment
             :components
             ((:file "rl-client-environment"))
             :depends-on ("rl-package" "rl-buffer"
-                         "rl-common" "rl-network"))
+                         "rl-common" "rl-network" "rl-version"))
    (:module experiment
             :components
             ((:file "rl-client-experiment"))
             :depends-on ("rl-package" "rl-buffer"
-                         "rl-common" "rl-network")))
-  :depends-on ("usocket" "ieee-floats"))
+                         "rl-common" "rl-network" "rl-version")))
+  :depends-on ("usocket"))
 

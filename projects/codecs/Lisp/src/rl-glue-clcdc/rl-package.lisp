@@ -21,10 +21,10 @@
 ;;; RL-Glue package interface.
 
 (defpackage #:rl-glue-clcdc
-  (:use #:common-lisp #:ieee-floats #:usocket)
+  (:use #:common-lisp #:usocket)
   (:export
-   #:*rl-glue-path*
-   #:rl-load-utility
+   #:get-codec-version
+   #:get-svn-codec-version
    ;; rl-common
    #:int-array
    #:float-array
@@ -75,4 +75,14 @@
    #:rl-set-random-seed
    #:rl-agent-message
    #:rl-env-message))
+
+(in-package #:rl-glue-clcdc)
+
+(defvar *optimize-settings*
+  '(optimize
+    speed
+    (safety 0)
+    (space 0)
+    (debug 1)
+    (compilation-speed 0)))
 

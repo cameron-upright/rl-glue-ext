@@ -120,12 +120,14 @@ RETURNS:
 ;;; Agent client methods surrounded by buffer handling.
 
 (defun on-agent-init (agent buffer)
+  (declare #.*optimize-settings*)
   (let ((task-spec (rl-read-task-spec buffer)))
     (agent-init agent task-spec))
   (buffer-clear buffer)
   agent)
 
 (defun on-agent-start (agent buffer)
+  (declare #.*optimize-settings*)
   (let ((observation (rl-read-observation buffer)))
     (let ((action (agent-start agent observation)))
       (buffer-clear buffer)
@@ -133,6 +135,7 @@ RETURNS:
   agent)
 
 (defun on-agent-step (agent buffer)
+  (declare #.*optimize-settings*)
   (let ((reward (rl-read-reward buffer))
         (observation (rl-read-observation buffer)))
     (let ((action (agent-step agent reward observation)))
@@ -141,17 +144,20 @@ RETURNS:
   agent)
 
 (defun on-agent-end (agent buffer)
+  (declare #.*optimize-settings*)
   (let ((reward (rl-read-reward buffer)))
     (agent-end agent reward))
   (buffer-clear buffer)
   agent)
 
 (defun on-agent-cleanup (agent buffer)
+  (declare #.*optimize-settings*)
   (agent-cleanup agent)
   (buffer-clear buffer)
   agent)
 
 (defun on-agent-message (agent buffer)
+  (declare #.*optimize-settings*)
   (let ((input-msg (rl-read-message buffer)))
     (let ((output-msg (agent-message agent input-msg)))
       (buffer-clear buffer)
@@ -162,6 +168,7 @@ RETURNS:
 ;;; Agent client event loop.
 
 (defun run-agent-event-loop (agent socket buffer)
+  (declare #.*optimize-settings*)
   (loop do
        (buffer-clear buffer)
        (let ((state (rl-recv-buffer socket buffer)))
@@ -206,6 +213,8 @@ PARAMETERS:
                     (key parameter, default is nil)
 RETURNS:
     (none)"
+  (forced-format "RL-Glue Lisp Agent Codec Version ~a, Build ~a~%"
+                 (get-codec-version) (get-svn-codec-version))
   (rl-runner agent +k-agent-connection+ #'run-agent-event-loop
              host port max-retry retry-timeout autoreconnect))
 
