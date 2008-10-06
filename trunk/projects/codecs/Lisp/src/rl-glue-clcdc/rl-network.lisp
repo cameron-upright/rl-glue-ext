@@ -25,6 +25,10 @@
 (defparameter +k-experiment-connection+ 1)
 (defparameter +k-agent-connection+ 2)
 (defparameter +k-environment-connection+ 3)
+(declaim (type (integer 0 *)
+               +k-experiment-connection+
+               +k-agent-connection+
+               +k-environment-connection+))
 
 ;;; The server starts by sending one of these values to the client 
 ;;; to let it know what type of event to respond to.
@@ -36,6 +40,9 @@
 (defparameter +k-agent-cleanup+ 8)
 (defparameter +k-agent-freeze+ 9) ; deprecated, not handled anymore
 (defparameter +k-agent-message+ 10)
+(declaim (type (integer 0 *)
+               +k-agent-init+ +k-agent-start+ +k-agent-step+ +k-agent-end+
+               +k-agent-cleanup+ +k-agent-freeze+ +k-agent-message+))
 
 (defparameter +k-env-init+ 11)
 (defparameter +k-env-start+ 12)
@@ -46,6 +53,10 @@
 (defparameter +k-env-getstate+ 17)
 (defparameter +k-env-getrandomseed+ 18)
 (defparameter +k-env-message+ 19)
+(declaim (type (integer 0 *)
+               +k-env-init+ +k-env-start+ +k-env-step+ +k-env-cleanup+
+               +k-env-setstate+ +k-env-setrandomseed+ +k-env-getstate+
+               +k-env-getrandomseed+ +k-env-message+))
 
 (defparameter +k-rl-init+ 20)
 (defparameter +k-rl-start+ 21)
@@ -62,8 +73,13 @@
 (defparameter +k-rl-freeze+ 32) ; deprecated, not handled anymore
 (defparameter +k-rl-agent-message+ 33)
 (defparameter +k-rl-env-message+ 34)
-
 (defparameter +k-rl-term+ 35)
+(declaim (type (integer 0 *)
+               +k-rl-init+ +k-rl-start+ +k-rl-step+ +k-rl-cleanup+
+               +k-rl-return+ +k-rl-numsteps+ +k-rl-numepisodes+
+               +k-rl-episode+ +k-rl-setstate+ +k-rl-setrandomseed+
+               +k-rl-getstate+ +k-rl-getrandomseed+ +k-rl-freeze+
+               +k-rl-agent-message+ +k-rl-env-message+ +k-rl-term+))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Network constants.
@@ -84,7 +100,7 @@
 (defun rl-wait-for-connection (host port max-retry retry-timeout)
   "Waiting for a connection to be established. Returns the obtained socket 
 descriptor on success, or nil on failure."
-  (forced-format "Connecting to ~a:~a " host port)
+  (forced-format "        Connecting to ~a:~a " host port)
   (loop with retry = 0 do
        (forced-format ".")
        (when max-retry
@@ -109,11 +125,13 @@ descriptor on success, or nil on failure."
 
 (defun rl-send-buffer (socket buffer state)
   "Sends the BUFFER content with STATE identifier."
+  (declare #.*optimize-settings*)
   (buffer-send buffer (usocket:socket-stream socket) state)
   buffer)
 
 (defun rl-recv-buffer (socket buffer)
   "Receives the BUFFER content and a state identifier what is returned."
+  (declare #.*optimize-settings*)
   (buffer-recv buffer (usocket:socket-stream socket)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

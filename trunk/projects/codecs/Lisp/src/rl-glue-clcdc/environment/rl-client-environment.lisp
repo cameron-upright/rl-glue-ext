@@ -148,18 +148,21 @@ RETURNS:
 ;;; Environment client methods surrounded by buffer handling.
 
 (defun on-env-init (env buffer)
+  (declare #.*optimize-settings*)
   (let ((task-spec (env-init env)))
     (buffer-clear buffer)
     (rl-write-task-spec task-spec buffer))
   env)
 
 (defun on-env-start (env buffer)
+  (declare #.*optimize-settings*)
   (let ((observation (env-start env)))
     (buffer-clear buffer)
     (rl-write-observation observation buffer))
   env)
 
 (defun on-env-step (env buffer)
+  (declare #.*optimize-settings*)
   (let ((action (rl-read-action buffer)))
     (multiple-value-bind (reward observation terminal)
         (env-step env action)
@@ -170,35 +173,41 @@ RETURNS:
   env)
 
 (defun on-env-get-state (env buffer)
+  (declare #.*optimize-settings*)
   (let ((state-key (env-get-state env)))
     (buffer-clear buffer)
     (rl-write-state-key state-key buffer))
   env)
 
 (defun on-env-set-state (env buffer)
+  (declare #.*optimize-settings*)
   (let ((state-key (rl-read-state-key buffer)))
     (env-set-state env state-key))
   (buffer-clear buffer)
   env)
 
 (defun on-env-get-random-seed (env buffer)
+  (declare #.*optimize-settings*)
   (let ((random-seed (env-get-random-seed env)))
     (buffer-clear buffer)
     (rl-write-random-seed-key random-seed buffer))
   env)
 
 (defun on-env-set-random-seed (env buffer)
+  (declare #.*optimize-settings*)
   (let ((random-seed (rl-read-random-seed-key buffer)))
     (env-set-random-seed env random-seed))
   (buffer-clear buffer)
   env)
 
 (defun on-env-cleanup (env buffer)
+  (declare #.*optimize-settings*)
   (env-cleanup env)
   (buffer-clear buffer)
   env)
 
 (defun on-env-message (env buffer)
+  (declare #.*optimize-settings*)
   (let ((input-msg (rl-read-message buffer)))
     (let ((output-msg (env-message env input-msg)))
       (buffer-clear buffer)
@@ -209,6 +218,7 @@ RETURNS:
 ;;; Environment client event loop.
 
 (defun run-env-event-loop (env socket buffer)
+  (declare #.*optimize-settings*)
   (loop do
        (buffer-clear buffer)
        (let ((state (rl-recv-buffer socket buffer)))
@@ -256,6 +266,8 @@ PARAMETERS:
                     (key parameter, default is nil)
 RETURNS:
     (none)"
+  (forced-format "RL-Glue Lisp Environment Codec Version ~a, Build ~a~%"
+                 (get-codec-version) (get-svn-codec-version))
   (rl-runner env +k-environment-connection+ #'run-env-event-loop
              host port max-retry retry-timeout autoreconnect))
 
