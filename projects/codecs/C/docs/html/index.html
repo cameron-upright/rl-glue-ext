@@ -42,66 +42,68 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html47"
+<LI><A NAME="tex2html49"
   HREF="C-Codec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html48"
-  HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html49"
-  HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
 <LI><A NAME="tex2html50"
-  HREF="C-Codec.html#SECTION00023000000000000000">Installing the Codec</A>
+  HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
 <LI><A NAME="tex2html51"
+  HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
+<LI><A NAME="tex2html52"
+  HREF="C-Codec.html#SECTION00023000000000000000">Installing the Codec</A>
+<LI><A NAME="tex2html53"
   HREF="C-Codec.html#SECTION00024000000000000000">Uninstall</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html52"
+<LI><A NAME="tex2html54"
   HREF="C-Codec.html#SECTION00030000000000000000">Agents</A>
 <UL>
-<LI><A NAME="tex2html53"
+<LI><A NAME="tex2html55"
   HREF="C-Codec.html#SECTION00031000000000000000">Custom Flags for Custom Installs</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html54"
+<LI><A NAME="tex2html56"
   HREF="C-Codec.html#SECTION00040000000000000000">Environments</A>
-<LI><A NAME="tex2html55"
+<LI><A NAME="tex2html57"
   HREF="C-Codec.html#SECTION00050000000000000000">Experiments</A>
 <UL>
-<LI><A NAME="tex2html56"
+<LI><A NAME="tex2html58"
   HREF="C-Codec.html#SECTION00051000000000000000">Gotchas!</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html57"
-  HREF="C-Codec.html#SECTION00060000000000000000">Putting it all together</A>
-<LI><A NAME="tex2html58"
-  HREF="C-Codec.html#SECTION00070000000000000000">Codec Specification, Memory Allocation, Types, and Function Prototypes</A>
 <LI><A NAME="tex2html59"
+  HREF="C-Codec.html#SECTION00060000000000000000">Putting it all together</A>
+<LI><A NAME="tex2html60"
+  HREF="C-Codec.html#SECTION00070000000000000000">Codec Specification, Memory Allocation, Types, and Function Prototypes</A>
+<LI><A NAME="tex2html61"
   HREF="C-Codec.html#SECTION00080000000000000000">Advanced Features</A>
 <UL>
-<LI><A NAME="tex2html60"
+<LI><A NAME="tex2html62"
   HREF="C-Codec.html#SECTION00081000000000000000">Connecting to Custom Hosts and Ports</A>
-<LI><A NAME="tex2html61"
+<LI><A NAME="tex2html63"
   HREF="C-Codec.html#SECTION00082000000000000000">Customize the Codec for Flexible Integration</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html62"
+<LI><A NAME="tex2html64"
   HREF="C-Codec.html#SECTION00090000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html63"
+<LI><A NAME="tex2html65"
   HREF="C-Codec.html#SECTION00091000000000000000">Types</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html64"
+<LI><A NAME="tex2html66"
   HREF="C-Codec.html#SECTION000100000000000000000">Frequently Asked Questions</A>
 <UL>
-<LI><A NAME="tex2html65"
+<LI><A NAME="tex2html67"
   HREF="C-Codec.html#SECTION000101000000000000000">Where can I get more help?</A>
+<LI><A NAME="tex2html68"
+  HREF="C-Codec.html#SECTION000102000000000000000">What's up with the Task Spec Parser?</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html66"
+<LI><A NAME="tex2html69"
   HREF="C-Codec.html#SECTION000110000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html67"
+<LI><A NAME="tex2html70"
   HREF="C-Codec.html#SECTION000111000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -116,14 +118,14 @@ This document describes how to use the C/C++ RL-Glue Codec, a software library t
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot230"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot232"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in C and/or C++.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot231"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot233"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -140,8 +142,8 @@ by this codec.  The RL-Glue 3.0 technical manual can be found in the <TT>docs</T
 Software Requirements</A>
 </H2>
 This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools<A NAME="tex2html6"
-  HREF="#foot232"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
-  HREF="#foot233"><SUP>4</SUP></A>). 
+  HREF="#foot234"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
+  HREF="#foot235"><SUP>4</SUP></A>). 
 
 <P>
 
@@ -789,6 +791,24 @@ We're happy to answer any questions about RL-Glue.  Of course, try to search thr
 
 <P>
 
+<H2><A NAME="SECTION000102000000000000000">
+What's up with the Task Spec Parser?</A>
+</H2>
+We've distributed the existing task spec parser from the previous version of RL-Glue with this codec. 
+However, it is not officially supported as we are trying to ratify a new and improved task 
+specification language.
+
+<P>
+We will release an updated codec with certified task spec parser once the new language has been 
+ratified.
+
+<P>
+For more information, please go here:
+<BR>
+<TT><A NAME="tex2html14"
+  HREF="http://glue.rl-community.org/Home/rl-glue/task-spec-language">http://glue.rl-community.org/Home/rl-glue/task-spec-language</A></TT>
+<P>
+
 <H1><A NAME="SECTION000110000000000000000">
 Credits and Acknowledgements</A>
 </H1>
@@ -810,9 +830,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 300 $
+Revision Number: $Rev: 310 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-10-04 21:13:17 -0600 (Sat, 04 Oct 2008) $
+Last Updated   : $Date: 2008-10-05 22:15:51 -0600 (Sun, 05 Oct 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.tex $
 </PRE>
 
@@ -839,25 +859,25 @@ The command line arguments were: <BR>
 The translation was initiated by Brian Tanner on 2008-10-05
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot230">... RL-Glue</A><A
+<DT><A NAME="foot232">... RL-Glue</A><A
  HREF="C-Codec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot231">... Apache-2.0</A><A
+<DT><A NAME="foot233">... Apache-2.0</A><A
  HREF="C-Codec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot232">... Autotools</A><A
+<DT><A NAME="foot234">... Autotools</A><A
  HREF="C-Codec.html#tex2html6"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html7"
   HREF="http://sources.redhat.com/autobook/">http://sources.redhat.com/autobook/</A></TT>
 
 </DD>
-<DT><A NAME="foot233">... CYGWIN</A><A
+<DT><A NAME="foot235">... CYGWIN</A><A
  HREF="C-Codec.html#tex2html8"><SUP>4</SUP></A></DT>
 <DD><TT><A NAME="tex2html9"
   HREF="http://www.cygwin.com/">http://www.cygwin.com/</A></TT>
