@@ -1,5 +1,5 @@
 /* 
-* Copyright (C) 2007, Andrew Butcher
+* Copyright (C) 2008, Brian Taner
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,9 +21,19 @@
 */
 
 /**
-This is just a straight copy of RL_client_environment with a couple 
-of specific calls filled in
-*/
+This is a copy of RL_client_environment with a couple 
+of specific calls filled in.  To customize the codec, just 
+look for places where default calls are happening, like:
+env_init, env_start, env_step, etc, etc.. and then write a bit of code to 
+emulate the same behavior using whatever project you are hooking into.
+
+
+All of the inserted code is commented.
+All of the previous code in here has been commented out like:*/
+
+/* CUT-FOR-CUSTOMIZATION: env_init();*/
+
+
 
 #include <assert.h> /* assert  */
 #include <unistd.h> /* sleep   */
@@ -51,17 +61,25 @@ static const char* kUnknownMessage = "Unknown Message: %s\n";
 static action_t theAction                 = {0};
 static state_key_t theStateKey            = {0};
 static random_seed_key_t theRandomSeedKey = {0};
-static rlBuffer theBuffer               = {0};
+static rlBuffer theBuffer                 = {0};
 static message_t theInMessage = 0;
 static unsigned int theInMessageCapacity = 0;
 
+/*Added as a global variable because now we must allocate and fill
+up the data structures instead of the environment.*/
+static observation_t theObservation		  = {0};
+
 static void onEnvInit(int theConnection) {
+ /* CUT-FOR-CUSTOMIZATION:  task_specification_t theTaskSpec = 0;*/
   unsigned int theTaskSpecLength = 0;
   unsigned int offset = 0;
 
-  /* You could give a real RL-Glue task spec or a custom one*/
-  task_specification_t theTaskSpec = "version Sample-Game1.0";
+   /* CUT-FOR-CUSTOMIZATION: theTaskSpec = env_init();*/
 
+  /* You could give a real RL-Glue task spec or a custom one*/
+  /* TheGame conveniently is the same as SkeletonEnvironment.c,
+	 our other example environment*/
+  task_specification_t theTaskSpec = "2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]";
 
   if (theTaskSpec != NULL) {
     theTaskSpecLength = strlen(theTaskSpec);
@@ -76,39 +94,53 @@ static void onEnvInit(int theConnection) {
 }
 
 static void onEnvStart(int theConnection) {
-	observation_t theObservation = {0};
-  unsigned int offset = 0;
+   	/* CUT-FOR-CUSTOMIZATION: observation_t theObservation = {0}; */
+  	unsigned int offset = 0;
 
-	allocateRLStruct(&theObservation,1,0,0);
-  
+ 	/* CUT-FOR-CUSTOMIZATION: theObservation=env_start(); */
+
+	/* Call our hook into TheGame to start a new game */
 	new_game();
+	/* Allocate space to store the observation (gameState)*/
+	allocateRLStruct(&theObservation,1,0,0);
+
+	/* Get the int observation from a global variable we
+								extern'd from TheGame.c */
 	theObservation.intArray[0]=gameState;
-	
-
 	__RL_CHECK_STRUCT(&theObservation)
-
   rlBufferClear(&theBuffer);
   offset = rlCopyADTToBuffer(&theObservation, &theBuffer, offset);
 }
 
 static void onEnvStep(int theConnection) {
-	observation_t theObservation = {0};
 	reward_observation_t ro = {0};
 	unsigned int offset = 0;
-  int theIntAction=0;
+
+	/* Create an integer variable to hold the action from the agent*/
+  	int theIntAction=0;
 
 
-  offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
-  __RL_CHECK_STRUCT(&theAction);
+	offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
+ 	__RL_CHECK_STRUCT(&theAction);
 
 	/*I know to only expect 1 integer action*/
 	theIntAction=theAction.intArray[0];
 
+	/*This is our hook into TheGame */
 	play_one_step(theIntAction);
-
+	
+  	/* CUT-FOR-CUSTOMIZATION: ro = env_step(theAction);	*/
+  
+	/************************** ALL NEW CODE HERE **************************/
+	/* Allocate space to store the observation (gameState)*/
 	allocateRLStruct(&theObservation,1,0,0);
+	/* Get the int observation from a global variable we
+								extern'd from TheGame.c */
 	theObservation.intArray[0]=gameState;
 
+	/* TheGame doesn't know about rewards, and it doesn't
+		have a "terminal" flag, so we have to write code
+					   to make TheGame fit with RL-Glue*/
 	if(gameState==0){
 		ro.r=-1.0;
 		ro.terminal=1;
@@ -117,10 +149,11 @@ static void onEnvStep(int theConnection) {
 	if(gameState==20){
 		ro.r=1.0;
 		ro.terminal=1;
-		
 	}
+
 	ro.o=theObservation;
 
+	/************************** NEW CODE OVER **************************/
 	
   __RL_CHECK_STRUCT(&ro.o)
 
@@ -134,79 +167,75 @@ static void onEnvStep(int theConnection) {
 
 static void onEnvCleanup(int theConnection) {
 	/*No game specific cleanup to do*/
+	/* CUT-FOR-CUSTOMIZATION: env_cleanup();*/
 
-  rlBufferClear(&theBuffer);
+	rlBufferClear(&theBuffer);
+	
+	/* Clean up theObservation global we created*/
+	clearRLStruct(&theObservation);
 
-  free(theAction.intArray);
-  free(theAction.doubleArray);
-  free(theRandomSeedKey.intArray);
-  free(theRandomSeedKey.doubleArray);
-  free(theStateKey.intArray);
-  free(theStateKey.doubleArray);
-  free(theInMessage);
-
-  theAction.intArray           = 0;
-  theAction.doubleArray        = 0;
-  theRandomSeedKey.intArray    = 0;
-  theRandomSeedKey.doubleArray = 0;
-  theStateKey.intArray         = 0;
-  theStateKey.doubleArray      = 0;
-
-  theAction.numInts = 0;
-  theAction.numDoubles = 0;
-  theRandomSeedKey.numInts = 0;
-  theRandomSeedKey.numDoubles = 0;
-  theStateKey.numInts = 0;
-  theStateKey.numDoubles = 0;
-
-  theInMessage = 0;
-  theInMessageCapacity = 0;
+	clearRLStruct(&theAction);
+	clearRLStruct(&theRandomSeedKey);
+	clearRLStruct(&theStateKey);
+	
+	/*It's ok to free null pointers, so this is safe */
+	free(theInMessage);
+	theInMessage = 0;
+	theInMessageCapacity = 0;
 }
 
 static void onEnvSetState(int theConnection) {
-  unsigned int offset = 0;
+	unsigned int offset = 0;
 
 	printf("envSetState not supported by sample custom codec integration\n");
 
-  offset = rlCopyBufferToADT(&theBuffer, offset, &theStateKey);
+	offset = rlCopyBufferToADT(&theBuffer, offset, &theStateKey);
+	/* CUT-FOR-CUSTOMIZATION: env_set_state(theStateKey);*/
 
-  rlBufferClear(&theBuffer);
+	rlBufferClear(&theBuffer);
 }
 
 static void onEnvSetRandomSeed(int theConnection) {
-  unsigned int offset = 0;
+	unsigned int offset = 0;
 
 	printf("envSetRandomSeed not supported by sample custom codec integration\n");
 
-  offset = rlCopyBufferToADT(&theBuffer, offset, &theRandomSeedKey);  
-  rlBufferClear(&theBuffer);
+	offset = rlCopyBufferToADT(&theBuffer, offset, &theRandomSeedKey);  
+	/* CUT-FOR-CUSTOMIZATION: env_set_random_seed(theRandomSeedKey);*/
+
+	rlBufferClear(&theBuffer);
 }
 
 static void onEnvGetState(int theConnection) {
 	state_key_t key = {0};
-  unsigned int offset = 0;
+	unsigned int offset = 0;
 
 	printf("envGetState not supported by sample custom codec integration\n");
+	/* CUT-FOR-CUSTOMIZATION: key = env_get_state();*/
+	/* CUT-FOR-CUSTOMIZATION: __RL_CHECK_STRUCT(&key);*/
 
 
 	rlBufferClear(&theBuffer);
-  offset = rlCopyADTToBuffer(&key, &theBuffer, offset);
+	offset = rlCopyADTToBuffer(&key, &theBuffer, offset);
 }
 
 static void onEnvGetRandomSeed(int theConnection) {
 	random_seed_key_t key = {0};
-  unsigned int offset = 0;
+	unsigned int offset = 0;
 
 	printf("envGetRandomSeed no supported by sample custom codec integration\n");
+	/* CUT-FOR-CUSTOMIZATION: key=env_get_random_seed(); */
+	/* CUT-FOR-CUSTOMIZATION: __RL_CHECK_STRUCT(&key); */
 
-  rlBufferClear(&theBuffer);
-  rlCopyADTToBuffer(&key, &theBuffer, offset);
+	rlBufferClear(&theBuffer);
+	rlCopyADTToBuffer(&key, &theBuffer, offset);
 }
 
 static void onEnvMessage(int theConnection) {
   unsigned int inMessageLength = 0;
   unsigned int outMessageLength = 0;
   message_t inMessage = 0;
+  /*We set this to a string constant instead of null*/
   message_t outMessage = "sample custom codec integration has no messages!";
   unsigned int offset = 0;
 
@@ -226,6 +255,7 @@ static void onEnvMessage(int theConnection) {
 /*Make sure to null terminate the string */
    theInMessage[inMessageLength]='\0';
 
+	/* CUT-FOR-CUSTOMIZATION: outMessage = env_message(theInMessage);*/
 
   if (outMessage != NULL) {
    outMessageLength = strlen(outMessage);
@@ -297,29 +327,28 @@ void runEnvironmentEventLoop(int theConnection) {
   } while (envState != kRLTerm);
 }
 
-/*This is now my custom main*/
+/*This used to be the main method, I've renamed it and cut a bunch of stuff out*/
 int setup_rlglue_network() {
-  int theConnection = 0;
+	int theConnection = 0;
 
-  char* host = kLocalHost;
-  short port = kDefaultPort;
+	char* host = kLocalHost;
+	short port = kDefaultPort;
 
-  printf("RL-Glue sample env custom codec integration.\n");
+	printf("RL-Glue sample env custom codec integration.\n");
 
-  /* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
-  rlBufferCreate(&theBuffer, 4096);
-  
-    theConnection = rlWaitForConnection(host, port, kRetryTimeout);
-	
-		printf("\tSample custom env codec :: Connected\n");
-    rlBufferClear(&theBuffer);
-    rlSendBufferData(theConnection, &theBuffer, kEnvironmentConnection);
+	/* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
+	rlBufferCreate(&theBuffer, 4096);
 
-		return theConnection;
+	theConnection = rlWaitForConnection(host, port, kRetryTimeout);
 
+	printf("\tSample custom env codec :: Connected\n");
+	rlBufferClear(&theBuffer);
+	rlSendBufferData(theConnection, &theBuffer, kEnvironmentConnection);
+
+	return theConnection;
 }
 
 void teardown_rlglue_network(int theConnection){
-    rlClose(theConnection);
-		rlBufferDestroy(&theBuffer);
+	rlClose(theConnection);
+	rlBufferDestroy(&theBuffer);
 }

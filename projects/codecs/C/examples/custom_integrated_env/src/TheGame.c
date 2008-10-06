@@ -17,12 +17,19 @@
 
 #include "TheGame.h"
 
+/*Just like the SkeletonEnvironment distributed with this Codec, 
+TheGame takes 2 actions {0,1}, 0 decrements the state, 
+and 1 increments it.  Unlike the Skeleton environment, 
+TheGame doesn't have a concept of terminal states or
+rewards.  Starting state is 10. */
 
+/* Global variable to keep track of game state */
 int gameState=10;
 
 void new_game(){
 	gameState=10;
 }
+
 
 void play_one_step(int whichAction){
 	if(whichAction==0)
@@ -34,13 +41,17 @@ void play_one_step(int whichAction){
 
 void game_startup(){
 		printf("\"The Game\" starting up...\n");
-		printf("...intializing fun factors\n");
-		printf("...calibrating goof exponents\n");
-		printf("etc.\n");
+		printf("\t...intializing fun factors\n");
+		printf("\t...calibrating goof exponents\n");
+		printf("\t...done.\n");
 	}
 
 
+/*
+This is a custom main method that would be a specialized version
+of the one that came with unmodified TheGame (if it were real).
 
+Basically, we've injected calls here and there to setup RL-Glue, etc.*/
 int main(int argc, char** argv) {
 	int theConnection=0;
 	game_startup();
