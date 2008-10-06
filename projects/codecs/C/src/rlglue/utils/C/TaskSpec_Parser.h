@@ -26,6 +26,8 @@
 #include <math.h>
 #include <float.h>
 
+/* We are distributing this but not supporting it as of RL-Glue 3.0 RC1 */
+
 
 #ifndef C_TASKSPEC_PARSER_H
 #define C_TASKSPEC_PARSER_H

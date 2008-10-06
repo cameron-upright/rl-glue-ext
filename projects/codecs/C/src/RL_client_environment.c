@@ -36,184 +36,184 @@
 #include <rlglue/Environment_common.h>
 #include <rlglue/network/RL_network.h>
 
+/* Include the utility methods*/
+#include <rlglue/utils/C/RLStruct_util.h>
+
+
 
 static const char* kUnknownMessage = "Unknown Message: %s\n";
 
-static action_t theAction                 = {0};
-static state_key_t theStateKey            = {0};
-static random_seed_key_t theRandomSeedKey = {0};
-static rlBuffer theBuffer               = {0};
-static message_t theInMessage = 0;
-static unsigned int theInMessageCapacity = 0;
+static action_t ce_globalaction                 = {0};
+static state_key_t ce_globalstatekey            = {0};
+static random_seed_key_t ce_globalrandomseedkey = {0};
+static rlBuffer ce_globalrlbuffer               = {0};
+static message_t ce_globalinmessage = 0;
+static unsigned int ce_globalinmessagecapacity = 0;
 
 static void onEnvInit(int theConnection) {
-  task_specification_t theTaskSpec = 0;
-  unsigned int theTaskSpecLength = 0;
-  unsigned int offset = 0;
+	task_specification_t theTaskSpec = 0;
+	unsigned int theTaskSpecLength = 0;
+	unsigned int offset = 0;
 
-  /* Read the data in the buffer (data from server) */
-  /* No data to read .... */
+	/* Read the data in the buffer (data from server) */
+	/* No data to read .... */
 
-  /* Call RL method on the recv'd data */
-  theTaskSpec = env_init();
-  if (theTaskSpec != NULL) {
-    theTaskSpecLength = strlen(theTaskSpec);
-  }
+	/* Call RL method on the recv'd data */
+	theTaskSpec = env_init();
+	if (theTaskSpec != NULL) {
+		theTaskSpecLength = strlen(theTaskSpec);
+	}
 
-  /* Prepare the buffer for sending data back to the server */
-  rlBufferClear(&theBuffer);
-  offset = rlBufferWrite(&theBuffer, offset, &theTaskSpecLength, 1, sizeof(int));
-  if (theTaskSpecLength > 0) {
-    offset = rlBufferWrite(&theBuffer, offset, theTaskSpec, theTaskSpecLength, sizeof(char));
-  }
+	/* Prepare the buffer for sending data back to the server */
+	rlBufferClear(&ce_globalrlbuffer);
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &theTaskSpecLength, 1, sizeof(int));
+	if (theTaskSpecLength > 0) {
+		offset = rlBufferWrite(&ce_globalrlbuffer, offset, theTaskSpec, theTaskSpecLength, sizeof(char));
+	}
 }
 
 static void onEnvStart(int theConnection) {
 	observation_t theObservation = {0};
-  	unsigned int offset = 0;
+	 	unsigned int offset = 0;
 
 	theObservation=env_start();
 	__RL_CHECK_STRUCT(&theObservation)
 
-  rlBufferClear(&theBuffer);
-  offset = rlCopyADTToBuffer(&theObservation, &theBuffer, offset);
+	rlBufferClear(&ce_globalrlbuffer);
+	offset = rlCopyADTToBuffer(&theObservation, &ce_globalrlbuffer, offset);
 }
 
 static void onEnvStep(int theConnection) {
 	reward_observation_t ro = {0};
 	unsigned int offset = 0;
 
-  offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
-  __RL_CHECK_STRUCT(&theAction);
+	offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalaction);
+	__RL_CHECK_STRUCT(&ce_globalaction);
 
-  ro = env_step(theAction);	
-  __RL_CHECK_STRUCT(&ro.o)
+	ro = env_step(ce_globalaction);	
+	__RL_CHECK_STRUCT(&ro.o)
 
 
-  rlBufferClear(&theBuffer);
-  offset = 0;
-  offset = rlBufferWrite(&theBuffer, offset, &ro.terminal, 1, sizeof(terminal_t));
-  offset = rlBufferWrite(&theBuffer, offset, &ro.r, 1, sizeof(reward_t));
-  offset = rlCopyADTToBuffer(&ro.o, &theBuffer, offset);
+	rlBufferClear(&ce_globalrlbuffer);
+	offset = 0;
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro.terminal, 1, sizeof(terminal_t));
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro.r, 1, sizeof(reward_t));
+	offset = rlCopyADTToBuffer(&ro.o, &ce_globalrlbuffer, offset);
 }
 
 static void onEnvCleanup(int theConnection) {
-  env_cleanup();
-  rlBufferClear(&theBuffer);
+	env_cleanup();
+	rlBufferClear(&ce_globalrlbuffer);
 
-  free(theAction.intArray);
-  free(theAction.doubleArray);
-  free(theRandomSeedKey.intArray);
-  free(theRandomSeedKey.doubleArray);
-  free(theStateKey.intArray);
-  free(theStateKey.doubleArray);
-  free(theInMessage);
+	clearRLStruct(&ce_globalaction);
+	clearRLStruct(&ce_globalrandomseedkey);
+	clearRLStruct(&ce_globalstatekey);
+	if(ce_globalinmessage!=0)
+		free(ce_globalinmessage);
 
-  theAction.intArray           = 0;
-  theAction.doubleArray        = 0;
-  theRandomSeedKey.intArray    = 0;
-  theRandomSeedKey.doubleArray = 0;
-  theStateKey.intArray         = 0;
-  theStateKey.doubleArray      = 0;
 
-  theAction.numInts = 0;
-  theAction.numDoubles = 0;
-  theRandomSeedKey.numInts = 0;
-  theRandomSeedKey.numDoubles = 0;
-  theStateKey.numInts = 0;
-  theStateKey.numDoubles = 0;
-
-  theInMessage = 0;
-  theInMessageCapacity = 0;
+	ce_globalinmessage = 0;
+	ce_globalinmessagecapacity = 0;
 }
 
 static void onEnvSetState(int theConnection) {
   unsigned int offset = 0;
 
-  offset = rlCopyBufferToADT(&theBuffer, offset, &theStateKey);
-  env_set_state(theStateKey);
+  offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalstatekey);
+  env_set_state(ce_globalstatekey);
 
-  rlBufferClear(&theBuffer);
+  rlBufferClear(&ce_globalrlbuffer);
 }
 
 static void onEnvSetRandomSeed(int theConnection) {
   unsigned int offset = 0;
 
-  offset = rlCopyBufferToADT(&theBuffer, offset, &theRandomSeedKey);  
-  env_set_random_seed(theRandomSeedKey);
+  offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalrandomseedkey);  
+  env_set_random_seed(ce_globalrandomseedkey);
 
-  rlBufferClear(&theBuffer);
+  rlBufferClear(&ce_globalrlbuffer);
 }
 
 static void onEnvGetState(int theConnection) {
 	state_key_t key = {0};
-  unsigned int offset = 0;
+	unsigned int offset = 0;
 
-  key=	env_get_state();
+	key = env_get_state();
+	__RL_CHECK_STRUCT(&key);
 
-
-		__RL_CHECK_STRUCT(&key);
-		rlBufferClear(&theBuffer);
-  offset = rlCopyADTToBuffer(&key, &theBuffer, offset);
+	rlBufferClear(&ce_globalrlbuffer);
+	offset = rlCopyADTToBuffer(&key, &ce_globalrlbuffer, offset);
 }
 
 static void onEnvGetRandomSeed(int theConnection) {
 	random_seed_key_t key = {0};
-  unsigned int offset = 0;
+	unsigned int offset = 0;
 
-key=env_get_random_seed();
+	key=env_get_random_seed();
 	__RL_CHECK_STRUCT(&key);
 
 
-  rlBufferClear(&theBuffer);
-  rlCopyADTToBuffer(&key, &theBuffer, offset);
+	rlBufferClear(&ce_globalrlbuffer);
+	rlCopyADTToBuffer(&key, &ce_globalrlbuffer, offset);
 }
 
+/*
+	- Remember that ce_globalinmessage is a global variable
+*/
 static void onEnvMessage(int theConnection) {
-  unsigned int inMessageLength = 0;
-  unsigned int outMessageLength = 0;
-  message_t inMessage = 0;
-  message_t outMessage = 0;
-  unsigned int offset = 0;
+	unsigned int inMessageLength = 0;
+	unsigned int outMessageLength = 0;
+	message_t inMessage = 0;
+	message_t outMessage = 0;
+	unsigned int offset = 0;
 
-  offset = 0;
-  offset = rlBufferRead(&theBuffer, offset, &inMessageLength, 1, sizeof(int));
-  if (inMessageLength >= theInMessageCapacity) {
-    inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
-    free(theInMessage);
+	offset = 0;
+	offset = rlBufferRead(&ce_globalrlbuffer, offset, &inMessageLength, 1, sizeof(int));
+	
+	/*Check if the length of the message we're getting is too big
+	  If it is too big, allocate more space						*/
+	if (inMessageLength >= ce_globalinmessagecapacity) {
+		/*We make it size + 1 so we can be sure that we can null terminate it*/
+		inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
+		/*Free the old one (might be null, but that's safe)*/
+		free(ce_globalinmessage);
 
-    theInMessage = inMessage;
-    theInMessageCapacity = inMessageLength;
-  }
+		ce_globalinmessage = inMessage;
+		ce_globalinmessagecapacity = inMessageLength;
+	}
 
-  if (inMessageLength > 0) {
-    offset = rlBufferRead(&theBuffer, offset, theInMessage, inMessageLength, sizeof(char));
-  }
-/*Make sure to null terminate the string */
-   theInMessage[inMessageLength]='\0';
+	/*If there was a message, read it off the buffer*/
+	if (inMessageLength > 0) {
+		offset = rlBufferRead(&ce_globalrlbuffer, offset, ce_globalinmessage, inMessageLength, sizeof(char));
+	}
+	/*Make sure to null terminate the string */
+	 ce_globalinmessage[inMessageLength]='\0';
 
-  outMessage = env_message(theInMessage);
+	outMessage = env_message(ce_globalinmessage);
 
-  if (outMessage != NULL) {
-   outMessageLength = strlen(outMessage);
-  }
+	if (outMessage != NULL) {
+		outMessageLength = strlen(outMessage);
+	}
 
-  
-  /* we want to start sending, so we're going to reset the offset to 0 so we write the the beginning of the buffer */
-  rlBufferClear(&theBuffer);
-  offset = 0;
-  offset = rlBufferWrite(&theBuffer, offset, &outMessageLength, 1, sizeof(int));
-  if (outMessageLength > 0) {
-    offset = rlBufferWrite(&theBuffer, offset, outMessage, outMessageLength, sizeof(char));
-  }
+
+	/* we want to start sending, so we're going to reset the offset to 0, 
+	 						so we write the the beginning of the buffer */
+	rlBufferClear(&ce_globalrlbuffer);
+	offset = 0;
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &outMessageLength, 1, sizeof(int));
+	if (outMessageLength > 0) {
+		offset = rlBufferWrite(&ce_globalrlbuffer, offset, outMessage, outMessageLength, sizeof(char));
+	}
 }
 
 static void runEnvironmentEventLoop(int theConnection) {
   int envState = 0;
 
+/* This is just a big loop the receives a command and then executes it, 
+until it receives a termination command */
   do { 
-    rlBufferClear(&theBuffer);
-    rlRecvBufferData(theConnection, &theBuffer, &envState);
+    rlBufferClear(&ce_globalrlbuffer);
+    rlRecvBufferData(theConnection, &ce_globalrlbuffer, &envState);
 
     switch(envState) {
     case kEnvInit:
@@ -261,7 +261,7 @@ static void runEnvironmentEventLoop(int theConnection) {
       break;
     };
 
-    rlSendBufferData(theConnection, &theBuffer, envState);
+    rlSendBufferData(theConnection, &ce_globalrlbuffer, envState);
   } while (envState != kRLTerm);
 }
 
@@ -307,17 +307,18 @@ int main(int argc, char** argv) {
 	fflush(stdout);
 
 
-  /* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
-  rlBufferCreate(&theBuffer, 4096);
+  /* Allocate what should be plenty of space for the buffer - 
+			it will dynamically resize if it is too small */
+  rlBufferCreate(&ce_globalrlbuffer, 4096);
   
     theConnection = rlWaitForConnection(host, port, kRetryTimeout);
 	fprintf(stdout, "\tRL-Glue C Environment Codec :: Connected\n");
-    rlBufferClear(&theBuffer);
-    rlSendBufferData(theConnection, &theBuffer, kEnvironmentConnection);
+    rlBufferClear(&ce_globalrlbuffer);
+    rlSendBufferData(theConnection, &ce_globalrlbuffer, kEnvironmentConnection);
     runEnvironmentEventLoop(theConnection);
     rlClose(theConnection);
 
-  rlBufferDestroy(&theBuffer);
+  rlBufferDestroy(&ce_globalrlbuffer);
 
   return 0;
 }
