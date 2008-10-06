@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
 <!--Converted with LaTeX2HTML 2002-2-1 (1.71)
 original version by:  Nikos Drakos, CBLU, University of Leeds
@@ -21,17 +21,16 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY >
-
-<DIV CLASS="navigation"><!--Navigation Panel-->
+<!--Navigation Panel-->
 <IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive" SRC="nx_grp_g.png"> 
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"> 
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png">   
 <BR>
 <BR>
-<BR></DIV>
+<BR>
 <!--End of Navigation Panel-->
 <H1 ALIGN="CENTER">RL-Glue C/C++ Codec 2.0 Manual </H1>
-<DIV CLASS="author_info">
+<DIV>
 
 <P ALIGN="CENTER"><STRONG>Brian Tanner :: brian@tannerpages.com</STRONG></P>
 </DIV>
@@ -42,55 +41,67 @@ Contents</A>
 </H2>
 <!--Table of Contents-->
 
-<UL CLASS="TofC">
-<LI><A NAME="tex2html40"
+<UL>
+<LI><A NAME="tex2html47"
   HREF="C-Codec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html41"
+<LI><A NAME="tex2html48"
   HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html42"
+<LI><A NAME="tex2html49"
   HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
-<LI><A NAME="tex2html43"
+<LI><A NAME="tex2html50"
   HREF="C-Codec.html#SECTION00023000000000000000">Installing the Codec</A>
-<LI><A NAME="tex2html44"
+<LI><A NAME="tex2html51"
   HREF="C-Codec.html#SECTION00024000000000000000">Uninstall</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html45"
+<LI><A NAME="tex2html52"
   HREF="C-Codec.html#SECTION00030000000000000000">Agents</A>
 <UL>
-<LI><A NAME="tex2html46"
+<LI><A NAME="tex2html53"
   HREF="C-Codec.html#SECTION00031000000000000000">Custom Flags for Custom Installs</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html47"
+<LI><A NAME="tex2html54"
   HREF="C-Codec.html#SECTION00040000000000000000">Environments</A>
-<LI><A NAME="tex2html48"
+<LI><A NAME="tex2html55"
   HREF="C-Codec.html#SECTION00050000000000000000">Experiments</A>
 <UL>
-<LI><A NAME="tex2html49"
+<LI><A NAME="tex2html56"
   HREF="C-Codec.html#SECTION00051000000000000000">Gotchas!</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html50"
+<LI><A NAME="tex2html57"
   HREF="C-Codec.html#SECTION00060000000000000000">Putting it all together</A>
-<LI><A NAME="tex2html51"
+<LI><A NAME="tex2html58"
   HREF="C-Codec.html#SECTION00070000000000000000">Codec Specification, Memory Allocation, Types, and Function Prototypes</A>
-<LI><A NAME="tex2html52"
+<LI><A NAME="tex2html59"
   HREF="C-Codec.html#SECTION00080000000000000000">Advanced Features</A>
-<LI><A NAME="tex2html53"
+<UL>
+<LI><A NAME="tex2html60"
+  HREF="C-Codec.html#SECTION00081000000000000000">Connecting to Custom Hosts and Ports</A>
+<LI><A NAME="tex2html61"
+  HREF="C-Codec.html#SECTION00082000000000000000">Customize the Codec for Flexible Integration</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html62"
   HREF="C-Codec.html#SECTION00090000000000000000">Changes and 2.x Backward Compatibility</A>
 <UL>
-<LI><A NAME="tex2html54"
+<LI><A NAME="tex2html63"
   HREF="C-Codec.html#SECTION00091000000000000000">Types</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html55"
+<LI><A NAME="tex2html64"
   HREF="C-Codec.html#SECTION000100000000000000000">Frequently Asked Questions</A>
-<LI><A NAME="tex2html56"
+<UL>
+<LI><A NAME="tex2html65"
+  HREF="C-Codec.html#SECTION000101000000000000000">Where can I get more help?</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html66"
   HREF="C-Codec.html#SECTION000110000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html57"
+<LI><A NAME="tex2html67"
   HREF="C-Codec.html#SECTION000111000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -105,14 +116,14 @@ This document describes how to use the C/C++ RL-Glue Codec, a software library t
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot198"><SUP><SPAN CLASS="arabic">1</SPAN></SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot230"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in C and/or C++.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot199"><SUP><SPAN CLASS="arabic">2</SPAN></SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot231"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -129,8 +140,8 @@ by this codec.  The RL-Glue 3.0 technical manual can be found in the <TT>docs</T
 Software Requirements</A>
 </H2>
 This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools<A NAME="tex2html6"
-  HREF="#foot200"><SUP><SPAN CLASS="arabic">3</SPAN></SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
-  HREF="#foot201"><SUP><SPAN CLASS="arabic">4</SPAN></SUP></A>). 
+  HREF="#foot232"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html8"
+  HREF="#foot233"><SUP>4</SUP></A>). 
 
 <P>
 
@@ -161,7 +172,7 @@ The codec package was made with autotools, which means that you shouldn't have t
 <H3><A NAME="SECTION00023100000000000000">
 Simple Codec Install</A>
 </H3>
-If you are working on your own machine, it is usually easiest to install the headers and libraries into <TT>/usr/local</TT>, which is the default installation location but requires <SPAN  CLASS="textit">sudo</SPAN> or <SPAN  CLASS="textit">root</SPAN> access.
+If you are working on your own machine, it is usually easiest to install the headers and libraries into <TT>/usr/local</TT>, which is the default installation location but requires <I>sudo</I> or <I>root</I> access.
 
 <P>
 The steps are:
@@ -204,13 +215,13 @@ If you installed RL-Glue to some place other than <TT>/usr/local</TT>, say <TT>/
 <P>
 
 <H3><A NAME="SECTION00023300000000000000">
-Install Codec To Custom Location (without <SPAN  CLASS="textit">root</SPAN> access)</A>
+Install Codec To Custom Location (without <I>root</I> access)</A>
 </H3>
-If you don't have <SPAN  CLASS="textit">sudo</SPAN> or <SPAN  CLASS="textit">root</SPAN> access on the target machine, you can install the codec in your home directory (or other directory you have access to).
+If you don't have <I>sudo</I> or <I>root</I> access on the target machine, you can install the codec in your home directory (or other directory you have access to).
 If you install to a custom location, you will need set your <TT>CFLAGS</TT> and <TT>LDFLAGS</TT> variables appropriately when compiling your agents, environments, and experiments. See Section <A HREF="#sec:custom-flags">2.1</A> for more information.
 
 <P>
-For example, maybe we want to install the codec to <TT>/Users/btanner/tmp/rlglue</TT>.  This will <SPAN  CLASS="textbf">not</SPAN> clobber RL-Glue if it is already installed to this location, it will install beside it.  The commands are:
+For example, maybe we want to install the codec to <TT>/Users/btanner/tmp/rlglue</TT>.  This will <B>not</B> clobber RL-Glue if it is already installed to this location, it will install beside it.  The commands are:
 <PRE>
 	&gt;$ ./configure --prefix=/Users/btanner/tmp/rlglue
 	&gt;$ make
@@ -274,7 +285,7 @@ The pertinent files are:
 </PRE>
 
 <P>
-This agent does not learn anything and randomly chooses integer action <SPAN CLASS="MATH">0</SPAN> or <SPAN CLASS="MATH">1</SPAN>.  
+This agent does not learn anything and randomly chooses integer action 0 or 1.  
 
 <P>
 If RL-Glue and this codec have been installed in the default location, <TT>/usr/local</TT>, then you can compile and run the agent like:
@@ -292,7 +303,7 @@ You will see something like:
 </PRE>
 
 <P>
-This means that the SkeletonAgent is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port <SPAN CLASS="MATH">4096</SPAN>! 
+This means that the SkeletonAgent is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
 
 <P>
 You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
@@ -305,7 +316,7 @@ The Skeleton agent is very simple and well documented, so we won't spend any mor
 Please open it up and take a look.
 
 <P>
-<SPAN  CLASS="textbf">POSSIBLE CONTRIBUTION</SPAN>: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
+<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
 <P>
@@ -347,7 +358,7 @@ RLGlueNetDev provides implementations of the low level network code that is used
 <BR>
 Custom Flags for Custom Installs
 </H2>
-If RL-Glue <SPAN  CLASS="textbf">or</SPAN> this codec have been installed in a custom location (for example: <TT>/Users/joe/glue</TT>), then you will
+If RL-Glue <B>or</B> this codec have been installed in a custom location (for example: <TT>/Users/joe/glue</TT>), then you will
 need to set the header search path in <TT>CFLAGS</TT> and the library search path in <TT>LDFLAGS</TT>.  You can either do this each time you call make, 
 or you can export the values as environment variables.  These instructions apply to agents, environments, and experiment programs.
 
@@ -410,11 +421,11 @@ The pertinent files are:
 This environment is episodic, with 21 states, labeled <!-- MATH
  $\{0, 1,\ldots,19,20\}$
  -->
-<SPAN CLASS="MATH"><IMG
+<IMG
  WIDTH="128" HEIGHT="35" ALIGN="MIDDLE" BORDER="0"
  SRC="img1.png"
- ALT="$\{0, 1,\ldots,19,20\}$"></SPAN>. States <SPAN CLASS="MATH">{0, 20}</SPAN> are terminal and return rewards of <SPAN CLASS="MATH">{-1, +1}</SPAN> respectively.  The other states return reward of <SPAN CLASS="MATH">0</SPAN>.
-There are two actions, <SPAN CLASS="MATH">{0, 1}</SPAN>.  Action <SPAN CLASS="MATH">0</SPAN> decrements the state number, and action <SPAN CLASS="MATH">1</SPAN> increments it. The environment starts in state 10.
+ ALT="$\{0, 1,\ldots,19,20\}$">. States {0, 20} are terminal and return rewards of {-1, +1} respectively.  The other states return reward of 0.
+There are two actions, {0, 1}.  Action 0 decrements the state number, and action 1 increments it. The environment starts in state 10.
 
 <P>
 If RL-Glue and this codec have been installed in the default location, <TT>/usr/local</TT>, then you can compile and run the environment like:
@@ -432,7 +443,7 @@ You will see something like:
 </PRE>
 
 <P>
-This means that the SkeletonEnvironment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port <SPAN CLASS="MATH">4096</SPAN>! 
+This means that the SkeletonEnvironment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
 
 <P>
 You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
@@ -445,7 +456,7 @@ The Skeleton environment is very simple and well documented, so we won't spend a
 Please open it up and take a look.
 
 <P>
-<SPAN  CLASS="textbf">POSSIBLE CONTRIBUTION</SPAN>: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
+<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
 <P>
@@ -492,7 +503,7 @@ You will see something like:
 </PRE>
 
 <P>
-This means that the SkeletonExperiment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port <SPAN CLASS="MATH">4096</SPAN>!  
+This means that the SkeletonExperiment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096!  
 
 <P>
 You can kill the process by pressing <TT>CTRL-C</TT> on your keyboard.
@@ -505,7 +516,7 @@ The Skeleton experiment is very simple and well documented, so we won't spend an
 Please open it up and take a look.
 
 <P>
-<SPAN  CLASS="textbf">POSSIBLE CONTRIBUTION</SPAN>: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
+<B>POSSIBLE CONTRIBUTION</B>: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
 or just that it should do some fancier things, let us know and we'll be happy to do it!
 
 <P>
@@ -641,7 +652,7 @@ There is some important information about memory management practices in RL-Glue
 RL-Glue 3.0 technical manual.  We've opted to not duplicate those 6 pages of useful information here : but you really should go read them.
 
 <P>
-The main thing to realize is that agents, environments, and experiment programs are completely interchangeable between <SPAN  CLASS="textit">direct-compile</SPAN> (RL-Glue project) and <SPAN  CLASS="textit">socket-communication</SPAN>
+The main thing to realize is that agents, environments, and experiment programs are completely interchangeable between <I>direct-compile</I> (RL-Glue project) and <I>socket-communication</I>
 (this codec).  An agent written for either one will be compiled the same way, the only difference is what library it is linked to.  So, 95% of the technical manual from the RL-Glue project applies 
 perfectly to people using this codec! 
 
@@ -650,10 +661,77 @@ perfectly to people using this codec!
 <H1><A NAME="SECTION00080000000000000000">
 Advanced Features</A>
 </H1>
-This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
+
+<H2><A NAME="SECTION00081000000000000000">
+Connecting to Custom Hosts and Ports</A>
+</H2>
+Sometimes you will want to connect to the <TT>rl_glue</TT> server over the network instead of 
+on the local host.  Othertimes you may want to run the <TT>rl_glue</TT> server on a port other than
+4096 either because of firewall issues, or because you want to run multiple instances on the same machine.
 
 <P>
-Someone should write this later (Opportunity to contribute!).
+In these cases, you can tell this codec to connect to custom port/host combinations using the environment
+variables <TT>RLGLUE_HOST</TT> and <TT>RLGLUE_PORT</TT>.  These are both optional parameters.
+
+<P>
+For example, try the following code:
+<PRE>
+	&gt; $ RLGLUE_HOST=69.64.159.1 RLGLUE_PORT=1025 skeleton_agent/SkeletonAgent
+</PRE>
+
+<P>
+That command could give outcome:
+<PRE>
+RL-Glue C Agent Codec Version 2.0-RC1, Build 277
+    Connecting to host=69.64.159.1 on port=1025...
+</PRE>
+
+<P>
+Alternatively, you can actually use a host name:
+<PRE>
+	&gt; $ RLGLUE_HOST=rlai.net skeleton_agent/SkeletonAgent
+</PRE>
+
+<P>
+That command could give outcome:
+<PRE>
+RL-Glue C Agent Codec Version 2.0-RC1, Build 277
+     Connecting to host=69.64.159.1 on port=4096...
+</PRE>
+
+<P>
+If you don't like typing them every time, you can export them:
+<PRE>
+	&gt; $ export RLGLUE_HOST=rlai.net
+	&gt; $ export RLGLUE_PORT=1025
+	&gt; $ skeleton_agent/SkeletonAgent
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00082000000000000000">
+Customize the Codec for Flexible Integration</A>
+</H2>
+From time to time, someone wants to connect an agent or environment to RL-Glue which comes from 
+an third-party code base that is not easy to fit into the mod of a standard RL-Glue module.  Often the 
+integration problems are related to the third-party code base defining a main method and controlling 
+the execution flow of the program directly (instead of waiting for commands from the <TT>rl_glue</TT> server).
+
+<P>
+Two such examples that have happened already are Marc Lanctot's real time strategy engine that was used
+in the 2008 RL-Competition, and also the project to connect the Stella Atari emulator to RL-Glue.
+
+<P>
+We support a path for integrating these projects with RL-Glue that involves customizing this C/C++ codec, rather than trying too hard to link to it.  We have provided an example in: <TT>examples/custom_integrated_env</TT>.
+
+<P>
+The idea in the example is that you have a game (called <TT>TheGame</TT>) which was never meant to be used
+with RL-Glue.  To integrate it, a copy of <TT>src/RL_client_environment.c</TT> was modified to work 
+specifically with <TT>TheGame</TT>.  For example, all of the calls to <TT>env_init</TT>, <TT>env_start</TT>, <TT>env_step</TT>, etc. were replaced with calls to functions defined in <TT>TheGame</TT>.  The input and output to those <TT>TheGame</TT> functions need to be wrapped up a little
+ bit, but the end result is a fairly easy way to connect <TT>TheGame</TT> to RL-Glue!
+
+<P>
+Check out the source code in the example, and feel free to ask questions in the RL-Glue Google Group!
 
 <P>
 
@@ -679,7 +757,35 @@ All of the types that existed in the 2.x codec (ex: <TT>Observation</TT> instead
 <H1><A NAME="SECTION000100000000000000000">
 Frequently Asked Questions</A>
 </H1>
-We're waiting to hear your questions!
+We're waiting to hear more of your questions!
+
+<P>
+
+<H2><A NAME="SECTION000101000000000000000">
+Where can I get more help?</A>
+</H2>
+
+<H3><A NAME="SECTION000101100000000000000">
+Online FAQ</A>
+</H3>
+We suggest checking out the online RL-Glue C/C++ Codec FAQ:
+<BR>
+<TT><A NAME="tex2html12"
+  HREF="http://glue.rl-community.org/Home/Extensions/c-c-codec#TOC-Frequently-Asked-Questions">http://glue.rl-community.org/Home/Extensions/c-c-codec#TOC-Frequently-Asked-Questions</A></TT>
+<P>
+The online FAQ may be more current than this document, which may have been distributed some time ago.
+
+<P>
+
+<H3><A NAME="SECTION000101200000000000000">
+Google Group / Mailing List</A>
+</H3>
+First, you should join the RL-Glue Google Group Mailing List:
+<BR>
+<TT><A NAME="tex2html13"
+  HREF="http://groups.google.com/group/rl-glue">http://groups.google.com/group/rl-glue</A></TT>
+<P>
+We're happy to answer any questions about RL-Glue.  Of course, try to search through previous messages first in case your question has been answered before.
 
 <P>
 
@@ -704,9 +810,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 294 $
+Revision Number: $Rev: 300 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-10-01 21:24:00 -0600 (Wed, 01 Oct 2008) $
+Last Updated   : $Date: 2008-10-04 21:13:17 -0600 (Sat, 04 Oct 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.tex $
 </PRE>
 
@@ -720,7 +826,7 @@ This document was generated using the
 <A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002-2-1 (1.71)
 <P>
 Copyright &#169; 1993, 1994, 1995, 1996,
-Nikos Drakos, 
+<A HREF="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos Drakos</A>, 
 Computer Based Learning Unit, University of Leeds.
 <BR>
 Copyright &#169; 1997, 1998, 1999,
@@ -730,44 +836,43 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>C-Codec.tex -split 0 -dir html -mkdir -title 'RL-Glue C/C++ Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2008-10-04
+The translation was initiated by Brian Tanner on 2008-10-05
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot198">... RL-Glue</A><A
- HREF="C-Codec.html#tex2html1"><SUP><SPAN CLASS="arabic">1</SPAN></SUP></A></DT>
+<DT><A NAME="foot230">... RL-Glue</A><A
+ HREF="C-Codec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot199">... Apache-2.0</A><A
- HREF="C-Codec.html#tex2html3"><SUP><SPAN CLASS="arabic">2</SPAN></SUP></A></DT>
+<DT><A NAME="foot231">... Apache-2.0</A><A
+ HREF="C-Codec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot200">... Autotools</A><A
- HREF="C-Codec.html#tex2html6"><SUP><SPAN CLASS="arabic">3</SPAN></SUP></A></DT>
+<DT><A NAME="foot232">... Autotools</A><A
+ HREF="C-Codec.html#tex2html6"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html7"
   HREF="http://sources.redhat.com/autobook/">http://sources.redhat.com/autobook/</A></TT>
 
 </DD>
-<DT><A NAME="foot201">... CYGWIN</A><A
- HREF="C-Codec.html#tex2html8"><SUP><SPAN CLASS="arabic">4</SPAN></SUP></A></DT>
+<DT><A NAME="foot233">... CYGWIN</A><A
+ HREF="C-Codec.html#tex2html8"><SUP>4</SUP></A></DT>
 <DD><TT><A NAME="tex2html9"
   HREF="http://www.cygwin.com/">http://www.cygwin.com/</A></TT>
 
 </DD>
-</DL>
-<DIV CLASS="navigation"><HR>
+</DL><HR>
 <!--Navigation Panel-->
 <IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive" SRC="nx_grp_g.png"> 
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"> 
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png">   
-<BR></DIV>
+<BR>
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2008-10-04
+2008-10-05
 </ADDRESS>
 </BODY>
 </HTML>
