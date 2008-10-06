@@ -42,53 +42,60 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html43"
+<LI><A NAME="tex2html50"
   HREF="MatlabCodec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html44"
+<LI><A NAME="tex2html51"
   HREF="MatlabCodec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html45"
+<LI><A NAME="tex2html52"
   HREF="MatlabCodec.html#SECTION00022000000000000000">Getting the Codec</A>
-<LI><A NAME="tex2html46"
+<LI><A NAME="tex2html53"
   HREF="MatlabCodec.html#SECTION00023000000000000000">Installing the Codec</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html47"
+<LI><A NAME="tex2html54"
   HREF="MatlabCodec.html#SECTION00030000000000000000">Gotchas!</A>
 <UL>
-<LI><A NAME="tex2html48"
+<LI><A NAME="tex2html55"
   HREF="MatlabCodec.html#SECTION00031000000000000000">Disconnect your Agent/Environment/Experiment</A>
-<LI><A NAME="tex2html49"
+<LI><A NAME="tex2html56"
   HREF="MatlabCodec.html#SECTION00032000000000000000">One Component At A Time</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html50"
+<LI><A NAME="tex2html57"
   HREF="MatlabCodec.html#SECTION00040000000000000000">Agents</A>
-<LI><A NAME="tex2html51"
+<LI><A NAME="tex2html58"
   HREF="MatlabCodec.html#SECTION00050000000000000000">Environments</A>
-<LI><A NAME="tex2html52"
+<LI><A NAME="tex2html59"
   HREF="MatlabCodec.html#SECTION00060000000000000000">Experiments</A>
-<LI><A NAME="tex2html53"
+<LI><A NAME="tex2html60"
   HREF="MatlabCodec.html#SECTION00070000000000000000">Putting it all together</A>
-<LI><A NAME="tex2html54"
+<LI><A NAME="tex2html61"
   HREF="MatlabCodec.html#SECTION00080000000000000000">Who creates and frees memory?</A>
-<LI><A NAME="tex2html55"
+<LI><A NAME="tex2html62"
   HREF="MatlabCodec.html#SECTION00090000000000000000">Advanced Features</A>
-<LI><A NAME="tex2html56"
+<LI><A NAME="tex2html63"
   HREF="MatlabCodec.html#SECTION000100000000000000000">Codec Specification Reference</A>
 <UL>
-<LI><A NAME="tex2html57"
+<LI><A NAME="tex2html64"
   HREF="MatlabCodec.html#SECTION000101000000000000000">Types</A>
-<LI><A NAME="tex2html58"
+<LI><A NAME="tex2html65"
   HREF="MatlabCodec.html#SECTION000102000000000000000">Functions</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html59"
+<LI><A NAME="tex2html66"
   HREF="MatlabCodec.html#SECTION000110000000000000000">Frequently Asked Questions</A>
-<LI><A NAME="tex2html60"
+<UL>
+<LI><A NAME="tex2html67"
+  HREF="MatlabCodec.html#SECTION000111000000000000000">Where can I get more help?</A>
+<LI><A NAME="tex2html68"
+  HREF="MatlabCodec.html#SECTION000112000000000000000">What's up with the Task Spec Parser?</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html69"
   HREF="MatlabCodec.html#SECTION000120000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html61"
+<LI><A NAME="tex2html70"
   HREF="MatlabCodec.html#SECTION000121000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -104,14 +111,14 @@ have scorned us for not supporting Matlab earlier.  It turned out to not even be
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot155"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot162"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in Matlab.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot156"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot163"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -273,7 +280,7 @@ Using this method, you can stop and examine what your agent is learning, and pot
 You will see something like:
 <PRE>
 	&gt;&gt; runAgent(theAgent)
-	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision: 292 $)
+	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision: 294 $)
 	    Connecting to rl_glue at host: localhost on port 4096
 </PRE>
 
@@ -336,7 +343,7 @@ You can compile and run the environment like:
 <P>
 You will see something like:
 <PRE>
-	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision: 292 $)
+	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision: 294 $)
 	    Connecting to rl_glue at host: localhost on port 4096
 </PRE>
 
@@ -383,7 +390,7 @@ This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the
 You will see something like:
 <PRE>
 	Experiment starting up!
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 292 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 294 $)
 	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
 </PRE>
 
@@ -440,7 +447,7 @@ In the Matlab window, you should see the following if it worked:
 <PRE>
 	&gt;&gt; skeleton_experiment()
 	Experiment starting up!
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 292 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 294 $)
 	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
 	    Experiment Codec Connected
 	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
@@ -611,6 +618,52 @@ We're waiting to hear your questions!
 
 <P>
 
+<H2><A NAME="SECTION000111000000000000000">
+Where can I get more help?</A>
+</H2>
+
+<H3><A NAME="SECTION000111100000000000000">
+Online FAQ</A>
+</H3>
+We suggest checking out the online RL-Glue C/C++ Codec FAQ:
+<BR>
+<TT><A NAME="tex2html16"
+  HREF="http://glue.rl-community.org/Home/Extensions/matlab-codec#TOC-Frequently-Asked-Questions">http://glue.rl-community.org/Home/Extensions/matlab-codec#TOC-Frequently-Asked-Questions</A></TT>
+<P>
+The online FAQ may be more current than this document, which may have been distributed some time ago.
+
+<P>
+
+<H3><A NAME="SECTION000111200000000000000">
+Google Group / Mailing List</A>
+</H3>
+First, you should join the RL-Glue Google Group Mailing List:
+<BR>
+<TT><A NAME="tex2html17"
+  HREF="http://groups.google.com/group/rl-glue">http://groups.google.com/group/rl-glue</A></TT>
+<P>
+We're happy to answer any questions about RL-Glue.  Of course, try to search through previous messages first in case your question has been answered before.
+
+<P>
+
+<H2><A NAME="SECTION000112000000000000000">
+What's up with the Task Spec Parser?</A>
+</H2>
+We've distributed the existing task spec parser from the previous version of RL-Glue with this codec. 
+However, it is not officially supported as we are trying to ratify a new and improved task 
+specification language.
+
+<P>
+We will release an updated codec with certified task spec parser once the new language has been 
+ratified.
+
+<P>
+For more information, please go here:
+<BR>
+<TT><A NAME="tex2html18"
+  HREF="http://glue.rl-community.org/Home/rl-glue/task-spec-language">http://glue.rl-community.org/Home/rl-glue/task-spec-language</A></TT>
+<P>
+
 <H1><A NAME="SECTION000120000000000000000">
 Credits and Acknowledgements</A>
 </H1>
@@ -629,9 +682,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 292 $
+Revision Number: $Rev: 294 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-10-01 16:44:53 -0600 (Wed, 01 Oct 2008) $
+Last Updated   : $Date: 2008-10-01 21:24:00 -0600 (Wed, 01 Oct 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab/docs/MatlabCodec.tex $
 </PRE>
 
@@ -655,16 +708,16 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>MatlabCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Matlab Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2008-10-01
+The translation was initiated by Brian Tanner on 2008-10-05
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot155">... RL-Glue</A><A
+<DT><A NAME="foot162">... RL-Glue</A><A
  HREF="MatlabCodec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot156">... Apache-2.0</A><A
+<DT><A NAME="foot163">... Apache-2.0</A><A
  HREF="MatlabCodec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
@@ -679,7 +732,7 @@ The translation was initiated by Brian Tanner on 2008-10-01
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2008-10-01
+2008-10-05
 </ADDRESS>
 </BODY>
 </HTML>
