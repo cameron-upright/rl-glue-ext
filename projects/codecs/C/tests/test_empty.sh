@@ -5,10 +5,10 @@
 # *  $Author$
 # *  $HeadURL$
 
-killall rl_glue
-killall test_empty_agent
-killall test_empty_environment
-killall test_empty_experiment
+./pkill.sh rl_glue
+./pkill.sh test_empty_agent
+./pkill.sh test_empty_environment
+./pkill.sh test_empty_experiment
 sleep 1
 rl_glue &
 sleep 1

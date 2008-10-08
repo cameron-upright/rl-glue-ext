@@ -5,10 +5,10 @@
 # *  $Author: brian@tannerpages.com $
 # *  $HeadURL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/tests/test_1.sh $
 
-killall rl_glue
-killall test_1_agent
-killall test_seeds_environment
-killall test_seeds_experiment
+./pkill.sh rl_glue
+./pkill.sh test_1_agent
+./pkill.sh test_seeds_environment
+./pkill.sh test_seeds_experiment
 sleep 1
 rl_glue &
 sleep 1
