@@ -21,23 +21,31 @@
 ;;; Architecture specific parameters.
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (defparameter +bits-per-byte+ 8)
-  (defparameter +bytes-per-char+ 1)
-  (defparameter +bytes-per-integer+ 4)
-  (defparameter +bytes-per-float+ 8)
-  (declaim (type fixnum
-                 +bits-per-byte+ +bytes-per-char+
-                 +bytes-per-integer+ +bytes-per-float+))
+  (defconstant +bits-per-byte+ 8)
+  (defconstant +bytes-per-char+ 1)
+  (defconstant +bytes-per-integer+ 4)
+  (defconstant +bytes-per-float+ 8)
+
+  (defconstant +bits-per-char+ (* +bits-per-byte+ +bytes-per-char+))
+  (defconstant +bits-per-integer+ (* +bits-per-byte+ +bytes-per-integer+))
+  (defconstant +bits-per-float+ (* +bits-per-byte+ +bytes-per-float+))
+
+  (defconstant +max-int-pos+ (1- +bits-per-integer+))
+  (defconstant +uint-limit+ (expt 2 (1+ +max-int-pos+)))
+  (defconstant +ubyte-limit+ (expt 2 +bits-per-byte+))
+  (defconstant +sint-max+ (1- (/ +uint-limit+ 2)))
+  (defconstant +sint-min+ (1- (- +sint-max+)))
 
   (defmacro ubyte-type ()
     `'(unsigned-byte ,+bits-per-byte+))
 
-  (setf (symbol-function 'get-endianness)
-        #'(lambda ()
-            (case (ldb (byte +bits-per-byte+ 0) 511)
-              ((255) 'little-endian)
-              ((1) 'big-endian)
-              (t (error "Not supported endian type."))))))
+  (defmacro uint-type ()
+    `'(unsigned-byte ,+bits-per-integer+))
+
+  (defmacro code-type ()
+    `'(unsigned-byte ,(max +bits-per-char+
+                           +bits-per-integer+
+                           +bits-per-float+)))) 
 
 ;;; Character encoding / decoding
 
@@ -50,44 +58,37 @@
 (defun char-decoder (code)
   "Returns the decoded character of CODE."
   (declare #.*optimize-settings*)
-  (declare (type (integer 0 *) code))
+  (declare (type #.(code-type) code))
   (code-char code))
 
 ;;; Integer encoding / decoding.
 
-(let* ((max-ipos (1- (* +bits-per-byte+ +bytes-per-integer+)))
-       (max-uint (expt 2 (1+ max-ipos)))
-       (max-sint (1- (/ max-uint 2)))
-       (min-sint (1- (- max-sint))))
-  (declare (integer max-ipos max-uint max-sint min-sint))
+(defun integer-encoder (int)
+  "Returns the code of INT."
+  (declare #.*optimize-settings*)
+  (declare (integer int))
+  (assert (<= +sint-min+ int +sint-max+)
+          (int) "Integer out of range to encode: ~D" int)
+  (if (minusp int) (+ int +uint-limit+) int))
 
-  (defun integer-encoder (int)
-    "Returns the code of INT."
-    (declare #.*optimize-settings*)
-    (declare (integer int))
-    (assert (<= int max-sint) (int) "Too big integer to encode: ~D" int)
-    (assert (>= int min-sint) (int) "Too little integer to encode: ~D" int)
-    int)
-
-  (defun integer-decoder (code)
-    "Returns the decoded sigend integer of CODE."
-    (declare #.*optimize-settings*)
-    (declare (type (unsigned-byte #.(* +bits-per-byte+
-                                       +bytes-per-integer+)) code))
-    (if (logbitp max-ipos code) (- code max-uint) code)))
+(defun integer-decoder (code)
+  "Returns the decoded sigend integer of CODE."
+  (declare #.*optimize-settings*)
+  (declare (type (unsigned-byte #.+bits-per-integer+) code))
+  (if (logbitp +max-int-pos+ code) (- code +uint-limit+) code))
 
 ;;; Float encoding / decoding.
 
 (let ((max-signif (expt 2 52)))
   (declare (type (integer 0 *) max-signif))
 
-  (defun create-code (sign expo sigd)
+  (defun create-float-code (sign expo sigd)
     "Constructs the float code."
     (declare #.*optimize-settings*)
     (declare (fixnum sign expo))
-    (declare (type (integer 0 *) sigd))
+    (declare (type #.(code-type) sigd))
     (let ((code 0))
-      (declare (type (unsigned-byte 64) code))
+      (declare (type #.(code-type) code))
       (setf (ldb (byte 1 63) code) sign
             (ldb (byte 11 52) code) expo
             (ldb (byte 52 0) code) sigd)
@@ -98,7 +99,7 @@
     (declare #.*optimize-settings*)
     (check-type float double-float)
     (if (zerop float)
-        (create-code 0 0 0)
+        (create-float-code 0 0 0)
         (multiple-value-bind (sigd expo sign) (decode-float float)
           (declare (type double-float sigd sign))
           (declare (type fixnum expo))
@@ -106,21 +107,22 @@
                 (sign (if (plusp sign) 0 1)))
             (declare (type fixnum expo sign))
             (if (minusp expo)
-                (create-code sign
-                             0
-                             (ash (round (* max-signif sigd)) expo))
-                (create-code sign
-                             expo
-                             (round (* max-signif (1- (* sigd 2))))))))))
+                (create-float-code sign
+                                   0
+                                   (ash (round (* max-signif sigd)) expo))
+                (create-float-code sign
+                                   expo
+                                   (round (* max-signif (1- (* sigd 2))))))))))
 
   (defun float-decoder (code)
     "Returns the float of CODE."
     (declare #.*optimize-settings*)
-    (declare (type (unsigned-byte 64) code))
+    (declare (type #.(code-type) code))
     (let ((sign (ldb (byte 1 63) code))
           (expo (ldb (byte 11 52) code))
           (sigd (ldb (byte 52 0) code)))
-      (declare (integer sign expo sigd))
+      (declare (fixnum sign expo))
+      (declare (type #.(code-type) sigd))
       (if (zerop expo)
           (setf expo 1)
           (setf (ldb (byte 1 52) sigd) 1))
@@ -132,18 +134,18 @@
 ;;; Byte buffer for network communication.
 
 (defparameter *init-buffer-size* 4096) ; in bytes
-(declaim (type (integer 0 *) *init-buffer-size*))
+(declaim (fixnum *init-buffer-size*))
 
 (defclass buffer ()
   ((offset
     :accessor offset
     :initform 0
-    :type (integer 0 *)
+    :type fixnum
     :documentation "Position from/to where reading/writing happens.")
    (size
     :accessor size
     :initform 0
-    :type (integer 0 *)
+    :type fixnum
     :documentation "Number of bytes in the buffer.")
    (bytes
     :accessor bytes
@@ -181,8 +183,9 @@
   "Checks whether there is enough bytes in BUFFER to read an object of TYPE."
   (let ((buff buffer))
     `(if ,chk-p
-         (if (>= (- (the (integer 0 *) (size ,buff))
-                    (the (integer 0 *) (offset ,buff))) ,type-size)
+         (if (>= (- (the fixnum (size ,buff))
+                    (the fixnum (offset ,buff)))
+                 (the fixnum ,type-size))
              ,@body
              (restart-case (error 'empty-buffer-error :otype ,type)
                (use-value (value) value)))
@@ -192,33 +195,17 @@
   "Checks whether the buffer has enough free space to store SIZE bytes. 
 If not, it automatically adjust the buffer."
   (declare #.*optimize-settings*)
-  (declare (type (integer 0 *) size))
+  (declare (fixnum size))
   (with-accessors ((bytes bytes)) buffer
     (let* ((buff-size (size buffer))
            (buff-capab (length (the vector bytes)))
            (free-size (- buff-capab buff-size)))
-      (declare (type (integer 0 *) buff-size buff-capab free-size))
+      (declare (fixnum buff-size buff-capab free-size))
       (when (< free-size size)
         (setf bytes (adjust-array bytes
                                   (+ buff-capab (- size free-size) size)
                                   :element-type (ubyte-type))))))
   buffer)
-
-(defmacro endian-loop ((pos-name size) &body body)
-  "General loop for network read/write according to the endianness of the
-current architecture. POS-NAME is the name of the byte position iterator,
-and SIZE is the length of the encoded value in bytes."
-  (let ((pos pos-name) (ctr (gensym)))
-    `(let ((,pos ,(ecase (get-endianness)
-                    ((big-endian) 0)
-                    ((little-endian) `(* (1- ,size) +bits-per-byte+)))))
-       (declare (fixnum ,pos))
-       (dotimes (,ctr ,size)
-         (declare (fixnum ,ctr))
-         ,@body
-         (setf ,pos ,(ecase (get-endianness)
-                       ((big-endian) `(+ ,pos +bits-per-byte+))
-                       ((little-endian) `(- ,pos +bits-per-byte+))))))))
 
 (defun buffer-read (size buffer)
   "Reads an encoded value (CODE) from BYTE-STREAM, where SIZE is the length 
@@ -226,13 +213,12 @@ of the encoded value in bytes."
   (declare #.*optimize-settings*)
   (declare (fixnum size))
   (let ((code 0))
-    (declare (type (integer 0 *) code))
+    (declare (type #.(code-type) code))
     (with-accessors ((bytes bytes) (offset offset)) buffer
-      (endian-loop (pos size)
-        (setf code (dpb (aref bytes offset)
-                        (byte +bits-per-byte+ pos)
-                        code))
-        (incf (the (integer 0 *) offset))))
+      (loop repeat size do 
+           (setf code (+ (ash code +bits-per-byte+)
+                         (aref (the (vector #.(ubyte-type)) bytes) offset)))
+           (incf (the fixnum offset))))
     code))
 
 (defun buffer-write (size code buffer)
@@ -240,12 +226,17 @@ of the encoded value in bytes."
 of the encoded value in bytes."
   (declare #.*optimize-settings*)
   (declare (fixnum size))
-  (declare (type (integer 0 *) code))
-  (endian-loop (pos size)
-    (with-accessors ((bytes bytes) (offset offset) (size size)) buffer
-      (setf (aref bytes offset) (ldb (byte +bits-per-byte+ pos) code))
-      (incf (the (integer 0 *) offset))
-      (incf (the (integer 0 *) size))))
+  (declare (type #.(code-type) code))
+  (with-accessors ((bytes bytes) (offset offset) (buffsize size)) buffer
+    (loop
+       repeat size
+       for pos = (the fixnum (* +bits-per-byte+ (1- size)))
+                 then (the fixnum (- pos +bits-per-byte+))
+       do
+         (setf (aref (the (vector #.(ubyte-type)) bytes) offset)
+               (ldb (byte +bits-per-byte+ pos) code))
+         (incf (the fixnum offset)))
+    (incf (the fixnum buffsize) size))
   code)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -296,9 +287,10 @@ of the encoded value in bytes."
 (defun buffer-read-seq (seq-type make-seq-fn elem-size reader-fn buffer
                         &key size (buffchk-p nil))
   (declare #.*optimize-settings*)
+  (declare (fixnum elem-size))
   (declare (function make-seq-fn reader-fn))
   (let ((size (or size (buffer-read-int buffer))))
-    (declare (type (integer 0 *) size))
+    (declare (fixnum size))
     (if (zerop size)
         (funcall make-seq-fn 0)
         (with-empty-buffer-check (buffchk-p buffer seq-type (* elem-size size))
@@ -312,14 +304,14 @@ of the encoded value in bytes."
                          &key size write-size-p)
   (declare #.*optimize-settings*)
   (declare (vector seq))
-  (declare (type (integer 0 *) elem-size))
+  (declare (fixnum elem-size))
   (declare (function writer-fn))
   (let* ((elem-num (or size (length seq)))
          (byte-num (* elem-size elem-num)))
-    (declare (type (integer 0 *) elem-num byte-num))
+    (declare (fixnum elem-num byte-num))
     (if write-size-p
         (progn
-          (auto-adjust buffer (+ +bytes-per-integer+ byte-num))
+          (auto-adjust buffer (the fixnum (+ +bytes-per-integer+ byte-num)))
           (buffer-write-int elem-num buffer :adjust-p nil))
         (auto-adjust buffer byte-num))
     (when (plusp elem-num)
@@ -345,33 +337,36 @@ of the encoded value in bytes."
   "Returns a read integer from STREAM."
   (declare #.*optimize-settings*)
   (let ((code 0))
-    (declare (type (integer 0 *) code))
-    (endian-loop (pos +bytes-per-integer+)
-      (setf code (dpb (read-byte stream)
-                      (byte +bits-per-byte+ pos)
-                      code)))
+    (declare (type #.(uint-type) code))
+    (loop repeat +bytes-per-integer+ do
+         (setf code (+ (the #.(ubyte-type) (ash code +bits-per-byte+))
+                       (the #.(ubyte-type) (read-byte stream)))))
     (integer-decoder code)))
 
 (defun write-int (int stream)
   "Writes an integer to STREAM."
   (declare #.*optimize-settings*)
   (let ((code (integer-encoder int)))
-    (declare (type (integer 0 *) code))
-    (endian-loop (pos +bytes-per-integer+)
-      (write-byte (ldb (byte +bits-per-byte+ pos) code) stream)))
+    (declare (type #.(uint-type) code))
+    (loop
+       repeat +bytes-per-integer+
+       for pos = #.(* +bits-per-byte+ (1- +bytes-per-integer+))
+                 then (the fixnum (- pos +bits-per-byte+))
+       do (write-byte (ldb (byte +bits-per-byte+ pos) code) stream)))
   stream)
 
 (defun buffer-send (buffer stream state)
   "Sending the TARGET, the size and the bytes from BUFFER to STREAM."
   (declare #.*optimize-settings*)
   (let ((size (size buffer)))
-    (declare (type (integer 0 *) size))
+    (declare (type #.(uint-type) size))
     ;; sending header
     (write-int state stream)
     (write-int size stream)
     ;; sending buffer content
     (dotimes (idx size)
-      (write-byte (aref (bytes buffer) idx) stream)))
+      (write-byte (aref (the (vector #.(ubyte-type)) (bytes buffer)) idx)
+                  stream)))
   (force-output stream)
   buffer)
 
@@ -381,12 +376,13 @@ of the encoded value in bytes."
   (declare #.*optimize-settings*)
   (let ((state (read-int stream))
         (size (read-int stream)))
-    (declare (type (integer 0 *) state size))
+    (declare (fixnum state size))
     ;; receiving buffer content
     (buffer-clear buffer)
     (auto-adjust buffer size)
     (dotimes (idx size)
-      (setf (aref (bytes buffer) idx) (read-byte stream)))
+      (setf (aref (the (vector #.(ubyte-type)) (bytes buffer)) idx)
+            (read-byte stream)))
     (setf (size buffer) size)
     state))
 

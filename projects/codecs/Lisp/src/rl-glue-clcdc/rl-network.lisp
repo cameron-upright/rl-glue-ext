@@ -22,64 +22,47 @@
 
 ;;; RL-Glue needs to know what type of object is trying to connect.
 
-(defparameter +k-experiment-connection+ 1)
-(defparameter +k-agent-connection+ 2)
-(defparameter +k-environment-connection+ 3)
-(declaim (type (integer 0 *)
-               +k-experiment-connection+
-               +k-agent-connection+
-               +k-environment-connection+))
+(defconstant +k-experiment-connection+ 1)
+(defconstant +k-agent-connection+ 2)
+(defconstant +k-environment-connection+ 3)
 
 ;;; The server starts by sending one of these values to the client 
 ;;; to let it know what type of event to respond to.
 
-(defparameter +k-agent-init+ 4)
-(defparameter +k-agent-start+ 5)
-(defparameter +k-agent-step+ 6)
-(defparameter +k-agent-end+ 7)
-(defparameter +k-agent-cleanup+ 8)
-(defparameter +k-agent-freeze+ 9) ; deprecated, not handled anymore
-(defparameter +k-agent-message+ 10)
-(declaim (type (integer 0 *)
-               +k-agent-init+ +k-agent-start+ +k-agent-step+ +k-agent-end+
-               +k-agent-cleanup+ +k-agent-freeze+ +k-agent-message+))
+(defconstant +k-agent-init+ 4)
+(defconstant +k-agent-start+ 5)
+(defconstant +k-agent-step+ 6)
+(defconstant +k-agent-end+ 7)
+(defconstant +k-agent-cleanup+ 8)
+(defconstant +k-agent-freeze+ 9) ; deprecated, not handled anymore
+(defconstant +k-agent-message+ 10)
 
-(defparameter +k-env-init+ 11)
-(defparameter +k-env-start+ 12)
-(defparameter +k-env-step+ 13)
-(defparameter +k-env-cleanup+ 14)
-(defparameter +k-env-setstate+ 15)
-(defparameter +k-env-setrandomseed+ 16)
-(defparameter +k-env-getstate+ 17)
-(defparameter +k-env-getrandomseed+ 18)
-(defparameter +k-env-message+ 19)
-(declaim (type (integer 0 *)
-               +k-env-init+ +k-env-start+ +k-env-step+ +k-env-cleanup+
-               +k-env-setstate+ +k-env-setrandomseed+ +k-env-getstate+
-               +k-env-getrandomseed+ +k-env-message+))
+(defconstant +k-env-init+ 11)
+(defconstant +k-env-start+ 12)
+(defconstant +k-env-step+ 13)
+(defconstant +k-env-cleanup+ 14)
+(defconstant +k-env-setstate+ 15)
+(defconstant +k-env-setrandomseed+ 16)
+(defconstant +k-env-getstate+ 17)
+(defconstant +k-env-getrandomseed+ 18)
+(defconstant +k-env-message+ 19)
 
-(defparameter +k-rl-init+ 20)
-(defparameter +k-rl-start+ 21)
-(defparameter +k-rl-step+ 22)
-(defparameter +k-rl-cleanup+ 23)
-(defparameter +k-rl-return+ 24)
-(defparameter +k-rl-numsteps+ 25)
-(defparameter +k-rl-numepisodes+ 26)
-(defparameter +k-rl-episode+ 27)
-(defparameter +k-rl-setstate+ 28)
-(defparameter +k-rl-setrandomseed+ 29)
-(defparameter +k-rl-getstate+ 30)
-(defparameter +k-rl-getrandomseed+ 31)
-(defparameter +k-rl-freeze+ 32) ; deprecated, not handled anymore
-(defparameter +k-rl-agent-message+ 33)
-(defparameter +k-rl-env-message+ 34)
-(defparameter +k-rl-term+ 35)
-(declaim (type (integer 0 *)
-               +k-rl-init+ +k-rl-start+ +k-rl-step+ +k-rl-cleanup+
-               +k-rl-return+ +k-rl-numsteps+ +k-rl-numepisodes+
-               +k-rl-episode+ +k-rl-setstate+ +k-rl-setrandomseed+
-               +k-rl-getstate+ +k-rl-getrandomseed+ +k-rl-freeze+
-               +k-rl-agent-message+ +k-rl-env-message+ +k-rl-term+))
+(defconstant +k-rl-init+ 20)
+(defconstant +k-rl-start+ 21)
+(defconstant +k-rl-step+ 22)
+(defconstant +k-rl-cleanup+ 23)
+(defconstant +k-rl-return+ 24)
+(defconstant +k-rl-numsteps+ 25)
+(defconstant +k-rl-numepisodes+ 26)
+(defconstant +k-rl-episode+ 27)
+(defconstant +k-rl-setstate+ 28)
+(defconstant +k-rl-setrandomseed+ 29)
+(defconstant +k-rl-getstate+ 30)
+(defconstant +k-rl-getrandomseed+ 31)
+(defconstant +k-rl-freeze+ 32) ; deprecated, not handled anymore
+(defconstant +k-rl-agent-message+ 33)
+(defconstant +k-rl-env-message+ 34)
+(defconstant +k-rl-term+ 35)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Network constants.

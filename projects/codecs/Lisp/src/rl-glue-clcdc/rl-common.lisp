@@ -121,9 +121,9 @@
   (with-accessors ((int-array int-array)
                    (float-array float-array)
                    (char-string char-string)) object
-    (let ((int-num (length int-array))
-          (float-num (length float-array))
-          (char-num (length char-string)))
+    (let ((int-num (length (the vector int-array)))
+          (float-num (length (the vector float-array)))
+          (char-num (length (the string char-string))))
       (declare (type (integer 0 *) int-num float-num char-num))
       (buffer-write-int int-num buffer)
       (buffer-write-int float-num buffer)

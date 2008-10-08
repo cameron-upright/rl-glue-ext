@@ -172,6 +172,7 @@ RETURNS:
   (loop do
        (buffer-clear buffer)
        (let ((state (rl-recv-buffer socket buffer)))
+         (declare (fixnum state))
          (cond
            ((= state +k-agent-init+) (on-agent-init agent buffer))
            ((= state +k-agent-start+) (on-agent-start agent buffer))

@@ -68,7 +68,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-init+)
     (buffer-clear buffer)
-    (assert (= +k-rl-init+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-init+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-task-spec buffer)))
 
 (defun rl-start (exp)
@@ -87,7 +88,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-start+)
     (buffer-clear buffer)
-    (assert (= +k-rl-start+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-start+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (let ((observation (rl-read-observation buffer))
           (action (rl-read-action buffer)))
       (values observation action))))
@@ -113,7 +115,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-step+)
     (buffer-clear buffer)
-    (assert (= +k-rl-step+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-step+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (let ((terminal (rl-read-terminal buffer))
           (reward (rl-read-reward buffer))
           (obs (rl-read-observation buffer))
@@ -134,7 +137,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-cleanup+)
     (buffer-clear buffer)
-    (assert (= +k-rl-cleanup+ (rl-recv-buffer socket buffer))))
+    (assert (= +k-rl-cleanup+
+               (the fixnum (rl-recv-buffer socket buffer)))))
   exp)
 
 (defun rl-return (exp)
@@ -154,7 +158,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-return+)
     (buffer-clear buffer)
-    (assert (= +k-rl-return+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-return+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-reward buffer)))
 
 (defun rl-num-steps (exp)
@@ -171,7 +176,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-numsteps+)
     (buffer-clear buffer)
-    (assert (= +k-rl-numsteps+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-numsteps+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (buffer-read-int buffer)))
 
 (defun rl-num-episodes (exp)
@@ -188,7 +194,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-numepisodes+)
     (buffer-clear buffer)
-    (assert (= +k-rl-numepisodes+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-numepisodes+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (buffer-read-int buffer)))
 
 (defun rl-episode (exp &optional (max-num-steps 0))
@@ -214,7 +221,8 @@ RETURNS:
     (buffer-write-int max-num-steps buffer)
     (rl-send-buffer socket buffer +k-rl-episode+)
     (buffer-clear buffer)
-    (assert (= +k-rl-episode+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-episode+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-terminal buffer)))
 
 (defun rl-get-state (exp)
@@ -232,7 +240,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-getstate+)
     (buffer-clear buffer)
-    (assert (= +k-rl-getstate+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-getstate+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-state-key buffer)))
 
 (defun rl-set-state (exp state-key)
@@ -251,7 +260,8 @@ RETURNS:
     (rl-write-state-key state-key buffer)
     (rl-send-buffer socket buffer +k-rl-setstate+)
     (buffer-clear buffer)
-    (assert (= +k-rl-setstate+ (rl-recv-buffer socket buffer))))
+    (assert (= +k-rl-setstate+
+               (the fixnum (rl-recv-buffer socket buffer)))))
   state-key)
 
 (defun rl-get-random-seed (exp)
@@ -269,7 +279,8 @@ RETURNS:
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-getrandomseed+)
     (buffer-clear buffer)
-    (assert (= +k-rl-getrandomseed+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-getrandomseed+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-random-seed-key buffer)))
 
 (defun rl-set-random-seed (exp random-seed-key)
@@ -289,13 +300,14 @@ RETURNS:
     (rl-write-random-seed-key random-seed-key buffer)
     (rl-send-buffer socket buffer +k-rl-setrandomseed+)
     (buffer-clear buffer)
-    (assert (= +k-rl-setrandomseed+ (rl-recv-buffer socket buffer))))
+    (assert (= +k-rl-setrandomseed+
+               (the fixnum (rl-recv-buffer socket buffer)))))
   random-seed-key)
 
 (defun rl-agent-message (exp message)
   "DESCRIPTION:
-     This message passes the input string to the agent and returns the reply string given
-     by the agent. See agent-message for more details.
+     This message passes the input string to the agent and returns the
+     reply string given by the agent. See agent-message for more details.
 
 PARAMETERS:
     exp     : experiment in use [rl-glue:experiment]
@@ -309,13 +321,14 @@ RETURNS:
     (rl-write-message message buffer)
     (rl-send-buffer socket buffer +k-rl-agent-message+)
     (buffer-clear buffer)
-    (assert (= +k-rl-agent-message+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-agent-message+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-message buffer)))
 
 (defun rl-env-message (exp message)
   "DESCRIPTION:
-    This message passes the input string to the environment and returns the reply string
-    given by the environment. See env-message for more details.
+    This message passes the input string to the environment and returns the 
+    reply string given by the environment. See env-message for more details.
 
 PARAMETERS:
     exp     : experiment in use [rl-glue:experiment]
@@ -329,6 +342,7 @@ RETURNS:
     (rl-write-message message buffer)
     (rl-send-buffer socket buffer +k-rl-env-message+)
     (buffer-clear buffer)
-    (assert (= +k-rl-env-message+ (rl-recv-buffer socket buffer)))
+    (assert (= +k-rl-env-message+
+               (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-message buffer)))
 

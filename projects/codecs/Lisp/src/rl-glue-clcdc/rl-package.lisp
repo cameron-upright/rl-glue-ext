@@ -25,6 +25,7 @@
   (:export
    #:get-codec-version
    #:get-svn-codec-version
+   #:*init-buffer-size*
    ;; rl-common
    #:int-array
    #:float-array
@@ -80,7 +81,7 @@
 
 (defvar *optimize-settings*
   '(optimize
-    speed
+    (speed 3)
     (safety 0)
     (space 0)
     (debug 1)
