@@ -35,6 +35,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+LIBOBJDIR =
 check_PROGRAMS = test_sanity_experiment$(EXEEXT) test_1_agent$(EXEEXT) \
 	test_1_environment$(EXEEXT) test_1_experiment$(EXEEXT) \
 	test_message_agent$(EXEEXT) test_message_environment$(EXEEXT) \
@@ -56,67 +57,82 @@ CONFIG_CLEAN_FILES =
 am_test_1_agent_OBJECTS = test_1_agent.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_1_agent_OBJECTS = $(am_test_1_agent_OBJECTS)
-test_1_agent_DEPENDENCIES = ../src/librlagent.la
+am__DEPENDENCIES_1 =
+test_1_agent_DEPENDENCIES = ../src/librlagent.la $(am__DEPENDENCIES_1)
 am_test_1_environment_OBJECTS = test_1_environment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_1_environment_OBJECTS = $(am_test_1_environment_OBJECTS)
-test_1_environment_DEPENDENCIES = ../src/librlenvironment.la
+test_1_environment_DEPENDENCIES = ../src/librlenvironment.la \
+	$(am__DEPENDENCIES_1)
 am_test_1_experiment_OBJECTS = test_1_experiment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_1_experiment_OBJECTS = $(am_test_1_experiment_OBJECTS)
-test_1_experiment_DEPENDENCIES = ../src/librlexperiment.la
+test_1_experiment_DEPENDENCIES = ../src/librlexperiment.la \
+	$(am__DEPENDENCIES_1)
 am_test_empty_agent_OBJECTS = test_empty_agent.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_empty_agent_OBJECTS = $(am_test_empty_agent_OBJECTS)
-test_empty_agent_DEPENDENCIES = ../src/librlagent.la
+test_empty_agent_DEPENDENCIES = ../src/librlagent.la \
+	$(am__DEPENDENCIES_1)
 am_test_empty_environment_OBJECTS = test_empty_environment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_empty_environment_OBJECTS = $(am_test_empty_environment_OBJECTS)
-test_empty_environment_DEPENDENCIES = ../src/librlenvironment.la
+test_empty_environment_DEPENDENCIES = ../src/librlenvironment.la \
+	$(am__DEPENDENCIES_1)
 am_test_empty_experiment_OBJECTS = test_empty_experiment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_empty_experiment_OBJECTS = $(am_test_empty_experiment_OBJECTS)
-test_empty_experiment_DEPENDENCIES = ../src/librlexperiment.la
+test_empty_experiment_DEPENDENCIES = ../src/librlexperiment.la \
+	$(am__DEPENDENCIES_1)
 am_test_message_agent_OBJECTS = test_message_agent.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_message_agent_OBJECTS = $(am_test_message_agent_OBJECTS)
-test_message_agent_DEPENDENCIES = ../src/librlagent.la
+test_message_agent_DEPENDENCIES = ../src/librlagent.la \
+	$(am__DEPENDENCIES_1)
 am_test_message_environment_OBJECTS =  \
 	test_message_environment.$(OBJEXT) useful_functions.$(OBJEXT)
 test_message_environment_OBJECTS =  \
 	$(am_test_message_environment_OBJECTS)
-test_message_environment_DEPENDENCIES = ../src/librlenvironment.la
+test_message_environment_DEPENDENCIES = ../src/librlenvironment.la \
+	$(am__DEPENDENCIES_1)
 am_test_message_experiment_OBJECTS =  \
 	test_message_experiment.$(OBJEXT) useful_functions.$(OBJEXT)
 test_message_experiment_OBJECTS =  \
 	$(am_test_message_experiment_OBJECTS)
-test_message_experiment_DEPENDENCIES = ../src/librlexperiment.la
+test_message_experiment_DEPENDENCIES = ../src/librlexperiment.la \
+	$(am__DEPENDENCIES_1)
 am_test_rl_episode_experiment_OBJECTS =  \
 	test_rl_episode_experiment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_rl_episode_experiment_OBJECTS =  \
 	$(am_test_rl_episode_experiment_OBJECTS)
-test_rl_episode_experiment_DEPENDENCIES = ../src/librlexperiment.la
+test_rl_episode_experiment_DEPENDENCIES = ../src/librlexperiment.la \
+	$(am__DEPENDENCIES_1)
 am_test_sanity_experiment_OBJECTS = test_sanity_experiment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_sanity_experiment_OBJECTS = $(am_test_sanity_experiment_OBJECTS)
-test_sanity_experiment_DEPENDENCIES = ../src/librlexperiment.la
+test_sanity_experiment_DEPENDENCIES = ../src/librlexperiment.la \
+	$(am__DEPENDENCIES_1)
 am_test_seeds_environment_OBJECTS = test_seeds_environment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_seeds_environment_OBJECTS = $(am_test_seeds_environment_OBJECTS)
-test_seeds_environment_DEPENDENCIES = ../src/librlenvironment.la
+test_seeds_environment_DEPENDENCIES = ../src/librlenvironment.la \
+	$(am__DEPENDENCIES_1)
 am_test_seeds_experiment_OBJECTS = test_seeds_experiment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_seeds_experiment_OBJECTS = $(am_test_seeds_experiment_OBJECTS)
-test_seeds_experiment_DEPENDENCIES = ../src/librlexperiment.la
+test_seeds_experiment_DEPENDENCIES = ../src/librlexperiment.la \
+	$(am__DEPENDENCIES_1)
 am_test_speed_environment_OBJECTS = test_speed_environment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_speed_environment_OBJECTS = $(am_test_speed_environment_OBJECTS)
-test_speed_environment_DEPENDENCIES = ../src/librlenvironment.la
+test_speed_environment_DEPENDENCIES = ../src/librlenvironment.la \
+	$(am__DEPENDENCIES_1)
 am_test_speed_experiment_OBJECTS = test_speed_experiment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_speed_experiment_OBJECTS = $(am_test_speed_experiment_OBJECTS)
-test_speed_experiment_DEPENDENCIES = ../src/librlexperiment.la
+test_speed_experiment_DEPENDENCIES = ../src/librlexperiment.la \
+	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/config
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
@@ -262,36 +278,37 @@ target_alias = @target_alias@
 TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh test_empty.sh test_speed.sh
 check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_seeds.sh test_empty.sh test_speed.sh
 AM_CFLAGS = -g -Wall -pedantic -std=c99
+EXTRA_LIBS = -lrlgluenetdev
 test_sanity_experiment_SOURCES = test_sanity_experiment.c useful_functions.c useful_functions.h
-test_sanity_experiment_LDADD = ../src/librlexperiment.la
+test_sanity_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_1_agent_SOURCES = test_1_agent.c useful_functions.c useful_functions.h
-test_1_agent_LDADD = ../src/librlagent.la
+test_1_agent_LDADD = ../src/librlagent.la  $(EXTRA_LIBS)
 test_1_environment_SOURCES = test_1_environment.c useful_functions.c useful_functions.h
-test_1_environment_LDADD = ../src/librlenvironment.la
+test_1_environment_LDADD = ../src/librlenvironment.la  $(EXTRA_LIBS)
 test_1_experiment_SOURCES = test_1_experiment.c useful_functions.c useful_functions.h
-test_1_experiment_LDADD = ../src/librlexperiment.la
+test_1_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_message_agent_SOURCES = test_message_agent.c useful_functions.c useful_functions.h
-test_message_agent_LDADD = ../src/librlagent.la
+test_message_agent_LDADD = ../src/librlagent.la  $(EXTRA_LIBS)
 test_message_environment_SOURCES = test_message_environment.c useful_functions.c useful_functions.h
-test_message_environment_LDADD = ../src/librlenvironment.la
+test_message_environment_LDADD = ../src/librlenvironment.la  $(EXTRA_LIBS)
 test_message_experiment_SOURCES = test_message_experiment.c useful_functions.c useful_functions.h
-test_message_experiment_LDADD = ../src/librlexperiment.la
+test_message_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_rl_episode_experiment_SOURCES = test_rl_episode_experiment.c useful_functions.c useful_functions.h
-test_rl_episode_experiment_LDADD = ../src/librlexperiment.la
+test_rl_episode_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_seeds_experiment_SOURCES = test_seeds_experiment.c useful_functions.c useful_functions.h
-test_seeds_experiment_LDADD = ../src/librlexperiment.la
+test_seeds_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_seeds_environment_SOURCES = test_seeds_environment.c useful_functions.c useful_functions.h
-test_seeds_environment_LDADD = ../src/librlenvironment.la
+test_seeds_environment_LDADD = ../src/librlenvironment.la  $(EXTRA_LIBS)
 test_empty_agent_SOURCES = test_empty_agent.c useful_functions.c useful_functions.h
-test_empty_agent_LDADD = ../src/librlagent.la
+test_empty_agent_LDADD = ../src/librlagent.la  $(EXTRA_LIBS)
 test_empty_environment_SOURCES = test_empty_environment.c useful_functions.c useful_functions.h
-test_empty_environment_LDADD = ../src/librlenvironment.la
+test_empty_environment_LDADD = ../src/librlenvironment.la  $(EXTRA_LIBS)
 test_empty_experiment_SOURCES = test_empty_experiment.c useful_functions.c useful_functions.h
-test_empty_experiment_LDADD = ../src/librlexperiment.la
+test_empty_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_speed_environment_SOURCES = test_speed_environment.c useful_functions.c useful_functions.h
-test_speed_environment_LDADD = ../src/librlenvironment.la
+test_speed_environment_LDADD = ../src/librlenvironment.la  $(EXTRA_LIBS)
 test_speed_experiment_SOURCES = test_speed_experiment.c useful_functions.c useful_functions.h
-test_speed_experiment_LDADD = ../src/librlexperiment.la
+test_speed_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 INCLUDES = -I$(top_srcdir)/src
 EXTRA_DIST = $(check_SCRIPTS)
 all: all-am

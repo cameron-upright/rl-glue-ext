@@ -21,6 +21,9 @@
 /* Define to 1 if you have the `rlgluenetdev' library (-lrlgluenetdev). */
 #undef HAVE_LIBRLGLUENETDEV
 
+/* Define to 1 if you have the `rlutils' library (-lrlutils). */
+#undef HAVE_LIBRLUTILS
+
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 

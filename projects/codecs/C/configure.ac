@@ -12,8 +12,13 @@ AC_ARG_WITH(rl-glue,
 	AC_MSG_RESULT(yes)
 	],[AC_MSG_RESULT(no)])
 
-#Check to make sure we can find the rlglue libraries and headers.  If no, then tell them how to tell us where they are.
-AC_CHECK_LIB([rlgluenetdev], [rlConnect],[], AC_MSG_ERROR(RL-Glue library not found. You must have RL-Glue installed to use this codec. If you have not downloaded it please see http://glue.rl-community.org/ .  If you do have it installed in a non-standard location you may need to use the --with-rl-glue=/path/to/rlglue command line switch to specify where the rl-glue root is located.))
+if test "${TERM}" = "cygwin"; then
+	#Cygwin will not let us link rlgluenetdev without rlutils so we will do a lesser check
+	AC_CHECK_LIB([rlutils], [clearRLStruct],[], AC_MSG_ERROR(RL-Glue utils library not found.  This probably means you do not have RL-Glue installed.  You must have RL-Glue installed to use this codec. If you have not downloaded it please see http://glue.rl-community.org/ .  If you do have it installed in a non-standard location you may need to use the --with-rl-glue=/path/to/rlglue command line switch to specify where the rl-glue root is located.))
+else
+	#Check to make sure we can find the rlglue libraries and headers.  If no, then tell them how to tell us where they are.
+	AC_CHECK_LIB([rlgluenetdev], [rlConnect],[], AC_MSG_ERROR(RL-Glue library not found. You must have RL-Glue installed to use this codec. If you have not downloaded it please see http://glue.rl-community.org/ .  If you do have it installed in a non-standard location you may need to use the --with-rl-glue=/path/to/rlglue command line switch to specify where the rl-glue root is located.))
+fi
 
 
 AC_CHECK_HEADERS([rlglue/RL_common.h rlglue/Agent_common.h rlglue/Environment_common.h rlglue/RL_glue.h rlglue/network/RL_network.h],[] ,AC_MSG_ERROR(RL-Glue library not found. You must have RL-Glue installed to use this codec. If you have not downloaded it please see http://glue.rl-community.org/ .  If you do have it installed in a non-standard location, you may need to use the --with-rl-glue=/path/to/rlglue command line switch to specify where the rl-glue root is located.),[[#ifdef HAVE_RLGLUE_RL_COMMON_H

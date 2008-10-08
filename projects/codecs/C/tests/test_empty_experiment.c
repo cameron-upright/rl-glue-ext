@@ -70,26 +70,28 @@ int main(int argc, char *argv[]) {
 				check_fail(startTuple.a.intArray[i]!=i);
 
 			check_fail(startTuple.a.numDoubles!=3);
-			for(i=0;i<startTuple.a.numDoubles;i++)
-				check_fail(startTuple.a.doubleArray[i]!=(double)i/(double)startTuple.a.numDoubles);
+			for(i=0;i<startTuple.a.numDoubles;i++){
+				check_fail(startTuple.a.doubleArray[i]-(double)i/(double)startTuple.a.numDoubles>.000001);
+			}
 
 			check_fail(startTuple.a.numChars!=1);
 			for(i=0;i<startTuple.a.numChars;i++)
 				check_fail(startTuple.a.charArray[i]!='a'+i);
+
 
 			check_fail(startTuple.o.numInts!=2);
 			for(i=0;i<startTuple.o.numInts;i++)
 				check_fail(startTuple.o.intArray[i]!=i);
 
 			check_fail(startTuple.o.numDoubles!=4);
-			for(i=0;i<startTuple.o.numDoubles;i++)
-				check_fail(startTuple.o.doubleArray[i]!=(double)i/(double)startTuple.o.numDoubles);
+			for(i=0;i<startTuple.o.numDoubles;i++){
+				check_fail(startTuple.o.doubleArray[i]-(double)i/(double)startTuple.o.numDoubles>.000001);
+			}
 
 			check_fail(startTuple.o.numChars!=5);
-			for(i=0;i<startTuple.o.numChars;i++)
+			for(i=0;i<startTuple.o.numChars;i++){
 				check_fail(startTuple.o.charArray[i]!='a'+i);
-				
-			
+			}
 		}
 		
 		for(whichStep=0;whichStep<5;whichStep++){
@@ -114,10 +116,7 @@ int main(int argc, char *argv[]) {
 				check_fail(stepTuple.o.numDoubles!=4);
 				check_fail(stepTuple.o.numChars!=5);
 			}
-			
 		}
-		
-		
 	}
 	
 
