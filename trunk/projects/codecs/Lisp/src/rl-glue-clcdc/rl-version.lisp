@@ -21,5 +21,5 @@
     (subseq glue-ver 11 (- (length glue-ver) 2))))
 
 (defun get-codec-version ()
-  "2.0-RC1")
+  "3.0-RC1")
 

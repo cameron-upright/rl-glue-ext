@@ -222,6 +222,7 @@ RETURNS:
   (loop do
        (buffer-clear buffer)
        (let ((state (rl-recv-buffer socket buffer)))
+         (declare (fixnum state))
          (cond
            ((= state +k-env-init+) (on-env-init env buffer))
            ((= state +k-env-start+) (on-env-start env buffer))
