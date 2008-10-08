@@ -6,10 +6,10 @@
 # *  $HeadURL$
 
 
-./pkill.sh rl_glue
-./pkill.sh test_1_agent
-./pkill.sh test_1_environment
-./pkill.sh test_sanity_experiment
+killall rl_glue 2>/dev/null
+killall test_1_agent 2>/dev/null
+killall test_1_environment 2>/dev/null
+killall test_sanity_experiment 2>/dev/null
 sleep 1
 rl_glue &
 sleep 1
