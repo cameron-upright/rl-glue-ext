@@ -298,10 +298,15 @@ int main(int argc, char** argv) {
   }
 
 
-  if (isalpha(host[0])) {
-    host_ent = gethostbyname(host); 
-  	host = inet_ntoa(*(struct in_addr*)host_ent->h_addr_list[0]);
-  }
+	if (isalpha(host[0])) {
+		/*This method is apparently deprecated, we should update at some point*/
+		host_ent = gethostbyname(host); 
+		if(host_ent==0){
+			fprintf(stderr,"Couldn't find IP address for host: %s\n",host);
+			exit(55);
+		}
+	  	host = inet_ntoa(*(struct in_addr*)host_ent->h_addr_list[0]);
+	}
 
   fprintf(stdout, "RL-Glue C Environment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
 	fflush(stdout);
