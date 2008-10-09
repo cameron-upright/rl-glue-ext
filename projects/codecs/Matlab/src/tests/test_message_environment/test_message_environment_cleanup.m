@@ -1,2 +1,0 @@
-function test_message_environment_cleanup()
-end
