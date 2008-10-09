@@ -46,9 +46,9 @@ it may be slightly more sparsely commented than that file */
 static const char* kUnknownMessage = "Unknown Message: %d\n";
 
 static char* theTaskSpec = 0;
-static observation_t clientagent_observation = {0};
+static observation_t *clientagent_observation=0;
 static rlBuffer clientagent_rlbuffer = {0};
-static message_t clientagent_inmessage = 0;
+static char *clientagent_inmessage = 0;
 static unsigned int clientagent_inmessagecapacity = 0;
 
 static void onAgentInit(int theConnection) {
@@ -72,42 +72,42 @@ static void onAgentInit(int theConnection) {
 }
 
 static void onAgentStart(int theConnection) {
-	action_t theAction = {0};
+	const action_t *theAction;
 	unsigned int offset = 0;
 
 	/* Read the data in the buffer (data from server) */
-	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, &clientagent_observation);
-	__RL_CHECK_STRUCT(&clientagent_observation)
+	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, clientagent_observation);
+	__RL_CHECK_STRUCT(clientagent_observation)
 
 	/* Call RL method on the recv'd data */
 	theAction = agent_start(clientagent_observation);
-	__RL_CHECK_STRUCT(&theAction)
+	__RL_CHECK_STRUCT(theAction)
 
 	/* Prepare the buffer for sending data back to the server */
 	rlBufferClear(&clientagent_rlbuffer);
 	offset = 0;
-	offset = rlCopyADTToBuffer(&theAction, &clientagent_rlbuffer, offset);
+	offset = rlCopyADTToBuffer(theAction, &clientagent_rlbuffer, offset);
 }
 
 static void onAgentStep(int theConnection) {
 	reward_t theReward = 0;
-	action_t theAction = {0};
+	const action_t *theAction;
 	unsigned int offset = 0;
 
 	/* Read the data in the buffer (data from server) */
 	offset = rlBufferRead(&clientagent_rlbuffer, offset, &theReward, 1, sizeof(theReward));
-	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, &clientagent_observation);
-	__RL_CHECK_STRUCT(&clientagent_observation)
+	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, clientagent_observation);
+	__RL_CHECK_STRUCT(clientagent_observation)
 
 	/* Call RL method on the recv'd data */
 	theAction = agent_step(theReward, clientagent_observation);
-	__RL_CHECK_STRUCT(&theAction)
+	__RL_CHECK_STRUCT(theAction)
 
 	/* Prepare the buffer for sending data back to the server */
 	rlBufferClear(&clientagent_rlbuffer);
 	offset = 0;
 
-	rlCopyADTToBuffer(&theAction, &clientagent_rlbuffer, offset);
+	rlCopyADTToBuffer(theAction, &clientagent_rlbuffer, offset);
 }
 
 static void onAgentEnd(int theConnection) {
@@ -134,7 +134,7 @@ static void onAgentCleanup(int theConnection) {
 	rlBufferClear(&clientagent_rlbuffer);
 
 	/* Cleanup our resources */
-	clearRLStruct(&clientagent_observation);
+	clearRLStruct(clientagent_observation);
 	free(theTaskSpec);
 	free(clientagent_inmessage);
 

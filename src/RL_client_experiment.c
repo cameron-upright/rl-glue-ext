@@ -97,7 +97,7 @@ static void forceConnection()
   }
 }
 
-task_specification_t RL_init() {
+const char* RL_init() {
   unsigned int offset=0;
   unsigned int messageLength=0;
   int experimentState = kRLInit;
@@ -135,9 +135,9 @@ task_specification_t RL_init() {
   return clientexp_message;
 }
 
-observation_action_t RL_start() {
+const observation_action_t *RL_start() {
   int experimentState = kRLStart;
-  observation_action_t oa = { {0}, {0} };
+  static observation_action_t oa = { 0,0};
   unsigned int offset = 0;
 
   assert(theExperimentConnection != 0);
@@ -154,15 +154,15 @@ observation_action_t RL_start() {
 	__RL_CHECK_STRUCT(&clientexp_observation)
 	__RL_CHECK_STRUCT(&clientexp_action)
 
-  oa.o = clientexp_observation;
-  oa.a = clientexp_action;
+  oa.o = &clientexp_observation;
+  oa.a = &clientexp_action;
 
-  return oa;
+  return &oa;
 }
 
-reward_observation_action_terminal_t RL_step() {
+const reward_observation_action_terminal_t *RL_step() {
   int experimentState = kRLStep;
-  reward_observation_action_terminal_t roat = {0, {0}, {0}, 0};
+  static reward_observation_action_terminal_t roat = {0, 0,0, 0};
   unsigned int offset = 0;
   
   assert(theExperimentConnection != 0);
@@ -182,10 +182,10 @@ reward_observation_action_terminal_t RL_step() {
 	__RL_CHECK_STRUCT(&clientexp_observation)
 	__RL_CHECK_STRUCT(&clientexp_action)
 
-  roat.o = clientexp_observation;
-  roat.a = clientexp_action;
+  roat.o = &clientexp_observation;
+  roat.a = &clientexp_action;
 
-  return roat;
+  return &roat;
 }
 
 void RL_cleanup() {
@@ -251,7 +251,7 @@ int RL_num_steps() {
 }
 
 
-message_t RL_agent_message(const message_t message) {
+const char* RL_agent_message(const char* message) {
   int experimentState = kRLAgentMessage;
   unsigned int messageLength = 0;
   unsigned int offset = 0;
@@ -295,7 +295,7 @@ message_t RL_agent_message(const message_t message) {
 }
 
 
-message_t RL_env_message(const message_t message) {
+const char* RL_env_message(const char *message) {
 	int experimentState = kRLEnvMessage;
 	unsigned int messageLength = 0;
 	unsigned int offset = 0;
@@ -379,14 +379,14 @@ terminal_t RL_episode(unsigned int numSteps) {
 	return terminal;
 }
 
-void RL_set_state(state_key_t clientexp_statekey) {
+void RL_set_state(const state_key_t *theStatekey) {
 	int experimentState = kRLSetState;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
 
 	rlBufferClear(&clientexp_rlbuffer);
-	offset = rlCopyADTToBuffer(&clientexp_statekey, &clientexp_rlbuffer, offset);
+	offset = rlCopyADTToBuffer(theStatekey, &clientexp_rlbuffer, offset);
 	rlSendBufferData(theExperimentConnection, &clientexp_rlbuffer, experimentState);
 
 	rlBufferClear(&clientexp_rlbuffer);
@@ -394,14 +394,14 @@ void RL_set_state(state_key_t clientexp_statekey) {
 	assert(experimentState == kRLSetState);
 }
 
-void RL_set_random_seed(random_seed_key_t clientexp_randomseedkey) {
+void RL_set_random_seed(const random_seed_key_t *theRandomKey) {
 	int experimentState = kRLSetRandomSeed;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
 
 	rlBufferClear(&clientexp_rlbuffer);
-	offset = rlCopyADTToBuffer(&clientexp_randomseedkey, &clientexp_rlbuffer, offset);
+	offset = rlCopyADTToBuffer(theRandomKey, &clientexp_rlbuffer, offset);
 	rlSendBufferData(theExperimentConnection, &clientexp_rlbuffer, experimentState);
 
 	rlBufferClear(&clientexp_rlbuffer);
@@ -409,7 +409,7 @@ void RL_set_random_seed(random_seed_key_t clientexp_randomseedkey) {
 	assert(experimentState == kRLSetRandomSeed);
 }
 
-state_key_t RL_get_state() {
+const state_key_t *RL_get_state() {
 	int experimentState = kRLGetState;
 	unsigned int offset = 0;
 
@@ -424,10 +424,10 @@ state_key_t RL_get_state() {
 
 	offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_statekey);
 
-	return clientexp_statekey;
+	return &clientexp_statekey;
 }
 
-random_seed_key_t RL_get_random_seed() {
+const random_seed_key_t *RL_get_random_seed() {
 	int experimentState = kRLGetRandomSeed;
 	unsigned int offset = 0;
 
@@ -442,5 +442,5 @@ random_seed_key_t RL_get_random_seed() {
 
 	offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_randomseedkey);
 
-	return clientexp_randomseedkey;
+	return &clientexp_randomseedkey;
 }
