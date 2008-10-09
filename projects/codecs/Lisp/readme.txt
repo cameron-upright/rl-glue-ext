@@ -3,7 +3,7 @@ The documentation of this codec can be found in the readme files of the
 directories.
 
 A general description about the codec can be discovered in
-the rl-glue-clcdc directory and agent, environment, experiment specific
+the rl-glue-codec directory and agent, environment, experiment specific
 ones in their directories respectively.
 
 The rl-glue-utils directory contains information about utilities designed

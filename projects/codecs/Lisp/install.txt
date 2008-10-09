@@ -35,12 +35,12 @@
         chmod +x pack-asdf.sh (if necessary)
         ./pack-asdf.sh
 
-    It creates the rl-glue-clcdc.tar.gz and the rl-glue-utils.tar.gz
+    It creates the rl-glue-codec.tar.gz and the rl-glue-utils.tar.gz
     ASDF packages, which can be installed on the usual way.
 
     Installation with ASDF-Install (http://www.cliki.net/ASDF-Install).
 
-        (asdf-install:install "/path/to/package/rl-glue-clcdc.tar.gz")
+        (asdf-install:install "/path/to/package/rl-glue-codec.tar.gz")
         (asdf-install:install "/path/to/package/rl-glue-utils.tar.gz")
 
     Manual installation.
@@ -55,7 +55,7 @@
     Uninstallation with ASDF-Install (http://www.cliki.net/ASDF-Install).
 
         (asdf-install:uninstall :rl-glue-utils)
-        (asdf-install:uninstall :rl-glue-clcdc)
+        (asdf-install:uninstall :rl-glue-codec)
 
     Manual uninstallation.
 
