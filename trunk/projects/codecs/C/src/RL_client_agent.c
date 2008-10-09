@@ -265,7 +265,7 @@ int main(int argc, char** argv) {
 
 	if (isalpha(host[0])) {
 		host_ent = gethostbyname(host); 
-		host = inet_ntoa(*(struct in_addr*)host_ent->h_addr);
+	  	host = inet_ntoa(*(struct in_addr*)host_ent->h_addr_list[0]);
 	}
 
 	fprintf(stdout, "RL-Glue C Agent Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
