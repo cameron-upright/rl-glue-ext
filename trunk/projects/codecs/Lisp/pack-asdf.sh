@@ -8,7 +8,7 @@ function make_asdf_package {
 }
 
 cd src
-make_asdf_package 'rl-glue-clcdc'
+make_asdf_package 'rl-glue-codec'
 make_asdf_package 'rl-glue-utils'
 cd ..
 
