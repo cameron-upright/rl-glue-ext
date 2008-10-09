@@ -82,10 +82,10 @@ const reward_observation_t *env_step(const action_t *a)
         }
 
 	
-	ro.o=o;
-	ro.r=1.0;
+	ro.observation=o;
+	ro.reward=1.0;
 	ro.terminal=terminal;
-	__RL_CHECK_STRUCT(ro.o)
+	__RL_CHECK_STRUCT(ro.observation)
     return &ro;
 }
 

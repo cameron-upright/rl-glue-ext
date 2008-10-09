@@ -154,13 +154,13 @@ const observation_action_t *RL_start() {
 	__RL_CHECK_STRUCT(&clientexp_observation)
 	__RL_CHECK_STRUCT(&clientexp_action)
 
-  oa.o = &clientexp_observation;
-  oa.a = &clientexp_action;
+  oa.observation = &clientexp_observation;
+  oa.action = &clientexp_action;
 
   return &oa;
 }
 
-const reward_observation_action_terminal_t *RL_step() {
+const reward_observation_action_terminal_t* RL_step() {
   int experimentState = kRLStep;
   static reward_observation_action_terminal_t roat = {0, 0,0, 0};
   unsigned int offset = 0;
@@ -176,14 +176,14 @@ const reward_observation_action_terminal_t *RL_step() {
   assert(experimentState == kRLStep);
 
   offset = rlBufferRead(&clientexp_rlbuffer, offset, &roat.terminal, 1, sizeof(int));
-  offset = rlBufferRead(&clientexp_rlbuffer, offset, &roat.r, 1, sizeof(reward_t));
+  offset = rlBufferRead(&clientexp_rlbuffer, offset, &roat.reward, 1, sizeof(double));
   offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_observation);
   offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_action);
 	__RL_CHECK_STRUCT(&clientexp_observation)
 	__RL_CHECK_STRUCT(&clientexp_action)
 
-  roat.o = &clientexp_observation;
-  roat.a = &clientexp_action;
+  roat.observation = &clientexp_observation;
+  roat.action = &clientexp_action;
 
   return &roat;
 }
@@ -212,9 +212,9 @@ void RL_cleanup() {
 	clientexp_messagecapacity = 0;
 }
 
-reward_t RL_return() {
+double RL_return() {
   int experimentState = kRLReturn;
-  reward_t theReward = 0;
+  double theReward = 0;
   unsigned int offset = 0;
 
   assert(theExperimentConnection != 0);
@@ -226,7 +226,7 @@ reward_t RL_return() {
   rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
   assert(experimentState == kRLReturn);
 
-  offset = rlBufferRead(&clientexp_rlbuffer, offset, &theReward, 1, sizeof(reward_t));
+  offset = rlBufferRead(&clientexp_rlbuffer, offset, &theReward, 1, sizeof(double));
 
   return theReward;
 }
@@ -358,8 +358,8 @@ int RL_num_episodes() {
 	return numEpisodes;
 }
 
-terminal_t RL_episode(unsigned int numSteps) {
-	terminal_t terminal=0;
+int RL_episode(unsigned int numSteps) {
+	int terminal=0;
 	unsigned int offset = 0;
 	int experimentState = kRLEpisode;
 
@@ -374,7 +374,7 @@ terminal_t RL_episode(unsigned int numSteps) {
 	/*Brian Sept 8 2008 :: Not really sure if I should be resetting offset to 0 here.  Seems to work as is*/
 	offset=0;
 	rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
-	offset = rlBufferRead(&clientexp_rlbuffer, offset, &terminal, 1, sizeof(terminal_t));
+	offset = rlBufferRead(&clientexp_rlbuffer, offset, &terminal, 1, sizeof(int));
 	assert(experimentState == kRLEpisode);
 	return terminal;
 }

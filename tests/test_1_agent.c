@@ -58,7 +58,7 @@ const action_t *agent_start(const observation_t *o) {
 	return action;
 }
 
-const action_t *agent_step(const reward_t reward, const observation_t *o) {
+const action_t *agent_step(const double reward, const observation_t *o) {
 	__RL_CHECK_STRUCT(o);
 	agent_stepCount++;
 
@@ -68,7 +68,7 @@ const action_t *agent_step(const reward_t reward, const observation_t *o) {
 	return action;
 }
 
-void agent_end(const reward_t reward) {
+void agent_end(const double reward) {
 }
 
 void agent_cleanup() {

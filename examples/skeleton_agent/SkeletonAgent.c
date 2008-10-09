@@ -68,7 +68,7 @@ const action_t *agent_start(const observation_t *this_observation) {
 	return &this_action;
 }
 
-const action_t *agent_step(reward_t reward, const observation_t *this_observation) {
+const action_t *agent_step(double reward, const observation_t *this_observation) {
 	/* This agent  returns 0 or 1 randomly for its action */
 	/* This agent always returns a random number, either 0 or 1 for its action */
 	int theIntAction=randInRange(1);
@@ -82,7 +82,7 @@ const action_t *agent_step(reward_t reward, const observation_t *this_observatio
 	return &this_action;
 }
 
-void agent_end(reward_t reward) {
+void agent_end(double reward) {
 	clearRLStruct(&last_action);
 	clearRLStruct(last_observation);
 }

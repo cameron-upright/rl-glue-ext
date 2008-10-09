@@ -91,14 +91,14 @@ static void onEnvStep(int theConnection) {
 	__RL_CHECK_STRUCT(&ce_globalaction);
 
 	ro = env_step(&ce_globalaction);	
-	__RL_CHECK_STRUCT(ro->o)
+	__RL_CHECK_STRUCT(ro->observation)
 
 
 	rlBufferClear(&ce_globalrlbuffer);
 	offset = 0;
-	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro->terminal, 1, sizeof(terminal_t));
-	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro->r, 1, sizeof(reward_t));
-	offset = rlCopyADTToBuffer(ro->o, &ce_globalrlbuffer, offset);
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro->terminal, 1, sizeof(int));
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro->reward, 1, sizeof(double));
+	offset = rlCopyADTToBuffer(ro->observation, &ce_globalrlbuffer, offset);
 }
 
 static void onEnvCleanup(int theConnection) {
@@ -174,7 +174,7 @@ static void onEnvMessage(int theConnection) {
 	  If it is too big, allocate more space						*/
 	if (inMessageLength >= ce_globalinmessagecapacity) {
 		/*We make it size + 1 so we can be sure that we can null terminate it*/
-		inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
+		inMessage = (char*)calloc(inMessageLength+1, sizeof(char));
 		/*Free the old one (might be null, but that's safe)*/
 		free(ce_globalinmessage);
 

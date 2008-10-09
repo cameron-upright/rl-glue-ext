@@ -53,10 +53,10 @@ int main(int argc, char *argv[]) {
 	
 	roat=RL_step();
 
-	check_fail(roat->o->numInts!=1);
-	check_fail(roat->o->numDoubles!=0);
-	check_fail(roat->o->numChars!=0);
-	check_fail(roat->o->intArray[0]!=0);
+	check_fail(roat->observation->numInts!=1);
+	check_fail(roat->observation->numDoubles!=0);
+	check_fail(roat->observation->numChars!=0);
+	check_fail(roat->observation->intArray[0]!=0);
     check_fail(strcmp("one|1.|one",RL_env_message("one"))!=0);
     check_fail(strcmp("one|1.|one",RL_agent_message("one"))!=0);
 	check_fail(roat->terminal!=0);
@@ -67,29 +67,29 @@ int main(int argc, char *argv[]) {
     check_fail(strcmp("two|2.2.|two",RL_env_message("two"))!=0);
     check_fail(strcmp("two|2.2.|two",RL_agent_message("two"))!=0);
 	check_fail(roat->terminal!=0);
-	check_fail(roat->o->numInts!=1);
-	check_fail(roat->o->numDoubles!=0);
-	check_fail(roat->o->numChars!=0);
-	check_fail(roat->o->intArray[0]!=1);
+	check_fail(roat->observation->numInts!=1);
+	check_fail(roat->observation->numDoubles!=0);
+	check_fail(roat->observation->numChars!=0);
+	check_fail(roat->observation->intArray[0]!=1);
 
 	roat=RL_step();
 
     check_fail(strcmp("three||three",RL_env_message("three"))!=0);
     check_fail(strcmp("three||three",RL_agent_message("three"))!=0);
 	check_fail(roat->terminal!=0);
-	check_fail(roat->o->numInts!=1);
-	check_fail(roat->o->numDoubles!=0);
-	check_fail(roat->o->numChars!=0);	
-	check_fail(roat->o->intArray[0]!=2);
+	check_fail(roat->observation->numInts!=1);
+	check_fail(roat->observation->numDoubles!=0);
+	check_fail(roat->observation->numChars!=0);	
+	check_fail(roat->observation->intArray[0]!=2);
 
 	roat=RL_step();
     check_fail(strcmp("four|4.|four",RL_env_message("four"))!=0);
     check_fail(strcmp("four|4.|four",RL_agent_message("four"))!=0);
 	check_fail(roat->terminal!=0);
-	check_fail(roat->o->numInts!=1);
-	check_fail(roat->o->numDoubles!=0);
-	check_fail(roat->o->numChars!=0);
-	check_fail(roat->o->intArray[0]!=3);
+	check_fail(roat->observation->numInts!=1);
+	check_fail(roat->observation->numDoubles!=0);
+	check_fail(roat->observation->numChars!=0);
+	check_fail(roat->observation->intArray[0]!=3);
 	
 
 	roat=RL_step();

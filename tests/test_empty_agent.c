@@ -65,14 +65,14 @@ const action_t *agent_start(const observation_t *o) {
 	return nonEmptyAction;
 }
 
-const action_t *agent_step(const reward_t reward, const observation_t *o) {
+const action_t *agent_step(const double reward, const observation_t *o) {
 	if(agent_whichEpisode%2==0)
 		return emptyAction;
 	
 	return nonEmptyAction;
 }
 
-void agent_end(const reward_t reward) {
+void agent_end(const double reward) {
 }
 
 void agent_cleanup() {

@@ -92,7 +92,7 @@ static void onAgentStart(int theConnection) {
 }
 
 static void onAgentStep(int theConnection) {
-	reward_t theReward = 0;
+	double theReward = 0;
 	const action_t *theAction;
 	unsigned int offset = 0;
 
@@ -113,10 +113,10 @@ static void onAgentStep(int theConnection) {
 }
 
 static void onAgentEnd(int theConnection) {
-	reward_t theReward = 0;
+	double theReward = 0;
 
 	/* Read the data in the buffer (data from server) */
-	rlBufferRead(&clientagent_rlbuffer, 0, &theReward, 1, sizeof(reward_t));
+	rlBufferRead(&clientagent_rlbuffer, 0, &theReward, 1, sizeof(double));
 
 	/* Call RL method on the recv'd data */
 	agent_end(theReward);
@@ -158,7 +158,7 @@ static void onAgentMessage(int theConnection) {
 	offset = rlBufferRead(&clientagent_rlbuffer, offset, &inMessageLength, 1, sizeof(int));
 
 	if (inMessageLength >= clientagent_inmessagecapacity) {
-		inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
+		inMessage = (char*)calloc(inMessageLength+1, sizeof(char));
 		free(clientagent_inmessage);
 
 		clientagent_inmessage = inMessage;
