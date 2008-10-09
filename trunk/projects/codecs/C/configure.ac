@@ -12,11 +12,17 @@ AC_ARG_WITH(rl-glue,
 	AC_MSG_RESULT(yes)
 	],[AC_MSG_RESULT(no)])
 
+
+AC_PROG_CC
+AC_PROG_INSTALL
+AM_PROG_LIBTOOL
+
+
 if test "${TERM}" = "cygwin"; then
-	#Cygwin will not let us link rlgluenetdev without rlutils so we will do a lesser check
+dnl Cygwin will not let us link rlgluenetdev without rlutils so we will do a lesser check
 	AC_CHECK_LIB([rlutils], [clearRLStruct],[], AC_MSG_ERROR(RL-Glue utils library not found.  This probably means you do not have RL-Glue installed.  You must have RL-Glue installed to use this codec. If you have not downloaded it please see http://glue.rl-community.org/ .  If you do have it installed in a non-standard location you may need to use the --with-rl-glue=/path/to/rlglue command line switch to specify where the rl-glue root is located.))
 else
-	#Check to make sure we can find the rlglue libraries and headers.  If no, then tell them how to tell us where they are.
+dnl Check to make sure we can find the rlglue libraries and headers.  If no, then tell them how to tell us where they are.
 	AC_CHECK_LIB([rlgluenetdev], [rlConnect],[], AC_MSG_ERROR(RL-Glue library not found. You must have RL-Glue installed to use this codec. If you have not downloaded it please see http://glue.rl-community.org/ .  If you do have it installed in a non-standard location you may need to use the --with-rl-glue=/path/to/rlglue command line switch to specify where the rl-glue root is located.))
 fi
 
@@ -27,16 +33,15 @@ AC_CHECK_HEADERS([rlglue/RL_common.h rlglue/Agent_common.h rlglue/Environment_co
 ]])
 
 AC_CHECK_HEADERS([ieeefp.h, sys/time.h])
-AC_CHECK_FUNCS([isnan isinf gettimeofday])
+AC_CHECK_FUNCS([isnan isinf gettimeofday gethostbyname inet_ntoa])
 
 
+dnl For GCC 4.3, apparently we need to do something a bit fancy
+AC_CHECK_MEMBERS([struct hostent.h_addr_list],,,[#include <netdb.h>])
 
 AC_CONFIG_HEADERS(config/config.h)
 
 
 
-AC_PROG_CC
-AC_PROG_INSTALL
-AM_PROG_LIBTOOL
 
 AC_OUTPUT(Makefile src/Makefile tests/Makefile)
