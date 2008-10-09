@@ -20,7 +20,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL-Glue package interface.
 
-(defpackage #:rl-glue-clcdc
+(defpackage #:org.rl-community.rl-glue-codec
+  (:nicknames #:rl-glue-codec)
   (:use #:common-lisp #:usocket)
   (:export
    #:get-codec-version
@@ -77,7 +78,7 @@
    #:rl-agent-message
    #:rl-env-message))
 
-(in-package #:rl-glue-clcdc)
+(in-package #:org.rl-community.rl-glue-codec)
 
 (defvar *optimize-settings*
   '(optimize

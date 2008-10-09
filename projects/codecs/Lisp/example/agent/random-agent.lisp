@@ -18,7 +18,7 @@
 (in-package #:cl-user)
 
 (defpackage #:rl-random-agent
-  (:use #:common-lisp #:rl-glue-clcdc #:rl-glue-utils)
+  (:use #:common-lisp #:rl-glue-codec #:rl-glue-utils)
   (:export
    #:random-agent
    #:start-random-agent))

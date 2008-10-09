@@ -20,12 +20,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL-Glue ASDF System
 
-(defpackage #:rl-glue-clcdc-asdf
+(defpackage #:org.rl-community.rl-glue-codec-asdf
   (:use #:asdf #:common-lisp))
 
-(in-package #:rl-glue-clcdc-asdf)
+(in-package #:org.rl-community.rl-glue-codec-asdf)
 
-(defsystem rl-glue-clcdc
+(defsystem rl-glue-codec
   :name "RL-Glue Common Lisp Codec"
   :version "0.2"
   :licence "Apache v2"

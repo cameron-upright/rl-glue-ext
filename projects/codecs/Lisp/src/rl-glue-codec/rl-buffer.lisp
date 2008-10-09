@@ -15,7 +15,7 @@
 ;;; $Revision$
 ;;; $Date$
 
-(in-package #:rl-glue-clcdc)
+(in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Architecture specific parameters.
@@ -216,7 +216,7 @@ of the encoded value in bytes."
     (declare (type #.(code-type) code))
     (with-accessors ((bytes bytes) (offset offset)) buffer
       (loop repeat size do 
-           (setf code (+ (ash code +bits-per-byte+)
+           (setf code (+ (the #.(code-type) (ash code +bits-per-byte+))
                          (aref (the (vector #.(ubyte-type)) bytes) offset)))
            (incf (the fixnum offset))))
     code))

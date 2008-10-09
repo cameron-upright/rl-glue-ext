@@ -20,7 +20,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL-Glue utility package.
 
-(defpackage #:rl-glue-utils
+(defpackage #:org.rl-community.rl-glue-utils
+  (:nicknames #:rl-glue-utils)
   (:use #:common-lisp)
   (:export
    ;; task-spec-parser

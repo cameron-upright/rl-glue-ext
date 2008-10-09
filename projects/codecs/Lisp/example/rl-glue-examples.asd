@@ -17,10 +17,10 @@
 
 (in-package #:cl-user)
 
-(defpackage #:rl-glue-examples-asdf
+(defpackage #:org.rl-community.rl-glue-examples-asdf
   (:use #:asdf #:common-lisp))
 
-(in-package #:rl-glue-examples-asdf)
+(in-package #:org.rl-community.rl-glue-examples-asdf)
 
 (defsystem rl-glue-examples
   :name "RL-Glue Common Lisp Codec Examples"
@@ -39,5 +39,5 @@
    (:module experiment
             :components
             ((:file "experiment"))))
-  :depends-on ("rl-glue-clcdc" "rl-glue-utils"))
+  :depends-on ("rl-glue-codec" "rl-glue-utils"))
 

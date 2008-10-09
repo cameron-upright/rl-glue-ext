@@ -15,7 +15,7 @@
 ;;; $Revision$
 ;;; $Date$
 
-(in-package #:rl-glue-clcdc)
+(in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Environment client interface.
