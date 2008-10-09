@@ -67,7 +67,7 @@ static unsigned int theInMessageCapacity = 0;
 
 /*Added as a global variable because now we must allocate and fill
 up the data structures instead of the environment.*/
-static observation_t theObservation		  = {0};
+static observation_t globalObservation		  = {0};
 
 static void onEnvInit(int theConnection) {
  /* CUT-FOR-CUSTOMIZATION:  task_specification_t theTaskSpec = 0;*/
@@ -94,26 +94,26 @@ static void onEnvInit(int theConnection) {
 }
 
 static void onEnvStart(int theConnection) {
-   	/* CUT-FOR-CUSTOMIZATION: observation_t theObservation = {0}; */
+   	/* CUT-FOR-CUSTOMIZATION: observation_t globalObservation = {0}; */
   	unsigned int offset = 0;
 
- 	/* CUT-FOR-CUSTOMIZATION: theObservation=env_start(); */
+ 	/* CUT-FOR-CUSTOMIZATION: globalObservation=env_start(); */
 
 	/* Call our hook into TheGame to start a new game */
 	new_game();
 	/* Allocate space to store the observation (gameState)*/
-	allocateRLStruct(&theObservation,1,0,0);
+	allocateRLStruct(&globalObservation,1,0,0);
 
 	/* Get the int observation from a global variable we
 								extern'd from TheGame.c */
-	theObservation.intArray[0]=gameState;
-	__RL_CHECK_STRUCT(&theObservation)
+	globalObservation.intArray[0]=gameState;
+	__RL_CHECK_STRUCT(&globalObservation)
   rlBufferClear(&theBuffer);
-  offset = rlCopyADTToBuffer(&theObservation, &theBuffer, offset);
+  offset = rlCopyADTToBuffer(&globalObservation, &theBuffer, offset);
 }
 
 static void onEnvStep(int theConnection) {
-	reward_observation_t ro = {0};
+	static reward_observation_t ro = {0};
 	unsigned int offset = 0;
 
 	/* Create an integer variable to hold the action from the agent*/
@@ -133,10 +133,10 @@ static void onEnvStep(int theConnection) {
   
 	/************************** ALL NEW CODE HERE **************************/
 	/* Allocate space to store the observation (gameState)*/
-	allocateRLStruct(&theObservation,1,0,0);
+	allocateRLStruct(&globalObservation,1,0,0);
 	/* Get the int observation from a global variable we
 								extern'd from TheGame.c */
-	theObservation.intArray[0]=gameState;
+	globalObservation.intArray[0]=gameState;
 
 	/* TheGame doesn't know about rewards, and it doesn't
 		have a "terminal" flag, so we have to write code
@@ -151,18 +151,18 @@ static void onEnvStep(int theConnection) {
 		ro.terminal=1;
 	}
 
-	ro.o=theObservation;
+	ro.o=&globalObservation;
 
 	/************************** NEW CODE OVER **************************/
 	
-  __RL_CHECK_STRUCT(&ro.o)
+  __RL_CHECK_STRUCT(ro.o)
 
 
   rlBufferClear(&theBuffer);
   offset = 0;
   offset = rlBufferWrite(&theBuffer, offset, &ro.terminal, 1, sizeof(terminal_t));
   offset = rlBufferWrite(&theBuffer, offset, &ro.r, 1, sizeof(reward_t));
-  offset = rlCopyADTToBuffer(&ro.o, &theBuffer, offset);
+  offset = rlCopyADTToBuffer(ro.o, &theBuffer, offset);
 }
 
 static void onEnvCleanup(int theConnection) {
@@ -171,8 +171,8 @@ static void onEnvCleanup(int theConnection) {
 
 	rlBufferClear(&theBuffer);
 	
-	/* Clean up theObservation global we created*/
-	clearRLStruct(&theObservation);
+	/* Clean up globalObservation global we created*/
+	clearRLStruct(&globalObservation);
 
 	clearRLStruct(&theAction);
 	clearRLStruct(&theRandomSeedKey);

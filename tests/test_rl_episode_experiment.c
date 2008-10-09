@@ -26,6 +26,7 @@
 
 
 #include <stdio.h>
+#include <rlglue/utils/C/RLStruct_util.h>
 
 #include <rlglue/RL_glue.h>
 #include <string.h>
@@ -49,8 +50,10 @@ int main(int argc, char *argv[]) {
 	terminal_t isTerminal = RL_episode(0);
 	check_fail(isTerminal!=1);
 	check_fail(RL_num_steps()!=5);
+	
 
 	isTerminal = RL_episode(1);
+
 	check_fail(isTerminal!=0);
 	check_fail(RL_num_steps()!=1);
 
