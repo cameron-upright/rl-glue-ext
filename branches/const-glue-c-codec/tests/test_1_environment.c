@@ -61,8 +61,8 @@ const reward_observation_t *env_step(const action_t *a)
 	makeKInts(o,1);
 	o->intArray[0]=stepCount;
 	
-	ro.o=o;
-	ro.r=1.0;
+	ro.observation=o;
+	ro.reward=1.0;
   
 	stepCount++;
 	

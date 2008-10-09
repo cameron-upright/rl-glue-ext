@@ -70,11 +70,11 @@ const reward_observation_t *env_step(const action_t *a)
 	static reward_observation_t ro={0};
 
 	if(env_whichEpisode%2==0)
-		ro.o=emptyObservation;
+		ro.observation=emptyObservation;
 	else
-		ro.o=nonEmptyObservation;
+		ro.observation=nonEmptyObservation;
 		
-	ro.r=0;
+	ro.reward=0;
 	ro.terminal=0;
 	
 	return &ro;

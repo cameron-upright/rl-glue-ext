@@ -28,7 +28,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <rlglue/Environment_common.h>
 #include <rlglue/utils/C/RLStruct_util.h>
 #include "useful_functions.h"
@@ -57,7 +56,7 @@ const reward_observation_t *env_step(const action_t *a)
 {
 	static reward_observation_t ro={0};
 	clearRLStruct(o);
-	ro.o=o;
+	ro.observation=o;
 	return &ro;
 }
 
@@ -68,27 +67,21 @@ void env_cleanup()
 
 void env_set_state(const state_key_t *sk)
 {
-	assert(env_saved_state_key!=0);
-	assert(sk!=0);
 	replaceRLStruct(sk,env_saved_state_key);
 }
      
 void env_set_random_seed(const random_seed_key_t *rsk)
 {
-	assert(env_saved_random_key!=0);
-	assert(rsk!=0);
 	replaceRLStruct(rsk,env_saved_random_key);
 }
 
 const state_key_t *env_get_state()
 {
-	__rlglue_check_abstract_type(env_saved_state_key);
 	return env_saved_state_key;
 }
 
 const random_seed_key_t *env_get_random_seed()
 {
-	__rlglue_check_abstract_type(env_saved_random_key);
 	return env_saved_random_key;
 }
 
