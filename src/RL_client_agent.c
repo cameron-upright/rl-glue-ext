@@ -39,6 +39,7 @@
 #include <rlglue/utils/C/RLStruct_util.h>
 
 
+#define DEBUGAGENT 1
 /*
 This is the core of the agent C codec. It is very similar to RL_client_environment.c, so
 it may be slightly more sparsely commented than that file */
@@ -46,7 +47,7 @@ it may be slightly more sparsely commented than that file */
 static const char* kUnknownMessage = "Unknown Message: %d\n";
 
 static char* theTaskSpec = 0;
-static observation_t *clientagent_observation=0;
+static observation_t clientagent_observation={0};
 static rlBuffer clientagent_rlbuffer = {0};
 static char *clientagent_inmessage = 0;
 static unsigned int clientagent_inmessagecapacity = 0;
@@ -76,17 +77,18 @@ static void onAgentStart(int theConnection) {
 	unsigned int offset = 0;
 
 	/* Read the data in the buffer (data from server) */
-	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, clientagent_observation);
-	__RL_CHECK_STRUCT(clientagent_observation)
+	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, &clientagent_observation);
+	__RL_CHECK_STRUCT(&clientagent_observation)
 
 	/* Call RL method on the recv'd data */
-	theAction = agent_start(clientagent_observation);
+	theAction = agent_start(&clientagent_observation);
 	__RL_CHECK_STRUCT(theAction)
 
 	/* Prepare the buffer for sending data back to the server */
 	rlBufferClear(&clientagent_rlbuffer);
 	offset = 0;
 	offset = rlCopyADTToBuffer(theAction, &clientagent_rlbuffer, offset);
+
 }
 
 static void onAgentStep(int theConnection) {
@@ -96,11 +98,11 @@ static void onAgentStep(int theConnection) {
 
 	/* Read the data in the buffer (data from server) */
 	offset = rlBufferRead(&clientagent_rlbuffer, offset, &theReward, 1, sizeof(theReward));
-	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, clientagent_observation);
-	__RL_CHECK_STRUCT(clientagent_observation)
+	offset = rlCopyBufferToADT(&clientagent_rlbuffer, offset, &clientagent_observation);
+	__RL_CHECK_STRUCT(&clientagent_observation)
 
 	/* Call RL method on the recv'd data */
-	theAction = agent_step(theReward, clientagent_observation);
+	theAction = agent_step(theReward, &clientagent_observation);
 	__RL_CHECK_STRUCT(theAction)
 
 	/* Prepare the buffer for sending data back to the server */
@@ -134,7 +136,7 @@ static void onAgentCleanup(int theConnection) {
 	rlBufferClear(&clientagent_rlbuffer);
 
 	/* Cleanup our resources */
-	clearRLStruct(clientagent_observation);
+	clearRLStruct(&clientagent_observation);
 	free(theTaskSpec);
 	free(clientagent_inmessage);
 
@@ -147,8 +149,8 @@ static void onAgentCleanup(int theConnection) {
 static void onAgentMessage(int theConnection) {
 	unsigned int inMessageLength = 0;
 	unsigned int outMessageLength = 0;
-	message_t inMessage = 0;
-	message_t outMessage = 0;
+	char* inMessage = 0;
+	const char* outMessage = 0;
 	unsigned int offset = 0;
 
 	/* Read the data in the buffer (data from server) */
@@ -231,6 +233,7 @@ static void runAgentEventLoop(int theConnection) {
   } while (agentState != kRLTerm);
 }
 
+
 int main(int argc, char** argv) {
 	int theConnection = 0;
 
@@ -276,7 +279,7 @@ int main(int argc, char** argv) {
 	fprintf(stdout, "RL-Glue C Agent Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
 	fflush(stdout);
 
-	/* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
+/* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
 	rlBufferCreate(&clientagent_rlbuffer, 4096);
 
 	theConnection = rlWaitForConnection(host, port, kRetryTimeout);
