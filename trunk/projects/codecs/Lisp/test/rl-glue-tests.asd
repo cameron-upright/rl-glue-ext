@@ -17,10 +17,10 @@
 
 (in-package #:cl-user)
 
-(defpackage #:rl-glue-tests-asdf
+(defpackage #:org.rl-community.rl-glue-tests-asdf
   (:use #:asdf #:common-lisp))
 
-(in-package #:rl-glue-tests-asdf)
+(in-package #:org.rl-community.rl-glue-tests-asdf)
 
 (defsystem rl-glue-tests
   :name "RL-Glue Common Lisp Codec Tests"
@@ -68,5 +68,5 @@
             ((:file "test-speed-environment")
              (:file "test-speed-experiment"))
             :depends-on ("test-1")))
-  :depends-on ("rl-glue-clcdc" "rl-glue-utils"))
+  :depends-on ("rl-glue-codec" "rl-glue-utils"))
 

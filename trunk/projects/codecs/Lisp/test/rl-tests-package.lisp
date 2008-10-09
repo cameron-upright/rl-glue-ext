@@ -17,8 +17,9 @@
 
 (in-package #:cl-user)
 
-(defpackage #:rl-glue-tests
-  (:use #:common-lisp #:rl-glue-clcdc #:rl-glue-utils)
+(defpackage #:org.rl-community.rl-glue-tests
+  (:nicknames #:rl-glue-tests)
+  (:use #:common-lisp #:rl-glue-codec #:rl-glue-utils)
   (:export
    ;; test-1
    #:start-test-1-agent

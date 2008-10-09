@@ -32,7 +32,7 @@ include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 RL_agent: $(RL_GLUE_TESTS_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
-	              $(call asdf_load, rl-glue-clcdc) \
+	              $(call asdf_load, rl-glue-codec) \
 	              $(call asdf_load, rl-glue-utils) \
 	              $(call asdf_load, rl-glue-tests) \
 				  $(LISP_EVAL) "(rl-glue-tests:start-$(AGENT) \
@@ -43,7 +43,7 @@ RL_agent: $(RL_GLUE_TESTS_TARGET)
 RL_environment: $(RL_GLUE_TESTS_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
-	              $(call asdf_load, rl-glue-clcdc) \
+	              $(call asdf_load, rl-glue-codec) \
 	              $(call asdf_load, rl-glue-utils) \
 	              $(call asdf_load, rl-glue-tests) \
 	              $(LISP_EVAL) "(rl-glue-tests:start-$(ENVIRONMENT) \
@@ -54,7 +54,7 @@ RL_environment: $(RL_GLUE_TESTS_TARGET)
 RL_experiment: $(RL_GLUE_TESTS_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
-	              $(call asdf_load, rl-glue-clcdc) \
+	              $(call asdf_load, rl-glue-codec) \
 	              $(call asdf_load, rl-glue-utils) \
 	              $(call asdf_load, rl-glue-tests) \
 	              $(LISP_EVAL) "(rl-glue-tests:start-$(EXPERIMENT) \

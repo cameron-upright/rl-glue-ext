@@ -14,7 +14,7 @@
 ;;;
 ;;; $Date$
 
-(in-package #:rl-glue-clcdc)
+(in-package #:org.rl-community.rl-glue-codec)
 
 (defun get-svn-codec-version ()
   (let ((glue-ver "$Revision$"))

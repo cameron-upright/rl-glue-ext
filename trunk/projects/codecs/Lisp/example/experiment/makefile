@@ -7,7 +7,7 @@ include $(RL_GLUE_BASE_PATH)/makefile.rl-glue
 $(TARGETS): $(RL_GLUE_EXAMPLES_TARGET)
 	$(call lisp_start_sh, $@, \
 	       $(call lisp_run, \
-		   $(call asdf_load, rl-glue-clcdc) \
+		   $(call asdf_load, rl-glue-codec) \
 		   $(call asdf_load, rl-glue-utils) \
 		   $(call asdf_load, rl-glue-examples) \
 	       $(LISP_EVAL) "(rl-episode-avg:start-episode-avg \

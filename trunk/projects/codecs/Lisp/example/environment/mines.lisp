@@ -28,7 +28,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Mines environment.
 
-(defclass mines (rl-glue-clcdc:environment)
+(defclass mines (rl-glue-codec:environment)
   ((rand-state
     :accessor rand-state
     :initform (make-random-state t)
@@ -83,7 +83,7 @@
 
 (defun make-observation (mines &key row col terminal)
   "Creates an observation of a mines environment state."
-  (rl-glue-clcdc:make-observation
+  (rl-glue-codec:make-observation
    :int-array (make-array
                1
                :element-type 'integer
@@ -126,7 +126,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Interface methods.
 
-(defmethod rl-glue-clcdc:env-init ((env mines))
+(defmethod rl-glue-codec:env-init ((env mines))
   ;; setting field marks
   (setf (start env) 0)
   (setf (goal env) 1)
@@ -155,7 +155,7 @@
   (format nil "2:e:1_[i]_[0,~a]:1_[i]_[0,~a]:[-10,10]"
           (1- (* (row env) (col env))) 3))
 
-(defmethod rl-glue-clcdc:env-start ((env mines))
+(defmethod rl-glue-codec:env-start ((env mines))
   (with-accessors ((rand-state rand-state)
                    (start-row start-row) (start-col start-col)
                    (map field-map) (land land) (row row) (col col)) env
@@ -173,12 +173,12 @@
     (setf (agent-col env) start-col)
     (make-observation env :row start-row :col start-col)))
 
-(defmethod rl-glue-clcdc:env-step ((env mines) action)
+(defmethod rl-glue-codec:env-step ((env mines) action)
   (with-accessors ((step-num step-num)) env
     (incf step-num)
     (format t "Step number: ~a (~a,~a)~%"
             step-num (agent-row env) (agent-col env)))
-  (update-position env (aref (rl-glue-clcdc:int-array action) 0))
+  (update-position env (aref (rl-glue-codec:int-array action) 0))
   (multiple-value-bind (reward terminal) (get-reward env)
     (values reward
             (make-observation env
@@ -187,22 +187,22 @@
                               :terminal terminal)
             terminal)))
 
-(defmethod rl-glue-clcdc:env-cleanup ((env mines))
+(defmethod rl-glue-codec:env-cleanup ((env mines))
   env)
 
-(defmethod rl-glue-clcdc:env-get-state ((env mines))
-  (rl-glue-clcdc:make-state-key))
+(defmethod rl-glue-codec:env-get-state ((env mines))
+  (rl-glue-codec:make-state-key))
 
-(defmethod rl-glue-clcdc:env-set-state ((env mines) state-key)
+(defmethod rl-glue-codec:env-set-state ((env mines) state-key)
   'not-supported)
 
-(defmethod rl-glue-clcdc:env-get-random-seed ((env mines))
-  (rl-glue-clcdc:make-random-seed-key))
+(defmethod rl-glue-codec:env-get-random-seed ((env mines))
+  (rl-glue-codec:make-random-seed-key))
 
-(defmethod rl-glue-clcdc:env-set-random-seed ((env mines) random-seed-key)
+(defmethod rl-glue-codec:env-set-random-seed ((env mines) random-seed-key)
   'not-supported)
 
-(defmethod rl-glue-clcdc:env-message ((env mines) input-message)
+(defmethod rl-glue-codec:env-message ((env mines) input-message)
   "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -210,5 +210,5 @@
 
 (defmacro start-mines (&rest args)
   "Starting a mines environment."
-  `(rl-glue-clcdc:run-env (make-instance 'mines) ,@args))
+  `(rl-glue-codec:run-env (make-instance 'mines) ,@args))
 

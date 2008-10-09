@@ -53,7 +53,7 @@ RL_GLUE_TESTS_PATH ?= $(RL_GLUE_BASE_PATH)/test
 RL_GLUE_BUILD_PATH ?= $(RL_GLUE_BASE_PATH)/build
 RL_GLUE_EXAMPLE_PATH ?= $(RL_GLUE_BASE_PATH)/example
 
-RL_GLUE_CLCDC_PATH ?= $(RL_GLUE_SRC_PATH)/rl-glue-clcdc
+RL_GLUE_CLCDC_PATH ?= $(RL_GLUE_SRC_PATH)/rl-glue-codec
 RL_GLUE_UTILS_PATH ?= $(RL_GLUE_SRC_PATH)/rl-glue-utils
 
 ###############################################################################
@@ -106,7 +106,7 @@ RL_GLUE_EXAMPLES_SOURCES = $(call find_sources, $(RL_GLUE_EXAMPLE_PATH))
 ### Default targets.
 
 make_target = $(RL_GLUE_BUILD_PATH)/$(strip $(1))-$(strip $(LISP_IMPL))
-RL_GLUE_CLCDC_TARGET = $(call make_target, rl-glue-clcdc)
+RL_GLUE_CLCDC_TARGET = $(call make_target, rl-glue-codec)
 RL_GLUE_UTILS_TARGET = $(call make_target, rl-glue-utils)
 RL_GLUE_TESTS_TARGET = $(call make_target, rl-glue-tests)
 RL_GLUE_EXAMPLES_TARGET = $(call make_target, rl-glue-examples)
@@ -117,7 +117,7 @@ LISP_EXEC_LOCK ?= 1
 all: $(TARGETS)
 
 $(RL_GLUE_CLCDC_TARGET): $(RL_GLUE_CLCDC_SOURCES)
-	$(call lisp_compile_asdf, rl-glue-clcdc)
+	$(call lisp_compile_asdf, rl-glue-codec)
 	touch $@
 
 $(RL_GLUE_UTILS_TARGET): $(RL_GLUE_UTILS_SOURCES)

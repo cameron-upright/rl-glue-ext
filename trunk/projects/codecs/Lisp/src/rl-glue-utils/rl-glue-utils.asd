@@ -20,10 +20,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL-Glue Utilities ASDF System
 
-(defpackage #:rl-glue-utils-asdf
+(defpackage #:org.rl-community.rl-glue-utils-asdf
   (:use #:asdf #:common-lisp))
 
-(in-package #:rl-glue-utils-asdf)
+(in-package #:org.rl-community.rl-glue-utils-asdf)
 
 (defsystem rl-glue-utils
   :name "RL-Glue Common Lisp Codec Utilities"
