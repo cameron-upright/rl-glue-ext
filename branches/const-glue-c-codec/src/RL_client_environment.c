@@ -47,11 +47,11 @@ static action_t ce_globalaction                 = {0};
 static state_key_t ce_globalstatekey            = {0};
 static random_seed_key_t ce_globalrandomseedkey = {0};
 static rlBuffer ce_globalrlbuffer               = {0};
-static message_t ce_globalinmessage = 0;
+static char *ce_globalinmessage = 0;
 static unsigned int ce_globalinmessagecapacity = 0;
 
 static void onEnvInit(int theConnection) {
-	task_specification_t theTaskSpec = 0;
+	const char* theTaskSpec=0;
 	unsigned int theTaskSpecLength = 0;
 	unsigned int offset = 0;
 
@@ -73,32 +73,32 @@ static void onEnvInit(int theConnection) {
 }
 
 static void onEnvStart(int theConnection) {
-	observation_t theObservation = {0};
+	const observation_t *theObservation=0;
 	 	unsigned int offset = 0;
 
 	theObservation=env_start();
-	__RL_CHECK_STRUCT(&theObservation)
+	__RL_CHECK_STRUCT(theObservation)
 
 	rlBufferClear(&ce_globalrlbuffer);
-	offset = rlCopyADTToBuffer(&theObservation, &ce_globalrlbuffer, offset);
+	offset = rlCopyADTToBuffer(theObservation, &ce_globalrlbuffer, offset);
 }
 
 static void onEnvStep(int theConnection) {
-	reward_observation_t ro = {0};
+	const reward_observation_t *ro = 0;
 	unsigned int offset = 0;
 
 	offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalaction);
 	__RL_CHECK_STRUCT(&ce_globalaction);
 
-	ro = env_step(ce_globalaction);	
-	__RL_CHECK_STRUCT(&ro.o)
+	ro = env_step(&ce_globalaction);	
+	__RL_CHECK_STRUCT(ro->o)
 
 
 	rlBufferClear(&ce_globalrlbuffer);
 	offset = 0;
-	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro.terminal, 1, sizeof(terminal_t));
-	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro.r, 1, sizeof(reward_t));
-	offset = rlCopyADTToBuffer(&ro.o, &ce_globalrlbuffer, offset);
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro->terminal, 1, sizeof(terminal_t));
+	offset = rlBufferWrite(&ce_globalrlbuffer, offset, &ro->r, 1, sizeof(reward_t));
+	offset = rlCopyADTToBuffer(ro->o, &ce_globalrlbuffer, offset);
 }
 
 static void onEnvCleanup(int theConnection) {
@@ -120,7 +120,7 @@ static void onEnvSetState(int theConnection) {
   unsigned int offset = 0;
 
   offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalstatekey);
-  env_set_state(ce_globalstatekey);
+  env_set_state(&ce_globalstatekey);
 
   rlBufferClear(&ce_globalrlbuffer);
 }
@@ -129,32 +129,32 @@ static void onEnvSetRandomSeed(int theConnection) {
   unsigned int offset = 0;
 
   offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalrandomseedkey);  
-  env_set_random_seed(ce_globalrandomseedkey);
+  env_set_random_seed(&ce_globalrandomseedkey);
 
   rlBufferClear(&ce_globalrlbuffer);
 }
 
 static void onEnvGetState(int theConnection) {
-	state_key_t key = {0};
+	const state_key_t *key = 0;
 	unsigned int offset = 0;
 
 	key = env_get_state();
-	__RL_CHECK_STRUCT(&key);
+	__RL_CHECK_STRUCT(key);
 
 	rlBufferClear(&ce_globalrlbuffer);
-	offset = rlCopyADTToBuffer(&key, &ce_globalrlbuffer, offset);
+	offset = rlCopyADTToBuffer(key, &ce_globalrlbuffer, offset);
 }
 
 static void onEnvGetRandomSeed(int theConnection) {
-	random_seed_key_t key = {0};
+	const random_seed_key_t *key = 0;
 	unsigned int offset = 0;
 
 	key=env_get_random_seed();
-	__RL_CHECK_STRUCT(&key);
+	__RL_CHECK_STRUCT(key);
 
 
 	rlBufferClear(&ce_globalrlbuffer);
-	rlCopyADTToBuffer(&key, &ce_globalrlbuffer, offset);
+	rlCopyADTToBuffer(key, &ce_globalrlbuffer, offset);
 }
 
 /*
