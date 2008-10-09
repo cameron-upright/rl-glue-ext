@@ -163,8 +163,8 @@ static void onEnvGetRandomSeed(int theConnection) {
 static void onEnvMessage(int theConnection) {
 	unsigned int inMessageLength = 0;
 	unsigned int outMessageLength = 0;
-	message_t inMessage = 0;
-	message_t outMessage = 0;
+	char* inMessage = 0;
+	const char* outMessage = 0;
 	unsigned int offset = 0;
 
 	offset = 0;
@@ -211,6 +211,7 @@ static void runEnvironmentEventLoop(int theConnection) {
 
 /* This is just a big loop the receives a command and then executes it, 
 until it receives a termination command */
+
   do { 
     rlBufferClear(&ce_globalrlbuffer);
     rlRecvBufferData(theConnection, &ce_globalrlbuffer, &envState);
@@ -265,6 +266,7 @@ until it receives a termination command */
   } while (envState != kRLTerm);
 }
 
+
 int main(int argc, char** argv) {
   int theConnection = 0;
 
@@ -308,17 +310,16 @@ int main(int argc, char** argv) {
 	  	host = inet_ntoa(*(struct in_addr*)host_ent->h_addr_list[0]);
 	}
 
-  fprintf(stdout, "RL-Glue C Environment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
+  	fprintf(stdout, "RL-Glue C Environment Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
 	fflush(stdout);
 
 
-  /* Allocate what should be plenty of space for the buffer - 
-			it will dynamically resize if it is too small */
-  rlBufferCreate(&ce_globalrlbuffer, 4096);
+	rlBufferCreate(&ce_globalrlbuffer, 4096);
   
     theConnection = rlWaitForConnection(host, port, kRetryTimeout);
 	fprintf(stdout, "\tRL-Glue C Environment Codec :: Connected\n");
-    rlBufferClear(&ce_globalrlbuffer);
+	
+	rlBufferClear(&ce_globalrlbuffer);    
     rlSendBufferData(theConnection, &ce_globalrlbuffer, kEnvironmentConnection);
     runEnvironmentEventLoop(theConnection);
     rlClose(theConnection);

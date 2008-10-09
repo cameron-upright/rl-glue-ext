@@ -31,17 +31,18 @@
 
 int __rlglue_check_abstract_type(const rl_abstract_type_t *theStruct){
 
-	if(theStruct->numInts>1000000)return 1;
-	if(theStruct->numDoubles>1000000)return 2;
-	if(theStruct->numChars>1000000)return 3;
+	
+	assert(theStruct->numInts<1000000);
+	assert(theStruct->numDoubles<1000000);
+	assert(theStruct->numChars<1000000);
 
-	if(theStruct->numInts>0 && theStruct->intArray==0)return 4;
-	if(theStruct->numDoubles>0 && theStruct->doubleArray==0)return 5;
-	if(theStruct->numChars>0 && theStruct->charArray==0)return 6;
+	assert(theStruct->numInts>0 || theStruct->intArray==0);
+	assert(theStruct->numDoubles>0 || theStruct->doubleArray==0);
+	assert(theStruct->numChars>0 || theStruct->charArray==0);
 
-	if(theStruct->numInts==0 && theStruct->intArray!=0)return 7;
-	if(theStruct->numDoubles==0 && theStruct->doubleArray!=0)return 8;
-	if(theStruct->numChars==0 && theStruct->charArray!=0)return 9;
+	assert(theStruct->numInts==0 || theStruct->intArray!=0);
+	assert(theStruct->numDoubles==0 || theStruct->doubleArray!=0);
+	assert(theStruct->numChars==0 || theStruct->charArray!=0);
 	
 	return 0;
 }
