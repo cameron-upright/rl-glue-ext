@@ -115,12 +115,10 @@ static void onEnvStart(int theConnection) {
 static void onEnvStep(int theConnection) {
 	static reward_observation_t ro = {0};
 	unsigned int offset = 0;
-	
-	ro.terminal=0;
-
 	/* Create an integer variable to hold the action from the agent*/
   	int theIntAction=0;
-
+	ro.terminal=0;
+  ro.reward=0;
 
 	offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
  	__RL_CHECK_STRUCT(&theAction);
