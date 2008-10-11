@@ -1,4 +1,238 @@
 -----------------------------------------
+RL-GLUE C-Codec RC2 :: 2008-10-11  
+-----------------------------------------
+2008-10-11  Brian Tanner <brian@tannerpages.com>
+
+	* [r337] configure, configure.ac,
+	  examples/custom_integrated_env/src/Custom_Integrated_Env_Codec.c,
+	  examples/skeleton_agent/SkeletonAgent.c,
+	  examples/skeleton_environment/SkeletonEnvironment.c,
+	  examples/skeleton_experiment/SkeletonExperiment.c,
+	  src/RL_client_agent.c, src/RL_client_environment.c,
+	  src/RL_client_experiment.c, src/RL_debug.c, tests/test_1_agent.c,
+	  tests/test_1_environment.c, tests/test_1_experiment.c,
+	  tests/test_empty_agent.c, tests/test_empty_environment.c,
+	  tests/test_empty_experiment.c, tests/test_message_agent.c,
+	  tests/test_message_environment.c,
+	  tests/test_message_experiment.c,
+	  tests/test_rl_episode_experiment.c,
+	  tests/test_sanity_experiment.c, tests/test_seeds_environment.c,
+	  tests/test_seeds_experiment.c, tests/test_speed_environment.c,
+	  tests/test_speed_experiment.c, tests/useful_functions.c: Merged
+	  the C-Const pointer branch with the trunk. The RL-Glue C Codec is
+	  now compatible with the pointer version of RL-Glue 3.x.
+
+2008-10-09  Brian Tanner <brian@tannerpages.com>
+
+	* [r327] src/RL_client_agent.c, src/RL_client_environment.c,
+	  src/RL_client_experiment.c: Updated the gethostbyname stuff to
+	  die gracefully if can't lookup the hostname.
+
+	* [r326] Makefile.in, aclocal.m4, config/config.h.in,
+	  config/ltmain.sh, configure, src/Makefile.in,
+	  src/RL_client_agent.c, src/RL_client_environment.c,
+	  src/RL_client_experiment.c, tests/Makefile.in: Updated the C
+	  codec main() functions to use a more current approach to
+	  translate host names to host addresses, this should fix a compile
+	  error on GCC 4.3.
+
+	* [r325] configure.ac: Moved AC_PROG_CC/INSTALL/LIBTOOL to top of
+	  configure.ac which fixes a weird bug that only shows up when
+	  doing an if statement. In the process, fixed a weird bug in the
+	  conditional library check. We also check for a few more functions
+	  now, and for some structs.
+
+2008-10-08  Brian Tanner <brian@tannerpages.com>
+
+	* [r323] Makefile.in, aclocal.m4, config/config.h.in,
+	  config/ltmain.sh, configure, configure.ac,
+	  examples/skeleton_experiment/Makefile, src/Makefile.in,
+	  tests/Makefile.am, tests/Makefile.in,
+	  tests/test_empty_experiment.c: Made some small changes to make
+	  codecs compile and link right in Cygwin.
+
+	* [r322] tests/pkill.sh, tests/test_1.sh, tests/test_empty.sh,
+	  tests/test_message.sh, tests/test_rl_episode.sh,
+	  tests/test_sanity.sh, tests/test_seeds.sh, tests/test_speed.sh:
+	  took out pkill because its a kludge, went back to killall, but
+	  redirect stderr to dev null so we don't get ugly warnings. can't
+	  just use -q because BSD doesn't support it.
+
+	* [r321] tests/test_1.sh, tests/test_empty.sh,
+	  tests/test_message.sh, tests/test_rl_episode.sh,
+	  tests/test_sanity.sh, tests/test_seeds.sh, tests/test_speed.sh:
+	  Updated all of the tests to use pkill script instead of killall,
+	  because killall works the way I Want only on Mac, pkill works on
+	  Mac and Linux.
+
+	* [r320] tests/pkill.sh: A little utility script that lets you kill
+	  processes by name.:
+
+	* [r319] tests/test_rl_episode_experiment.c: Removed an unused
+	  variable.
+
+2008-10-07  Brian Tanner <brian@tannerpages.com>
+
+	* [r318] examples/skeleton_experiment/Makefile: Added -lrlutils to
+	  the skeleton experiment makefile so it will build on Linux.
+
+2008-10-06  Brian Tanner <brian@tannerpages.com>
+
+	* [r316] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/index.html: Added nice links to
+	  the files for the codec customization section.
+
+	* [r315] configure, configure.ac, docs/C-Codec.pdf,
+	  docs/C-Codec.tex, docs/html/C-Codec.html, docs/html/index.html:
+	  Added whats up with task spec parser section.
+
+	* [r311] src/RL_client_agent.c, src/RL_client_environment.c,
+	  src/RL_client_experiment.c, src/rlglue/utils/C/TaskSpec_Parser.h:
+	  Did a bunch of formatting to make things pretty, and replaced
+	  laborious freeing of data structures with calls to the utils
+	  library.
+
+	* [r310] docs, docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/WARNINGS, docs/html/index.html:
+	  Added section about customizing the codec for integrating with
+	  external environments, how to get more help (mailing list and
+	  online faq), and added advanced usage section for setting ports
+	  and hosts to connect to.
+
+	* [r309]
+	  examples/custom_integrated_env/src/Custom_Integrated_Env_Codec.c,
+	  examples/custom_integrated_env/src/TheGame.c: Updated the custom
+	  integrated environment.
+
+2008-10-05  Brian Tanner <brian@tannerpages.com>
+
+	* [r308] examples/custom_integrated_env/Makefile,
+	  examples/custom_integrated_env/README: A few more updates to the
+	  custom environment intgration example.
+
+	* [r307]
+	  examples/custom_integrated_env/src/Custom_Integrated_Env_Codec.c~,
+	  examples/custom_integrated_env/src/Makefile: Taking out emacs tmp
+	  file.
+
+	* [r306] examples/external_env: Removing directory that I Was going
+	  to use but it has a bad name.
+
+	* [r305] examples/custom_integrated_env/README,
+	  examples/custom_integrated_env/src, examples/src: Moving the
+	  source of the custom example into the appropriate directory.
+
+	* [r304] examples/custom_integrated_env: Adding directory for the
+	  custom example.
+
+	* [r303] examples/external_env, examples/src,
+	  examples/src/Custom_Integrated_Env_Codec.c,
+	  examples/src/Custom_Integrated_Env_Codec.c~,
+	  examples/src/Makefile, examples/src/TheGame.c,
+	  examples/src/TheGame.h: Added the code for the example of how to
+	  integrate a custom codec with a nonstandard environment.
+
+	* [r302] src/RL_client_agent.c, src/RL_client_environment.c,
+	  src/RL_client_experiment.c: Changed some stderr print statements
+	  to match their stdout counterparts.
+
+	* [r300] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/WARNINGS, docs/html/index.html:
+	  Quick updated to the docs to make the loader debugging stuff a
+	  little easier to understand.
+
+2008-10-02  Brian Tanner <brian@tannerpages.com>
+
+	* [r294] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/index.html: Updated my e-mail
+	  and website in the docs cause it was messing up the formatting.
+
+2008-10-01  Brian Tanner <brian@tannerpages.com>
+
+	* [r290] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/WARNINGS, docs/html/index.html:
+	  Added html package, out a link in to the overview docs.
+
+	* [r289] configure, configure.ac: Changed name from c_codec to
+	  C-Codec.
+
+	* [r281] Makefile.in, README: Updated README with proper link to
+	  docs.
+
+	* [r280] AUTHORS: Removing Authors.
+
+	* [r279] examples/skeleton_agent/SkeletonAgent.c: Put a newline at
+	  end of SkeletonAgent.c to remove Linux warning.
+
+	* [r278] INSTALL, Makefile.am, Makefile.in, config/config.h.in,
+	  configure, configure.ac, tests/Makefile.in: Updated version to
+	  2.0-RC1.
+
+	* [r277] src/Makefile.in, src/RL_client_agent.c,
+	  src/RL_client_environment.c, src/RL_client_experiment.c,
+	  src/RL_debug.c: Comitting new method for getting svn build
+	  values.
+
+	* [r276] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/index.html: Updated the name to
+	  version 2.0 and added my e-mail and url
+
+	* [r275] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/index.html: Added uninstall
+	  information to C codec.
+
+	* [r264] docs/C-Codec.tex, docs/html/C-Codec.html,
+	  docs/html/index.html,
+	  examples/skeleton_experiment/SkeletonExperiment.c: Updating the
+	  test script for codecs and some other random small changes.
+
+2008-09-30  Brian Tanner <brian@tannerpages.com>
+
+	* [r259] Makefile.in,
+	  examples/skeleton_environment/SkeletonEnvironment.c,
+	  src/Makefile.in, src/RLStruct_util.c: Took RLStruct_Util out of
+	  this project cause it's in the glue now.
+
+2008-09-29  Brian Tanner <brian@tannerpages.com>
+
+	* [r244] docs/C-Codec.pdf, docs/html/WARNINGS: oops, needed to run
+	  latex before latex2html.
+
+	* [r243] docs/html/C-Codec.html, docs/html/WARNINGS,
+	  docs/html/images.log, docs/html/images.pl, docs/html/images.tex,
+	  docs/html/img1.png, docs/html/index.html: Updated math image to
+	  not have underline as per:
+	  http://ccrma.stanford.edu/~jos/webpub/Eliminating_Black_Rules_Under.html
+
+	* [r238] src/Makefile.am, src/rlglue/utils/C/RLStruct_util.h:
+	  Moving RLStruct_Util.h to RL-Glue
+
+	* [r237] docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/index.html,
+	  docs/html/labels.pl, examples/Makefile.am: Updated the
+	  documentation a bit (moved stuff out that is now in the RL-Glue
+	  3.0 technical manual).
+
+	* [r236] Makefile.am, docs/C-Codec.pdf, docs/C-Codec.tex,
+	  docs/html/C-Codec.html, docs/html/index.html: Mentioned the
+	  license and the project url in the docs.
+
+2008-09-28  Brian Tanner <brian@tannerpages.com>
+
+	* [r233] Makefile.am, Makefile.in: Added docs to EXTRA_DIST in
+	  Makefile.am.
+
+	* [r232] ChangeLog, HOWTORELEASE, Makefile.am, Makefile.in, README,
+	  aclocal.m4, configure, configure.ac, examples/Makefile,
+	  examples/Makefile.am: updated changlog and stuff for beta
+	  release.
+
+	* [r231] configure, configure.ac,
+	  src/rlglue/utils/C/RLStruct_util.h,
+	  tests/test_rl_episode_experiment.c: Preparing the official beta-1
+	  of the C/C++ Codec.
+
+-----------------------------------------
 RL-GLUE-EXTENSIONS 1.0 BETA Release :: 2008-09-28  
 -----------------------------------------
 
