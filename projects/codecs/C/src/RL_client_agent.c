@@ -39,6 +39,7 @@
 #include <rlglue/utils/C/RLStruct_util.h>
 
 
+#define DEBUGAGENT 1
 /*
 This is the core of the agent C codec. It is very similar to RL_client_environment.c, so
 it may be slightly more sparsely commented than that file */
@@ -46,9 +47,9 @@ it may be slightly more sparsely commented than that file */
 static const char* kUnknownMessage = "Unknown Message: %d\n";
 
 static char* theTaskSpec = 0;
-static observation_t clientagent_observation = {0};
+static observation_t clientagent_observation={0};
 static rlBuffer clientagent_rlbuffer = {0};
-static message_t clientagent_inmessage = 0;
+static char *clientagent_inmessage = 0;
 static unsigned int clientagent_inmessagecapacity = 0;
 
 static void onAgentInit(int theConnection) {
@@ -72,7 +73,7 @@ static void onAgentInit(int theConnection) {
 }
 
 static void onAgentStart(int theConnection) {
-	action_t theAction = {0};
+	const action_t *theAction;
 	unsigned int offset = 0;
 
 	/* Read the data in the buffer (data from server) */
@@ -80,18 +81,19 @@ static void onAgentStart(int theConnection) {
 	__RL_CHECK_STRUCT(&clientagent_observation)
 
 	/* Call RL method on the recv'd data */
-	theAction = agent_start(clientagent_observation);
-	__RL_CHECK_STRUCT(&theAction)
+	theAction = agent_start(&clientagent_observation);
+	__RL_CHECK_STRUCT(theAction)
 
 	/* Prepare the buffer for sending data back to the server */
 	rlBufferClear(&clientagent_rlbuffer);
 	offset = 0;
-	offset = rlCopyADTToBuffer(&theAction, &clientagent_rlbuffer, offset);
+	offset = rlCopyADTToBuffer(theAction, &clientagent_rlbuffer, offset);
+
 }
 
 static void onAgentStep(int theConnection) {
-	reward_t theReward = 0;
-	action_t theAction = {0};
+	double theReward = 0;
+	const action_t *theAction;
 	unsigned int offset = 0;
 
 	/* Read the data in the buffer (data from server) */
@@ -100,21 +102,21 @@ static void onAgentStep(int theConnection) {
 	__RL_CHECK_STRUCT(&clientagent_observation)
 
 	/* Call RL method on the recv'd data */
-	theAction = agent_step(theReward, clientagent_observation);
-	__RL_CHECK_STRUCT(&theAction)
+	theAction = agent_step(theReward, &clientagent_observation);
+	__RL_CHECK_STRUCT(theAction)
 
 	/* Prepare the buffer for sending data back to the server */
 	rlBufferClear(&clientagent_rlbuffer);
 	offset = 0;
 
-	rlCopyADTToBuffer(&theAction, &clientagent_rlbuffer, offset);
+	rlCopyADTToBuffer(theAction, &clientagent_rlbuffer, offset);
 }
 
 static void onAgentEnd(int theConnection) {
-	reward_t theReward = 0;
+	double theReward = 0;
 
 	/* Read the data in the buffer (data from server) */
-	rlBufferRead(&clientagent_rlbuffer, 0, &theReward, 1, sizeof(reward_t));
+	rlBufferRead(&clientagent_rlbuffer, 0, &theReward, 1, sizeof(double));
 
 	/* Call RL method on the recv'd data */
 	agent_end(theReward);
@@ -147,8 +149,8 @@ static void onAgentCleanup(int theConnection) {
 static void onAgentMessage(int theConnection) {
 	unsigned int inMessageLength = 0;
 	unsigned int outMessageLength = 0;
-	message_t inMessage = 0;
-	message_t outMessage = 0;
+	char* inMessage = 0;
+	const char* outMessage = 0;
 	unsigned int offset = 0;
 
 	/* Read the data in the buffer (data from server) */
@@ -156,7 +158,7 @@ static void onAgentMessage(int theConnection) {
 	offset = rlBufferRead(&clientagent_rlbuffer, offset, &inMessageLength, 1, sizeof(int));
 
 	if (inMessageLength >= clientagent_inmessagecapacity) {
-		inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
+		inMessage = (char*)calloc(inMessageLength+1, sizeof(char));
 		free(clientagent_inmessage);
 
 		clientagent_inmessage = inMessage;
@@ -231,6 +233,7 @@ static void runAgentEventLoop(int theConnection) {
   } while (agentState != kRLTerm);
 }
 
+
 int main(int argc, char** argv) {
 	int theConnection = 0;
 
@@ -276,7 +279,7 @@ int main(int argc, char** argv) {
 	fprintf(stdout, "RL-Glue C Agent Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
 	fflush(stdout);
 
-	/* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
+/* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
 	rlBufferCreate(&clientagent_rlbuffer, 4096);
 
 	theConnection = rlWaitForConnection(host, port, kRetryTimeout);

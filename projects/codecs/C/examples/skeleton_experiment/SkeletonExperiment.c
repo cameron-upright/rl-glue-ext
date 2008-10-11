@@ -21,16 +21,16 @@ int whichEpisode=0;
 
 /* Run One Episode of length maximum cutOff*/
 void runEpisode(int stepLimit) {        
-    terminal_t terminal=RL_episode(stepLimit);
+    int terminal=RL_episode(stepLimit);
 	printf("Episode %d\t %d steps \t%f total reward\t %d natural end \n",whichEpisode,RL_num_steps(),RL_return(), terminal);
 	whichEpisode++;
 }
 
 int main(int argc, char *argv[]) {
-	task_specification_t task_spec;
-	message_t responseMessage=0;
-	reward_observation_action_terminal_t stepResponse;
-	observation_action_t startResponse;
+	const char* task_spec;
+	const char* responseMessage;
+	const reward_observation_action_terminal_t *stepResponse;
+	const observation_action_t *startResponse;
 
 	printf("\n\nExperiment starting up!\n");
 
@@ -43,12 +43,12 @@ int main(int argc, char *argv[]) {
 	responseMessage=RL_agent_message("what is your name?");
 	printf("Agent responded to \"what is your name?\" with: %s\n",responseMessage);
 	responseMessage=RL_agent_message("If at first you don't succeed; call it version 1.0");
-	printf("Agent responded to \"If at first you don't succeed; call it version 1.0  \" with: %s\n\n",responseMessage);
+	printf("Agent responded to \"If at first you don't succeed; call it version 1.0\" with: %s\n\n",responseMessage);
 
 	responseMessage=RL_env_message("what is your name?");
 	printf("Environment responded to \"what is your name?\" with: %s\n",responseMessage);
 	responseMessage=RL_env_message("If at first you don't succeed; call it version 1.0");
-	printf("Environment responded to \"If at first you don't succeed; call it version 1.0  \" with: %s\n",responseMessage);
+	printf("Environment responded to \"If at first you don't succeed; call it version 1.0\" with: %s\n",responseMessage);
 
 	printf("\n\n----------Running a few episodes----------\n");
 	runEpisode(100);
@@ -68,15 +68,15 @@ int main(int argc, char *argv[]) {
 	/*We could run one step at a time instead of one episode at a time */
 	/*Start the episode */
 	startResponse=RL_start();
-	printf("First observation and action were: %d %d\n",startResponse.o.intArray[0],startResponse.a.intArray[0]);
+	printf("First observation and action were: %d %d\n",startResponse->observation->intArray[0],startResponse->action->intArray[0]);
 
 	/*Run one step */
 	stepResponse=RL_step();
 	
 	/*Run until the episode ends*/
-	while(stepResponse.terminal!=1){
+	while(stepResponse->terminal!=1){
 		stepResponse=RL_step();
-		if(stepResponse.terminal!=1){
+		if(stepResponse->terminal!=1){
 			/*Could optionally print state,action pairs */
 			/*printf("(%d,%d) ",stepResponse.o.intArray[0],stepResponse.a.intArray[0]);*/
 		}

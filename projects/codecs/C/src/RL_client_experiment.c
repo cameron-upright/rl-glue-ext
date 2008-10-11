@@ -97,7 +97,7 @@ static void forceConnection()
   }
 }
 
-task_specification_t RL_init() {
+const char* RL_init() {
   unsigned int offset=0;
   unsigned int messageLength=0;
   int experimentState = kRLInit;
@@ -135,9 +135,9 @@ task_specification_t RL_init() {
   return clientexp_message;
 }
 
-observation_action_t RL_start() {
+const observation_action_t *RL_start() {
   int experimentState = kRLStart;
-  observation_action_t oa = { {0}, {0} };
+  static observation_action_t oa = { 0,0};
   unsigned int offset = 0;
 
   assert(theExperimentConnection != 0);
@@ -154,15 +154,15 @@ observation_action_t RL_start() {
 	__RL_CHECK_STRUCT(&clientexp_observation)
 	__RL_CHECK_STRUCT(&clientexp_action)
 
-  oa.o = clientexp_observation;
-  oa.a = clientexp_action;
+  oa.observation = &clientexp_observation;
+  oa.action = &clientexp_action;
 
-  return oa;
+  return &oa;
 }
 
-reward_observation_action_terminal_t RL_step() {
+const reward_observation_action_terminal_t* RL_step() {
   int experimentState = kRLStep;
-  reward_observation_action_terminal_t roat = {0, {0}, {0}, 0};
+  static reward_observation_action_terminal_t roat = {0, 0,0, 0};
   unsigned int offset = 0;
   
   assert(theExperimentConnection != 0);
@@ -176,16 +176,16 @@ reward_observation_action_terminal_t RL_step() {
   assert(experimentState == kRLStep);
 
   offset = rlBufferRead(&clientexp_rlbuffer, offset, &roat.terminal, 1, sizeof(int));
-  offset = rlBufferRead(&clientexp_rlbuffer, offset, &roat.r, 1, sizeof(reward_t));
+  offset = rlBufferRead(&clientexp_rlbuffer, offset, &roat.reward, 1, sizeof(double));
   offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_observation);
   offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_action);
 	__RL_CHECK_STRUCT(&clientexp_observation)
 	__RL_CHECK_STRUCT(&clientexp_action)
 
-  roat.o = clientexp_observation;
-  roat.a = clientexp_action;
+  roat.observation = &clientexp_observation;
+  roat.action = &clientexp_action;
 
-  return roat;
+  return &roat;
 }
 
 void RL_cleanup() {
@@ -212,9 +212,9 @@ void RL_cleanup() {
 	clientexp_messagecapacity = 0;
 }
 
-reward_t RL_return() {
+double RL_return() {
   int experimentState = kRLReturn;
-  reward_t theReward = 0;
+  double theReward = 0;
   unsigned int offset = 0;
 
   assert(theExperimentConnection != 0);
@@ -226,7 +226,7 @@ reward_t RL_return() {
   rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
   assert(experimentState == kRLReturn);
 
-  offset = rlBufferRead(&clientexp_rlbuffer, offset, &theReward, 1, sizeof(reward_t));
+  offset = rlBufferRead(&clientexp_rlbuffer, offset, &theReward, 1, sizeof(double));
 
   return theReward;
 }
@@ -251,7 +251,7 @@ int RL_num_steps() {
 }
 
 
-message_t RL_agent_message(const message_t message) {
+const char* RL_agent_message(const char* message) {
   int experimentState = kRLAgentMessage;
   unsigned int messageLength = 0;
   unsigned int offset = 0;
@@ -295,7 +295,7 @@ message_t RL_agent_message(const message_t message) {
 }
 
 
-message_t RL_env_message(const message_t message) {
+const char* RL_env_message(const char *message) {
 	int experimentState = kRLEnvMessage;
 	unsigned int messageLength = 0;
 	unsigned int offset = 0;
@@ -358,8 +358,8 @@ int RL_num_episodes() {
 	return numEpisodes;
 }
 
-terminal_t RL_episode(unsigned int numSteps) {
-	terminal_t terminal=0;
+int RL_episode(unsigned int numSteps) {
+	int terminal=0;
 	unsigned int offset = 0;
 	int experimentState = kRLEpisode;
 
@@ -374,19 +374,19 @@ terminal_t RL_episode(unsigned int numSteps) {
 	/*Brian Sept 8 2008 :: Not really sure if I should be resetting offset to 0 here.  Seems to work as is*/
 	offset=0;
 	rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
-	offset = rlBufferRead(&clientexp_rlbuffer, offset, &terminal, 1, sizeof(terminal_t));
+	offset = rlBufferRead(&clientexp_rlbuffer, offset, &terminal, 1, sizeof(int));
 	assert(experimentState == kRLEpisode);
 	return terminal;
 }
 
-void RL_set_state(state_key_t clientexp_statekey) {
+void RL_set_state(const state_key_t *theStatekey) {
 	int experimentState = kRLSetState;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
 
 	rlBufferClear(&clientexp_rlbuffer);
-	offset = rlCopyADTToBuffer(&clientexp_statekey, &clientexp_rlbuffer, offset);
+	offset = rlCopyADTToBuffer(theStatekey, &clientexp_rlbuffer, offset);
 	rlSendBufferData(theExperimentConnection, &clientexp_rlbuffer, experimentState);
 
 	rlBufferClear(&clientexp_rlbuffer);
@@ -394,14 +394,14 @@ void RL_set_state(state_key_t clientexp_statekey) {
 	assert(experimentState == kRLSetState);
 }
 
-void RL_set_random_seed(random_seed_key_t clientexp_randomseedkey) {
+void RL_set_random_seed(const random_seed_key_t *theRandomKey) {
 	int experimentState = kRLSetRandomSeed;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
 
 	rlBufferClear(&clientexp_rlbuffer);
-	offset = rlCopyADTToBuffer(&clientexp_randomseedkey, &clientexp_rlbuffer, offset);
+	offset = rlCopyADTToBuffer(theRandomKey, &clientexp_rlbuffer, offset);
 	rlSendBufferData(theExperimentConnection, &clientexp_rlbuffer, experimentState);
 
 	rlBufferClear(&clientexp_rlbuffer);
@@ -409,7 +409,7 @@ void RL_set_random_seed(random_seed_key_t clientexp_randomseedkey) {
 	assert(experimentState == kRLSetRandomSeed);
 }
 
-state_key_t RL_get_state() {
+const state_key_t *RL_get_state() {
 	int experimentState = kRLGetState;
 	unsigned int offset = 0;
 
@@ -424,10 +424,10 @@ state_key_t RL_get_state() {
 
 	offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_statekey);
 
-	return clientexp_statekey;
+	return &clientexp_statekey;
 }
 
-random_seed_key_t RL_get_random_seed() {
+const random_seed_key_t *RL_get_random_seed() {
 	int experimentState = kRLGetRandomSeed;
 	unsigned int offset = 0;
 
@@ -442,5 +442,5 @@ random_seed_key_t RL_get_random_seed() {
 
 	offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_randomseedkey);
 
-	return clientexp_randomseedkey;
+	return &clientexp_randomseedkey;
 }
