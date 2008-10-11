@@ -93,7 +93,7 @@ descriptor on success, or nil on failure."
            (return nil)))
        (handler-case
            (let ((socket (usocket:socket-connect host port
-                                                 :element-type (ubyte-type))))
+                                                 :element-type (byte-type))))
              (forced-format " ok~%")
              (return socket))
          (error (e)

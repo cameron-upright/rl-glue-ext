@@ -36,10 +36,31 @@
 
 (defmethod env-step ((env test-1-environment) action)
   (with-accessors ((step-count step-count)) env
-    (let ((observation (fill-adt (make-observation) :ints 1)))
-      (setf (aref (int-array observation) 0) step-count)
-      (incf step-count)
-      (values 1.0d0 observation (= step-count 5)))))
+    (if (< step-count 5)
+        (let ((observation (fill-adt (make-observation) :ints 1)))
+          (setf (aref (int-array observation) 0) step-count)
+          (incf step-count)
+          (values 1.0d0 observation (= step-count 5)))
+        (let ((observation (fill-adt (make-observation) :ints 5 :floats 5 :chars 5)))
+          (with-accessors ((int-array int-array)
+                           (float-array float-array)
+                           (char-string char-string)) observation
+            (setf (aref int-array 0) 173
+                  (aref int-array 1) -173
+                  (aref int-array 2) 2147483647
+                  (aref int-array 3) 0
+                  (aref int-array 4) -2147483648)
+            (setf (aref float-array 0) 0.0078125d0
+                  (aref float-array 1) -0.0078125d0
+                  (aref float-array 2) 0.0d0
+                  (aref float-array 3) 0.0078125d150
+                  (aref float-array 4) -0.0078125d150)
+            (setf (char char-string 0) #\g
+                  (char char-string 1) #\F
+                  (char char-string 2) #\?
+                  (char char-string 3) #\Space
+                  (char char-string 4) #\&))
+          (values -2 observation nil)))))
 
 (defmethod env-cleanup ((env test-1-environment))
   env)
