@@ -28,7 +28,9 @@
    #:get-svn-codec-version
    #:*init-buffer-size*
    ;; rl-common
+   #:make-int-array
    #:int-array
+   #:make-float-array
    #:float-array
    #:char-string
    #:observation
