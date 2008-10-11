@@ -62,15 +62,15 @@ static action_t theAction                 = {0};
 static state_key_t theStateKey            = {0};
 static random_seed_key_t theRandomSeedKey = {0};
 static rlBuffer theBuffer                 = {0};
-static message_t theInMessage = 0;
+static char* theInMessage = 0;
 static unsigned int theInMessageCapacity = 0;
 
 /*Added as a global variable because now we must allocate and fill
 up the data structures instead of the environment.*/
-static observation_t theObservation		  = {0};
+static observation_t globalObservation		  = {0};
 
 static void onEnvInit(int theConnection) {
- /* CUT-FOR-CUSTOMIZATION:  task_specification_t theTaskSpec = 0;*/
+ /* CUT-FOR-CUSTOMIZATION:  char* theTaskSpec = 0;*/
   unsigned int theTaskSpecLength = 0;
   unsigned int offset = 0;
 
@@ -79,7 +79,7 @@ static void onEnvInit(int theConnection) {
   /* You could give a real RL-Glue task spec or a custom one*/
   /* TheGame conveniently is the same as SkeletonEnvironment.c,
 	 our other example environment*/
-  task_specification_t theTaskSpec = "2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]";
+  char* theTaskSpec = "2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]";
 
   if (theTaskSpec != NULL) {
     theTaskSpecLength = strlen(theTaskSpec);
@@ -94,31 +94,31 @@ static void onEnvInit(int theConnection) {
 }
 
 static void onEnvStart(int theConnection) {
-   	/* CUT-FOR-CUSTOMIZATION: observation_t theObservation = {0}; */
+   	/* CUT-FOR-CUSTOMIZATION: observation_t globalObservation = {0}; */
   	unsigned int offset = 0;
 
- 	/* CUT-FOR-CUSTOMIZATION: theObservation=env_start(); */
+ 	/* CUT-FOR-CUSTOMIZATION: globalObservation=env_start(); */
 
 	/* Call our hook into TheGame to start a new game */
 	new_game();
 	/* Allocate space to store the observation (gameState)*/
-	allocateRLStruct(&theObservation,1,0,0);
+	allocateRLStruct(&globalObservation,1,0,0);
 
 	/* Get the int observation from a global variable we
 								extern'd from TheGame.c */
-	theObservation.intArray[0]=gameState;
-	__RL_CHECK_STRUCT(&theObservation)
+	globalObservation.intArray[0]=gameState;
+	__RL_CHECK_STRUCT(&globalObservation)
   rlBufferClear(&theBuffer);
-  offset = rlCopyADTToBuffer(&theObservation, &theBuffer, offset);
+  offset = rlCopyADTToBuffer(&globalObservation, &theBuffer, offset);
 }
 
 static void onEnvStep(int theConnection) {
-	reward_observation_t ro = {0};
+	static reward_observation_t ro = {0};
 	unsigned int offset = 0;
-
 	/* Create an integer variable to hold the action from the agent*/
   	int theIntAction=0;
-
+	ro.terminal=0;
+  ro.reward=0;
 
 	offset = rlCopyBufferToADT(&theBuffer, offset, &theAction);
  	__RL_CHECK_STRUCT(&theAction);
@@ -133,36 +133,36 @@ static void onEnvStep(int theConnection) {
   
 	/************************** ALL NEW CODE HERE **************************/
 	/* Allocate space to store the observation (gameState)*/
-	allocateRLStruct(&theObservation,1,0,0);
+	allocateRLStruct(&globalObservation,1,0,0);
 	/* Get the int observation from a global variable we
 								extern'd from TheGame.c */
-	theObservation.intArray[0]=gameState;
+	globalObservation.intArray[0]=gameState;
 
 	/* TheGame doesn't know about rewards, and it doesn't
 		have a "terminal" flag, so we have to write code
 					   to make TheGame fit with RL-Glue*/
 	if(gameState==0){
-		ro.r=-1.0;
+		ro.reward =-1.0;
 		ro.terminal=1;
 	}
 
 	if(gameState==20){
-		ro.r=1.0;
+		ro.reward =1.0;
 		ro.terminal=1;
 	}
 
-	ro.o=theObservation;
+	ro.observation =&globalObservation;
 
 	/************************** NEW CODE OVER **************************/
 	
-  __RL_CHECK_STRUCT(&ro.o)
+  __RL_CHECK_STRUCT(ro.observation)
 
 
   rlBufferClear(&theBuffer);
   offset = 0;
-  offset = rlBufferWrite(&theBuffer, offset, &ro.terminal, 1, sizeof(terminal_t));
-  offset = rlBufferWrite(&theBuffer, offset, &ro.r, 1, sizeof(reward_t));
-  offset = rlCopyADTToBuffer(&ro.o, &theBuffer, offset);
+  offset = rlBufferWrite(&theBuffer, offset, &ro.terminal, 1, sizeof(int));
+  offset = rlBufferWrite(&theBuffer, offset, &ro.reward, 1, sizeof(double));
+  offset = rlCopyADTToBuffer(ro.observation, &theBuffer, offset);
 }
 
 static void onEnvCleanup(int theConnection) {
@@ -171,8 +171,8 @@ static void onEnvCleanup(int theConnection) {
 
 	rlBufferClear(&theBuffer);
 	
-	/* Clean up theObservation global we created*/
-	clearRLStruct(&theObservation);
+	/* Clean up globalObservation global we created*/
+	clearRLStruct(&globalObservation);
 
 	clearRLStruct(&theAction);
 	clearRLStruct(&theRandomSeedKey);
@@ -234,15 +234,15 @@ static void onEnvGetRandomSeed(int theConnection) {
 static void onEnvMessage(int theConnection) {
   unsigned int inMessageLength = 0;
   unsigned int outMessageLength = 0;
-  message_t inMessage = 0;
+  char* inMessage = 0;
   /*We set this to a string constant instead of null*/
-  message_t outMessage = "sample custom codec integration has no messages!";
+  char* outMessage = "sample custom codec integration has no messages!";
   unsigned int offset = 0;
 
   offset = 0;
   offset = rlBufferRead(&theBuffer, offset, &inMessageLength, 1, sizeof(int));
   if (inMessageLength >= theInMessageCapacity) {
-    inMessage = (message_t)calloc(inMessageLength+1, sizeof(char));
+    inMessage = (char*)calloc(inMessageLength+1, sizeof(char));
     free(theInMessage);
 
     theInMessage = inMessage;
