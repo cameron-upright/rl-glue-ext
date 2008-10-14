@@ -20,17 +20,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Common RL types.
 
-(defmacro make-int-array (size &key initial-contents)
+(defmacro make-adt-array (size type initial-contents)
   `(make-array ,size
-               :element-type '#.(integer-type)
+               :element-type ,type
                ,@(when initial-contents
                    `(:initial-contents ,initial-contents))))
 
+(defmacro make-int-array (size &key initial-contents)
+  `(make-adt-array ,size 'integer-t ,initial-contents))
+
 (defmacro make-float-array (size &key initial-contents)
-  `(make-array ,size
-               :element-type 'double-float
-               ,@(when initial-contents
-                   `(:initial-contents ,initial-contents))))
+  `(make-adt-array ,size 'double-float ,initial-contents))
 
 (defparameter *init-integer-array* (make-int-array 0))
 (defparameter *init-float-array* (make-float-array 0))
@@ -128,7 +128,7 @@
   (with-accessors ((int-array int-array)
                    (float-array float-array)
                    (char-string char-string)) self
-    (check-type int-array (simple-array #.(integer-type)))
+    (check-type int-array (simple-array integer-t))
     (check-type float-array (simple-array double-float))
     (check-type char-string string)
     (let ((int-num (length (the simple-array int-array)))
