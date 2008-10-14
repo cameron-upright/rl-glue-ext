@@ -33,11 +33,10 @@
 #include "useful_functions.h"
 
 
-observation_t *o=0;
-reward_observation_t ro={0};
-char* env_responseMessage=0;
-int env_stepCount=0;
-int env_episodeCount=0;
+static observation_t *o=0;
+static reward_observation_t ro={0};
+static int stepCount=0;
+static int episodeCount=0;
 
 const char* env_init()
 {    
@@ -47,8 +46,8 @@ const char* env_init()
 
 const observation_t *env_start()
 {
-	env_episodeCount++;
-	env_stepCount=0;
+	episodeCount++;
+	stepCount=0;
 	clearRLStruct(o);
 	__RL_CHECK_STRUCT(o)
 	return o;
@@ -57,28 +56,28 @@ const observation_t *env_start()
 const reward_observation_t *env_step(const action_t *a)
 {
 	int terminal=0;
-	env_stepCount++;
+	stepCount++;
 	clearRLStruct(o);
 	    
         /*Short episode with big observations*/
-        if(env_episodeCount%2==0){
+        if(episodeCount%2==0){
 			__RL_CHECK_STRUCT(o)
             set_k_ints_in_abstract_type(o, 50000);
 			__RL_CHECK_STRUCT(o)
             set_k_doubles_in_abstract_type(o, 50000);
 			__RL_CHECK_STRUCT(o)
 
-            if(env_stepCount==200)terminal=1;
+            if(stepCount==200)terminal=1;
         }
         /*Longer episode with smaller observations*/
-        if(env_episodeCount%2==1){
+        if(episodeCount%2==1){
 			__RL_CHECK_STRUCT(o)
             set_k_ints_in_abstract_type(o, 5);
 		__RL_CHECK_STRUCT(o)
             set_k_doubles_in_abstract_type(o, 5);
 		__RL_CHECK_STRUCT(o)
 
-            if(env_stepCount==5000)terminal=1;
+            if(stepCount==5000)terminal=1;
         }
 
 	
@@ -91,7 +90,7 @@ const reward_observation_t *env_step(const action_t *a)
 
 void env_cleanup()
 {
-  clearRLStruct(o);
+  freeRLStructPointer(o);
 }
 
 void env_set_state(const state_key_t *sk)
@@ -104,16 +103,12 @@ void env_set_random_seed(const random_seed_key_t *rsk)
 
 const state_key_t *env_get_state()
 {
-	state_key_t *theKey=0;
-	clearRLStruct(theKey);
-	return theKey;
+	return 0;
 }
 
 const random_seed_key_t *env_get_random_seed()
 {
-	random_seed_key_t *theKey=0;
-	clearRLStruct(theKey);
-	return theKey;
+	return 0;
 }
 
 const char* env_message(const char* inMessage) {
