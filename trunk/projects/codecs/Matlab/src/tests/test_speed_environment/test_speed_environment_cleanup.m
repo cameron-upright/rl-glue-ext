@@ -1,2 +1,0 @@
-function test_speed_environment_cleanup()
-end
