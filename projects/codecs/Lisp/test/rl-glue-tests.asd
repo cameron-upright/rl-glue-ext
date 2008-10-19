@@ -24,7 +24,7 @@
 
 (defsystem rl-glue-tests
   :name "RL-Glue Common Lisp Codec Tests"
-  :version "0.1"
+  :version "1.0"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"

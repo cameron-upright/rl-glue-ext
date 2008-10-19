@@ -23,7 +23,11 @@
     :documentation "Episode counter.")
    (step-count
     :accessor step-count
-    :documentation "Step counter in an episode."))
+    :documentation "Step counter in an episode.")
+   (observation
+    :accessor observation
+    :initform (make-observation)
+    :documentation "Current observation."))
   (:documentation "An environment which creates larger observations and 
 shorter episodes for every even and smaller observations with longer 
 episodes for every odd episodes."))
@@ -38,18 +42,24 @@ episodes for every odd episodes."))
 (defmethod env-start ((env test-speed-environment))
   (incf (episode-count env))
   (setf (step-count env) 0)
-  (make-observation))
+  (let ((observation (observation env))
+        (num (if (evenp (episode-count env)) 50000 5)))
+    (setf (int-array observation) (make-int-array num))
+    (setf (float-array observation) (make-float-array num))
+    (setf (observation env) observation)
+    observation))
 
 (defmethod env-step ((env test-speed-environment) action)
   (with-accessors ((step-count step-count)) env
     (incf step-count)
-    (if (evenp (episode-count env))
-        (values 1.0d0
-                (fill-adt (make-observation) :ints 50000 :floats 50000)
-                (= step-count 200))
-        (values 1.0d0
-                (fill-adt (make-observation) :ints 5 :floats 5)
-                (= step-count 5000)))))
+    (let ((observation (observation env)))
+      (if (evenp (episode-count env))
+          (values 1.0d0
+                  (fill-adt observation :ints 50000 :floats 50000)
+                  (= step-count 200))
+          (values 1.0d0
+                  (fill-adt observation :ints 5 :floats 5)
+                  (= step-count 5000))))))
 
 (defmethod env-cleanup ((env test-speed-environment))
   env)

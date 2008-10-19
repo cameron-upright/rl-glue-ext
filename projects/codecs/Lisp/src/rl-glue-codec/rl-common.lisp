@@ -34,20 +34,20 @@
 
 (defparameter *init-integer-array* (make-int-array 0))
 (defparameter *init-float-array* (make-float-array 0))
-(declaim (simple-array +empty-integer-array+ +empty-float-array+))
+(declaim (type simple-array +empty-integer-array+ +empty-float-array+))
 
 (defclass rl-abstract-type ()
   ((int-array
     :accessor int-array
     :initarg :int-array
     :initform *init-integer-array*
-    :type simple-array
+    :type (simple-array integer-t)
     :documentation "Array of integer numbers.")
    (float-array
     :accessor float-array
     :initarg :float-array
     :initform *init-float-array*
-    :type simple-array
+    :type (simple-array double-float)
     :documentation "Array of floating point numbers.")
    (char-string
     :accessor char-string
@@ -108,7 +108,8 @@
   (declare #.*optimize-settings*)
   (and (equalp (int-array object-1) (int-array object-2))
        (equalp (float-array object-1) (float-array object-2))
-       (string= (char-string object-1) (char-string object-2))))
+       (string= (the string (char-string object-1))
+                (the string (char-string object-2)))))
 
 (defmethod rl-read ((self rl-abstract-type) buffer)
   "Reads an ADT object from the buffer."
@@ -117,17 +118,17 @@
         (float-num (buffer-read-int buffer))
         (char-num (buffer-read-int buffer)))
     (declare (fixnum int-num float-num char-num))
-    (setf (int-array self) (buffer-read-int-seq buffer :size int-num))
-    (setf (float-array self) (buffer-read-float-seq buffer :size float-num))
-    (setf (char-string self) (buffer-read-string buffer :size char-num)))
+    (setf (int-array self) (buffer-read-int-seq buffer int-num))
+    (setf (float-array self) (buffer-read-float-seq buffer float-num))
+    (setf (char-string self) (buffer-read-string buffer char-num)))
   self)
 
 (defmethod rl-write ((self rl-abstract-type) buffer)
   "Writes an ADT object to the buffer."
   (declare #.*optimize-settings*)
-  (with-accessors ((int-array int-array)
-                   (float-array float-array)
-                   (char-string char-string)) self
+  (let ((int-array (int-array self))
+        (float-array (float-array self))
+        (char-string (char-string self)))
     (check-type int-array (simple-array integer-t))
     (check-type float-array (simple-array double-float))
     (check-type char-string string)
@@ -139,29 +140,27 @@
       (buffer-write-int float-num buffer)
       (buffer-write-int char-num buffer)
       (when (plusp int-num)
-        (buffer-write-int-seq int-array buffer
-                              :size int-num :write-size-p nil))
+        (buffer-write-int-seq int-array buffer int-num nil))
       (when (plusp float-num)
-        (buffer-write-float-seq float-array buffer
-                                :size float-num :write-size-p nil))
+        (buffer-write-float-seq float-array buffer float-num nil))
       (when (plusp char-num)
-        (buffer-write-string char-string buffer :write-size-p nil))))
+        (buffer-write-string char-string buffer nil))))
   self)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL read / write.
 
 (defmacro make-rl-read-write (type)
-  (let ((typ type))
+  (let ((type type))
     `(progn
-       (setf (symbol-function (intern ,(format nil "RL-READ-~a" typ)))
+       (setf (symbol-function (intern ,(format nil "RL-READ-~a" type)))
              (lambda (buffer)
                (declare #.*optimize-settings*)
-               (rl-read (make-instance ',typ) buffer)))
-       (setf (symbol-function (intern ,(format nil "RL-WRITE-~a" typ)))
-             (lambda (,typ buffer)
+               (rl-read (make-instance ',type) buffer)))
+       (setf (symbol-function (intern ,(format nil "RL-WRITE-~a" type)))
+             (lambda (,type buffer)
                (declare #.*optimize-settings*)
-               (rl-write ,typ buffer))))))
+               (rl-write ,type buffer))))))
 
 (make-rl-read-write observation)
 (make-rl-read-write action)
@@ -174,7 +173,7 @@
 
 (defun rl-write-reward (reward buffer)
   (declare #.*optimize-settings*)
-  (check-type reward number)
+  (check-type reward (or integer-t float))
   (buffer-write-float (coerce reward 'double-float) buffer))
 
 (defun rl-read-message (buffer)

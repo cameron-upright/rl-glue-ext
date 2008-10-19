@@ -47,6 +47,7 @@
 
 (defmacro start-test-speed-experiment (&rest args)
   "Starting a test-speed-experiment experiment."
-  `(run-test-speed-experiment (make-instance 'test-speed-experiment
-                                             :test-name "test-speed") ,@args))
+  `(time (run-test-speed-experiment
+          (make-instance 'test-speed-experiment
+                         :test-name "test-speed") ,@args)))
 
