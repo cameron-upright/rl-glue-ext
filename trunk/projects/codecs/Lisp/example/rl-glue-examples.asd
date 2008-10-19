@@ -24,7 +24,7 @@
 
 (defsystem rl-glue-examples
   :name "RL-Glue Common Lisp Codec Examples"
-  :version "0.1"
+  :version "1.0"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"

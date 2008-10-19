@@ -32,8 +32,9 @@
 
     The sources can be turned into ASDF packages by the pack-asdf.sh script.
 
-        chmod +x pack-asdf.sh (if necessary)
-        ./pack-asdf.sh
+        chmod +x make-asdf-package.sh (if necessary)
+        ./make-asdf-package.sh rl-glue-codec
+        ./make-asdf-package.sh rl-glue-utils
 
     It creates the rl-glue-codec.tar.gz and the rl-glue-utils.tar.gz
     ASDF packages, which can be installed on the usual way.

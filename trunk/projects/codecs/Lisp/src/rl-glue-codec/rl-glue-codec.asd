@@ -27,7 +27,7 @@
 
 (defsystem rl-glue-codec
   :name "RL-Glue Common Lisp Codec"
-  :version "0.2"
+  :version "1.0"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"
