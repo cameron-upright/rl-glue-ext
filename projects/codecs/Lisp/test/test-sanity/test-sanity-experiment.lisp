@@ -26,6 +26,7 @@
   "Runs the experiment of test-sanity test."
   (let ((task-spec (apply #'rl-init exp args)))
     (check exp #'string= "sample task spec" task-spec))
+  (rl-cleanup exp)
   (summarize-stat exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

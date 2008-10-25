@@ -43,12 +43,8 @@
 
 (defun select-random-action (agent)
   (with-accessors ((task-spec task-spec) (rstate rand-state)) agent
-    (let ((i-actions
-           (make-array (num-discrete-action-dims task-spec)
-                       :element-type 'integer))
-          (f-actions
-           (make-array (num-continuous-action-dims task-spec)
-                       :element-type 'double-float)))
+    (let ((i-actions (make-int-array (num-discrete-action-dims task-spec)))
+          (f-actions (make-float-array (num-continuous-action-dims task-spec))))
       (loop
          with ii = 0
          with fi = 0

@@ -1,0 +1,4 @@
+
+LISP='clisp -q -q -K full'
+EVAL='-x'
+

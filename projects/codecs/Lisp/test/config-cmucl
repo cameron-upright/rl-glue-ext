@@ -1,0 +1,4 @@
+
+LISP='lisp -quiet'
+EVAL='-eval'
+

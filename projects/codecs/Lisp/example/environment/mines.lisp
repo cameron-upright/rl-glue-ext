@@ -84,14 +84,12 @@
 (defun make-observation (mines &key row col terminal)
   "Creates an observation of a mines environment state."
   (rl-glue-codec:make-observation
-   :int-array (make-array
+   :int-array (rl-glue-codec:make-int-array
                1
-               :element-type 'integer
                :initial-contents
                (list (if terminal -1 (+ (* row (col mines)) col))))
-   :float-array (make-array
+   :float-array (rl-glue-codec:make-float-array
                  2
-                 :element-type 'float
                  :initial-contents
                  (list 4.5d0 3.4d0))
    :char-string "Can I do it successfully?"))
@@ -174,10 +172,7 @@
     (make-observation env :row start-row :col start-col)))
 
 (defmethod rl-glue-codec:env-step ((env mines) action)
-  (with-accessors ((step-num step-num)) env
-    (incf step-num)
-    (format t "Step number: ~a (~a,~a)~%"
-            step-num (agent-row env) (agent-col env)))
+  (incf (step-num env))
   (update-position env (aref (rl-glue-codec:int-array action) 0))
   (multiple-value-bind (reward terminal) (get-reward env)
     (values reward
