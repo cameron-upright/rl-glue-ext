@@ -1,0 +1,18 @@
+
+${LISP} ${EVAL} "(asdf:oos 'asdf:compile-op :rl-glue-tests :verbose nil)" \
+        ${EVAL} "(quit)"
+
+rl_glue &
+
+${LISP} ${EVAL} "(asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)" \
+        ${EVAL} "(rl-glue-tests:start-${AGENT})" \
+        ${EVAL} "(quit)" &
+
+${LISP} ${EVAL} "(asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)" \
+        ${EVAL} "(rl-glue-tests:start-${ENVIRONMENT})" \
+        ${EVAL} "(quit)" &
+
+${LISP} ${EVAL} "(asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)" \
+        ${EVAL} "(rl-glue-tests:start-${EXPERIMENT})" \
+        ${EVAL} "(quit)"
+

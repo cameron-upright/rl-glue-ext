@@ -39,6 +39,7 @@
     (check exp #'rl-equalp empty-state-key (rl-get-state exp))
     (rl-set-random-seed exp empty-random-seed-key)
     (check exp #'rl-equalp empty-random-seed-key (rl-get-random-seed exp))
+    (rl-cleanup exp)
     (summarize-stat exp)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

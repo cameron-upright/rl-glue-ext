@@ -47,7 +47,7 @@ episodes for every odd episodes."))
     (setf (int-array observation) (make-int-array num))
     (setf (float-array observation) (make-float-array num))
     (setf (observation env) observation)
-    observation))
+    (fill-adt observation :ints num :floats num)))
 
 (defmethod env-step ((env test-speed-environment) action)
   (with-accessors ((step-count step-count)) env

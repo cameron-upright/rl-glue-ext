@@ -77,8 +77,8 @@
 (defmacro forced-format (fmtstr &rest args)
   "Writes to the standard output without any delay."
   `(progn
-     (format *error-output* ,fmtstr ,@args)
-     (force-output *error-output*)))
+     (format *standard-output* ,fmtstr ,@args)
+     (force-output *standard-output*)))
 
 (defun rl-wait-for-connection (host port max-retry retry-timeout)
   "Waiting for a connection to be established. Returns the obtained socket 

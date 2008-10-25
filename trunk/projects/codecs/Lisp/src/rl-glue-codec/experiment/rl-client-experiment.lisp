@@ -138,7 +138,8 @@ RETURNS:
     (rl-send-buffer socket buffer +k-rl-cleanup+)
     (buffer-clear buffer)
     (assert (= +k-rl-cleanup+
-               (the fixnum (rl-recv-buffer socket buffer)))))
+               (the fixnum (rl-recv-buffer socket buffer))))
+    (usocket:socket-close socket))
   exp)
 
 (defun rl-return (exp)

@@ -1,0 +1,7 @@
+
+AGENT='test-1-agent'
+ENVIRONMENT='test-speed-environment'
+EXPERIMENT='test-speed-experiment'
+
+source '../run-test'
+
