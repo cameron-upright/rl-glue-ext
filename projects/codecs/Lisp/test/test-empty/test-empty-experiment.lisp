@@ -55,8 +55,8 @@
                                 action
                                 :reward reward
                                 :terminal-p terminal-p))))
-  (rl-cleanup exp)
-  (summarize-stat exp))
+  (summarize-stat exp)
+  (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Starter macro.

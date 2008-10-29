@@ -38,9 +38,9 @@
     (rl-load-state exp empty-state-key)
     (check exp #'rl-equalp empty-state-key (rl-save-state exp))
     (rl-load-random-seed exp empty-random-seed-key)
-    (check exp #'rl-equalp empty-random-seed-key (rl-save-random-seed exp))
-    (rl-cleanup exp)
-    (summarize-stat exp)))
+    (check exp #'rl-equalp empty-random-seed-key (rl-save-random-seed exp)))
+  (summarize-stat exp)
+  (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Starter macro.

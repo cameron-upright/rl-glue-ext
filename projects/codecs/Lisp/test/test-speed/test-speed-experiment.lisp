@@ -40,7 +40,7 @@
   (rl-episode exp 500)
   (test-speed-measurement exp)
   (test-speed-measurement exp)
-  (rl-cleanup exp))
+  (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Starter macro.

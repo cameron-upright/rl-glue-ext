@@ -47,8 +47,8 @@
                                    "55555555555555565555555555555555555555555"
                                    "5555555555555555555555555555559")))
     (check exp #'string= str-to-check (rl-agent-message exp str-to-check)))
-  (rl-cleanup exp)
-  (summarize-stat exp))
+  (summarize-stat exp)
+  (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Starter macro.

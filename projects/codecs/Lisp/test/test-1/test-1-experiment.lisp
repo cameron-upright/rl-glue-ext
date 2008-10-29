@@ -76,8 +76,8 @@
       (check exp #'char= #\Space (char char-string 3))
       (check exp #'char= #\& (char char-string 4)))
     (check exp #'rl-equalp observation action))
-  (rl-cleanup exp)
-  (summarize-stat exp))
+  (summarize-stat exp)
+  (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Starter macro.
