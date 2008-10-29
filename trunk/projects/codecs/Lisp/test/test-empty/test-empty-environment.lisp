@@ -55,16 +55,16 @@ second episodes and a non-empty one in the other cases."))
 (defmethod env-cleanup ((env test-empty-environment))
   env)
 
-(defmethod env-get-state ((env test-empty-environment))
+(defmethod env-save-state ((env test-empty-environment))
   (make-state-key))
 
-(defmethod env-set-state ((env test-empty-environment) state-key)
+(defmethod env-load-state ((env test-empty-environment) state-key)
   'not-supported)
 
-(defmethod env-get-random-seed ((env test-empty-environment))
+(defmethod env-save-random-seed ((env test-empty-environment))
   (make-random-seed-key))
 
-(defmethod env-set-random-seed ((env test-empty-environment) random-seed-key)
+(defmethod env-load-random-seed ((env test-empty-environment) random-seed-key)
   'not-supported)
 
 (defmethod env-message ((env test-empty-environment) input-message)

@@ -65,7 +65,7 @@ RETURNS:
     observation   : observation after the step [rl-glue:observation]
     terminal flag : shows whether the episode is ended [boolean]"))
 
-(defgeneric env-get-state (env)
+(defgeneric env-save-state (env)
   (:documentation "DESCRIPTION:
     The state-key is a compact representation of the current state of the 
     environment such that at any point in the future, provided with the
@@ -80,7 +80,7 @@ PARAMETERS:
 RETURNS:
     state key [rl-glue:state-key]"))
 
-(defgeneric env-set-state (env state-key)
+(defgeneric env-load-state (env state-key)
   (:documentation "DESCRIPTION:
     Given the STATE-KEY, the environment should return to it's exact
     formation when the state_key was obtained.
@@ -92,7 +92,7 @@ PARAMETERS:
 RETURNS:
     (none)"))
 
-(defgeneric env-get-random-seed (env)
+(defgeneric env-save-random-seed (env)
   (:documentation "DESCRIPTION:
     Saves the random seed object used by the environment such that it can
     be restored upon presentation of random seed key.
@@ -103,12 +103,12 @@ PARAMETERS:
 RETURNS:
     random seed key [rl-glue:random-seed-key]"))
 
-(defgeneric env-set-random-seed (env random-seed-key)
+(defgeneric env-load-random-seed (env random-seed-key)
   (:documentation "DESCRIPTION:
     Sets the random seed used by the environment. Typically it is
     advantageous for the experiment program to control the randomness of
-    the environment. The env-set-random-seed can be used in conjunction
-    with env-set-state to save and restore a random_seed such that the
+    the environment. The env-load-random-seed can be used in conjunction
+    with env-load-state to save and restore a random_seed such that the
     environment will behave exactly the same way it has previously when
     it was in this state and given the same actions.
 
@@ -172,31 +172,31 @@ RETURNS:
       (rl-write-observation observation buffer)))
   env)
 
-(defun on-env-get-state (env buffer)
+(defun on-env-save-state (env buffer)
   (declare #.*optimize-settings*)
-  (let ((state-key (env-get-state env)))
+  (let ((state-key (env-save-state env)))
     (buffer-clear buffer)
     (rl-write-state-key state-key buffer))
   env)
 
-(defun on-env-set-state (env buffer)
+(defun on-env-load-state (env buffer)
   (declare #.*optimize-settings*)
   (let ((state-key (rl-read-state-key buffer)))
-    (env-set-state env state-key))
+    (env-load-state env state-key))
   (buffer-clear buffer)
   env)
 
-(defun on-env-get-random-seed (env buffer)
+(defun on-env-save-random-seed (env buffer)
   (declare #.*optimize-settings*)
-  (let ((random-seed (env-get-random-seed env)))
+  (let ((random-seed (env-save-random-seed env)))
     (buffer-clear buffer)
     (rl-write-random-seed-key random-seed buffer))
   env)
 
-(defun on-env-set-random-seed (env buffer)
+(defun on-env-load-random-seed (env buffer)
   (declare #.*optimize-settings*)
   (let ((random-seed (rl-read-random-seed-key buffer)))
-    (env-set-random-seed env random-seed))
+    (env-load-random-seed env random-seed))
   (buffer-clear buffer)
   env)
 
@@ -224,16 +224,26 @@ RETURNS:
        (let ((state (rl-recv-buffer socket buffer)))
          (declare (fixnum state))
          (cond
-           ((= state +k-env-init+) (on-env-init env buffer))
-           ((= state +k-env-start+) (on-env-start env buffer))
-           ((= state +k-env-step+) (on-env-step env buffer))
-           ((= state +k-env-getstate+) (on-env-get-state env buffer))
-           ((= state +k-env-setstate+) (on-env-set-state env buffer))
-           ((= state +k-env-getrandomseed+) (on-env-get-random-seed env buffer))
-           ((= state +k-env-setrandomseed+) (on-env-set-random-seed env buffer))
-           ((= state +k-env-cleanup+) (on-env-cleanup env buffer))
-           ((= state +k-env-message+) (on-env-message env buffer))
-           ((= state +k-rl-term+) (return))
+           ((= state +k-env-init+)
+            (on-env-init env buffer))
+           ((= state +k-env-start+)
+            (on-env-start env buffer))
+           ((= state +k-env-step+)
+            (on-env-step env buffer))
+           ((= state +k-env-save-state+)
+            (on-env-save-state env buffer))
+           ((= state +k-env-load-state+)
+            (on-env-load-state env buffer))
+           ((= state +k-env-save-random-seed+)
+            (on-env-save-random-seed env buffer))
+           ((= state +k-env-load-random-seed+)
+            (on-env-load-random-seed env buffer))
+           ((= state +k-env-cleanup+)
+            (on-env-cleanup env buffer))
+           ((= state +k-env-message+)
+            (on-env-message env buffer))
+           ((= state +k-rl-term+)
+            (return))
            (t (assert nil (state) "Unknown environment state: ~D" state)))
          (rl-send-buffer socket buffer state)))
   env)

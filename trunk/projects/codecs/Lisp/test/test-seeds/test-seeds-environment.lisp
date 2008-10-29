@@ -18,12 +18,12 @@
 (in-package #:rl-glue-tests)
 
 (defclass test-seeds-environment (environment)
-  ((saved-state-key
-    :accessor saved-state-key
+  ((stored-state-key
+    :accessor stored-state-key
     :initform (make-state-key)
     :documentation "A stored state key.")
-   (saved-random-seed-key
-    :accessor saved-random-seed-key
+   (stored-random-seed-key
+    :accessor stored-random-seed-key
     :initform (make-random-seed-key)
     :documentation "A stored random seed key."))
   (:documentation "An environment which can store two keys."))
@@ -43,18 +43,18 @@
 (defmethod env-cleanup ((env test-seeds-environment))
   env)
 
-(defmethod env-get-state ((env test-seeds-environment))
-  (saved-state-key env))
+(defmethod env-save-state ((env test-seeds-environment))
+  (stored-state-key env))
 
-(defmethod env-set-state ((env test-seeds-environment) state-key)
-  (setf (saved-state-key env) state-key)
+(defmethod env-load-state ((env test-seeds-environment) state-key)
+  (setf (stored-state-key env) state-key)
   state-key)
 
-(defmethod env-get-random-seed ((env test-seeds-environment))
-  (saved-random-seed-key env))
+(defmethod env-save-random-seed ((env test-seeds-environment))
+  (stored-random-seed-key env))
 
-(defmethod env-set-random-seed ((env test-seeds-environment) random-seed-key)
-  (setf (saved-random-seed-key env) random-seed-key)
+(defmethod env-load-random-seed ((env test-seeds-environment) random-seed-key)
+  (setf (stored-random-seed-key env) random-seed-key)
   random-seed-key)
 
 (defmethod env-message ((env test-seeds-environment) input-message)

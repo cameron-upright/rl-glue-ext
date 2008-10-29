@@ -226,10 +226,10 @@ RETURNS:
                (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-terminal buffer)))
 
-(defun rl-get-state (exp)
+(defun rl-save-state (exp)
   "DESCRIPTION:
     Provides an opportunity to extract the state key from the environment
-    (see env-get-state for details).
+    (see env-save-state for details).
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -239,15 +239,15 @@ RETURNS:
   (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
-    (rl-send-buffer socket buffer +k-rl-getstate+)
+    (rl-send-buffer socket buffer +k-rl-save-state+)
     (buffer-clear buffer)
-    (assert (= +k-rl-getstate+
+    (assert (= +k-rl-save-state+
                (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-state-key buffer)))
 
-(defun rl-set-state (exp state-key)
+(defun rl-load-state (exp state-key)
   "DESCRIPTION:
-    Provides an opportunity to reset the state (see env-set-state for details).
+    Provides an opportunity to reset the state (see env-load-state for details).
 
 PARAMETERS:
     exp       : experiment in use [rl-glue:experiment]
@@ -259,16 +259,16 @@ RETURNS:
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-write-state-key state-key buffer)
-    (rl-send-buffer socket buffer +k-rl-setstate+)
+    (rl-send-buffer socket buffer +k-rl-load-state+)
     (buffer-clear buffer)
-    (assert (= +k-rl-setstate+
+    (assert (= +k-rl-load-state+
                (the fixnum (rl-recv-buffer socket buffer)))))
   state-key)
 
-(defun rl-get-random-seed (exp)
+(defun rl-save-random-seed (exp)
   "DESCRIPTION:
     Provides an opportunity to extract the random seed key from the environment
-    (see env-get-random-seed for details).
+    (see env-save-random-seed for details).
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -278,16 +278,16 @@ RETURNS:
   (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
-    (rl-send-buffer socket buffer +k-rl-getrandomseed+)
+    (rl-send-buffer socket buffer +k-rl-save-random-seed+)
     (buffer-clear buffer)
-    (assert (= +k-rl-getrandomseed+
+    (assert (= +k-rl-save-random-seed+
                (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-random-seed-key buffer)))
 
-(defun rl-set-random-seed (exp random-seed-key)
+(defun rl-load-random-seed (exp random-seed-key)
   "DESCRIPTION:
     Provides an opportunity to reset the random seed key
-    (see env-set-random-seed for details).
+    (see env-load-random-seed for details).
 
 PARAMETERS:
     exp             : experiment in use [rl-glue:experiment]
@@ -299,9 +299,9 @@ RETURNS:
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
     (rl-write-random-seed-key random-seed-key buffer)
-    (rl-send-buffer socket buffer +k-rl-setrandomseed+)
+    (rl-send-buffer socket buffer +k-rl-load-random-seed+)
     (buffer-clear buffer)
-    (assert (= +k-rl-setrandomseed+
+    (assert (= +k-rl-load-random-seed+
                (the fixnum (rl-recv-buffer socket buffer)))))
   random-seed-key)
 
