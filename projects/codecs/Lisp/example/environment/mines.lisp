@@ -185,16 +185,16 @@
 (defmethod rl-glue-codec:env-cleanup ((env mines))
   env)
 
-(defmethod rl-glue-codec:env-get-state ((env mines))
+(defmethod rl-glue-codec:env-save-state ((env mines))
   (rl-glue-codec:make-state-key))
 
-(defmethod rl-glue-codec:env-set-state ((env mines) state-key)
+(defmethod rl-glue-codec:env-load-state ((env mines) state-key)
   'not-supported)
 
-(defmethod rl-glue-codec:env-get-random-seed ((env mines))
+(defmethod rl-glue-codec:env-save-random-seed ((env mines))
   (rl-glue-codec:make-random-seed-key))
 
-(defmethod rl-glue-codec:env-set-random-seed ((env mines) random-seed-key)
+(defmethod rl-glue-codec:env-load-random-seed ((env mines) random-seed-key)
   'not-supported)
 
 (defmethod rl-glue-codec:env-message ((env mines) input-message)

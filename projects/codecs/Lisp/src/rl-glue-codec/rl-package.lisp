@@ -56,10 +56,10 @@
    #:env-init
    #:env-start
    #:env-step
-   #:env-get-state
-   #:env-set-state
-   #:env-get-random-seed
-   #:env-set-random-seed
+   #:env-save-state
+   #:env-load-state
+   #:env-save-random-seed
+   #:env-load-random-seed
    #:env-cleanup
    #:env-message
    #:run-env
@@ -73,10 +73,10 @@
    #:rl-num-steps
    #:rl-num-episodes
    #:rl-episode
-   #:rl-get-state
-   #:rl-set-state
-   #:rl-get-random-seed
-   #:rl-set-random-seed
+   #:rl-save-state
+   #:rl-load-state
+   #:rl-save-random-seed
+   #:rl-load-random-seed
    #:rl-agent-message
    #:rl-env-message))
 

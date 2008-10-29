@@ -37,16 +37,16 @@ tests the message transmitting mechanism."))
 (defmethod env-cleanup ((env test-message-environment))
   env)
 
-(defmethod env-get-state ((env test-message-environment))
+(defmethod env-save-state ((env test-message-environment))
   (make-state-key))
 
-(defmethod env-set-state ((env test-message-environment) state-key)
+(defmethod env-load-state ((env test-message-environment) state-key)
   'not-supported)
 
-(defmethod env-get-random-seed ((env test-message-environment))
+(defmethod env-save-random-seed ((env test-message-environment))
   (make-random-seed-key))
 
-(defmethod env-set-random-seed ((env test-message-environment) random-seed-key)
+(defmethod env-load-random-seed ((env test-message-environment) random-seed-key)
   'not-supported)
 
 (defmethod env-message ((env test-message-environment) input-message)
