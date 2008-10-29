@@ -379,8 +379,8 @@ int RL_episode(unsigned int numSteps) {
 	return terminal;
 }
 
-void RL_set_state(const state_key_t *theStatekey) {
-	int experimentState = kRLSetState;
+void RL_load_state(const state_key_t *theStatekey) {
+	int experimentState = kRLLoadState;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
@@ -391,11 +391,11 @@ void RL_set_state(const state_key_t *theStatekey) {
 
 	rlBufferClear(&clientexp_rlbuffer);
 	rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
-	assert(experimentState == kRLSetState);
+	assert(experimentState == kRLLoadState);
 }
 
-void RL_set_random_seed(const random_seed_key_t *theRandomKey) {
-	int experimentState = kRLSetRandomSeed;
+void RL_load_random_seed(const random_seed_key_t *theRandomKey) {
+	int experimentState = kRLLoadRandomSeed;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
@@ -406,11 +406,11 @@ void RL_set_random_seed(const random_seed_key_t *theRandomKey) {
 
 	rlBufferClear(&clientexp_rlbuffer);
 	rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
-	assert(experimentState == kRLSetRandomSeed);
+	assert(experimentState == kRLLoadRandomSeed);
 }
 
-const state_key_t *RL_get_state() {
-	int experimentState = kRLGetState;
+const state_key_t *RL_save_state() {
+	int experimentState = kRLSaveState;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
@@ -420,15 +420,15 @@ const state_key_t *RL_get_state() {
 
 	rlBufferClear(&clientexp_rlbuffer);
 	rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
-	assert(experimentState == kRLGetState);
+	assert(experimentState == kRLSaveState);
 
 	offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_statekey);
 
 	return &clientexp_statekey;
 }
 
-const random_seed_key_t *RL_get_random_seed() {
-	int experimentState = kRLGetRandomSeed;
+const random_seed_key_t *RL_save_random_seed() {
+	int experimentState = kRLSaveRandomSeed;
 	unsigned int offset = 0;
 
 	assert(theExperimentConnection != 0);
@@ -438,7 +438,7 @@ const random_seed_key_t *RL_get_random_seed() {
 
 	rlBufferClear(&clientexp_rlbuffer);
 	rlRecvBufferData(theExperimentConnection, &clientexp_rlbuffer, &experimentState);
-	assert(experimentState == kRLGetRandomSeed);
+	assert(experimentState == kRLSaveRandomSeed);
 
 	offset = rlCopyBufferToADT(&clientexp_rlbuffer, offset, &clientexp_randomseedkey);
 

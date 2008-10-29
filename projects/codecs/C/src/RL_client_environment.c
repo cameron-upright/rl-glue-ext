@@ -84,7 +84,7 @@ static void onEnvStart(int theConnection) {
 }
 
 static void onEnvStep(int theConnection) {
-	const reward_observation_t *ro = 0;
+	const reward_observation_terminal_t *ro = 0;
 	unsigned int offset = 0;
 
 	offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalaction);
@@ -120,7 +120,7 @@ static void onEnvSetState(int theConnection) {
   unsigned int offset = 0;
 
   offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalstatekey);
-  env_set_state(&ce_globalstatekey);
+  env_load_state(&ce_globalstatekey);
 
   rlBufferClear(&ce_globalrlbuffer);
 }
@@ -129,7 +129,7 @@ static void onEnvSetRandomSeed(int theConnection) {
   unsigned int offset = 0;
 
   offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalrandomseedkey);  
-  env_set_random_seed(&ce_globalrandomseedkey);
+  env_load_random_seed(&ce_globalrandomseedkey);
 
   rlBufferClear(&ce_globalrlbuffer);
 }
@@ -138,7 +138,7 @@ static void onEnvGetState(int theConnection) {
 	const state_key_t *key = 0;
 	unsigned int offset = 0;
 
-	key = env_get_state();
+	key = env_save_state();
 	__RL_CHECK_STRUCT(key);
 
 	rlBufferClear(&ce_globalrlbuffer);
@@ -149,7 +149,7 @@ static void onEnvGetRandomSeed(int theConnection) {
 	const random_seed_key_t *key = 0;
 	unsigned int offset = 0;
 
-	key=env_get_random_seed();
+	key=env_save_random_seed();
 	__RL_CHECK_STRUCT(key);
 
 
@@ -233,19 +233,19 @@ until it receives a termination command */
       onEnvCleanup(theConnection);
       break;
 
-    case kEnvSetState:
+    case kEnvLoadState:
       onEnvSetState(theConnection);
       break;
 
-    case kEnvSetRandomSeed:
+    case kEnvLoadRandomSeed:
       onEnvSetRandomSeed(theConnection);
       break;
 
-    case kEnvGetState:
+    case kEnvSaveState:
       onEnvGetState(theConnection);
       break;
 
-    case kEnvGetRandomSeed:
+    case kEnvSaveRandomSeed:
       onEnvGetRandomSeed(theConnection);
       break;
 

@@ -113,7 +113,7 @@ static void onEnvStart(int theConnection) {
 }
 
 static void onEnvStep(int theConnection) {
-	static reward_observation_t ro = {0};
+	static reward_observation_terminal_t ro = {0};
 	unsigned int offset = 0;
 	/* Create an integer variable to hold the action from the agent*/
   	int theIntAction=0;
@@ -190,7 +190,7 @@ static void onEnvSetState(int theConnection) {
 	printf("envSetState not supported by sample custom codec integration\n");
 
 	offset = rlCopyBufferToADT(&theBuffer, offset, &theStateKey);
-	/* CUT-FOR-CUSTOMIZATION: env_set_state(theStateKey);*/
+	/* CUT-FOR-CUSTOMIZATION: env_load_state(theStateKey);*/
 
 	rlBufferClear(&theBuffer);
 }
@@ -201,7 +201,7 @@ static void onEnvSetRandomSeed(int theConnection) {
 	printf("envSetRandomSeed not supported by sample custom codec integration\n");
 
 	offset = rlCopyBufferToADT(&theBuffer, offset, &theRandomSeedKey);  
-	/* CUT-FOR-CUSTOMIZATION: env_set_random_seed(theRandomSeedKey);*/
+	/* CUT-FOR-CUSTOMIZATION: env_load_random_seed(theRandomSeedKey);*/
 
 	rlBufferClear(&theBuffer);
 }
@@ -211,7 +211,7 @@ static void onEnvGetState(int theConnection) {
 	unsigned int offset = 0;
 
 	printf("envGetState not supported by sample custom codec integration\n");
-	/* CUT-FOR-CUSTOMIZATION: key = env_get_state();*/
+	/* CUT-FOR-CUSTOMIZATION: key = env_save_state();*/
 	/* CUT-FOR-CUSTOMIZATION: __RL_CHECK_STRUCT(&key);*/
 
 
@@ -224,7 +224,7 @@ static void onEnvGetRandomSeed(int theConnection) {
 	unsigned int offset = 0;
 
 	printf("envGetRandomSeed no supported by sample custom codec integration\n");
-	/* CUT-FOR-CUSTOMIZATION: key=env_get_random_seed(); */
+	/* CUT-FOR-CUSTOMIZATION: key=env_save_random_seed(); */
 	/* CUT-FOR-CUSTOMIZATION: __RL_CHECK_STRUCT(&key); */
 
 	rlBufferClear(&theBuffer);
@@ -295,18 +295,18 @@ void runEnvironmentEventLoop(int theConnection) {
       onEnvCleanup(theConnection);
       break;
 
-    case kEnvSetState:
+    case kEnvLoadState:
       onEnvSetState(theConnection);
       break;
 
-    case kEnvSetRandomSeed:
+    case kEnvLoadRandomSeed:
       onEnvSetRandomSeed(theConnection);
       break;
 
-    case kEnvGetState:
+    case kEnvSaveState:
       onEnvGetState(theConnection);
       break;
-    case kEnvGetRandomSeed:
+    case kEnvSaveRandomSeed:
       onEnvGetRandomSeed(theConnection);
       break;
 
