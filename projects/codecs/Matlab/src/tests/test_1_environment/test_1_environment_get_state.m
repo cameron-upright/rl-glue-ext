@@ -1,2 +1,0 @@
-function theState=test_1_environment_get_state()
-end

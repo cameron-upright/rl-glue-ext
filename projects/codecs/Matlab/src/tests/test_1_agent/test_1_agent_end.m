@@ -1,2 +1,0 @@
-function test_1_agent_end(theReward)
-end

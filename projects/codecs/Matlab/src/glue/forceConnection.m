@@ -8,7 +8,7 @@ function forceConnection()
         port=org.rlcommunity.rlglue.codec.network.Network.kDefaultPort;
         timeout=org.rlcommunity.rlglue.codec.network.Network.kRetryTimeout;
 
-        fprintf(1,'RL-Glue Matlab Experiment Codec Version: %s (%s)\n',RL_get_codec_version(),RL_get_svn_version());
+        fprintf(1,'RL-Glue Matlab Experiment Codec Version: %s (%s)\n',RL_save_codec_version(),RL_save_svn_version());
         fprintf(1,'\tConnecting to rl_glue at host: %s on port %d\n', char(host), port);
 
         % Connect

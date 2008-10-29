@@ -1,4 +1,4 @@
-function RL_set_random_seed(sk)
+function RL_load_random_seed(sk)
     global p__rlglueStruct;
 
     p__rlglueStruct.network.clearSendBuffer();

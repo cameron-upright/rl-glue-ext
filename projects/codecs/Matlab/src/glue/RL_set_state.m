@@ -1,4 +1,4 @@
-function RL_set_state(sk)
+function RL_load_state(sk)
     global p__rlglueStruct;
 
     p__rlglueStruct.network.clearSendBuffer();

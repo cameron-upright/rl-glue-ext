@@ -1,2 +1,0 @@
-function test_1_environment_set_seed(theState)
-end

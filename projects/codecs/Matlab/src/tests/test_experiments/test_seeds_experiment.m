@@ -27,12 +27,12 @@ function failures=test_seeds_experiment()
 	
 	RL_init();
 	
-	RL_set_state(the_state_key);
-	returned_state_key=RL_get_state();
+	RL_load_state(the_state_key);
+	returned_state_key=RL_save_state();
 	[failures,totalTests]=check_fail(the_state_key.compareTo(returned_state_key)~=0,failures,totalTests);
 
-	RL_set_random_seed(the_random_seed);
-	returned_random_seed_key=RL_get_random_seed();
+	RL_load_random_seed(the_random_seed);
+	returned_random_seed_key=RL_save_random_seed();
 	[failures,totalTests]=check_fail(the_random_seed.compareTo(returned_random_seed_key)~=0,failures,totalTests);
 	
 	
@@ -44,21 +44,21 @@ function failures=test_seeds_experiment()
 	org.rlcommunity.rlglue.codec.tests.TestUtility.set_k_doubles_in_abstract_type(the_random_seed,0);
 	org.rlcommunity.rlglue.codec.tests.TestUtility.set_k_chars_in_abstract_type(the_random_seed,0);
 
-	RL_set_state(the_state_key);
-	returned_state_key=RL_get_state();
+	RL_load_state(the_state_key);
+	returned_state_key=RL_save_state();
 	[failures,totalTests]=check_fail(the_state_key.compareTo(returned_state_key)~=0,failures,totalTests);
 
-	RL_set_random_seed(the_random_seed);
-	returned_random_seed_key=RL_get_random_seed();
+	RL_load_random_seed(the_random_seed);
+	returned_random_seed_key=RL_save_random_seed();
 	[failures,totalTests]=check_fail(the_random_seed.compareTo(returned_random_seed_key)~=0,failures,totalTests);
 	
 	%/* Make sure if we send an empty we get back an empty */
-	RL_set_state(empty_state_key);
-	returned_state_key=RL_get_state();
+	RL_load_state(empty_state_key);
+	returned_state_key=RL_save_state();
 	[failures,totalTests]=check_fail(empty_state_key.compareTo(returned_state_key)~=0,failures,totalTests);
 
-	RL_set_random_seed(empty_random_seed);
-	returned_random_seed_key=RL_get_random_seed();
+	RL_load_random_seed(empty_random_seed);
+	returned_random_seed_key=RL_save_random_seed();
 	[failures,totalTests]=check_fail(empty_random_seed.compareTo(returned_random_seed_key)~=0,failures,totalTests);
     
     

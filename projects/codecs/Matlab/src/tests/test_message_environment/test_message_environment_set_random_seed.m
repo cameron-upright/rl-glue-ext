@@ -1,4 +1,0 @@
-function test_message_environment_set_random_seed(randomSeed)
-	global test_message_environment_struct;
-	test_message_environment_struct.seed=randomSeed;
-end
