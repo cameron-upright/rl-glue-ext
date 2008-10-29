@@ -23,7 +23,7 @@ import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Random_seed_key;
-import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
@@ -72,9 +72,9 @@ public class Test_Empty_Environment implements EnvironmentInterface {
 	return nonEmptyObservation;
     }
 
-    public Reward_observation env_step(Action action) {
+    public Reward_observation_terminal env_step(Action action) {
         
-        Reward_observation ro=new Reward_observation();
+        Reward_observation_terminal ro=new Reward_observation_terminal();
         
 	if(whichEpisode%2==0)
             ro.o=emptyObservation;
@@ -86,17 +86,17 @@ public class Test_Empty_Environment implements EnvironmentInterface {
     public void env_cleanup() {
     }
 
-    public void env_set_state(State_key key) {
+    public void env_load_state(State_key key) {
     }
 
-    public void env_set_random_seed(Random_seed_key key) {
+    public void env_load_random_seed(Random_seed_key key) {
     }
 
-    public State_key env_get_state() {
+    public State_key env_save_state() {
         return new State_key();
     }
 
-    public Random_seed_key env_get_random_seed() {
+    public Random_seed_key env_save_random_seed() {
         return new Random_seed_key();
     }
 

@@ -46,7 +46,7 @@ public class SkeletonAgent implements AgentInterface {
         /**
          * Choose a random action (0 or 1)
          */
-        int theIntAction = randGenerator.nextInt(1);
+        int theIntAction = randGenerator.nextInt(2);
         /**
          * Create a structure to hold 1 integer action
          * and set the value
@@ -64,7 +64,7 @@ public class SkeletonAgent implements AgentInterface {
         /**
          * Choose a random action (0 or 1)
          */
-        int theIntAction = randGenerator.nextInt(1);
+        int theIntAction = randGenerator.nextInt(2);
         /**
          * Create a structure to hold 1 integer action
          * and set the value (alternate method)

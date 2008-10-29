@@ -27,7 +27,7 @@ import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Random_seed_key;
-import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 import org.rlcommunity.rlglue.codec.types.State_key;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 
@@ -56,7 +56,7 @@ public class SkeletonEnvironment implements EnvironmentInterface {
         return returnObservation;
     }
 
-    public Reward_observation env_step(Action thisAction) {
+    public Reward_observation_terminal env_step(Action thisAction) {
         boolean episodeOver=false;
         double theReward=0.0d;
         
@@ -79,27 +79,27 @@ public class SkeletonEnvironment implements EnvironmentInterface {
         Observation returnObservation=new Observation(1,0,0);
         returnObservation.intArray[0]=currentState;
         
-        Reward_observation returnRewardObs=new Reward_observation(theReward,returnObservation,episodeOver);
+        Reward_observation_terminal returnRewardObs=new Reward_observation_terminal(theReward,returnObservation,episodeOver);
         return returnRewardObs;
     }
 
     public void env_cleanup() {
     }
 
-    public void env_set_state(State_key key) {
+    public void env_load_state(State_key key) {
       	/* Advanced feature so not included in skeleton */
     }
 
-    public void env_set_random_seed(Random_seed_key key) {
+    public void env_load_random_seed(Random_seed_key key) {
       	/* Advanced feature so not included in skeleton */
     }
 
-    public State_key env_get_state() {
+    public State_key env_save_state() {
       	/* Advanced feature so not included in skeleton */
         return new State_key();
     }
 
-    public Random_seed_key env_get_random_seed() {
+    public Random_seed_key env_save_random_seed() {
       	/* Advanced feature so not included in skeleton */
         return new Random_seed_key();
     }

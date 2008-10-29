@@ -35,7 +35,7 @@ import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
 import org.rlcommunity.rlglue.codec.types.Random_seed_key;
-import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
@@ -391,7 +391,7 @@ public class Network {
         putAbstractType(key);
     }
 
-    public void putRewardObservation(Reward_observation rewardObservation) {
+    public void putRewardObservation(Reward_observation_terminal rewardObservation) {
         this.ensureSendCapacityRemains(Network.sizeOf(rewardObservation));
 
         this.putInt(rewardObservation.terminal);
@@ -455,7 +455,7 @@ public class Network {
         return size + intSize + doubleSize + charSize;
     }
 
-    public static int sizeOf(Reward_observation rewardObservation) {
+    public static int sizeOf(Reward_observation_terminal rewardObservation) {
         return Network.kIntSize + // terminal
                 Network.kDoubleSize + // reward
                 Network.sizeOf(rewardObservation.o);
