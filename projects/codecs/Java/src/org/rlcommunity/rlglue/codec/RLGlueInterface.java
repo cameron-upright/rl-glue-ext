@@ -42,8 +42,8 @@ public interface RLGlueInterface {
 	public   int RL_num_steps();
 	public   int RL_num_episodes();
 	public   int RL_episode(int numSteps);
-	public   void RL_set_state(State_key sk);
-	public   void RL_set_random_seed(Random_seed_key rsk);
-	public   State_key RL_get_state();
-	public   Random_seed_key RL_get_random_seed();
+	public   void RL_load_state(State_key stateKey);
+	public   void RL_load_random_seed(Random_seed_key randomSeedKey);
+	public   State_key RL_save_state();
+	public   Random_seed_key RL_save_random_seed();
 }

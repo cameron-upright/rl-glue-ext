@@ -31,7 +31,7 @@ import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
-import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
@@ -73,7 +73,7 @@ public class ClientEnvironment
 	protected void onEnvStep()
 	{
 		Action action = network.getAction();
-		Reward_observation rewardObservation = env.env_step(action);	
+		Reward_observation_terminal rewardObservation = env.env_step(action);	
 		
 		network.clearSendBuffer();
 		network.putInt(Network.kEnvStep);
@@ -91,7 +91,7 @@ public class ClientEnvironment
 
 	protected void onEnvGetRandomSeed()
 	{
-		Random_seed_key key = env.env_get_random_seed();
+		Random_seed_key key = env.env_save_random_seed();
 		
 		network.clearSendBuffer();
 		network.putInt(Network.kEnvGetRandomSeed);
@@ -101,7 +101,7 @@ public class ClientEnvironment
 	
 	protected void onEnvGetState()
 	{
-		State_key key = env.env_get_state();
+		State_key key = env.env_save_state();
 		
 		network.clearSendBuffer();
 		network.putInt(Network.kEnvGetState);
@@ -112,7 +112,7 @@ public class ClientEnvironment
 	protected void onEnvSetRandomSeed()
 	{
 		Random_seed_key key = network.getRandomSeedKey();
-		env.env_set_random_seed(key);
+		env.env_load_random_seed(key);
 			
 		network.clearSendBuffer();
 		network.putInt(Network.kEnvSetRandomSeed);
@@ -122,7 +122,7 @@ public class ClientEnvironment
 	protected void onEnvSetState()
 	{
 		State_key key = network.getStateKey();
-		env.env_set_state(key);
+		env.env_load_state(key);
 
 		network.clearSendBuffer();
 		network.putInt(Network.kEnvSetState);

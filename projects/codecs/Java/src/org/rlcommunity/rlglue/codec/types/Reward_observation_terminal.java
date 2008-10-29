@@ -21,27 +21,27 @@ limitations under the License.
 
 package org.rlcommunity.rlglue.codec.types;
 
-public class Reward_observation {
+public class Reward_observation_terminal {
 
     public double r;
     public Observation o;
     public int terminal;
 
-    public Reward_observation() {
+    public Reward_observation_terminal() {
         r=0;
         o=new Observation();
         terminal=0;
     }
     
 
-    public Reward_observation(double reward, Observation observation, int terminal) {
+    public Reward_observation_terminal(double reward, Observation observation, int terminal) {
         this(reward,observation,terminal==1);
     }
 
    /**
      * @since 2.0 Want to move towards using terminal as a boolean not an int.
      */
-    public Reward_observation(double reward, Observation observation, boolean terminal) {
+    public Reward_observation_terminal(double reward, Observation observation, boolean terminal) {
         this.r = reward;
         this.o = observation;
         if(terminal){
@@ -55,7 +55,7 @@ public class Reward_observation {
      * This is a deep copy constructor
      * @param src
      */
-    public Reward_observation(Reward_observation src) {
+    public Reward_observation_terminal(Reward_observation_terminal src) {
         this.o = src.o.duplicate();
         this.r = src.r;
         this.terminal = src.terminal;
@@ -70,7 +70,7 @@ public class Reward_observation {
     }
 
 
-    public Reward_observation duplicate() {
-        return new Reward_observation(this);
+    public Reward_observation_terminal duplicate() {
+        return new Reward_observation_terminal(this);
     }
 }

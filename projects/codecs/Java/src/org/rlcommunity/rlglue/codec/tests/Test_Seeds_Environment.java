@@ -23,7 +23,7 @@ import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Random_seed_key;
-import org.rlcommunity.rlglue.codec.types.Reward_observation;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
@@ -57,29 +57,29 @@ public class Test_Seeds_Environment implements EnvironmentInterface {
         return o;   
     }
 
-    public Reward_observation env_step(Action action) {
+    public Reward_observation_terminal env_step(Action action) {
         TestUtility.clean_abstract_type(o);
         int terminal=0;
-        Reward_observation ro=new Reward_observation(0.0d, o, terminal);
+        Reward_observation_terminal ro=new Reward_observation_terminal(0.0d, o, terminal);
         return ro;
     }
 
     public void env_cleanup() {
     }
 
-    public void env_set_state(State_key key) {
+    public void env_load_state(State_key key) {
         this.savedStateKey=key;
     }
 
-    public void env_set_random_seed(Random_seed_key key) {
+    public void env_load_random_seed(Random_seed_key key) {
         this.savedRandomSeed=key;
     }
 
-    public State_key env_get_state() {
+    public State_key env_save_state() {
         return savedStateKey;
     }
 
-    public Random_seed_key env_get_random_seed() {
+    public Random_seed_key env_save_random_seed() {
         return savedRandomSeed;
     }
 
