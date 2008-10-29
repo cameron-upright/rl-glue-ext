@@ -60,7 +60,7 @@ function shouldQuit=runEnvironmentLoop()
 
     case {org.rlcommunity.rlglue.codec.network.Network.kEnvSetState}
 		key = network.getStateKey();
-		env.env_set_state(key);
+		env.env_load_state(key);
 
 		network.clearSendBuffer();
 		network.putInt(org.rlcommunity.rlglue.codec.network.Network.kEnvSetState);
@@ -69,14 +69,14 @@ function shouldQuit=runEnvironmentLoop()
 
     case {org.rlcommunity.rlglue.codec.network.Network.kEnvSetRandomSeed}
 		key = network.getRandomSeedKey();
-		env.env_set_random_seed(key);
+		env.env_load_random_seed(key);
 			
 		network.clearSendBuffer();
 		network.putInt(org.rlcommunity.rlglue.codec.network.Network.kEnvSetRandomSeed);
 		network.putInt(0);
 
    case {org.rlcommunity.rlglue.codec.network.Network.kEnvGetState}
-		key = env.env_get_state();
+		key = env.env_save_state();
 		
 		network.clearSendBuffer();
 		network.putInt(org.rlcommunity.rlglue.codec.network.Network.kEnvGetState);
@@ -84,7 +84,7 @@ function shouldQuit=runEnvironmentLoop()
 		network.putStateKey(key);
 
    case {org.rlcommunity.rlglue.codec.network.Network.kEnvGetRandomSeed}
-		key = env.env_get_random_seed();
+		key = env.env_save_random_seed();
 		
 		network.clearSendBuffer();
 		network.putInt(org.rlcommunity.rlglue.codec.network.Network.kEnvGetRandomSeed);

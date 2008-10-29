@@ -1,2 +1,0 @@
-function test_empty_environment_set_random_seed(randomSeed)
-end
