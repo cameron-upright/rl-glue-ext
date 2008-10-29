@@ -39,8 +39,8 @@
   (check exp #'= 5 (rl-num-steps exp))
   (check exp #'eq t (rl-episode exp 7))
   (check exp #'= 5 (rl-num-steps exp))
-  (rl-cleanup exp)
-  (summarize-stat exp))
+  (summarize-stat exp)
+  (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Starter macro.

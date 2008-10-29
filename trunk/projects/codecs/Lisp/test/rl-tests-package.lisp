@@ -29,6 +29,8 @@
    #:start-test-empty-agent
    #:start-test-empty-environment
    #:start-test-empty-experiment
+   ;; test-init-cleanup
+   #:start-test-init-cleanup-experiment
    ;; test-message
    #:start-test-message-agent
    #:start-test-message-environment

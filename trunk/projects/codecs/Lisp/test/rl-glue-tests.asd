@@ -44,6 +44,10 @@
              (:file "test-empty-environment")
              (:file "test-empty-experiment"))
             :depends-on ("rl-tests-common"))
+   (:module test-init-cleanup
+            :components
+            ((:file "test-init-cleanup-experiment"))
+            :depends-on ("test-1"))
    (:module test-message
             :components
             ((:file "test-message-agent")
