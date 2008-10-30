@@ -302,10 +302,10 @@ Second, implement the following methods for it. \\
 \lispprompt{(defmethod env-init ((env my-env)) \ldots)} \\
 \lispprompt{(defmethod env-start ((env my-env)) \ldots)} \\
 \lispprompt{(defmethod env-step ((env my-env) action) \ldots)} \\
-\lispprompt{(defmethod env-get-state ((env my-env)) \ldots)} \\
-\lispprompt{(defmethod env-set-state ((env my-env) state-key) \ldots)} \\
-\lispprompt{(defmethod env-get-random-seed ((env my-env)) \ldots)} \\
-\lispprompt{(defmethod env-set-random-seed ((env my-env) random-seed-key) \ldots)} \\
+\lispprompt{(defmethod env-save-state ((env my-env)) \ldots)} \\
+\lispprompt{(defmethod env-load-state ((env my-env) state-key) \ldots)} \\
+\lispprompt{(defmethod env-save-random-seed ((env my-env)) \ldots)} \\
+\lispprompt{(defmethod env-load-random-seed ((env my-env) random-seed-key) \ldots)} \\
 \lispprompt{(defmethod env-cleanup ((env my-env)) \ldots)} \\
 \lispprompt{(defmethod env-message ((env my-env) input-message) \ldots)}
 
@@ -338,17 +338,26 @@ Second, implement your experiment. For this the codec provides client
 functions which hides the necessary buffer handling and network operation.
 These are the following.
 
-\prompttext{rl-init}, \prompttext{rl-start}, \prompttext{rl-step},
-\prompttext{rl-cleanup}, \prompttext{rl-return}, \prompttext{rl-num-steps},
-\prompttext{rl-num-episodes}, \\
-\prompttext{rl-episode}, \prompttext{rl-get-state}, \prompttext{rl-set-state},
-\prompttext{rl-get-random-seed}, \prompttext{rl-set-random-seed}, \\
-\prompttext{rl-agent-message}, \prompttext{rl-env-message}.
+\prompttext{rl-init},
+\prompttext{rl-start},
+\prompttext{rl-step},
+\prompttext{rl-cleanup},
+\prompttext{rl-close},
+\prompttext{rl-return},
+\prompttext{rl-num-steps}, \\
+\prompttext{rl-num-episodes},
+\prompttext{rl-episode},
+\prompttext{rl-save-state},
+\prompttext{rl-load-state},
+\prompttext{rl-save-random-seed}, \\
+\prompttext{rl-load-random-seed},
+\prompttext{rl-agent-message},
+\prompttext{rl-env-message}.
 
 A detailed description of these functions can be obtained this way. \\
 \lispprompt{(documentation \#'<function name> 'function)}
 
-Do not forget to call the \prompttext{rl-cleanup} function at the end of your
+Do not forget to call the \prompttext{rl-close} function at the end of your
 experiment, because it closes the network connection and so terminates the
 RL-Glue session.
 

@@ -99,8 +99,8 @@ descriptor on success, or nil on failure."
          (error (e)
            (declare (ignore e)) (sleep retry-timeout)))))
 
-(defun rl-close (socket)
-  "Closes SOCKET."
+(defun rl-close-socket (socket)
+  "Closes the given socket."
   (usocket:socket-close socket))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -136,8 +136,8 @@ descriptor on success, or nil on failure."
              (when socket
                (buffer-clear buffer)
                (rl-send-buffer socket buffer conn-state)
-               (funcall event-loop obj socket buffer)
-        (when socket (rl-close socket)))))
+               (funcall event-loop obj socket buffer)))
+        (when socket (rl-close-socket socket)))
       (unless autoreconnect (return))))
   obj)
 

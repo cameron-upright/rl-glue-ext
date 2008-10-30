@@ -76,7 +76,7 @@
          (format *standard-output*
                  "-----------------------------------------------~%")
          (force-output *standard-output*)))
-  ep-avg)
+  (rl-glue-codec::rl-close ep-avg))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Starter macro.
