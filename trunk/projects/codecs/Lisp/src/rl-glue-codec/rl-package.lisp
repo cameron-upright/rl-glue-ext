@@ -69,6 +69,7 @@
    #:rl-start
    #:rl-step
    #:rl-cleanup
+   #:rl-close
    #:rl-return
    #:rl-num-steps
    #:rl-num-episodes

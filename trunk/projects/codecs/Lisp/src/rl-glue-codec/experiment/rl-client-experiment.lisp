@@ -23,6 +23,7 @@
 (defclass experiment ()
   ((exp-socket
     :accessor exp-socket
+    :initform nil
     :documentation "Socket for the experiment server.")
    (exp-buffer
     :accessor exp-buffer
@@ -56,15 +57,16 @@ PARAMETERS:
 RETURNS:
     task specification [string]"
   (declare #.*optimize-settings*)
-  (forced-format "RL-Glue Lisp Experiment Codec Version ~a, Build ~a~%"
-                 (get-codec-version) (get-svn-codec-version))
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
-    (setf socket (rl-wait-for-connection host
-                                         port
-                                         max-retry
-                                         retry-timeout))
-    (buffer-clear buffer)
-    (rl-send-buffer socket buffer +k-experiment-connection+)
+    (unless socket
+      (forced-format "RL-Glue Lisp Experiment Codec Version ~a, Build ~a~%"
+                     (get-codec-version) (get-svn-codec-version))
+      (setf socket (rl-wait-for-connection host
+                                           port
+                                           max-retry
+                                           retry-timeout))
+      (buffer-clear buffer)
+      (rl-send-buffer socket buffer +k-experiment-connection+))
     (buffer-clear buffer)
     (rl-send-buffer socket buffer +k-rl-init+)
     (buffer-clear buffer)
@@ -138,16 +140,30 @@ RETURNS:
     (rl-send-buffer socket buffer +k-rl-cleanup+)
     (buffer-clear buffer)
     (assert (= +k-rl-cleanup+
-               (the fixnum (rl-recv-buffer socket buffer))))
-    (usocket:socket-close socket))
+               (the fixnum (rl-recv-buffer socket buffer)))))
+  exp)
+
+(defun rl-close (exp)
+  "DESCRIPTION:
+    Finishes the experiment by closing its network resources (socket).
+
+PARAMETERS:
+    exp : experiment in use [rl-glue:experiment]
+
+RETURNS:
+    used experiment [rl-glue:experiment]"
+  (with-accessors ((socket exp-socket)) exp
+    (when socket
+      (rl-close-socket socket)
+      (setf socket nil)))
   exp)
 
 (defun rl-return (exp)
   "DESCRIPTION:
-    Return the cumulative total reward of the current or just completed episode. The
-    collection of all the rewards received in an episode (the return) is done within
-    rl-return however, any discounting of rewards must be done inside the environment
-    or agent.
+    Return the cumulative total reward of the current or just completed episode.
+    The collection of all the rewards received in an episode (the return) is
+    done within rl-return however, any discounting of rewards must be done
+    inside the environment or agent.
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
