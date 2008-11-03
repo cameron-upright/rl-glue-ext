@@ -3,10 +3,10 @@ function theEnvironment=skeleton_environment()
 	theEnvironment.env_init=@skeleton_environment_init;
 	theEnvironment.env_start=@skeleton_environment_start;
 	theEnvironment.env_step=@skeleton_environment_step;
-	theEnvironment.env_set_state=@skeleton_environment_set_state;
-	theEnvironment.env_get_state=@skeleton_environment_get_state;
-	theEnvironment.env_set_random_seed=@skeleton_environment_set_random_seed;
-	theEnvironment.env_get_random_seed=@skeleton_environment_get_random_seed;
+	theEnvironment.env_load_state=@skeleton_environment_load_state;
+	theEnvironment.env_save_state=@skeleton_environment_save_state;
+	theEnvironment.env_load_random_seed=@skeleton_environment_load_random_seed;
+	theEnvironment.env_save_random_seed=@skeleton_environment_save_random_seed;
 	theEnvironment.env_cleanup=@skeleton_environment_cleanup;
 	theEnvironment.env_message=@skeleton_environment_message;
 end
@@ -83,24 +83,24 @@ function skeleton_environment_cleanup()
 
 end
 
-function randomSeed=skeleton_environment_get_random_seed()
+function randomSeed=skeleton_environment_save_random_seed()
 %Not really implemented because of advanced nature and example is 
 %supposed to be simple
 	randomSeed=org.rlcommunity.rlglue.codec.types.Random_seed_key();
 end
 
-function skeleton_environment_set_random_seed(randomSeed)
+function skeleton_environment_load_random_seed(randomSeed)
 	%Not really implemented because of advanced nature and example is 
 	%supposed to be simple
 end
 
-function theState=skeleton_environment_get_state()
+function theState=skeleton_environment_save_state()
 	%Not really implemented because of advanced nature and example is 
 	%supposed to be simple
 	theState=org.rlcommunity.rlglue.codec.types.State_key();
 end
 
-function skeleton_environment_set_seed(theState)
+function skeleton_environment_load_seed(theState)
 	%Not really implemented because of advanced nature and example is 
 	%supposed to be simple
 end

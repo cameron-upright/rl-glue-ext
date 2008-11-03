@@ -1,3 +1,3 @@
-function svnVersion=RL_save_svn_version()
+function svnVersion=RL_get_svn_version()
 	svnVersion='$Revision$';
 end
