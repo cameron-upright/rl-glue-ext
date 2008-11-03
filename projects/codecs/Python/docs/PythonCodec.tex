@@ -390,16 +390,16 @@ In this case we'll include their prototypes, because the source file is full of 
 	def RL_episode(num_steps):
 
 	# (State_key) -> void
-	def RL_set_state(sk):
+	def RL_load_state(sk):
 
 	# (Random_seed_key) -> void
-	def RL_set_random_seed(rsk):
+	def RL_load_random_seed(rsk):
 
 	# () -> State_key
-	def RL_get_state():
+	def RL_save_state():
 
 	# () -> Random_seed_key
-	def RL_get_random_seed():
+	def RL_save_random_seed():
 \end{verbatim}
 
 \section{Changes and 2.x Backward Compatibility}

@@ -516,7 +516,7 @@ class Observation_action:
         self.o = theObservation
         self.a = theAction
 
-class Reward_observation_terminal:
+class Reward_observation:
     def __init__(self,reward, theObservation, terminal):
         self.r = reward
         self.o = theObservation
@@ -594,16 +594,16 @@ In this case we'll include their prototypes, because the source file is full of 
 	def RL_episode(num_steps):
 
 	# (State_key) -&gt; void
-	def RL_set_state(sk):
+	def RL_load_state(sk):
 
 	# (Random_seed_key) -&gt; void
-	def RL_set_random_seed(rsk):
+	def RL_load_random_seed(rsk):
 
 	# () -&gt; State_key
-	def RL_get_state():
+	def RL_save_state():
 
 	# () -&gt; Random_seed_key
-	def RL_get_random_seed():
+	def RL_save_random_seed():
 </PRE>
 
 <P>
