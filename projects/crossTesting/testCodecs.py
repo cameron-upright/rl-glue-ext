@@ -6,8 +6,9 @@ subprocess.call(["killall rl_glue"],shell=True)
 
 javaCodecJar="JavaRLGlueCodec.jar";
 javaJarPath="../codecs/Java/products/";
-JavaCodec=javaJarPath+javaCodecJar
-PythonPath="../codecs/Python/src"
+JavaCodec=javaJarPath+javaCodecJar;
+PythonPath="../codecs/Python/src";
+logFile=file("log.txt","w");
 
 def run_test(agent, env, experiment):
 	global totalTests
@@ -23,7 +24,7 @@ def run_test(agent, env, experiment):
 			print "\t\t\tIt has PID="+str(thisProc.pid)
 			allSubProcesses.append(thisProc)
 		else:
-			thisProc=subprocess.Popen([cmd],shell=True,stdout=open(os.devnull,"w"), stderr=open(os.devnull,"w"))
+			thisProc=subprocess.Popen([cmd],shell=True,stdout=logFile, stderr=subprocess.STDOUT)
 			allSubProcesses.append(thisProc)
 
 	time.sleep(.65)
