@@ -67,35 +67,35 @@ class ClientEnvironment:
 		self.network.putInt(0) # No data in this packet
 
 	# () -> void
-	def onEnvGetRandomSeed(self):
-		key = self.env.env_get_random_seed()
+	def onEnvSaveRandomSeed(self):
+		key = self.env.env_save_random_seed()
 		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvGetRandomSeed)
+		self.network.putInt(Network.kEnvSaveRandomSeed)
 		self.network.putInt(self.network.sizeOfRandomSeed(key))
 		self.network.putRandomSeedKey(key)
 
 	# () -> void
-	def onEnvGetState(self):
-		key = self.env.env_get_state()
+	def onEnvSaveState(self):
+		key = self.env.env_save_state()
 		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvGetState)
+		self.network.putInt(Network.kEnvSaveState)
 		self.network.putInt(self.network.sizeOfStateKey(key))
 		self.network.putStateKey(key)
 
 	# () -> void
-	def onEnvSetRandomSeed(self):
+	def onEnvLoadRandomSeed(self):
 		key = self.network.getRandomSeedKey()
-		self.env.env_set_random_seed(key)
+		self.env.env_load_random_seed(key)
 		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvSetRandomSeed)
+		self.network.putInt(Network.kEnvLoadRandomSeed)
 		self.network.putInt(0) # No data in this packet
 
 	# () -> void
-	def onEnvSetState(self):
+	def onEnvLoadState(self):
 		key = self.network.getStateKey()
-		self.env.env_set_state(key)
+		self.env.env_load_state(key)
 		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvSetState)
+		self.network.putInt(Network.kEnvLoadState)
 		self.network.putInt(0) # No data in this packet
 
 	# () -> void
@@ -155,10 +155,10 @@ class ClientEnvironment:
 				Network.kEnvStart: lambda self: self.onEnvStart(),
 				Network.kEnvStep: lambda self: self.onEnvStep(),
 				Network.kEnvCleanup: lambda self: self.onEnvCleanup(),
-				Network.kEnvGetRandomSeed: lambda self: self.onEnvGetRandomSeed(),
-				Network.kEnvGetState: lambda self: self.onEnvGetState(),
-				Network.kEnvSetRandomSeed: lambda self: self.onEnvSetRandomSeed(),
-				Network.kEnvSetState: lambda self: self.onEnvSetState(),
+				Network.kEnvSaveRandomSeed: lambda self: self.onEnvSaveRandomSeed(),
+				Network.kEnvSaveState: lambda self: self.onEnvSaveState(),
+				Network.kEnvLoadRandomSeed: lambda self: self.onEnvLoadRandomSeed(),
+				Network.kEnvLoadState: lambda self: self.onEnvLoadState(),
 				Network.kEnvMessage: lambda self: self.onEnvMessage() }
 			if envState in switch:
 				switch[envState](self)

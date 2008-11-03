@@ -31,7 +31,7 @@ from rlglue.types import Action
 from rlglue.types import Observation
 from rlglue.types import State_key
 from rlglue.types import Random_seed_key
-from rlglue.types import Reward_observation
+from rlglue.types import Reward_observation_terminal
 from rlglue.types import RL_Abstract_Type
 
 # RL-Glue needs to know what type of object is trying to connect.
@@ -51,10 +51,10 @@ kEnvInit          = 11
 kEnvStart         = 12
 kEnvStep          = 13
 kEnvCleanup       = 14
-kEnvSetState      = 15
-kEnvSetRandomSeed = 16
-kEnvGetState      = 17
-kEnvGetRandomSeed = 18
+kEnvLoadState      = 15
+kEnvLoadRandomSeed = 16
+kEnvSaveState      = 17
+kEnvSaveRandomSeed = 18
 kEnvMessage       = 19
 
 kRLInit           = 20

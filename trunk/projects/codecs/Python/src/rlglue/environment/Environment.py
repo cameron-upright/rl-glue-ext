@@ -19,7 +19,7 @@
 from rlglue.types import Action
 from rlglue.types import Observation
 from rlglue.types import Random_seed_key
-from rlglue.types import Reward_observation
+from rlglue.types import Reward_observation_terminal
 from rlglue.types import State_key
 
 class Environment:
@@ -31,7 +31,7 @@ class Environment:
  	def env_start():
 		pass
 	
-	# (Action) -> Reward_observation
+	# (Action) -> Reward_observation_terminal
 	def env_step(action):
 		pass
 	
@@ -40,19 +40,19 @@ class Environment:
 		pass
 	
 	# (State_key) -> void
-	def env_set_state(key):
+	def env_load_state(key):
 		pass
 	
 	# (Random_seed_key) -> void
-	def env_set_random_seed(key):
+	def env_load_random_seed(key):
 		pass
 	
 	# () -> State_key
-	def env_get_state():
+	def env_save_state():
 		pass
 	
 	# () -> Random_seed_key
-	def env_get_random_seed():
+	def env_save_random_seed():
 		pass
 	
 	# (string) -> string

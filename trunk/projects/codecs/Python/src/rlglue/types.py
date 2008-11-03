@@ -76,7 +76,7 @@ class Observation_action:
 		else:
 			self.a = Action()
 
-class Reward_observation:
+class Reward_observation_terminal:
 	def __init__(self,reward=None, theObservation=None, terminal=None):
 		if reward != None:
 			self.r = reward

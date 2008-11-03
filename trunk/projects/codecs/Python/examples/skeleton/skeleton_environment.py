@@ -22,7 +22,7 @@ from rlglue.environment.Environment import Environment
 from rlglue.environment import EnvironmentLoader as EnvironmentLoader
 from rlglue.types import Observation
 from rlglue.types import Action
-from rlglue.types import Reward_observation
+from rlglue.types import Reward_observation_terminal
 from rlglue.types import State_key
 from rlglue.types import Random_seed_key
 # /**
@@ -71,7 +71,7 @@ class skeleton_environment(Environment):
 		theObs=Observation()
 		theObs.intArray=[self.currentState]
 		
-		returnRO=Reward_observation()
+		returnRO=Reward_observation_terminal()
 		returnRO.r=theReward
 		returnRO.o=theObs
 		returnRO.terminal=episodeOver
@@ -81,18 +81,18 @@ class skeleton_environment(Environment):
 	def env_cleanup(self):
 		pass
 	
-	def env_set_state(self, stateKey):
+	def env_load_state(self, stateKey):
 		#Advanced features so not included in skeleton
 		pass
 	
-	def env_set_random_seed(self, randomSeedKey):
+	def env_load_random_seed(self, randomSeedKey):
 		#Advanced features so not included in skeleton
 		pass
 	
-	def env_get_state(self):
+	def env_save_state(self):
 		return State_key()
 	
-	def env_get_random_seed(self):
+	def env_save_random_seed(self):
 		return Random_seed_key()
 	
 	def env_message(self,inMessage):
