@@ -22,7 +22,7 @@ from rlglue.environment.Environment import Environment
 from rlglue.environment import EnvironmentLoader as EnvironmentLoader
 from rlglue.types import Observation
 from rlglue.types import Action
-from rlglue.types import Reward_observation
+from rlglue.types import Reward_observation_terminal
 from rlglue.types import State_key
 from rlglue.types import Random_seed_key
 
@@ -54,7 +54,7 @@ class test_1_environment(Environment):
 		if self.stepCount==5:
 			terminal=True
 		
-		ro=Reward_observation()
+		ro=Reward_observation_terminal()
 		ro.r=1.0
 		ro.o=self.o
 		ro.terminal=terminal
@@ -64,16 +64,16 @@ class test_1_environment(Environment):
 	def env_cleanup(self):
 		pass
 	
-	def env_set_state(self, stateKey):
+	def env_load_state(self, stateKey):
 		pass
 	
-	def env_set_random_seed(self, randomSeedKey):
+	def env_load_random_seed(self, randomSeedKey):
 		pass
 	
-	def env_get_state(self):
+	def env_save_state(self):
 		return State_key()
 	
-	def env_get_random_seed(self):
+	def env_save_random_seed(self):
 		return Random_seed_key()
 	
 	def env_message(self,inMessage):
