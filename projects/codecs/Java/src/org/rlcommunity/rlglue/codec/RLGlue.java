@@ -148,7 +148,7 @@ public class RLGlue {
     /**
      * RL-Glue Core Method.
      */
-    public static Random_seed_key RL_get_random_seed() {
+    public static Random_seed_key RL_save_random_seed() {
         checkInstance();
         Random_seed_key returnValue = instance.RL_save_random_seed();
         if (returnValue == null) {
@@ -160,7 +160,7 @@ public class RLGlue {
     /**
      * RL-Glue Core Method.
      */
-    public static State_key RL_get_state() {
+    public static State_key RL_save_state() {
         checkInstance();
         State_key returnValue = instance.RL_save_state();
         if (returnValue == null) {
@@ -213,7 +213,7 @@ public class RLGlue {
     /**
      * RL-Glue Core Method.
      */
-    public static void RL_set_random_seed(Random_seed_key rsk) {
+    public static void RL_load_random_seed(Random_seed_key rsk) {
         checkInstance();
         if (rsk == null) {
             rsk = new Random_seed_key();
@@ -224,7 +224,7 @@ public class RLGlue {
     /**
      * RL-Glue Core Method.
      */
-    public static void RL_set_state(State_key sk) {
+    public static void RL_load_state(State_key sk) {
         checkInstance();
         if (sk == null) {
             sk = new State_key();
