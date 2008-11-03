@@ -38,7 +38,7 @@ function rewardObservation=test_1_environment_step(theAction)
 		terminal=1;
     end
     
-	rewardObservation=org.rlcommunity.rlglue.codec.types.Reward_observation(1.0,theObservation,terminal);
+	rewardObservation=org.rlcommunity.rlglue.codec.types.Reward_observation_terminal(1.0,theObservation,terminal);
 	
 end
 
