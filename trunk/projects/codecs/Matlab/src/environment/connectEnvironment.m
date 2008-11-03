@@ -11,7 +11,7 @@ function connectEnviroment(theEnviroment)
     timeout=60;
     
     
-    fprintf(1,'RL-Glue Matlab Environment Codec Version: %s (%s)\n',RL_save_codec_version(),RL_save_svn_version());
+    fprintf(1,'RL-Glue Matlab Environment Codec Version: %s (%s)\n',RL_get_codec_version(),RL_get_svn_version());
     fprintf(1,'\tConnecting to rl_glue at host: %s on port %d\n', host, port);
 
     p__rlglueEnvStruct.network=org.rlcommunity.rlglue.codec.network.Network;

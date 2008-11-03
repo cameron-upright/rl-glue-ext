@@ -1,2 +1,0 @@
-function skeleton_agent_end(theReward)
-end
