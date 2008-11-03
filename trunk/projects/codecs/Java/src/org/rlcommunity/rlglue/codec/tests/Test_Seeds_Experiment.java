@@ -57,12 +57,12 @@ public static int runTest(){
 	
 	RLGlue.RL_init();
 	
-	RLGlue.RL_set_state(the_state_key);
-	returned_state_key=RLGlue.RL_get_state();
+	RLGlue.RL_load_state(the_state_key);
+	returned_state_key=RLGlue.RL_save_state();
 	tester.check_fail(the_state_key.compareTo(returned_state_key)!=0);
 
-	RLGlue.RL_set_random_seed(the_random_seed);
-	returned_random_seed_key=RLGlue.RL_get_random_seed();
+	RLGlue.RL_load_random_seed(the_random_seed);
+	returned_random_seed_key=RLGlue.RL_save_random_seed();
 	tester.check_fail(the_random_seed.compareTo(returned_random_seed_key)!=0);
 	
 	
@@ -74,21 +74,21 @@ public static int runTest(){
 	TestUtility.set_k_doubles_in_abstract_type(the_random_seed,0);
 	TestUtility.set_k_chars_in_abstract_type(the_random_seed,0);
 
-	RLGlue.RL_set_state(the_state_key);
-	returned_state_key=RLGlue.RL_get_state();
+	RLGlue.RL_load_state(the_state_key);
+	returned_state_key=RLGlue.RL_save_state();
 	tester.check_fail(the_state_key.compareTo(returned_state_key)!=0);
 
-	RLGlue.RL_set_random_seed(the_random_seed);
-	returned_random_seed_key=RLGlue.RL_get_random_seed();
+	RLGlue.RL_load_random_seed(the_random_seed);
+	returned_random_seed_key=RLGlue.RL_save_random_seed();
 	tester.check_fail(the_random_seed.compareTo(returned_random_seed_key)!=0);
 	
 	/* Make sure if we send an empty we get back an empty */
-	RLGlue.RL_set_state(empty_state_key);
-	returned_state_key=RLGlue.RL_get_state();
+	RLGlue.RL_load_state(empty_state_key);
+	returned_state_key=RLGlue.RL_save_state();
 	tester.check_fail(empty_state_key.compareTo(returned_state_key)!=0);
 
-	RLGlue.RL_set_random_seed(empty_random_seed);
-	returned_random_seed_key=RLGlue.RL_get_random_seed();
+	RLGlue.RL_load_random_seed(empty_random_seed);
+	returned_random_seed_key=RLGlue.RL_save_random_seed();
 	tester.check_fail(empty_random_seed.compareTo(returned_random_seed_key)!=0);
 
 	

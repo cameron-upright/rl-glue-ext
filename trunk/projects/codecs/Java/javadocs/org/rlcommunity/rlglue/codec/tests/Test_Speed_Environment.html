@@ -176,7 +176,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/Random_seed_key.html" title="class in org.rlcommunity.rlglue.codec.types">Random_seed_key</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_get_random_seed()">env_get_random_seed</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_save_random_seed()">env_save_random_seed</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -184,7 +184,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html" title="class in org.rlcommunity.rlglue.codec.types">State_key</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_get_state()">env_get_state</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_save_state()">env_save_state</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -208,7 +208,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_set_random_seed(org.rlcommunity.rlglue.codec.types.Random_seed_key)">env_set_random_seed</A></B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/Random_seed_key.html" title="class in org.rlcommunity.rlglue.codec.types">Random_seed_key</A>&nbsp;key)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_load_random_seed(org.rlcommunity.rlglue.codec.types.Random_seed_key)">env_load_random_seed</A></B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/Random_seed_key.html" title="class in org.rlcommunity.rlglue.codec.types">Random_seed_key</A>&nbsp;key)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -216,7 +216,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_set_state(org.rlcommunity.rlglue.codec.types.State_key)">env_set_state</A></B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html" title="class in org.rlcommunity.rlglue.codec.types">State_key</A>&nbsp;key)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/rlcommunity/rlglue/codec/tests/Test_Speed_Environment.html#env_load_state(org.rlcommunity.rlglue.codec.types.State_key)">env_load_state</A></B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html" title="class in org.rlcommunity.rlglue.codec.types">State_key</A>&nbsp;key)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -408,13 +408,13 @@ public void <B>env_cleanup</B>()</PRE>
 </DL>
 <HR>
 
-<A NAME="env_set_state(org.rlcommunity.rlglue.codec.types.State_key)"><!-- --></A><H3>
-env_set_state</H3>
+<A NAME="env_load_state(org.rlcommunity.rlglue.codec.types.State_key)"><!-- --></A><H3>
+env_load_state</H3>
 <PRE>
-public void <B>env_set_state</B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html" title="class in org.rlcommunity.rlglue.codec.types">State_key</A>&nbsp;key)</PRE>
+public void <B>env_load_state</B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html" title="class in org.rlcommunity.rlglue.codec.types">State_key</A>&nbsp;key)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_set_state(org.rlcommunity.rlglue.codec.types.State_key)">env_set_state</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_load_state(org.rlcommunity.rlglue.codec.types.State_key)">env_load_state</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -422,13 +422,13 @@ public void <B>env_set_state</B>(<A HREF="../../../../../org/rlcommunity/rlglue/
 </DL>
 <HR>
 
-<A NAME="env_set_random_seed(org.rlcommunity.rlglue.codec.types.Random_seed_key)"><!-- --></A><H3>
-env_set_random_seed</H3>
+<A NAME="env_load_random_seed(org.rlcommunity.rlglue.codec.types.Random_seed_key)"><!-- --></A><H3>
+env_load_random_seed</H3>
 <PRE>
-public void <B>env_set_random_seed</B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/Random_seed_key.html" title="class in org.rlcommunity.rlglue.codec.types">Random_seed_key</A>&nbsp;key)</PRE>
+public void <B>env_load_random_seed</B>(<A HREF="../../../../../org/rlcommunity/rlglue/codec/types/Random_seed_key.html" title="class in org.rlcommunity.rlglue.codec.types">Random_seed_key</A>&nbsp;key)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_set_random_seed(org.rlcommunity.rlglue.codec.types.Random_seed_key)">env_set_random_seed</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_load_random_seed(org.rlcommunity.rlglue.codec.types.Random_seed_key)">env_load_random_seed</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -436,13 +436,13 @@ public void <B>env_set_random_seed</B>(<A HREF="../../../../../org/rlcommunity/r
 </DL>
 <HR>
 
-<A NAME="env_get_state()"><!-- --></A><H3>
-env_get_state</H3>
+<A NAME="env_save_state()"><!-- --></A><H3>
+env_save_state</H3>
 <PRE>
-public <A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html" title="class in org.rlcommunity.rlglue.codec.types">State_key</A> <B>env_get_state</B>()</PRE>
+public <A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html" title="class in org.rlcommunity.rlglue.codec.types">State_key</A> <B>env_save_state</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_get_state()">env_get_state</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_save_state()">env_save_state</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -450,13 +450,13 @@ public <A HREF="../../../../../org/rlcommunity/rlglue/codec/types/State_key.html
 </DL>
 <HR>
 
-<A NAME="env_get_random_seed()"><!-- --></A><H3>
-env_get_random_seed</H3>
+<A NAME="env_save_random_seed()"><!-- --></A><H3>
+env_save_random_seed</H3>
 <PRE>
-public <A HREF="../../../../../org/rlcommunity/rlglue/codec/types/Random_seed_key.html" title="class in org.rlcommunity.rlglue.codec.types">Random_seed_key</A> <B>env_get_random_seed</B>()</PRE>
+public <A HREF="../../../../../org/rlcommunity/rlglue/codec/types/Random_seed_key.html" title="class in org.rlcommunity.rlglue.codec.types">Random_seed_key</A> <B>env_save_random_seed</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_get_random_seed()">env_get_random_seed</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html#env_save_random_seed()">env_save_random_seed</A></CODE> in interface <CODE><A HREF="../../../../../org/rlcommunity/rlglue/codec/EnvironmentInterface.html" title="interface in org.rlcommunity.rlglue.codec">EnvironmentInterface</A></CODE></DL>
 </DD>
 <DD><DL>
 </DL>
