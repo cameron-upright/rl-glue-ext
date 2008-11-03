@@ -62,7 +62,7 @@ global skeleton_environment_struct;
 	theObservation.intArray=[skeleton_environment_struct.currentState];
 
 
-	rewardObservation=org.rlcommunity.rlglue.codec.types.Reward_observation(theReward,theObservation,episodeOver);
+	rewardObservation=org.rlcommunity.rlglue.codec.types.Reward_observation_terminal(theReward,theObservation,episodeOver);
 end
 
 function returnMessage=skeleton_environment_message(theMessageJavaObject)
