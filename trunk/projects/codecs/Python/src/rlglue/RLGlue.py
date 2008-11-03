@@ -194,7 +194,7 @@ def RL_freeze():
 	doStandardRecv(Network.kRLFreeze)
 
 # (State_key) -> void
-def RL_set_state(sk):
+def RL_load_state(sk):
 	if sk == None:
 		sk=State_key()
 	network.clearSendBuffer()
@@ -205,7 +205,7 @@ def RL_set_state(sk):
 	doStandardRecv(Network.kRLSetState)
 
 # (Random_seed_key) -> void
-def RL_set_random_seed(rsk):
+def RL_load_random_seed(rsk):
 	if rsk == None:
 		rsk=Random_seed_key()
 	network.clearSendBuffer()
@@ -216,7 +216,7 @@ def RL_set_random_seed(rsk):
 	doStandardRecv(Network.kRLSetRandomSeed)
 
 # () -> State_key
-def RL_get_state():
+def RL_save_state():
 	key = None
 	doCallWithNoParams(Network.kRLGetState)
 	doStandardRecv(Network.kRLGetState)
@@ -226,7 +226,7 @@ def RL_get_state():
 	return key
 
 # () -> Random_seed_key
-def RL_get_random_seed():
+def RL_save_random_seed():
 	key = None
 	doCallWithNoParams(Network.kRLGetRandomSeed)
 	doStandardRecv(Network.kRLGetRandomSeed)

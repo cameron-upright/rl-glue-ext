@@ -53,13 +53,13 @@ the_random_seed.charArray=['a','b','c','d']
 
 RLGlue.RL_init()
 
-RLGlue.RL_set_state(the_state_key)
-returned_state_key=RLGlue.RL_get_state()
+RLGlue.RL_load_state(the_state_key)
+returned_state_key=RLGlue.RL_save_state()
 tester.check_fail(not the_state_key.sameAs(returned_state_key))
 
 
-RLGlue.RL_set_random_seed(the_random_seed)
-returned_random_seed_key=RLGlue.RL_get_random_seed()
+RLGlue.RL_load_random_seed(the_random_seed)
+returned_random_seed_key=RLGlue.RL_save_random_seed()
 tester.check_fail(not the_random_seed.sameAs(returned_random_seed_key))
 
 
@@ -73,21 +73,21 @@ the_random_seed.doubleArray=[]
 the_random_seed.charArray=[]
 
 
-RLGlue.RL_set_state(the_state_key)
-returned_state_key=RLGlue.RL_get_state()
+RLGlue.RL_load_state(the_state_key)
+returned_state_key=RLGlue.RL_save_state()
 tester.check_fail(not the_state_key.sameAs(returned_state_key))
 
-RLGlue.RL_set_random_seed(the_random_seed)
-returned_random_seed_key=RLGlue.RL_get_random_seed()
+RLGlue.RL_load_random_seed(the_random_seed)
+returned_random_seed_key=RLGlue.RL_save_random_seed()
 tester.check_fail(not the_random_seed.sameAs(returned_random_seed_key))
 
 #/* Make sure if we send an empty we get back an empty */
-RLGlue.RL_set_state(empty_state_key)
-returned_state_key=RLGlue.RL_get_state()
+RLGlue.RL_load_state(empty_state_key)
+returned_state_key=RLGlue.RL_save_state()
 tester.check_fail(not empty_state_key.sameAs(returned_state_key))
 
-RLGlue.RL_set_random_seed(empty_random_seed)
-returned_random_seed_key=RLGlue.RL_get_random_seed()
+RLGlue.RL_load_random_seed(empty_random_seed)
+returned_random_seed_key=RLGlue.RL_save_random_seed()
 tester.check_fail(not empty_random_seed.sameAs(returned_random_seed_key))
 
 		
