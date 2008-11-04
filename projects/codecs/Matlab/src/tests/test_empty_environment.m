@@ -2,10 +2,6 @@ function theEnvironment=test_empty_environment()
     theEnvironment.env_init=@test_empty_environment_init;
     theEnvironment.env_start=@test_empty_environment_start;
     theEnvironment.env_step=@test_empty_environment_step;
-    theEnvironment.env_load_state=@test_empty_environment_load_state;
-    theEnvironment.env_save_state=@test_empty_environment_save_state;
-    theEnvironment.env_load_random_seed=@test_empty_environment_load_random_seed;
-    theEnvironment.env_save_random_seed=@test_empty_environment_save_random_seed;
     theEnvironment.env_cleanup=@test_empty_environment_cleanup;
     theEnvironment.env_message=@test_empty_environment_message;
 end
@@ -54,18 +50,4 @@ function returnMessage=test_empty_environment_message(theMessageJavaObject)
 end
 
 function test_empty_environment_cleanup()
-end
-
-function theState=test_empty_environment_save_state()
-	theState=org.rlcommunity.rlglue.codec.types.State_key();
-end
-
-function test_empty_environment_load_seed(theState)
-end
-
-function randomSeed=test_empty_environment_save_random_seed()
-	randomSeed=org.rlcommunity.rlglue.codec.types.Random_seed_key();
-end
-
-function test_empty_environment_load_random_seed(randomSeed)
 end

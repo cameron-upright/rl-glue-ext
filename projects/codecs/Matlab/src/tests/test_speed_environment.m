@@ -8,10 +8,6 @@ function theEnvironment=test_speed_environment_construct()
     theEnvironment.env_init=@test_speed_environment_init;
     theEnvironment.env_start=@test_speed_environment_start;
     theEnvironment.env_step=@test_speed_environment_step;
-    theEnvironment.env_load_state=@test_speed_environment_load_state;
-    theEnvironment.env_save_state=@test_speed_environment_save_state;
-    theEnvironment.env_load_random_seed=@test_speed_environment_load_random_seed;
-    theEnvironment.env_save_random_seed=@test_speed_environment_save_random_seed;
     theEnvironment.env_cleanup=@test_speed_environment_cleanup;
     theEnvironment.env_message=@test_speed_environment_message;
 end
@@ -61,23 +57,9 @@ function rewardObservation=test_speed_environment_step(theAction)
 end
 	
 
-function theState=test_speed_environment_save_state()
-	theState=org.rlcommunity.rlglue.codec.types.State_key();
-end
-
-function randomSeed=test_speed_environment_save_random_seed()
-	randomSeed=org.rlcommunity.rlglue.codec.types.Random_seed_key();
-end
 
 function test_speed_environment_cleanup()
 end
-
-function test_speed_environment_load_random_seed(randomSeed)
-end
-
-function test_speed_environment_load_state(stateKey)
-end
-
 
 function returnMessage=test_speed_environment_message(theMessageJavaObject)
 	returnMessage='';
