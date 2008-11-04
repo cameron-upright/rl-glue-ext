@@ -23,14 +23,14 @@
 (defclass environment () () (:documentation "The RL-Glue environment."))
 
 (defgeneric env-init (env)
-  (:documentation "DESCRIPTION:
-    This routine will be called exactly once for each trial/run. This
-    function is an ideal place to initialize all environment information 
-    and allocate any resources required to represent the environment. It 
-    must return a task specification which adheres to the task specification 
-    language. A task specification stores information regarding the 
-    observation and action space, as well as whether the task is episodic 
-    or continuous.
+  (:documentation
+   "This routine will be called exactly once for each trial/run. This 
+function is an ideal place to initialize all environment information 
+and allocate any resources required to represent the environment. It 
+must return a task specification which adheres to the task specification 
+language. A task specification stores information regarding the 
+observation and action space, as well as whether the task is episodic 
+or continuous.
 
 PARAMETERS:
     env : environment object in use [rl-glue:environment]
@@ -39,11 +39,11 @@ RETURNS:
     task specification [string]"))
 
 (defgeneric env-start (env)
-  (:documentation "DESCRIPTION:
-    For a continuing task this is done once. For an episodic task, this is
-    done at the beginning of each episode. Env_start assembles a
-    first observation given the agent is in the start state. Note the start
-    state cannot also be a terminal state.
+  (:documentation
+   "For a continuing task this is done once. For an episodic task, this is 
+done at the beginning of each episode. Env_start assembles a 
+first observation given the agent is in the start state. Note the start 
+state cannot also be a terminal state.
 
 PARAMETERS:
     env : environment object in use [rl-glue:environment]
@@ -52,9 +52,9 @@ RETURNS:
     1st observation of an episode [rl-glue:observation]"))
 
 (defgeneric env-step (env action)
-  (:documentation "DESCRIPTION:
-    Complete one step in the environment. Take the action passed in and
-    determine what the reward and next state are for that transition.
+  (:documentation
+   "Complete one step in the environment. Take the action passed in and 
+determine what the reward and next state are for that transition.
 
 PARAMETERS:
     env    : environment object in use [rl-glue:environment]
@@ -65,64 +65,10 @@ RETURNS:
     observation   : observation after the step [rl-glue:observation]
     terminal flag : shows whether the episode is ended [boolean]"))
 
-(defgeneric env-save-state (env)
-  (:documentation "DESCRIPTION:
-    The state-key is a compact representation of the current state of the 
-    environment such that at any point in the future, provided with the
-    state key, the environment could return to that state. Note that this
-    does not include the agent's value function, it is merely restoring the
-    details of the environment. For example, in a static grid world this
-    would be as simple as the position of the agent.
-
-PARAMETERS:
-    env : environment object in use [rl-glue:environment]
-
-RETURNS:
-    state key [rl-glue:state-key]"))
-
-(defgeneric env-load-state (env state-key)
-  (:documentation "DESCRIPTION:
-    Given the STATE-KEY, the environment should return to it's exact
-    formation when the state_key was obtained.
-
-PARAMETERS:
-    env       : environment object in use [rl-glue:environment]
-    state-key : state key to set [rl-glue:state-key]
-
-RETURNS:
-    (none)"))
-
-(defgeneric env-save-random-seed (env)
-  (:documentation "DESCRIPTION:
-    Saves the random seed object used by the environment such that it can
-    be restored upon presentation of random seed key.
-
-PARAMETERS:
-    env : environment object in use [rl-glue:environment]
-
-RETURNS:
-    random seed key [rl-glue:random-seed-key]"))
-
-(defgeneric env-load-random-seed (env random-seed-key)
-  (:documentation "DESCRIPTION:
-    Sets the random seed used by the environment. Typically it is
-    advantageous for the experiment program to control the randomness of
-    the environment. The env-load-random-seed can be used in conjunction
-    with env-load-state to save and restore a random_seed such that the
-    environment will behave exactly the same way it has previously when
-    it was in this state and given the same actions.
-
-PARAMETERS:
-    env             : environment object in use [rl-glue:environment]
-    random-seed-key : random seed key to set [rl-glue:random-seed-key]
-
-RETURNS:
-    (none)"))
-
 (defgeneric env-cleanup (env)
-  (:documentation "DESCRIPTION:
-    This can be used to release any allocated resources. It will be called
-    once for every call to env-init.
+  (:documentation
+   "This can be used to release any allocated resources. It will be called 
+once for every call to env-init.
 
 PARAMETERS:
     env : environment object in use [rl-glue:environment]
@@ -131,11 +77,11 @@ RETURNS:
     (none)"))
 
 (defgeneric env-message (env input-message)
-  (:documentation "DESCRIPTION:
-    Similar to agent-message, this function allows for any message passing
-    to the environment required by the experiment program. This may be used
-    to modify the environment mid experiment. Any information that needs to
-    passed in or out of the environment can be handled by this function.
+  (:documentation
+   "Similar to agent-message, this function allows for any message passing 
+to the environment required by the experiment program. This may be used 
+to modify the environment mid experiment. Any information that needs to 
+passed in or out of the environment can be handled by this function.
 
 PARAMETERS:  
     env           : environment object in use [rl-glue:environment]
@@ -172,34 +118,6 @@ RETURNS:
       (rl-write-observation observation buffer)))
   env)
 
-(defun on-env-save-state (env buffer)
-  (declare #.*optimize-settings*)
-  (let ((state-key (env-save-state env)))
-    (buffer-clear buffer)
-    (rl-write-state-key state-key buffer))
-  env)
-
-(defun on-env-load-state (env buffer)
-  (declare #.*optimize-settings*)
-  (let ((state-key (rl-read-state-key buffer)))
-    (env-load-state env state-key))
-  (buffer-clear buffer)
-  env)
-
-(defun on-env-save-random-seed (env buffer)
-  (declare #.*optimize-settings*)
-  (let ((random-seed (env-save-random-seed env)))
-    (buffer-clear buffer)
-    (rl-write-random-seed-key random-seed buffer))
-  env)
-
-(defun on-env-load-random-seed (env buffer)
-  (declare #.*optimize-settings*)
-  (let ((random-seed (rl-read-random-seed-key buffer)))
-    (env-load-random-seed env random-seed))
-  (buffer-clear buffer)
-  env)
-
 (defun on-env-cleanup (env buffer)
   (declare #.*optimize-settings*)
   (env-cleanup env)
@@ -230,14 +148,6 @@ RETURNS:
             (on-env-start env buffer))
            ((= state +k-env-step+)
             (on-env-step env buffer))
-           ((= state +k-env-save-state+)
-            (on-env-save-state env buffer))
-           ((= state +k-env-load-state+)
-            (on-env-load-state env buffer))
-           ((= state +k-env-save-random-seed+)
-            (on-env-save-random-seed env buffer))
-           ((= state +k-env-load-random-seed+)
-            (on-env-load-random-seed env buffer))
            ((= state +k-env-cleanup+)
             (on-env-cleanup env buffer))
            ((= state +k-env-message+)
@@ -258,10 +168,9 @@ RETURNS:
                 (max-retry nil)
                 (retry-timeout +k-retry-timeout+)
                 (autoreconnect nil))
-  "DESCRIPTION:
-    Connects the specified ENV to RL-Glue on HOST and PORT. If the
-    attempt is refused, it is tried again MAX-RETRY times, waiting for
-    RETRY-TIMEOUT second between them.
+  "Connects the specified ENV to RL-Glue on HOST and PORT. If the 
+attempt is refused, it is tried again MAX-RETRY times, waiting for 
+RETRY-TIMEOUT second between them.
 
 PARAMETERS:
     env           : environment object in use [rl-glue:environment]

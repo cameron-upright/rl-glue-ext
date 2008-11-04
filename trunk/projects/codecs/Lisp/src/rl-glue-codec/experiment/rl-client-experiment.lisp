@@ -37,12 +37,11 @@
                 (port +k-default-port+)
                 (max-retry nil)
                 (retry-timeout +k-retry-timeout+))
-  "DESCRIPTION:
-    This initializes everything, passing the environment's task specification
-    to the agent. This should be called at the beginning of every trial.
-    The rl-init function first connects the EXP to RL-Glue on HOST and PORT.
-    If the attempt is refused, it is tried again MAX-RETRY times, waiting for
-    RETRY-TIMEOUT second between them.
+  "This initializes everything, passing the environment's task specification 
+to the agent. This should be called at the beginning of every trial. 
+The rl-init function first connects the EXP to RL-Glue on HOST and PORT. 
+If the attempt is refused, it is tried again MAX-RETRY times, waiting for 
+RETRY-TIMEOUT second between them.
 
 PARAMETERS:
     exp           : experiment in use [rl-glue:experiment]
@@ -75,9 +74,8 @@ RETURNS:
     (rl-read-task-spec buffer)))
 
 (defun rl-start (exp)
-  "DESCRIPTION:
-    Do the first step of a run or episode. The action is saved in
-    the upcoming-action slot so that it can be used on the next step.
+  "Do the first step of a run or episode. The action is saved in 
+the upcoming-action slot so that it can be used on the next step.
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -97,12 +95,11 @@ RETURNS:
       (values observation action))))
 
 (defun rl-step (exp)
-  "DESCRIPTION:
-    Take one step. rl-step uses the saved action and saves the returned
-    action for the next step. The action returned from one call must be
-    used in the next, so it is better to handle this implicitly so that
-    the user doesn't have to keep track of the action. If the
-    end-of-episode observation occurs, then no action is returned.
+  "Take one step. rl-step uses the saved action and saves the returned 
+action for the next step. The action returned from one call must be 
+used in the next, so it is better to handle this implicitly so that 
+the user doesn't have to keep track of the action. If the 
+end-of-episode observation occurs, then no action is returned.
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -126,8 +123,7 @@ RETURNS:
       (values reward obs terminal action))))
 
 (defun rl-cleanup (exp)
-  "DESCRIPTION:
-    Provides an opportunity to reclaim resources allocated by rl-init.
+  "Provides an opportunity to reclaim resources allocated by rl-init.
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -144,8 +140,7 @@ RETURNS:
   exp)
 
 (defun rl-close (exp)
-  "DESCRIPTION:
-    Finishes the experiment by closing its network resources (socket).
+  "Finishes the experiment by closing its network resources (socket).
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -159,11 +154,10 @@ RETURNS:
   exp)
 
 (defun rl-return (exp)
-  "DESCRIPTION:
-    Return the cumulative total reward of the current or just completed episode.
-    The collection of all the rewards received in an episode (the return) is
-    done within rl-return however, any discounting of rewards must be done
-    inside the environment or agent.
+  "Return the cumulative total reward of the current or just completed episode. 
+The collection of all the rewards received in an episode (the return) is 
+done within rl-return however, any discounting of rewards must be done 
+inside the environment or agent.
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -180,8 +174,7 @@ RETURNS:
     (rl-read-reward buffer)))
 
 (defun rl-num-steps (exp)
-  "DESCRIPTION:
-    Return the number of steps elapsed in the current or just completed episode.
+  "Return the number of steps elapsed in the current or just completed episode.
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -198,8 +191,7 @@ RETURNS:
     (buffer-read-int buffer)))
 
 (defun rl-num-episodes (exp)
-  "DESCRIPTION:
-    Return the number of episodes finished after rl-init.
+  "Return the number of episodes finished after rl-init.
 
 PARAMETERS:
     exp : experiment in use [rl-glue:experiment]
@@ -216,15 +208,14 @@ RETURNS:
     (buffer-read-int buffer)))
 
 (defun rl-episode (exp &optional (max-num-steps 0))
-  "DESCRIPTION:
-    Do one episode until a termination observation occurs or until steps have
-    elapsed, whichever comes first. As you might imagine, this is done by
-    calling rl-start, then rl-step until the terminal observation occurs. If
-    max-num-steps is set to 0, it is taken to be the case where there is no
-    limitation on the number of steps taken and rl-episode will continue until
-    a termination observation occurs. If no terminal observation is reached
-    before max-num-steps is reached, the agent does not call agent-end, it
-    simply stops.
+  "Do one episode until a termination observation occurs or until steps have 
+elapsed, whichever comes first. As you might imagine, this is done by 
+calling rl-start, then rl-step until the terminal observation occurs. If 
+max-num-steps is set to 0, it is taken to be the case where there is no 
+limitation on the number of steps taken and rl-episode will continue until 
+a termination observation occurs. If no terminal observation is reached 
+before max-num-steps is reached, the agent does not call agent-end, it 
+simply stops.
 
 PARAMETERS:
     exp           : experiment in use [rl-glue:experiment]
@@ -242,89 +233,9 @@ RETURNS:
                (the fixnum (rl-recv-buffer socket buffer))))
     (rl-read-terminal buffer)))
 
-(defun rl-save-state (exp)
-  "DESCRIPTION:
-    Provides an opportunity to extract the state key from the environment
-    (see env-save-state for details).
-
-PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
-
-RETURNS:
-    state key [rl-glue:state-key]"
-  (declare #.*optimize-settings*)
-  (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
-    (buffer-clear buffer)
-    (rl-send-buffer socket buffer +k-rl-save-state+)
-    (buffer-clear buffer)
-    (assert (= +k-rl-save-state+
-               (the fixnum (rl-recv-buffer socket buffer))))
-    (rl-read-state-key buffer)))
-
-(defun rl-load-state (exp state-key)
-  "DESCRIPTION:
-    Provides an opportunity to reset the state (see env-load-state for details).
-
-PARAMETERS:
-    exp       : experiment in use [rl-glue:experiment]
-    state-key : state key to send [rl-glue:state-key]
-
-RETURNS:
-    state key has been set [rl-glue:state-key]"
-  (declare #.*optimize-settings*)
-  (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
-    (buffer-clear buffer)
-    (rl-write-state-key state-key buffer)
-    (rl-send-buffer socket buffer +k-rl-load-state+)
-    (buffer-clear buffer)
-    (assert (= +k-rl-load-state+
-               (the fixnum (rl-recv-buffer socket buffer)))))
-  state-key)
-
-(defun rl-save-random-seed (exp)
-  "DESCRIPTION:
-    Provides an opportunity to extract the random seed key from the environment
-    (see env-save-random-seed for details).
-
-PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
-
-RETURNS:
-    random seed key [rl-glue:random-seed-key]"
-  (declare #.*optimize-settings*)
-  (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
-    (buffer-clear buffer)
-    (rl-send-buffer socket buffer +k-rl-save-random-seed+)
-    (buffer-clear buffer)
-    (assert (= +k-rl-save-random-seed+
-               (the fixnum (rl-recv-buffer socket buffer))))
-    (rl-read-random-seed-key buffer)))
-
-(defun rl-load-random-seed (exp random-seed-key)
-  "DESCRIPTION:
-    Provides an opportunity to reset the random seed key
-    (see env-load-random-seed for details).
-
-PARAMETERS:
-    exp             : experiment in use [rl-glue:experiment]
-    random-seed-key : random seed key to send [rl-glue:random-seed-key]
-
-RETURNS:
-    random seed key has been set [rl-glue:random-seed-key]"
-  (declare #.*optimize-settings*)
-  (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
-    (buffer-clear buffer)
-    (rl-write-random-seed-key random-seed-key buffer)
-    (rl-send-buffer socket buffer +k-rl-load-random-seed+)
-    (buffer-clear buffer)
-    (assert (= +k-rl-load-random-seed+
-               (the fixnum (rl-recv-buffer socket buffer)))))
-  random-seed-key)
-
 (defun rl-agent-message (exp message)
-  "DESCRIPTION:
-     This message passes the input string to the agent and returns the
-     reply string given by the agent. See agent-message for more details.
+  "This message passes the input string to the agent and returns the 
+reply string given by the agent. See agent-message for more details.
 
 PARAMETERS:
     exp     : experiment in use [rl-glue:experiment]
@@ -343,9 +254,8 @@ RETURNS:
     (rl-read-message buffer)))
 
 (defun rl-env-message (exp message)
-  "DESCRIPTION:
-    This message passes the input string to the environment and returns the 
-    reply string given by the environment. See env-message for more details.
+  "This message passes the input string to the environment and returns the 
+reply string given by the environment. See env-message for more details.
 
 PARAMETERS:
     exp     : experiment in use [rl-glue:experiment]

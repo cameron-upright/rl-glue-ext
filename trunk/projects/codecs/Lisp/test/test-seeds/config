@@ -1,7 +1,0 @@
-
-AGENT='test-1-agent'
-ENVIRONMENT='test-seeds-environment'
-EXPERIMENT='test-seeds-experiment'
-
-source '../run-test'
-

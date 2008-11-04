@@ -62,11 +62,6 @@
             :components
             ((:file "test-sanity-experiment"))
             :depends-on ("test-1"))
-   (:module test-seeds
-            :components
-            ((:file "test-seeds-environment")
-             (:file "test-seeds-experiment"))
-            :depends-on ("test-1"))
    (:module test-speed
             :components
             ((:file "test-speed-environment")

@@ -55,18 +55,6 @@ second episodes and a non-empty one in the other cases."))
 (defmethod env-cleanup ((env test-empty-environment))
   env)
 
-(defmethod env-save-state ((env test-empty-environment))
-  (make-state-key))
-
-(defmethod env-load-state ((env test-empty-environment) state-key)
-  'not-supported)
-
-(defmethod env-save-random-seed ((env test-empty-environment))
-  (make-random-seed-key))
-
-(defmethod env-load-random-seed ((env test-empty-environment) random-seed-key)
-  'not-supported)
-
 (defmethod env-message ((env test-empty-environment) input-message)
   "")
 

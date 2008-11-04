@@ -37,10 +37,6 @@
    #:make-observation
    #:action
    #:make-action
-   #:random-seed-key
-   #:make-random-seed-key
-   #:state-key
-   #:make-state-key
    #:rl-equalp
    ;; rl-client-agent
    #:agent
@@ -56,10 +52,6 @@
    #:env-init
    #:env-start
    #:env-step
-   #:env-save-state
-   #:env-load-state
-   #:env-save-random-seed
-   #:env-load-random-seed
    #:env-cleanup
    #:env-message
    #:run-env
@@ -74,10 +66,6 @@
    #:rl-num-steps
    #:rl-num-episodes
    #:rl-episode
-   #:rl-save-state
-   #:rl-load-state
-   #:rl-save-random-seed
-   #:rl-load-random-seed
    #:rl-agent-message
    #:rl-env-message))
 
