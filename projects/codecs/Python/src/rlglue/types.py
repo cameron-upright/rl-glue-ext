@@ -57,14 +57,6 @@ class Observation(RL_Abstract_Type):
 		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
 
 
-class Random_seed_key(RL_Abstract_Type):
-	def __init__(self,numInts=None,numDoubles=None,numChars=None):
-		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
-
-class State_key(RL_Abstract_Type):
-	def __init__(self,numInts=None,numDoubles=None,numChars=None):
-		RL_Abstract_Type.__init__(self,numInts,numDoubles,numChars)
-			
 class Observation_action:
 	def __init__(self,theObservation=None,theAction=None):
 		if theObservation != None:

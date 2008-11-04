@@ -23,8 +23,6 @@ from rlglue.environment import EnvironmentLoader as EnvironmentLoader
 from rlglue.types import Observation
 from rlglue.types import Action
 from rlglue.types import Reward_observation_terminal
-from rlglue.types import State_key
-from rlglue.types import Random_seed_key
 
 class test_1_environment(Environment):
 	stepCount=0
@@ -63,19 +61,7 @@ class test_1_environment(Environment):
 
 	def env_cleanup(self):
 		pass
-	
-	def env_load_state(self, stateKey):
-		pass
-	
-	def env_load_random_seed(self, randomSeedKey):
-		pass
-	
-	def env_save_state(self):
-		return State_key()
-	
-	def env_save_random_seed(self):
-		return Random_seed_key()
-	
+
 	def env_message(self,inMessage):
 		timesToPrint=self.stepCount%3
 		

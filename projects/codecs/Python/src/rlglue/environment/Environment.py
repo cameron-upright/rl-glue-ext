@@ -18,9 +18,7 @@
 
 from rlglue.types import Action
 from rlglue.types import Observation
-from rlglue.types import Random_seed_key
 from rlglue.types import Reward_observation_terminal
-from rlglue.types import State_key
 
 class Environment:
 	# () -> string
@@ -37,22 +35,6 @@ class Environment:
 	
 	# () -> void
 	def env_cleanup():
-		pass
-	
-	# (State_key) -> void
-	def env_load_state(key):
-		pass
-	
-	# (Random_seed_key) -> void
-	def env_load_random_seed(key):
-		pass
-	
-	# () -> State_key
-	def env_save_state():
-		pass
-	
-	# () -> Random_seed_key
-	def env_save_random_seed():
 		pass
 	
 	# (string) -> string

@@ -29,8 +29,6 @@ import StringIO
 
 from rlglue.types import Action
 from rlglue.types import Observation
-from rlglue.types import State_key
-from rlglue.types import Random_seed_key
 from rlglue.types import Reward_observation_terminal
 from rlglue.types import RL_Abstract_Type
 
@@ -44,17 +42,12 @@ kAgentStart   = 5 # to the client to let it know what type of
 kAgentStep    = 6 # event to respond to
 kAgentEnd     = 7
 kAgentCleanup = 8
-kAgentFreeze  = 9
 kAgentMessage = 10
 
 kEnvInit          = 11
 kEnvStart         = 12
 kEnvStep          = 13
 kEnvCleanup       = 14
-kEnvLoadState      = 15
-kEnvLoadRandomSeed = 16
-kEnvSaveState      = 17
-kEnvSaveRandomSeed = 18
 kEnvMessage       = 19
 
 kRLInit           = 20
@@ -65,11 +58,6 @@ kRLReturn         = 24
 kRLNumSteps       = 25
 kRLNumEpisodes    = 26
 kRLEpisode        = 27
-kRLSetState       = 28
-kRLSetRandomSeed  = 29
-kRLGetState       = 30
-kRLGetRandomSeed  = 31
-kRLFreeze         = 32
 kRLAgentMessage   = 33
 kRLEnvMessage     = 34
 
@@ -170,13 +158,6 @@ class Network:
 	def getAction(self):
 		return Action.fromAbstractType(self.getAbstractType())
 
-	def getStateKey(self):
-		return State_key.fromAbstractType(self.getAbstractType())
-	
-	def getRandomSeedKey(self):
-		return Random_seed_key.fromAbstractType(self.getAbstractType())
-	
-		
 	def putInt(self,value):
 		self.sendBuffer.write(struct.pack("!i",value))
 	
@@ -194,13 +175,7 @@ class Network:
 	
 	def putAction(self,action):
 		self.putAbstractType(action)
-	
-	def putStateKey(self,key):
-		self.putAbstractType(key)
 
-	def putRandomSeedKey(self,key):
-		self.putAbstractType(key)
-		
 	def putAbstractType(self, theItem):
 		self.putInt(len(theItem.intArray))
 		self.putInt(len(theItem.doubleArray))
@@ -238,12 +213,6 @@ class Network:
 	
 	def sizeOfObservation(self,observation):
 		return self.sizeOfAbstractType(observation)
-	
-	def sizeOfRandomSeed(self,key):
-		return self.sizeOfAbstractType(key)
-	
-	def sizeOfStateKey(self,key):
-		return self.sizeOfAbstractType(key)
-	
+
 	def sizeOfRewardObservation(self,reward_observation):
 		return kIntSize + kDoubleSize + self.sizeOfObservation(reward_observation.o)
