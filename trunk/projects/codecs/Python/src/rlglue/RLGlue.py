@@ -20,9 +20,7 @@ import sys
 
 import rlglue.network.Network as Network
 from rlglue.types import Observation_action
-from rlglue.types import Random_seed_key 
 from rlglue.types import Reward_observation_action_terminal
-from rlglue.types import State_key
 
 
 from rlglue.versions import get_svn_codec_version
@@ -186,51 +184,3 @@ def RL_episode(num_steps):
 	#Brian Tanner added
 	exitStatus = network.getInt()
 	return exitStatus
-
-#This is deprecated, should remove it
-# () -> void
-def RL_freeze():
-	doCallWithNoParams(Network.kRLFreeze)
-	doStandardRecv(Network.kRLFreeze)
-
-# (State_key) -> void
-def RL_load_state(sk):
-	if sk == None:
-		sk=State_key()
-	network.clearSendBuffer()
-	network.putInt(Network.kRLSetState)
-	network.putInt(network.sizeOfStateKey(sk))
-	network.putStateKey(sk)
-	network.send()
-	doStandardRecv(Network.kRLSetState)
-
-# (Random_seed_key) -> void
-def RL_load_random_seed(rsk):
-	if rsk == None:
-		rsk=Random_seed_key()
-	network.clearSendBuffer()
-	network.putInt(Network.kRLSetRandomSeed)
-	network.putInt(network.sizeOfRandomSeed(rsk))
-	network.putRandomSeedKey(rsk)
-	network.send()
-	doStandardRecv(Network.kRLSetRandomSeed)
-
-# () -> State_key
-def RL_save_state():
-	key = None
-	doCallWithNoParams(Network.kRLGetState)
-	doStandardRecv(Network.kRLGetState)
-	key = network.getStateKey()
-	if key == None:
-		key=State_key()
-	return key
-
-# () -> Random_seed_key
-def RL_save_random_seed():
-	key = None
-	doCallWithNoParams(Network.kRLGetRandomSeed)
-	doStandardRecv(Network.kRLGetRandomSeed)
-	key = network.getRandomSeedKey()
-	if key == None:
-		key=Random_seed_key()
-	return key

@@ -67,38 +67,6 @@ class ClientEnvironment:
 		self.network.putInt(0) # No data in this packet
 
 	# () -> void
-	def onEnvSaveRandomSeed(self):
-		key = self.env.env_save_random_seed()
-		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvSaveRandomSeed)
-		self.network.putInt(self.network.sizeOfRandomSeed(key))
-		self.network.putRandomSeedKey(key)
-
-	# () -> void
-	def onEnvSaveState(self):
-		key = self.env.env_save_state()
-		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvSaveState)
-		self.network.putInt(self.network.sizeOfStateKey(key))
-		self.network.putStateKey(key)
-
-	# () -> void
-	def onEnvLoadRandomSeed(self):
-		key = self.network.getRandomSeedKey()
-		self.env.env_load_random_seed(key)
-		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvLoadRandomSeed)
-		self.network.putInt(0) # No data in this packet
-
-	# () -> void
-	def onEnvLoadState(self):
-		key = self.network.getStateKey()
-		self.env.env_load_state(key)
-		self.network.clearSendBuffer()
-		self.network.putInt(Network.kEnvLoadState)
-		self.network.putInt(0) # No data in this packet
-
-	# () -> void
 	def onEnvMessage(self):
 		message = self.network.getString()
 		reply = self.env.env_message(message)
@@ -155,10 +123,6 @@ class ClientEnvironment:
 				Network.kEnvStart: lambda self: self.onEnvStart(),
 				Network.kEnvStep: lambda self: self.onEnvStep(),
 				Network.kEnvCleanup: lambda self: self.onEnvCleanup(),
-				Network.kEnvSaveRandomSeed: lambda self: self.onEnvSaveRandomSeed(),
-				Network.kEnvSaveState: lambda self: self.onEnvSaveState(),
-				Network.kEnvLoadRandomSeed: lambda self: self.onEnvLoadRandomSeed(),
-				Network.kEnvLoadState: lambda self: self.onEnvLoadState(),
 				Network.kEnvMessage: lambda self: self.onEnvMessage() }
 			if envState in switch:
 				switch[envState](self)
