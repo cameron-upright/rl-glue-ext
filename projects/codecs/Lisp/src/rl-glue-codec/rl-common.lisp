@@ -63,12 +63,6 @@
 (defclass action (rl-abstract-type)
   () (:documentation "General RL-Glue action data representation."))
 
-(defclass random-seed-key (rl-abstract-type)
-  () (:documentation "General RL-Glue random seed key representation."))
-
-(defclass state-key (rl-abstract-type)
-  () (:documentation "General RL-Glue state key representation."))
-
 (defmacro make-rl-make (type)
   "Creating a make-TYPE macro."
   (let ((typ type))
@@ -77,8 +71,6 @@
 
 (make-rl-make observation)
 (make-rl-make action)
-(make-rl-make random-seed-key)
-(make-rl-make state-key)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Generic functions.

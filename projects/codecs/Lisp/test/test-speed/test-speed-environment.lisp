@@ -64,18 +64,6 @@ episodes for every odd episodes."))
 (defmethod env-cleanup ((env test-speed-environment))
   env)
 
-(defmethod env-save-state ((env test-speed-environment))
-  (make-state-key))
-
-(defmethod env-load-state ((env test-speed-environment) state-key)
-  state-key)
-
-(defmethod env-save-random-seed ((env test-speed-environment))
-  (make-random-seed-key))
-
-(defmethod env-load-random-seed ((env test-speed-environment) random-seed-key)
-  random-seed-key)
-
 (defmethod env-message ((env test-speed-environment) input-message)
   "")
 

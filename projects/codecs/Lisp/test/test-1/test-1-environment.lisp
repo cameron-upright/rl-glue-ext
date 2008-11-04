@@ -65,18 +65,6 @@
 (defmethod env-cleanup ((env test-1-environment))
   env)
 
-(defmethod env-save-state ((env test-1-environment))
-  (make-state-key))
-
-(defmethod env-load-state ((env test-1-environment) state-key)
-  'not-supported)
-
-(defmethod env-save-random-seed ((env test-1-environment))
-  (make-random-seed-key))
-
-(defmethod env-load-random-seed ((env test-1-environment) random-seed-key)
-  'not-supported)
-
 (defmethod env-message ((env test-1-environment) input-message)
   (create-answer-message (step-count env) input-message))
 

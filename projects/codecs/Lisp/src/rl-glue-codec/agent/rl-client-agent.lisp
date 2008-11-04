@@ -23,14 +23,14 @@
 (defclass agent () () (:documentation "The RL-Glue agent."))
 
 (defgeneric agent-init (agent task-spec)
-  (:documentation "DESCRIPTION:
-    This function will be called first, even before agent-start. TASK-SPEC
-    is a description of important experiment information, including but not
-    exclusive to a description of the state and action space. The RL-Glue
-    standard for writing TASK-SPEC strings is found here. In agent-init,
-    information about the environment is extracted from TASK-SPEC and then
-    used to set up any necessary resources (for example, initialize the
-    value function to a prelearning state).
+  (:documentation
+   "This function will be called first, even before agent-start. TASK-SPEC 
+is a description of important experiment information, including but not 
+exclusive to a description of the state and action space. The RL-Glue 
+standard for writing TASK-SPEC strings is found here. In agent-init, 
+information about the environment is extracted from TASK-SPEC and then 
+used to set up any necessary resources (for example, initialize the 
+value function to a prelearning state).
 
 PARAMETERS:
     agent     : agent object in use [rl-glue:agent]
@@ -40,11 +40,11 @@ RETURNS:
     (none)"))
 
 (defgeneric agent-start (agent first-observation)
-  (:documentation "DESCRIPTION:
-    Given the FIRST-OBSERVATION (the observation of the agent in the start
-    state) the agent must then return the action it wishes to perform.
-    This is called once if the task is continuing, else it happens at the
-    beginning of each episode.
+  (:documentation
+   "Given the FIRST-OBSERVATION (the observation of the agent in the start 
+state) the agent must then return the action it wishes to perform. 
+This is called once if the task is continuing, else it happens at the 
+beginning of each episode.
 
 PARAMETERS:
     agent             : agent object in use [rl-glue:agent]
@@ -54,11 +54,11 @@ RETURNS:
     1st action of the episode selected by the agent [rl-glue:action]"))
 
 (defgeneric agent-step (agent reward observation)
-  (:documentation "DESCRIPTION:
-    This is the most important function of the agent. Given the REWARD
-    garnered by the agent's previous action, and the resulting OBSERVATION,
-    choose the next action to take. Any learning (policy improvement)
-    should be done through this function.
+  (:documentation
+   "This is the most important function of the agent. Given the REWARD 
+garnered by the agent's previous action, and the resulting OBSERVATION, 
+choose the next action to take. Any learning (policy improvement) 
+should be done through this function.
 
 PARAMETERS:
     agent       : agent object in use [rl-glue:agent]
@@ -69,12 +69,12 @@ RETURNS:
     next action selected by the agent [rl-glue:action]"))
 
 (defgeneric agent-end (agent reward)
-  (:documentation "DESCRIPTION:
-    If the agent is in an episodic environment, this function will be
-    called after the terminal state is entered. This allows for any final
-    learning updates. If the episode is terminated prematurely (ie a
-    benchmark cutoff before entering a terminal state) agent-end is NOT
-    called.
+  (:documentation
+   "If the agent is in an episodic environment, this function will be 
+called after the terminal state is entered. This allows for any final 
+learning updates. If the episode is terminated prematurely (ie a 
+benchmark cutoff before entering a terminal state) agent-end is NOT 
+called.
 
 PARAMETERS:
     agent  : agent object in use [rl-glue:agent]
@@ -84,11 +84,11 @@ RETURNS:
     (none)"))
 
 (defgeneric agent-cleanup (agent)
-  (:documentation "DESCRIPTION:
-    This function is called at the end of a run/trial and can be used to
-    free any resources which may have allocated in agent-init. Calls to
-    agent-cleanup should be in a one to one ratio with the calls to
-    agent-init.
+  (:documentation
+   "This function is called at the end of a run/trial and can be used to 
+free any resources which may have allocated in agent-init. Calls to 
+agent-cleanup should be in a one to one ratio with the calls to 
+agent-init.
 
 PARAMETERS:
     agent : agent object in use [rl-glue:agent]
@@ -97,17 +97,17 @@ RETURNS:
     (none)"))
 
 (defgeneric agent-message (agent input-message)
-  (:documentation "DESCRIPTION:
-    The agent-message function is a jack of all trades and master of none.
-    Having no particular functionality, it is up to the user to determine
-    what agent-message should implement. If there is any information which
-    needs to be passed in or out of the agent, this message should do it.
-    For example, if it is desirable that an agent's learning parameters be
-    tweaked mid experiment, the author could establish an input string that
-    triggers this action. Likewise, if the author wished to extract a
-    representation of the value function, they could establish an input
-    string which would cause agent-message to return the desired
-    information.
+  (:documentation
+   "The agent-message function is a jack of all trades and master of none. 
+Having no particular functionality, it is up to the user to determine 
+what agent-message should implement. If there is any information which 
+needs to be passed in or out of the agent, this message should do it. 
+For example, if it is desirable that an agent's learning parameters be 
+tweaked mid experiment, the author could establish an input string that 
+triggers this action. Likewise, if the author wished to extract a 
+representation of the value function, they could establish an input 
+string which would cause agent-message to return the desired 
+information.
 
 PARAMETERS:
     agent         : agent object in use [rl-glue:agent]
@@ -195,10 +195,9 @@ RETURNS:
                   (max-retry nil)
                   (retry-timeout +k-retry-timeout+)
                   (autoreconnect nil))
-  "DESCRIPTION:
-    Connects the specified AGENT to RL-Glue on HOST and PORT. If the
-    attempt is refused, it is tried again MAX-RETRY times, waiting for
-    RETRY-TIMEOUT second between them.
+  "Connects the specified AGENT to RL-Glue on HOST and PORT. If the 
+attempt is refused, it is tried again MAX-RETRY times, waiting for 
+RETRY-TIMEOUT second between them.
 
 PARAMETERS:
     agent         : agent object in use [rl-glue:agent]

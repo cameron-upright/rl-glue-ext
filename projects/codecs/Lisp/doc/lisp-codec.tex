@@ -302,10 +302,6 @@ Second, implement the following methods for it. \\
 \lispprompt{(defmethod env-init ((env my-env)) \ldots)} \\
 \lispprompt{(defmethod env-start ((env my-env)) \ldots)} \\
 \lispprompt{(defmethod env-step ((env my-env) action) \ldots)} \\
-\lispprompt{(defmethod env-save-state ((env my-env)) \ldots)} \\
-\lispprompt{(defmethod env-load-state ((env my-env) state-key) \ldots)} \\
-\lispprompt{(defmethod env-save-random-seed ((env my-env)) \ldots)} \\
-\lispprompt{(defmethod env-load-random-seed ((env my-env) random-seed-key) \ldots)} \\
 \lispprompt{(defmethod env-cleanup ((env my-env)) \ldots)} \\
 \lispprompt{(defmethod env-message ((env my-env) input-message) \ldots)}
 
@@ -347,10 +343,6 @@ These are the following.
 \prompttext{rl-num-steps}, \\
 \prompttext{rl-num-episodes},
 \prompttext{rl-episode},
-\prompttext{rl-save-state},
-\prompttext{rl-load-state},
-\prompttext{rl-save-random-seed}, \\
-\prompttext{rl-load-random-seed},
 \prompttext{rl-agent-message},
 \prompttext{rl-env-message}.
 
