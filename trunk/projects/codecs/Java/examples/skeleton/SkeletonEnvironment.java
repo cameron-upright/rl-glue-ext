@@ -26,9 +26,7 @@
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
-import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
-import org.rlcommunity.rlglue.codec.types.State_key;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 
 /**
@@ -84,24 +82,6 @@ public class SkeletonEnvironment implements EnvironmentInterface {
     }
 
     public void env_cleanup() {
-    }
-
-    public void env_load_state(State_key key) {
-      	/* Advanced feature so not included in skeleton */
-    }
-
-    public void env_load_random_seed(Random_seed_key key) {
-      	/* Advanced feature so not included in skeleton */
-    }
-
-    public State_key env_save_state() {
-      	/* Advanced feature so not included in skeleton */
-        return new State_key();
-    }
-
-    public Random_seed_key env_save_random_seed() {
-      	/* Advanced feature so not included in skeleton */
-        return new Random_seed_key();
     }
 
     public String env_message(String message) {

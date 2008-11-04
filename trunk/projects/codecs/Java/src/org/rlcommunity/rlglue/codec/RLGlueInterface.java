@@ -20,9 +20,7 @@ http://brian.tannerpages.com
 package org.rlcommunity.rlglue.codec;
 
 import org.rlcommunity.rlglue.codec.types.Observation_action;
-import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
-import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
  * This is the definition of an RLGlue 'engine'.  The network codec is one such engine.
@@ -42,8 +40,4 @@ public interface RLGlueInterface {
 	public   int RL_num_steps();
 	public   int RL_num_episodes();
 	public   int RL_episode(int numSteps);
-	public   void RL_load_state(State_key stateKey);
-	public   void RL_load_random_seed(Random_seed_key randomSeedKey);
-	public   State_key RL_save_state();
-	public   Random_seed_key RL_save_random_seed();
 }
