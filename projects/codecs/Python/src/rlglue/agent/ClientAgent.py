@@ -77,13 +77,6 @@ class ClientAgent:
 		self.network.putInt(0) # No data in this packet
 
 	# () -> void
-	def onAgentFreeze(self):
-		self.agent.agent_freeze()
-		self.network.clearSendBuffer()
-		self.network.putInt(Network.kAgentFreeze)
-		self.network.putInt(0) # No data in this packet
-
-	# () -> void
 	def onAgentMessage(self):
 		message = self.network.getString()
 		reply = self.agent.agent_message(message)
@@ -141,7 +134,6 @@ class ClientAgent:
 				Network.kAgentStep: lambda self: self.onAgentStep(),
 				Network.kAgentEnd: lambda self: self.onAgentEnd(),
 				Network.kAgentCleanup: lambda self: self.onAgentCleanup(),
-				Network.kAgentFreeze: lambda self: self.onAgentFreeze(),
 				Network.kAgentMessage: lambda self: self.onAgentMessage() }
 			if agentState in switch:
 				switch[agentState](self)

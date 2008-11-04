@@ -39,11 +39,7 @@ class Agent:
 	# () -> void
 	def agent_cleanup():
 		pass
-	
-	# () -> void
-	def agent_freeze():
-		pass
-	
+
 	# (string) -> string
 	def agent_message(message):
 		pass
