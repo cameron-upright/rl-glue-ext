@@ -41,7 +41,6 @@ check_PROGRAMS = test_sanity_experiment$(EXEEXT) test_1_agent$(EXEEXT) \
 	test_message_experiment$(EXEEXT) \
 	test_rl_episode_experiment$(EXEEXT) \
 	test_init_cleanup_experiment$(EXEEXT) \
-	test_seeds_experiment$(EXEEXT) test_seeds_environment$(EXEEXT) \
 	test_empty_agent$(EXEEXT) test_empty_environment$(EXEEXT) \
 	test_empty_experiment$(EXEEXT) test_speed_environment$(EXEEXT) \
 	test_speed_experiment$(EXEEXT)
@@ -120,16 +119,6 @@ am_test_sanity_experiment_OBJECTS = test_sanity_experiment.$(OBJEXT) \
 test_sanity_experiment_OBJECTS = $(am_test_sanity_experiment_OBJECTS)
 test_sanity_experiment_DEPENDENCIES = ../src/librlexperiment.la \
 	$(am__DEPENDENCIES_1)
-am_test_seeds_environment_OBJECTS = test_seeds_environment.$(OBJEXT) \
-	useful_functions.$(OBJEXT)
-test_seeds_environment_OBJECTS = $(am_test_seeds_environment_OBJECTS)
-test_seeds_environment_DEPENDENCIES = ../src/librlenvironment.la \
-	$(am__DEPENDENCIES_1)
-am_test_seeds_experiment_OBJECTS = test_seeds_experiment.$(OBJEXT) \
-	useful_functions.$(OBJEXT)
-test_seeds_experiment_OBJECTS = $(am_test_seeds_experiment_OBJECTS)
-test_seeds_experiment_DEPENDENCIES = ../src/librlexperiment.la \
-	$(am__DEPENDENCIES_1)
 am_test_speed_environment_OBJECTS = test_speed_environment.$(OBJEXT) \
 	useful_functions.$(OBJEXT)
 test_speed_environment_OBJECTS = $(am_test_speed_environment_OBJECTS)
@@ -161,8 +150,6 @@ SOURCES = $(test_1_agent_SOURCES) $(test_1_environment_SOURCES) \
 	$(test_message_experiment_SOURCES) \
 	$(test_rl_episode_experiment_SOURCES) \
 	$(test_sanity_experiment_SOURCES) \
-	$(test_seeds_environment_SOURCES) \
-	$(test_seeds_experiment_SOURCES) \
 	$(test_speed_environment_SOURCES) \
 	$(test_speed_experiment_SOURCES)
 DIST_SOURCES = $(test_1_agent_SOURCES) $(test_1_environment_SOURCES) \
@@ -175,8 +162,6 @@ DIST_SOURCES = $(test_1_agent_SOURCES) $(test_1_environment_SOURCES) \
 	$(test_message_experiment_SOURCES) \
 	$(test_rl_episode_experiment_SOURCES) \
 	$(test_sanity_experiment_SOURCES) \
-	$(test_seeds_environment_SOURCES) \
-	$(test_seeds_experiment_SOURCES) \
 	$(test_speed_environment_SOURCES) \
 	$(test_speed_experiment_SOURCES)
 ETAGS = etags
@@ -286,8 +271,8 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_seeds.sh test_empty.sh test_speed.sh
-check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_seeds.sh test_empty.sh test_speed.sh
+TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_empty.sh test_speed.sh
+check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_empty.sh test_speed.sh
 AM_CFLAGS = -g -Wall -pedantic -std=c99
 EXTRA_LIBS = -lrlgluenetdev
 test_sanity_experiment_SOURCES = test_sanity_experiment.c useful_functions.c useful_functions.h
@@ -308,10 +293,6 @@ test_rl_episode_experiment_SOURCES = test_rl_episode_experiment.c useful_functio
 test_rl_episode_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_init_cleanup_experiment_SOURCES = test_init_cleanup_experiment.c useful_functions.c useful_functions.h
 test_init_cleanup_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
-test_seeds_experiment_SOURCES = test_seeds_experiment.c useful_functions.c useful_functions.h
-test_seeds_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
-test_seeds_environment_SOURCES = test_seeds_environment.c useful_functions.c useful_functions.h
-test_seeds_environment_LDADD = ../src/librlenvironment.la  $(EXTRA_LIBS)
 test_empty_agent_SOURCES = test_empty_agent.c useful_functions.c useful_functions.h
 test_empty_agent_LDADD = ../src/librlagent.la  $(EXTRA_LIBS)
 test_empty_environment_SOURCES = test_empty_environment.c useful_functions.c useful_functions.h
@@ -400,12 +381,6 @@ test_rl_episode_experiment$(EXEEXT): $(test_rl_episode_experiment_OBJECTS) $(tes
 test_sanity_experiment$(EXEEXT): $(test_sanity_experiment_OBJECTS) $(test_sanity_experiment_DEPENDENCIES) 
 	@rm -f test_sanity_experiment$(EXEEXT)
 	$(LINK) $(test_sanity_experiment_LDFLAGS) $(test_sanity_experiment_OBJECTS) $(test_sanity_experiment_LDADD) $(LIBS)
-test_seeds_environment$(EXEEXT): $(test_seeds_environment_OBJECTS) $(test_seeds_environment_DEPENDENCIES) 
-	@rm -f test_seeds_environment$(EXEEXT)
-	$(LINK) $(test_seeds_environment_LDFLAGS) $(test_seeds_environment_OBJECTS) $(test_seeds_environment_LDADD) $(LIBS)
-test_seeds_experiment$(EXEEXT): $(test_seeds_experiment_OBJECTS) $(test_seeds_experiment_DEPENDENCIES) 
-	@rm -f test_seeds_experiment$(EXEEXT)
-	$(LINK) $(test_seeds_experiment_LDFLAGS) $(test_seeds_experiment_OBJECTS) $(test_seeds_experiment_LDADD) $(LIBS)
 test_speed_environment$(EXEEXT): $(test_speed_environment_OBJECTS) $(test_speed_environment_DEPENDENCIES) 
 	@rm -f test_speed_environment$(EXEEXT)
 	$(LINK) $(test_speed_environment_LDFLAGS) $(test_speed_environment_OBJECTS) $(test_speed_environment_LDADD) $(LIBS)
@@ -431,8 +406,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_message_experiment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_rl_episode_experiment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_sanity_experiment.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_seeds_environment.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_seeds_experiment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_speed_environment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_speed_experiment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/useful_functions.Po@am__quote@

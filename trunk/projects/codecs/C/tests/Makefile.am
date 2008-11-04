@@ -1,7 +1,7 @@
-TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_seeds.sh test_empty.sh test_speed.sh
+TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_empty.sh test_speed.sh
 
-check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_seeds.sh test_empty.sh test_speed.sh
-check_PROGRAMS = test_sanity_experiment test_1_agent test_1_environment test_1_experiment test_message_agent test_message_environment test_message_experiment  test_rl_episode_experiment test_init_cleanup_experiment test_seeds_experiment test_seeds_environment test_empty_agent test_empty_environment test_empty_experiment test_speed_environment test_speed_experiment
+check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_empty.sh test_speed.sh
+check_PROGRAMS = test_sanity_experiment test_1_agent test_1_environment test_1_experiment test_message_agent test_message_environment test_message_experiment  test_rl_episode_experiment test_init_cleanup_experiment test_empty_agent test_empty_environment test_empty_experiment test_speed_environment test_speed_experiment
 
 AM_CFLAGS=-g -Wall -pedantic -std=c99
 
@@ -33,12 +33,6 @@ test_rl_episode_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 
 test_init_cleanup_experiment_SOURCES = test_init_cleanup_experiment.c useful_functions.c useful_functions.h
 test_init_cleanup_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
-
-test_seeds_experiment_SOURCES = test_seeds_experiment.c useful_functions.c useful_functions.h
-test_seeds_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
-
-test_seeds_environment_SOURCES = test_seeds_environment.c useful_functions.c useful_functions.h
-test_seeds_environment_LDADD = ../src/librlenvironment.la  $(EXTRA_LIBS)
 
 test_empty_agent_SOURCES = test_empty_agent.c useful_functions.c useful_functions.h
 test_empty_agent_LDADD = ../src/librlagent.la  $(EXTRA_LIBS)
