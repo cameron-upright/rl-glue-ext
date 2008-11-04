@@ -2,10 +2,6 @@ function theEnvironment=test_1_environment()
     theEnvironment.env_init=@test_1_environment_init;
     theEnvironment.env_start=@test_1_environment_start;
     theEnvironment.env_step=@test_1_environment_step;
-    theEnvironment.env_load_state=@test_1_environment_load_state;
-    theEnvironment.env_save_state=@test_1_environment_save_state;
-    theEnvironment.env_load_random_seed=@test_1_environment_load_random_seed;
-    theEnvironment.env_save_random_seed=@test_1_environment_save_random_seed;
     theEnvironment.env_cleanup=@test_1_environment_cleanup;
     theEnvironment.env_message=@test_1_environment_message;
 end
@@ -58,16 +54,4 @@ end
 
 
 function test_1_environment_cleanup()
-end
-
-function test_1_environment_load_seed(theState)
-end
-
-function test_1_environment_load_random_seed(randomSeed)
-end
-
-function theState=test_1_environment_save_state()
-end
-
-function randomSeed=test_1_environment_save_random_seed()
 end
