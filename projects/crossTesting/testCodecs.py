@@ -76,14 +76,12 @@ test_message_agent={}
 test_1_environment={}
 test_empty_environment={}
 test_message_environment={}
-test_seeds_environment={}
 
 #These dicts keep mapping from language --> experiments of various types
 test_sanity_experiment={}
 test_1_experiment={}
 test_empty_experiment={}
 test_message_experiment={}
-test_seeds_experiment={}
 test_rl_episode_experiment={}
 
 test_1_agent["C"]="../codecs/C/tests/test_1_agent &";
@@ -110,10 +108,6 @@ test_message_environment["C"]="../codecs/C/tests/test_message_environment &";
 test_message_environment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Message_Environment &";
 test_message_environment["Python"]="PYTHONPATH="+PythonPath+" python "+PythonPath+"/tests/test_message_environment.py &";
 
-test_seeds_environment["C"]="../codecs/C/tests/test_seeds_environment &";
-test_seeds_environment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Seeds_Environment &";
-test_seeds_environment["Python"]="PYTHONPATH="+PythonPath+" python "+PythonPath+"/tests/test_seeds_environment.py &";
-
 #Experiment should not have & at the end
 test_sanity_experiment["C"]="../codecs/C/tests/test_sanity_experiment";
 test_sanity_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Sanity_Experiment &";
@@ -131,10 +125,6 @@ test_empty_experiment["C"]="../codecs/C/tests/test_empty_experiment";
 test_empty_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Empty_Experiment &";
 test_empty_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_empty_experiment.py";
 
-test_seeds_experiment["C"]="../codecs/C/tests/test_seeds_experiment";
-test_seeds_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_Seeds_Experiment &";
-test_seeds_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_seeds_experiment.py";
-
 test_rl_episode_experiment["C"]="../codecs/C/tests/test_rl_episode_experiment"
 test_rl_episode_experiment["Java"]="java -Xmx128M -classpath "+JavaCodec+" org.rlcommunity.rlglue.codec.tests.Test_RL_Episode_Experiment &";
 test_rl_episode_experiment["Python"]="PYTHONPATH="+PythonPath+":"+PythonPath+"/tests python "+PythonPath+"/tests/test_rl_episode_experiment.py";
@@ -148,7 +138,6 @@ test_1=[test_1_agent,test_1_environment,test_1_experiment];
 test_empty = [test_empty_agent,test_empty_environment,test_empty_experiment];
 test_message = [test_message_agent,test_message_environment,test_message_experiment];
 test_rl_episode = [test_1_agent,test_1_environment,test_rl_episode_experiment];
-test_seeds = [test_1_agent,test_seeds_environment,test_seeds_experiment];
 
 if len(sys.argv)>1:
 	for arg in sys.argv:
@@ -162,15 +151,12 @@ if len(sys.argv)>1:
 			tests["test_message"]=test_message;
 		if arg=="rl_episode":
 			tests["test_rl_episode"]=test_rl_episode;
-		if arg=="seeds":
-			tests["test_seeds"]=test_seeds;
 else:
 	tests["test_sanity"]=test_sanity;
 	tests["test_1"]=test_1;
 	tests["test_empty"]=test_empty;
 	tests["test_message"]=test_message;
 	tests["test_rl_episode"]=test_rl_episode;
-	tests["test_seeds"]=test_seeds;
 			
 
 print "Running Codec Test Suites: "
