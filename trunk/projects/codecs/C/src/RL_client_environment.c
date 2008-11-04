@@ -44,8 +44,6 @@
 static const char* kUnknownMessage = "Unknown Message: %s\n";
 
 static action_t ce_globalaction                 = {0};
-static state_key_t ce_globalstatekey            = {0};
-static random_seed_key_t ce_globalrandomseedkey = {0};
 static rlBuffer ce_globalrlbuffer               = {0};
 static char *ce_globalinmessage = 0;
 static unsigned int ce_globalinmessagecapacity = 0;
@@ -106,55 +104,12 @@ static void onEnvCleanup(int theConnection) {
 	rlBufferClear(&ce_globalrlbuffer);
 
 	clearRLStruct(&ce_globalaction);
-	clearRLStruct(&ce_globalrandomseedkey);
-	clearRLStruct(&ce_globalstatekey);
 	if(ce_globalinmessage!=0)
 		free(ce_globalinmessage);
 
 
 	ce_globalinmessage = 0;
 	ce_globalinmessagecapacity = 0;
-}
-
-static void onEnvSetState(int theConnection) {
-  unsigned int offset = 0;
-
-  offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalstatekey);
-  env_load_state(&ce_globalstatekey);
-
-  rlBufferClear(&ce_globalrlbuffer);
-}
-
-static void onEnvSetRandomSeed(int theConnection) {
-  unsigned int offset = 0;
-
-  offset = rlCopyBufferToADT(&ce_globalrlbuffer, offset, &ce_globalrandomseedkey);  
-  env_load_random_seed(&ce_globalrandomseedkey);
-
-  rlBufferClear(&ce_globalrlbuffer);
-}
-
-static void onEnvGetState(int theConnection) {
-	const state_key_t *key = 0;
-	unsigned int offset = 0;
-
-	key = env_save_state();
-	__RL_CHECK_STRUCT(key);
-
-	rlBufferClear(&ce_globalrlbuffer);
-	offset = rlCopyADTToBuffer(key, &ce_globalrlbuffer, offset);
-}
-
-static void onEnvGetRandomSeed(int theConnection) {
-	const random_seed_key_t *key = 0;
-	unsigned int offset = 0;
-
-	key=env_save_random_seed();
-	__RL_CHECK_STRUCT(key);
-
-
-	rlBufferClear(&ce_globalrlbuffer);
-	rlCopyADTToBuffer(key, &ce_globalrlbuffer, offset);
 }
 
 /*
@@ -231,22 +186,6 @@ until it receives a termination command */
 
     case kEnvCleanup:
       onEnvCleanup(theConnection);
-      break;
-
-    case kEnvLoadState:
-      onEnvSetState(theConnection);
-      break;
-
-    case kEnvLoadRandomSeed:
-      onEnvSetRandomSeed(theConnection);
-      break;
-
-    case kEnvSaveState:
-      onEnvGetState(theConnection);
-      break;
-
-    case kEnvSaveRandomSeed:
-      onEnvGetRandomSeed(theConnection);
       break;
 
     case kEnvMessage:

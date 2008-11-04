@@ -59,8 +59,6 @@ extern int gameState;
 static const char* kUnknownMessage = "Unknown Message: %s\n";
 
 static action_t theAction                 = {0};
-static state_key_t theStateKey            = {0};
-static random_seed_key_t theRandomSeedKey = {0};
 static rlBuffer theBuffer                 = {0};
 static char* theInMessage = 0;
 static unsigned int theInMessageCapacity = 0;
@@ -175,8 +173,6 @@ static void onEnvCleanup(int theConnection) {
 	clearRLStruct(&globalObservation);
 
 	clearRLStruct(&theAction);
-	clearRLStruct(&theRandomSeedKey);
-	clearRLStruct(&theStateKey);
 	
 	/*It's ok to free null pointers, so this is safe */
 	free(theInMessage);
@@ -184,52 +180,6 @@ static void onEnvCleanup(int theConnection) {
 	theInMessageCapacity = 0;
 }
 
-static void onEnvSetState(int theConnection) {
-	unsigned int offset = 0;
-
-	printf("envSetState not supported by sample custom codec integration\n");
-
-	offset = rlCopyBufferToADT(&theBuffer, offset, &theStateKey);
-	/* CUT-FOR-CUSTOMIZATION: env_load_state(theStateKey);*/
-
-	rlBufferClear(&theBuffer);
-}
-
-static void onEnvSetRandomSeed(int theConnection) {
-	unsigned int offset = 0;
-
-	printf("envSetRandomSeed not supported by sample custom codec integration\n");
-
-	offset = rlCopyBufferToADT(&theBuffer, offset, &theRandomSeedKey);  
-	/* CUT-FOR-CUSTOMIZATION: env_load_random_seed(theRandomSeedKey);*/
-
-	rlBufferClear(&theBuffer);
-}
-
-static void onEnvGetState(int theConnection) {
-	state_key_t key = {0};
-	unsigned int offset = 0;
-
-	printf("envGetState not supported by sample custom codec integration\n");
-	/* CUT-FOR-CUSTOMIZATION: key = env_save_state();*/
-	/* CUT-FOR-CUSTOMIZATION: __RL_CHECK_STRUCT(&key);*/
-
-
-	rlBufferClear(&theBuffer);
-	offset = rlCopyADTToBuffer(&key, &theBuffer, offset);
-}
-
-static void onEnvGetRandomSeed(int theConnection) {
-	random_seed_key_t key = {0};
-	unsigned int offset = 0;
-
-	printf("envGetRandomSeed no supported by sample custom codec integration\n");
-	/* CUT-FOR-CUSTOMIZATION: key=env_save_random_seed(); */
-	/* CUT-FOR-CUSTOMIZATION: __RL_CHECK_STRUCT(&key); */
-
-	rlBufferClear(&theBuffer);
-	rlCopyADTToBuffer(&key, &theBuffer, offset);
-}
 
 static void onEnvMessage(int theConnection) {
   unsigned int inMessageLength = 0;
@@ -293,21 +243,6 @@ void runEnvironmentEventLoop(int theConnection) {
 
     case kEnvCleanup:
       onEnvCleanup(theConnection);
-      break;
-
-    case kEnvLoadState:
-      onEnvSetState(theConnection);
-      break;
-
-    case kEnvLoadRandomSeed:
-      onEnvSetRandomSeed(theConnection);
-      break;
-
-    case kEnvSaveState:
-      onEnvGetState(theConnection);
-      break;
-    case kEnvSaveRandomSeed:
-      onEnvGetRandomSeed(theConnection);
       break;
 
     case kEnvMessage:
