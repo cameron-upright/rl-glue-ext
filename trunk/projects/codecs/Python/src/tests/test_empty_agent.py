@@ -54,9 +54,6 @@ class test_empty_agent(Agent):
 	def agent_cleanup(self):
 		pass
 	
-	def agent_freeze(self):
-		pass
-	
 	def agent_message(self,inMessage):
 		return ""
 		

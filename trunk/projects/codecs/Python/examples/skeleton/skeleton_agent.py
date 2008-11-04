@@ -63,9 +63,6 @@ class skeleton_agent(Agent):
 	def agent_cleanup(self):
 		pass
 	
-	def agent_freeze(self):
-		pass
-	
 	def agent_message(self,inMessage):
 		if inMessage=="what is your name?":
 			return "my name is skeleton_agent, Python edition!";
