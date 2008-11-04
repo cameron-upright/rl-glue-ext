@@ -27,9 +27,7 @@ package org.rlcommunity.rlglue.codec;
 
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
-import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
-import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
  * This is the interface that all environments should implement.
@@ -41,9 +39,5 @@ public interface EnvironmentInterface
     Observation env_start();
     Reward_observation_terminal env_step(Action action);
     void env_cleanup();
-    void env_load_state(State_key key);
-    void env_load_random_seed(Random_seed_key key);
-    State_key env_save_state();
-    Random_seed_key env_save_random_seed();
     String env_message(final String message);
 }

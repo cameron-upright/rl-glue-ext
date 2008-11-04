@@ -29,14 +29,10 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
-import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
-import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
  * This class does the heavy lifting of sendig and receiving data over the 
@@ -53,17 +49,14 @@ public class Network {
     public static final int kAgentStep = 6;
     public static final int kAgentEnd = 7;
     public static final int kAgentCleanup = 8;
-    public static final int kAgentFreeze = 9;
     public static final int kAgentMessage = 10;
+
     public static final int kEnvInit = 11;
     public static final int kEnvStart = 12;
     public static final int kEnvStep = 13;
     public static final int kEnvCleanup = 14;
-    public static final int kEnvSetState = 15;
-    public static final int kEnvSetRandomSeed = 16;
-    public static final int kEnvGetState = 17;
-    public static final int kEnvGetRandomSeed = 18;
     public static final int kEnvMessage = 19;
+    
     public static final int kRLInit = 20;
     public static final int kRLStart = 21;
     public static final int kRLStep = 22;
@@ -72,14 +65,9 @@ public class Network {
     public static final int kRLNumSteps = 25;
     public static final int kRLNumEpisodes = 26;
     public static final int kRLEpisode = 27;
-    public static final int kRLSetState = 28;
-    public static final int kRLSetRandomSeed = 29;
-    public static final int kRLGetState = 30;
-    public static final int kRLGetRandomSeed = 31;
-    //RLFreeze is deprecated
-    public static final int kRLFreeze = 32;
     public static final int kRLAgentMessage = 33;
     public static final int kRLEnvMessage = 34;
+    
     public static final int kRLTerm = 35;
     public static final String kDefaultHost = "127.0.0.1";
     public static final int kDefaultPort = 4096;
@@ -221,18 +209,6 @@ public class Network {
 
     public Action getAction() {
         Action returnVal=new Action();
-        fillAbstractType(returnVal);
-        return returnVal;
-    }
-
-    public State_key getStateKey() {
-        State_key returnVal=new State_key();
-        fillAbstractType(returnVal);
-        return returnVal;
-    }
-
-    public Random_seed_key getRandomSeedKey() {
-        Random_seed_key returnVal=new Random_seed_key();
         fillAbstractType(returnVal);
         return returnVal;
     }
@@ -381,14 +357,6 @@ public class Network {
 
     public void putAction(Action action) {
         putAbstractType(action);
-    }
-
-    public void putStateKey(State_key key) {
-        putAbstractType(key);
-    }
-
-    public void putRandomSeedKey(Random_seed_key key) {
-        putAbstractType(key);
     }
 
     public void putRewardObservation(Reward_observation_terminal rewardObservation) {

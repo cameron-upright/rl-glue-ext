@@ -18,9 +18,7 @@ limitations under the License.
 package org.rlcommunity.rlglue.codec;
 
 import org.rlcommunity.rlglue.codec.types.Observation_action;
-import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
-import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
  * This is the main RLGlue interface class for Experiment Programs.
@@ -145,29 +143,6 @@ public class RLGlue {
         return terminationCondition;
     }
 
-    /**
-     * RL-Glue Core Method.
-     */
-    public static Random_seed_key RL_save_random_seed() {
-        checkInstance();
-        Random_seed_key returnValue = instance.RL_save_random_seed();
-        if (returnValue == null) {
-            returnValue = new Random_seed_key();
-        }
-        return returnValue;
-    }
-
-    /**
-     * RL-Glue Core Method.
-     */
-    public static State_key RL_save_state() {
-        checkInstance();
-        State_key returnValue = instance.RL_save_state();
-        if (returnValue == null) {
-            returnValue = new State_key();
-        }
-        return returnValue;
-    }
 
     /**
      * RL-Glue Core Method.
@@ -210,27 +185,6 @@ public class RLGlue {
         return instance.RL_return();
     }
 
-    /**
-     * RL-Glue Core Method.
-     */
-    public static void RL_load_random_seed(Random_seed_key rsk) {
-        checkInstance();
-        if (rsk == null) {
-            rsk = new Random_seed_key();
-        }
-        instance.RL_load_random_seed(rsk);
-    }
-
-    /**
-     * RL-Glue Core Method.
-     */
-    public static void RL_load_state(State_key sk) {
-        checkInstance();
-        if (sk == null) {
-            sk = new State_key();
-        }
-        instance.RL_load_state(sk);
-    }
 
     /**
      * RL-Glue Core Method.

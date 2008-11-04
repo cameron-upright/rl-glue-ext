@@ -27,9 +27,7 @@ import java.io.IOException;
 import org.rlcommunity.rlglue.codec.network.Network;
 import org.rlcommunity.rlglue.codec.types.Observation_action;
 import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
-import org.rlcommunity.rlglue.codec.types.Random_seed_key;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
-import org.rlcommunity.rlglue.codec.types.State_key;
 
 /**
  * This is the network connection for an experiment program that will talk to the 
@@ -152,25 +150,6 @@ public class NetGlue implements RLGlueInterface {
         return exitStatus;
     }
 
-    public synchronized void RL_load_state(State_key sk) {
-        send_abstract_type(sk, Network.kRLSetState, "RL_load_state");
-    }
-
-    public synchronized void RL_load_random_seed(Random_seed_key rsk) {
-        send_abstract_type(rsk, Network.kRLSetRandomSeed, "RL_load_random_seed");
-    }
-
-    public synchronized State_key RL_save_state() {
-        sendEmpty(Network.kRLGetState, "RL_save_state");
-        State_key key = network.getStateKey();
-        return key;
-    }
-
-    public synchronized Random_seed_key RL_save_random_seed() {
-        sendEmpty(Network.kRLGetRandomSeed, "RL_save_random_seed");
-        Random_seed_key key = network.getRandomSeedKey();
-        return key;
-    }
 
     /**
      * 
