@@ -80,9 +80,6 @@ void agent_cleanup() {
 	}
 }
 
-void agent_freeze() {
-}
-
 const char* agent_message(const char* inMessage) {
 	int timesToPrint=stepCount%3;
 	int i;
