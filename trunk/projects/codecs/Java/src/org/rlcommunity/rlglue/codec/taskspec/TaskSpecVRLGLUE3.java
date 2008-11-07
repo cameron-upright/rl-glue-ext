@@ -29,7 +29,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
  * The newest version of the Task Spec (Nov 1 2008). 
  * @author Brian Tanner
  */
- public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
+public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
 
     /**
      * Task Spec version. Should be 3.
@@ -204,9 +204,10 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     }
 
     @Override
-    public double getDiscountFactor(){
+    public double getDiscountFactor() {
         return discountFactor;
     }
+
     /**
      * Parse a task spec string.
      * @param taskSpecString
@@ -266,7 +267,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
             nextToken = T.nextToken();
 
         }
-        
+
         checkLabel("ACTIONS", nextToken);
         nextToken = T.nextToken();
         if (nextToken.equals("INTS")) {
@@ -299,7 +300,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
             nextToken = T.nextToken();
 
         }
-        
+
 
 
         checkLabel("REWARDS", nextToken);
@@ -353,7 +354,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     /**
      * Returns a person-friendly string  version of the object.
      * @return
-     */@Override
+     */
+    @Override
     public String toString() {
         StringBuilder SB = new StringBuilder();
         SB.append("Int obs\n");
@@ -495,7 +497,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     public IntRange getDiscreteObservationRange(int i) {
         int theCount = 0;
         for (IntRange thisRange : intObservations) {
-            theCount+=thisRange.getHowMany();
+            theCount += thisRange.getHowMany();
             if (theCount > i) {
                 return thisRange;
             }
@@ -509,7 +511,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     public IntRange getDiscreteActionRange(int i) {
         int theCount = 0;
         for (IntRange thisRange : intActions) {
-            theCount+=thisRange.getHowMany();
+            theCount += thisRange.getHowMany();
             if (theCount > i) {
                 return thisRange;
             }
@@ -523,7 +525,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     public DoubleRange getContinuousObservationRange(int i) {
         int theCount = 0;
         for (DoubleRange thisRange : doubleObservations) {
-            theCount+=thisRange.getHowMany();
+            theCount += thisRange.getHowMany();
             if (theCount > i) {
                 return thisRange;
             }
@@ -536,7 +538,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     public DoubleRange getContinuousActionRange(int i) {
         int theCount = 0;
         for (DoubleRange thisRange : doubleActions) {
-            theCount+=thisRange.getHowMany();
+            theCount += thisRange.getHowMany();
             if (theCount > i) {
                 return thisRange;
             }
@@ -646,8 +648,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMinRewardNegInf()
-      * @deprecated Just get the range and ask that object this question.
-    */
+     * @deprecated Just get the range and ask that object this question.
+     */
     @Override
     public boolean isMinRewardNegInf() {
         return rewardRange.getMinNegInf();
@@ -655,7 +657,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMaxRewardInf()
- v    */
+     * @deprecated Just get the range and ask that object this question.
+     */
     @Override
     public boolean isMaxRewardInf() {
         return rewardRange.getMaxInf();
@@ -663,8 +666,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMinRewardUnknown()
-      * @deprecated Just get the range and ask that object this question.
-    */
+     * @deprecated Just get the range and ask that object this question.
+     */
     @Override
     public boolean isMinRewardUnknown() {
         return rewardRange.getMinUnspecified();
@@ -672,8 +675,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMaxRewardUnknown()
-      * @deprecated Just get the range and ask that object this question.
-    */
+     * @deprecated Just get the range and ask that object this question.
+     */
     @Override
     public boolean isMaxRewardUnknown() {
         return rewardRange.getMaxUnspecified();
@@ -707,7 +710,6 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         return thisVersion;
     }
 
-
     /**
      * @see rlglue.utilities.TaskSpec#getNumContinuousObsDims()
      */
@@ -724,7 +726,6 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         return getDiscreteObservationCount();
     }
 
-    
     /**
      * @see rlglue.utilities.TaskSpec#getNumDiscreteActionDims()
      */
@@ -741,10 +742,9 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         return getContinuousActionCount();
     }
 
-
     /**
      * @see rlglue.utilities.TaskSpec#getRewardMax()
-      * @deprecated Just get the range and ask that object this question.
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public double getRewardMax() {
@@ -753,7 +753,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#getRewardMin()
-      * @deprecated Just get the range and ask that object this question.
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public double getRewardMin() {
@@ -767,8 +767,6 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     public String getExtraString() {
         return extra;
     }
-
- 
 }
 
 
