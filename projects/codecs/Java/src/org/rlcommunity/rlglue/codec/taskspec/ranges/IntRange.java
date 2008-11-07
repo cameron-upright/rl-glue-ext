@@ -57,6 +57,17 @@ public class IntRange extends AbstractRange {
         super(thisRange);
     }
     
+    /**
+     * Return the size of the range.  So, if the range was [0,0], the range size
+     * is 1.  If it is [0,9], the range size is 10, etc.  Good for determining
+     * for big of an array you need to hold all possible values.
+     * 
+     * Behavior is undefined if min or max has a special value.
+     * @return
+     */
+    public int getRangeSize(){
+        return getMax()-getMin()+1;
+    }
     
     /**
      * Constructs a min to max IntRange
