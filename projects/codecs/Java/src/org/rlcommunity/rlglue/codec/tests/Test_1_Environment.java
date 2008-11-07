@@ -52,10 +52,6 @@ public class Test_1_Environment implements EnvironmentInterface {
         return b.toString();
     }
 
-    public static void main(String[] args){
-        EnvironmentLoader L=new EnvironmentLoader(new Test_1_Environment());
-        L.run();
-    }
 
     public String env_init() {
 	return "sample task spec";    }
