@@ -11,16 +11,16 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-* 
-*  $Revision$
-*  $Date$
-*  $Author$
-*  $HeadURL$
-* 
-*/
-
+ * 
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
+ * 
+ */
 package org.rlcommunity.rlglue.codec.util;
 
+import java.net.InetAddress;
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 import org.rlcommunity.rlglue.codec.RLGlueCore;
 import org.rlcommunity.rlglue.codec.network.ClientEnvironment;
@@ -42,21 +42,48 @@ public class EnvironmentLoader implements Runnable {
     ClientEnvironment theClient = null;
 
     public EnvironmentLoader(EnvironmentInterface theEnvironment) {
-        assert theEnvironment!=null : "theEnvironment is null in EnvironmentLoader Constructor";
+        assert theEnvironment != null : "theEnvironment is null in EnvironmentLoader Constructor";
         this.theEnvironment = theEnvironment;
+        String envVariableHostString = System.getenv("RLGLUE_HOST");
+        String envVariablePortString = System.getenv("RLGLUE_PORT");
+        setHostAndPorts(envVariableHostString, envVariablePortString);
     }
 
     public EnvironmentLoader(String hostString, String portString, EnvironmentInterface theEnvironment) {
-        assert theEnvironment!=null : "theEnvironment is null in EnvironmentLoader Constructor";
-        this.theEnvironment=theEnvironment;
+        this(theEnvironment);
+        setHostAndPorts(hostString, portString);
+    }
+
+    /**
+     * Try these new settings.  We'll only actually set them if they seem valid.
+     * @param hostString
+     * @param portString
+     */
+    private void setHostAndPorts(String hostString, String portString) {
+
+        //Now override the default or env variable port and string with these specific settings
         if (hostString != null) {
-            host = hostString;
+            try {
+                InetAddress theAddress = InetAddress.getByName(hostString);
+                host = hostString;
+            } catch (Exception e) {
+                System.err.println("Problem resolving requested hostname: " + hostString + " so using default.");
+            }
         }
 
-        try {
-            port = Integer.parseInt(portString);
-        } catch (Exception e) {
-            port = Network.kDefaultPort;
+        if (portString != null) {
+
+            try {
+                int parsedPort = Integer.parseInt(portString);
+
+                if (parsedPort < 0 || parsedPort > 65535) {
+                    System.err.println("Could not use port you requested: " + parsedPort + " is not a valid port number.\n");
+                } else {
+                    port = parsedPort;
+                }
+            } catch (Exception e) {
+                System.err.println("Could not use port you requested: " + portString + " could not be parsed as an int.");
+            }
         }
     }
 
@@ -65,18 +92,18 @@ public class EnvironmentLoader implements Runnable {
     }
 
     public void run() {
-        String ImplementationVersion=RLGlueCore.getImplementationVersion();
-        String SpecVersion=RLGlueCore.getSpecVersion();
+        String ImplementationVersion = RLGlueCore.getImplementationVersion();
+        String SpecVersion = RLGlueCore.getSpecVersion();
 
-        System.out.println("RL-Glue Java Environment Codec Version: "+SpecVersion+" ("+ImplementationVersion+")");
+        System.out.println("RL-Glue Java Environment Codec Version: " + SpecVersion + " (" + ImplementationVersion + ")");
         System.out.println("\tConnecting to " + host + " on port " + port + "...");
 
         theClient = new ClientEnvironment(theEnvironment);
         try {
-                theClient.connect(host, port, Network.kRetryTimeout);
-                System.out.println("\tEnvironment Codec Connected");
-                theClient.runEnvironmentEventLoop();
-                theClient.close();
+            theClient.connect(host, port, Network.kRetryTimeout);
+            System.out.println("\tEnvironment Codec Connected");
+            theClient.runEnvironmentEventLoop();
+            theClient.close();
         } catch (Exception e) {
             System.err.println("EnvironmentLoader run(" + theEnvironment.getClass() + ") threw Exception: " + e);
         }
@@ -88,17 +115,13 @@ public class EnvironmentLoader implements Runnable {
      */
     public static EnvironmentLoader loadEnvironment(String envClassName) {
         EnvironmentInterface env = null;
-
-        String hostString = System.getenv("RLGLUE_HOST");
-        String portString = System.getenv("RLGLUE_PORT");
-
         try {
             env = (EnvironmentInterface) Class.forName(envClassName).newInstance();
         } catch (Exception e) {
             System.err.println("loadEnvironment(" + envClassName + ") threw Exception: " + e);
         }
-        
-        return new EnvironmentLoader(hostString, portString, env);
+
+        return new EnvironmentLoader(env);
     }
 
     public static void main(String[] args) throws Exception {

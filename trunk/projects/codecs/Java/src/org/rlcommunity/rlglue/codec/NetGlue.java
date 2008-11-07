@@ -24,6 +24,7 @@ limitations under the License.
 package org.rlcommunity.rlglue.codec;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import org.rlcommunity.rlglue.codec.network.Network;
 import org.rlcommunity.rlglue.codec.types.Observation_action;
 import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
@@ -38,15 +39,18 @@ import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
 public class NetGlue implements RLGlueInterface {
 
     private Network network;
-    private String host;
-    private int port;
+    private String host = Network.kDefaultHost;
+    private int port = Network.kDefaultPort;
 
     /**
      * @since 2.0
      * Sets default host and port
      */
     public NetGlue() {
-        this(Network.kDefaultHost, Network.kDefaultPort);
+        String envVariableHostString = System.getenv("RLGLUE_HOST");
+        String envVariablePortString = System.getenv("RLGLUE_PORT");
+        setHostAndPorts(envVariableHostString, envVariablePortString);
+
     }
 
     /**
@@ -54,8 +58,7 @@ public class NetGlue implements RLGlueInterface {
      * Custom host, default port
      */
     public NetGlue(String host) {
-        this(host, Network.kDefaultPort);
-
+        setHostAndPorts(host, null);
     }
 
     /**
@@ -63,9 +66,41 @@ public class NetGlue implements RLGlueInterface {
      * @since 2.0
      */
     public NetGlue(String host, int port) {
-        this.host = host;
-        this.port = port;
+        setHostAndPorts(host, "" + port);
+    }
 
+    /**
+     * Try these new settings.  We'll only actually set them if they seem valid.
+     * I realize it's bad that we have this copied in AgentLoader, EnvLoader, and netGlue.
+     * @param hostString
+     * @param portString
+     */
+    private void setHostAndPorts(String hostString, String portString) {
+
+        //Now override the default or env variable port and string with these specific settings
+        if (hostString != null) {
+            try {
+                InetAddress theAddress = InetAddress.getByName(hostString);
+                host = hostString;
+            } catch (Exception e) {
+                System.err.println("Problem resolving requested hostname: " + hostString + " so using default.");
+            }
+        }
+
+        if (portString != null) {
+
+            try {
+                int parsedPort = Integer.parseInt(portString);
+
+                if (parsedPort < 0 || parsedPort > 65535) {
+                    System.err.println("Could not use port you requested: " + parsedPort + " is not a valid port number.\n");
+                } else {
+                    port = parsedPort;
+                }
+            } catch (Exception e) {
+                System.err.println("Could not use port you requested: " + portString + " could not be parsed as an int.");
+            }
+        }
     }
 
     public synchronized String RL_init() {
@@ -149,7 +184,6 @@ public class NetGlue implements RLGlueInterface {
 
         return exitStatus;
     }
-
 
     /**
      * 
