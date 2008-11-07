@@ -51,6 +51,15 @@ public class DoubleRange extends AbstractRange {
         this.max=max;
     }
 
+    /**
+     * Get the range size.  If the range is [0,10] then the range is 10.0. If the
+     * range is [.5,1.5], the range is 1.0, etc.  Useful for normalizing.  Behavior
+     * is undefined if min or max has a special value.
+     * @return
+     */
+    public double getRangeSize(){
+        return getMax()-getMin();
+    }
     public double getMin() {
         if (hasSpecialMinStatus()) {
             System.err.println("This variable has a special state.  The return value of it's getMin method is invalid.");

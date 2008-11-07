@@ -27,7 +27,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
 /**
  * The newest version of the Task Spec (Nov 1 2008). 
- * @author Brian TAnner
+ * @author Brian Tanner
  */
  public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
 
@@ -53,7 +53,12 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         thisProblemType = "episodic";
     }
 
-    public TaskSpecVRLGLUE3(TaskSpecV3 V3TaskSpec) {
+    /**
+     * Create a new updated TaskSpecVRLGLUE3 object from a previous generation task 
+     * spec object.
+     * @param V3TaskSpec
+     */
+    TaskSpecVRLGLUE3(TaskSpecV3 V3TaskSpec) {
         thisVersion = ourVersion;
         if (V3TaskSpec.getEpisodic() == 'e') {
             thisProblemType = "episodic";
@@ -166,11 +171,11 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         this.discountFactor = discountFactor;
     }
 
-    public void addIntObservation(IntRange newIntRange) {
+    public void addDiscreteObservation(IntRange newIntRange) {
         intObservations.add(newIntRange);
     }
 
-    public void addDoubleObservation(DoubleRange newDoubleRange) {
+    public void addContinuousObservation(DoubleRange newDoubleRange) {
         doubleObservations.add(newDoubleRange);
     }
 
@@ -178,11 +183,11 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         this.numObsChars = charLimit;
     }
 
-    public void addIntAction(IntRange newIntRange) {
+    public void addDiscreteAction(IntRange newIntRange) {
         intActions.add(newIntRange);
     }
 
-    public void addDoubleAction(DoubleRange newDoubleRange) {
+    public void addContinuousAction(DoubleRange newDoubleRange) {
         doubleActions.add(newDoubleRange);
     }
 
@@ -261,22 +266,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
             nextToken = T.nextToken();
 
         }
-////        
-////        checkLabel("INTS", T);
-////        int numIntObservations = Integer.parseInt(T.nextToken());
-////        for (int i = 0; i < numIntObservations; i++) {
-////            intObservations.add(new IntRange(T));
-////        }
-////
-////
-////        checkLabel("DOUBLES", T);
-////        String numDoubleToken = T.nextToken();
-////        int numDoubleObservations = Integer.parseInt(numDoubleToken);
-////        for (int i = 0; i < numDoubleObservations; i++) {
-////            doubleObservations.add(new DoubleRange(T));
-////        }
-//        checkLabel("CHARCOUNT", T);
-
+        
         checkLabel("ACTIONS", nextToken);
         nextToken = T.nextToken();
         if (nextToken.equals("INTS")) {
@@ -309,22 +299,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
             nextToken = T.nextToken();
 
         }
-//        checkLabel("INTS", T);
-//        int numIntActions = Integer.parseInt(T.nextToken());
-//        for (int i = 0; i < numIntActions; i++) {
-//            intActions.add(new IntRange(T));
-//        }
-//
-//
-//        checkLabel("DOUBLES", T);
-//        numDoubleToken = T.nextToken();
-//        int numDoubleActions = Integer.parseInt(numDoubleToken);
-//        for (int i = 0; i < numDoubleActions; i++) {
-//            doubleActions.add(new DoubleRange(T));
-//        }
-//        checkLabel("CHARCOUNT", T);
-//        numCharToken = T.nextToken();
-//        numActChars = Integer.parseInt(numCharToken);
+        
 
 
         checkLabel("REWARDS", nextToken);
@@ -363,11 +338,11 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         TaskSpecVRLGLUE3 sampleTSO = new TaskSpecVRLGLUE3();
         sampleTSO.setEpisodic();
         sampleTSO.setDiscountFactor(0);
-        sampleTSO.addIntObservation(new IntRange(0, 1, 3));
-        sampleTSO.addDoubleObservation(new DoubleRange(-1.2, .5, 2));
-        sampleTSO.addDoubleObservation(new DoubleRange(-.07, .07));
+        sampleTSO.addDiscreteObservation(new IntRange(0, 1, 3));
+        sampleTSO.addContinuousObservation(new DoubleRange(-1.2, .5, 2));
+        sampleTSO.addContinuousObservation(new DoubleRange(-.07, .07));
         sampleTSO.setObservationCharLimit(1024);
-        sampleTSO.addIntAction(new IntRange(0, 4));
+        sampleTSO.addDiscreteAction(new IntRange(0, 4));
         sampleTSO.setRewardRange(new DoubleRange(-5, 5));
         sampleTSO.setExtra("some other stuff goes here");
         System.out.println(sampleTSO.toTaskSpec());
@@ -375,6 +350,10 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         assert (theTaskSpec.toTaskSpec().equals(sampleTSO.toTaskSpec()));
     }
 
+    /**
+     * Returns a person-friendly string  version of the object.
+     * @return
+     */@Override
     public String toString() {
         StringBuilder SB = new StringBuilder();
         SB.append("Int obs\n");
@@ -410,27 +389,18 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     }
 
-    /**
-     * @deprecated
-     * @param expectedLabel
-     * @param T
-     */
-    static void checkLabel(String expectedLabel, StringTokenizer T) {
-        String tmpToken = T.nextToken(" ");
-        if (tmpToken.equals(")")) {
-            tmpToken = T.nextToken(" ");
-        }
-        assert tmpToken.equals(expectedLabel) : "Expected " + expectedLabel + " token instead got: " + tmpToken;
-    }
-
-    static void checkLabel(String expectedLabel, String actualLabel) {
+    private static void checkLabel(String expectedLabel, String actualLabel) {
         assert actualLabel.equals(expectedLabel) : "Expected " + expectedLabel + " token instead got: " + actualLabel;
     }
 
+    /**
+     * Return a valid RLGLUEV3 task spec for this object.
+     * @return
+     */
     public String toTaskSpec() {
         StringBuilder TS = new StringBuilder();
         TS.append("VERSION ");
-        TS.append(this.ourVersion);
+        TS.append(ourVersion);
 
         TS.append(" PROBLEMTYPE ");
         TS.append(this.thisProblemType);
@@ -604,6 +574,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isObsMinNegInfinity(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isObsMinNegInfinity(int index) {
@@ -612,6 +583,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isActionMinNegInfinity(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isActionMinNegInfinity(int index) {
@@ -620,6 +592,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isObsMaxPosInfinity(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isObsMaxPosInfinity(int index) {
@@ -628,6 +601,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isActionMaxPosInfinity(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isActionMaxPosInfinity(int index) {
@@ -636,6 +610,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isObsMinUnknown(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isObsMinUnknown(int index) {
@@ -644,6 +619,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isObsMaxUnknown(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isObsMaxUnknown(int index) {
@@ -652,6 +628,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isActionMinUnknown(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isActionMinUnknown(int index) {
@@ -660,6 +637,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isActionMaxUnknown(int index)
+     * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public boolean isActionMaxUnknown(int index) {
@@ -668,7 +646,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMinRewardNegInf()
-     */
+      * @deprecated Just get the range and ask that object this question.
+    */
     @Override
     public boolean isMinRewardNegInf() {
         return rewardRange.getMinNegInf();
@@ -676,7 +655,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMaxRewardInf()
-     */
+ v    */
     @Override
     public boolean isMaxRewardInf() {
         return rewardRange.getMaxInf();
@@ -684,7 +663,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMinRewardUnknown()
-     */
+      * @deprecated Just get the range and ask that object this question.
+    */
     @Override
     public boolean isMinRewardUnknown() {
         return rewardRange.getMinUnspecified();
@@ -692,7 +672,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#isMaxRewardUnknown()
-     */
+      * @deprecated Just get the range and ask that object this question.
+    */
     @Override
     public boolean isMaxRewardUnknown() {
         return rewardRange.getMaxUnspecified();
@@ -708,6 +689,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#getEpisodic()
+     * @deprecated Use getProblemType
      */
     @Override
     public char getEpisodic() {
@@ -725,14 +707,6 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         return thisVersion;
     }
 
-    /**
-     * This is useless
-     * @see rlglue.utilities.TaskSpec#getObsDim()
-     */
-    @Override
-    public int getObsDim() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getobsDim");
-    }
 
     /**
      * @see rlglue.utilities.TaskSpec#getNumContinuousObsDims()
@@ -749,38 +723,8 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
     public int getNumDiscreteObsDims() {
         return getDiscreteObservationCount();
     }
-    /**
-     * @see rlglue.utilities.TaskSpec#getObsTypes()
-     */
-    @Override
-    public char[] getObsTypes() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getObsTypes");
-    }
 
-    /**
-     * @see rlglue.utilities.TaskSpec#getObsMins()
-     */
-    @Override
-    public double[] getObsMins() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getObsMins");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#getObsMaxs()
-     */
-    @Override
-    public double[] getObsMaxs() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getObsMaxs");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#getActionDim()
-     */
-    @Override
-    public int getActionDim() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getActionDim");
-    }
-
+    
     /**
      * @see rlglue.utilities.TaskSpec#getNumDiscreteActionDims()
      */
@@ -797,32 +741,10 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         return getContinuousActionCount();
     }
 
-    /**
-     * @see rlglue.utilities.TaskSpec#getActionTypes()
-     */
-    @Override
-    public char[] getActionTypes() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getActionTypes");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#getActionMins()
-     */
-    @Override
-    public double[] getActionMins() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getActionMins");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#getActionMaxs()
-     */
-    @Override
-    public double[] getActionMaxs() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getActionMaxs");
-    }
 
     /**
      * @see rlglue.utilities.TaskSpec#getRewardMax()
+      * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public double getRewardMax() {
@@ -831,6 +753,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
     /**
      * @see rlglue.utilities.TaskSpec#getRewardMin()
+      * @deprecated Just get the range and ask that object this question.
      */
     @Override
     public double getRewardMin() {
@@ -845,13 +768,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
         return extra;
     }
 
-    /**
-     * @see rlglue.utilities.TaskSpec#getParserVersion()
-     */
-    @Override
-    public int getParserVersion() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getParserVersion");
-    }
+ 
 }
 
 
