@@ -110,7 +110,7 @@ public class TaskSpec {
         String errorAccumulator = "Task Spec Parse Results:";
         
         try{
-            theTSO=new TaskSpecVRLGLUE3Test(taskSpec);
+            theTSO=new TaskSpecVRLGLUE3(taskSpec);
             TSVersion = theTSO.getVersionString();
         } catch (Exception e) {
             errorAccumulator += "\nParsing as TaskSpecVRLGLUE3: " + e.toString();
@@ -118,7 +118,7 @@ public class TaskSpec {
         try {
             TaskSpecV3 theV3TSO = new TaskSpecV3(taskSpec);
             //Later in here, make a taskSpecVRLGlue3 constructor that takes a taskspecv3
-            theTSO=new TaskSpecVRLGLUE3Test(theV3TSO);
+            theTSO=new TaskSpecVRLGLUE3(theV3TSO);
             TSVersion = "3";
         } catch (Exception e) {
             errorAccumulator += "\nParsing as V3: " + e.toString();
@@ -128,7 +128,7 @@ public class TaskSpec {
             try {
                 TaskSpecV2 oldV2Spec= new TaskSpecV2(taskSpec);
                 TaskSpecV3 newerV3Spec=new TaskSpecV3(oldV2Spec);
-                theTSO=new TaskSpecVRLGLUE3Test(newerV3Spec);
+                theTSO=new TaskSpecVRLGLUE3(newerV3Spec);
                 TSVersion = "2";
             } catch (Exception e) {
                 errorAccumulator += "\nParsing as V2: " + e.toString();
