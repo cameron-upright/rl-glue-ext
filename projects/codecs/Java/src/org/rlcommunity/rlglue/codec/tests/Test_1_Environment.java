@@ -80,5 +80,9 @@ public class Test_1_Environment implements EnvironmentInterface {
 
     public void env_cleanup() {
     }
+    public static void main(String[] args){
+        EnvironmentLoader L=new EnvironmentLoader(new Test_1_Environment());
+        L.run();
+    }
 
 }

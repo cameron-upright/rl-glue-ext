@@ -132,11 +132,17 @@ public class ClientAgent
 		network.putString(reply);
 	}
 
+        /**
+         * Called by agentloader.
+         * @param host
+         * @param port
+         * @param timeout
+         * @throws java.lang.Exception
+         */
 	public void connect(String host, int port, int timeout) throws Exception
 	{	
 		network.connect(host, port, timeout);
-
-		network.clearSendBuffer();
+            	network.clearSendBuffer();
 		network.putInt(Network.kAgentConnection);
 		network.putInt(0); // No body to this packet
 		network.flipSendBuffer();
