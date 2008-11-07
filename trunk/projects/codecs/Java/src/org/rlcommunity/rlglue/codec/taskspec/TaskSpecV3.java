@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 * 
 */
 
-package org.rlcommunity.rlglue.utilities;
+package org.rlcommunity.rlglue.codec.taskspec;
 import java.util.StringTokenizer;
 
 /**
@@ -103,6 +103,25 @@ class TaskSpecV3 extends TaskSpecDelegate {
      * Version of the parser used for this Task Spec.
      */
     static final int parser_version = 3;
+    
+    public TaskSpecV3(TaskSpecV2 oldTaskSpec){
+        this.episodic=oldTaskSpec.getEpisodic();
+        this.obs_dim=oldTaskSpec.getObsDim();
+        this.action_dim=oldTaskSpec.getActionDim();
+        this.num_continuous_action_dims=oldTaskSpec.getNumContinuousActionDims();
+        this.num_continuous_obs_dims=oldTaskSpec.getNumContinuousObsDims();
+        this.num_discrete_action_dims=oldTaskSpec.getNumDiscreteActionDims();
+        this.num_discrete_obs_dims=oldTaskSpec.getNumDiscreteObsDims();
+        this.obs_types=oldTaskSpec.getObsTypes();
+        this.obs_mins=oldTaskSpec.getObsMins();
+        this.obs_maxs=oldTaskSpec.getObsMaxs();
+        this.action_types=oldTaskSpec.getActionTypes();
+        this.action_mins=oldTaskSpec.getActionMins();
+        this.action_maxs=oldTaskSpec.getActionMaxs();
+        this.reward_max=oldTaskSpec.getRewardMax();
+        this.reward_min=oldTaskSpec.getRewardMin();
+        extraString="";
+    }
 
     /**
      * The constructor for version 3 of the Task Spec taks a string as a 

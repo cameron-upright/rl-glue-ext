@@ -1,4 +1,4 @@
-package org.rlcommunity.rlglue.utilities;
+package org.rlcommunity.rlglue.codec.taskspec;
 
 /*
 Copyright 2008 Matt Radkie

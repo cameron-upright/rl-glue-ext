@@ -17,7 +17,11 @@ limitations under the License.
 * 
 */
 
-package org.rlcommunity.rlglue.utilities;
+package org.rlcommunity.rlglue.codec.taskspec;
+
+import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
+import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
+
 /**
  * This class is used to store and parse the information given to an Agent in
  * the RL-Glue framework. The Task Spec stores information the Agent needs
@@ -35,6 +39,8 @@ package org.rlcommunity.rlglue.utilities;
  * always be the case, so this framework was designed to robustly accomodate
  * future versions.
  * 
+ * <h2>This most recent Implementation of TaskSpecDelegate is TaskSpecVRLGLUE3</h2>
+ * 
  * @author Matt Radkie
  */
 public class TaskSpec {
@@ -46,18 +52,53 @@ public class TaskSpec {
     /**
      * The version of the Task Spec.
      */
-    private int TSVersion = 0;
+    private String TSVersion = "0";
 
     /**
      * Gets the Task Spec version.
-     * 
+     * @deprecated  Moving to a string version
      * @param none
      * @return Integer value of the Task Spec version.
      */
     public int getVersion() {
-        return TSVersion;
+        try{
+            return(Integer.parseInt(TSVersion));
+        }catch(NumberFormatException ex){
+            System.err.println("Asked for version of task spec through deprecated int method and could not make it work. Version is: "+getVersionString());
+            return 0;
+        }
+    }
+    
+    /**
+     * Quick sanity check.  It parses the task spec into an Task Spec TSA.  Then, it 
+     * uses the string representation of TSA to make TSAB.  Finally, it makes sure that the 
+     * string representation of TSA is the same as TSB.
+     * @param theTaskSpecString
+     * @return
+     */
+    public static boolean checkTaskSpec(String theTaskSpecString){
+        TaskSpec TS=new TaskSpec(theTaskSpecString);
+        try{
+        boolean match=TS.getStringRepresentation().equals(new TaskSpec(TS.getStringRepresentation()).getStringRepresentation());
+        if(!match){
+            System.err.println("Task spec check failed: if the task spec means what we think it means, these two should be equal:");
+            System.err.println("First Construction:\t"+TS.getStringRepresentation());
+            System.err.println("Second Construction:\t"+new TaskSpec(TS.getStringRepresentation()).getStringRepresentation());
+        }
+        return match;
+        }catch(Throwable T){
+            System.err.println("There is a problem parsing the task spec you were checking: "+T);
+            return false;
+        }
     }
 
+    /**
+     * @since RL-Glue3.0
+     * @return
+     */
+    public String getVersionString(){
+        return theTSO.getVersionString();
+    }
     /**
      * Constructor that takes a string adhereing to the Task Spec language
      * protocol. This string is parsed out by the appropriate version of the
@@ -67,17 +108,28 @@ public class TaskSpec {
      */
     public TaskSpec(String taskSpec) {
         String errorAccumulator = "Task Spec Parse Results:";
+        
+        try{
+            theTSO=new TaskSpecVRLGLUE3Test(taskSpec);
+            TSVersion = theTSO.getVersionString();
+        } catch (Exception e) {
+            errorAccumulator += "\nParsing as TaskSpecVRLGLUE3: " + e.toString();
+        }
         try {
-            theTSO = new TaskSpecV3(taskSpec);
-            TSVersion = 3;
+            TaskSpecV3 theV3TSO = new TaskSpecV3(taskSpec);
+            //Later in here, make a taskSpecVRLGlue3 constructor that takes a taskspecv3
+            theTSO=new TaskSpecVRLGLUE3Test(theV3TSO);
+            TSVersion = "3";
         } catch (Exception e) {
             errorAccumulator += "\nParsing as V3: " + e.toString();
         }
 
         if (theTSO == null) {
             try {
-                theTSO = new TaskSpecV2(taskSpec);
-                TSVersion = 2;
+                TaskSpecV2 oldV2Spec= new TaskSpecV2(taskSpec);
+                TaskSpecV3 newerV3Spec=new TaskSpecV3(oldV2Spec);
+                theTSO=new TaskSpecVRLGLUE3Test(newerV3Spec);
+                TSVersion = "2";
             } catch (Exception e) {
                 errorAccumulator += "\nParsing as V2: " + e.toString();
             }
@@ -89,6 +141,11 @@ public class TaskSpec {
         }
 
     }
+    
+    public TaskSpec(TaskSpecDelegate theTaskSpecDelegate){
+        this.theTSO=theTaskSpecDelegate;
+        this.TSVersion=theTaskSpecDelegate.getVersionString();
+    }
 
     /**
      * Returns the string representation of the Task Spec object. This string
@@ -97,9 +154,22 @@ public class TaskSpec {
      * here</a>
      * 
      * @param none
+     * @deprecated We never should have overloaded toString in this way.
      * @return String representation of the Task Spec
      */
     public String toString() {
+        return getStringRepresentation();
+    }
+    
+    /**
+     * Returns the string representation of the Task Spec object. This string
+     * representation follows the Task Spec language as outlined
+     * <a href="http://glue.rl-community.org/Home/rl-glue/task-spec-language"> 
+     * http://glue.rl-community.org/Home/rl-glue/task-spec-language</a>
+     * 
+     * @return String representation of the Task Spec
+     */
+    public String getStringRepresentation(){
         return theTSO.getStringRepresentation();
     }
 
@@ -107,7 +177,7 @@ public class TaskSpec {
      * Returns a string containing debug information about the Task Spec. This
      * debug information is usually printed to the screen, but returning it as 
      * a string allows the caller to print it out to log files etc as well.
-     * 
+     * @deprecated This is dumb.
      * @param none
      * @return String containing debug information for the Task Spec.
      */
@@ -254,38 +324,18 @@ public class TaskSpec {
     }
 
     /**
-     * Set the version of the Task Spec.
-     * 
-     * @param version Integer representing the version of the Task Spec.
-     * @return none
-     */
-    public void setVersion(int version) {
-        theTSO.setVersion(version);
-    }
-
-    /**
      * Gets the episodic characteristic of the Task Spec.
      * 
      * @param none
      * @return Char value representing if an environment is episodic
+     * @deprecated use getProblemType()
      */
     public char getEpisodic() {
         return theTSO.getEpisodic();
     }
-
-    /**
-     * Set the episodec character in the Task Spec.
-     * 
-     * @param episodic Character representing whether an environment is episodic.
-     * @return none
-     */
-    public void setEpisodic(char episodic) {
-        theTSO.setEpisodic(episodic);
-    }
-
-    /**
+/**
      * Gets the size of the observation array (Number of observations)
-     * 
+     * @deprecated This is useless.
      * @param none
      * @return The size of the observation array (Number of observations)
      */
@@ -293,15 +343,6 @@ public class TaskSpec {
         return theTSO.getObsDim();
     }
 
-    /**
-     * Set the size of the observation array.
-     * 
-     * @param dim Integer for the size of the observation array.
-     * @return none
-     */
-    public void setobsDim(int dim) {
-        theTSO.setObsDim(dim);
-    }
 
     /**
      * Gets the number of descrete observations.
@@ -314,16 +355,6 @@ public class TaskSpec {
     }
 
     /**
-     * Sets the number of descrete observations.
-     * 
-     * @param numDisc Integer number of descrete observations.
-     * @return none
-     */
-    public void setNumDiscreteObsDims(int numDisc) {
-        theTSO.setNumDiscreteObsDims(numDisc);
-    }
-
-    /**
      * Gets the number of continuous observations.
      * 
      * @param none
@@ -333,19 +364,10 @@ public class TaskSpec {
         return theTSO.getNumContinuousObsDims();
     }
 
-    /**
-     * Sets the number of continuous observations.
-     * 
-     * @param numDisc Integer number of continuous observations.
-     * @return none
-     */
-    public void setNumContinuousObsDims(int numCont) {
-        theTSO.setNumContinuousObsDims(numCont);
-    }
 
     /**
      * Gets the types for the observations.
-     * 
+     * @deprecated  I don't like this anymore.
      * @param none
      * @return Character array representing the types of the observations.
      */
@@ -353,19 +375,10 @@ public class TaskSpec {
         return theTSO.getObsTypes();
     }
 
-    /**
-     * Sets the types for the observations.
-     * 
-     * @param types Character array representing the types of the observations.
-     * @return none
-     */
-    public void setObsTypes(char[] types) {
-        theTSO.setObsTypes(types);
-    }
 
     /**
      * Gets the array of mins for the observations.
-     * 
+     * @deprecated  I don't like this anymore.
      * @param none
      * @return double[] Array of the min values for the observations.
      */
@@ -374,35 +387,13 @@ public class TaskSpec {
     }
 
     /**
-     * Sets the array of mins for the observations.
-     * 
-     * @param mins array of doubles corresponding to the mins for the 
-     * observations.
-     * @return none
-     */
-    public void setObsMins(double[] mins) {
-        theTSO.setObsMins(mins);
-    }
-
-    /**
      * Gets the array of maxs for the observations.
-     * 
+     * @deprecated  I don't like this anymore.
      * @param none
      * @return double[] Array of the maxs values for the observations.
      */
     public double[] getObsMaxs() {
         return theTSO.getObsMaxs();
-    }
-
-    /**
-     * Sets the array of maxs for the observations.
-     * 
-     * @param mins array of doubles corresponding to the maxs for the 
-     * observations.
-     * @return none
-     */
-    public void setObsMaxs(double[] maxs) {
-        theTSO.setObsMaxs(maxs);
     }
 
     /**
@@ -416,16 +407,6 @@ public class TaskSpec {
     }
 
     /**
-     * Set the size of the action array.
-     * 
-     * @param dim Integer for the size of the action array.
-     * @return none
-     */
-    public void setActionDim(int dim) {
-        theTSO.setActionDim(dim);
-    }
-
-    /**
      * Gets the number of descrete actions
      * 
      * @param none
@@ -433,16 +414,6 @@ public class TaskSpec {
      */
     public int getNumDiscreteActionDims() {
         return theTSO.getNumDiscreteActionDims();
-    }
-
-    /**
-     * Sets the number of descrete actions.
-     * 
-     * @param numDisc Integer number of descrete actions.
-     * @return none
-     */
-    public void setNumDiscreteActionDims(int numDisc) {
-        theTSO.setNumDiscreteActionDims(numDisc);
     }
 
     /**
@@ -455,19 +426,11 @@ public class TaskSpec {
         return theTSO.getNumContinuousActionDims();
     }
 
-    /**
-     * Sets the number of continous actions.
-     * 
-     * @param numDisc Integer number of continous actions.
-     * @return none
-     */
-    public void setNumContinuousActionDims(int numCont) {
-        theTSO.setNumContinuousActionDims(numCont);
-    }
 
     /**
      * Gets the types for the actions.
      * 
+     * @deprecated  I don't like this anymore.
      * @param none
      * @return Character array representing the types of the actions.
      */
@@ -475,19 +438,11 @@ public class TaskSpec {
         return theTSO.getActionTypes();
     }
 
-    /**
-     * Sets the types for the actions.
-     * 
-     * @param types Character array representing the types of the actions.
-     * @return none
-     */
-    public void setActionTypes(char[] types) {
-        theTSO.setActionTypes(types);
-    }
 
     /**
      * Gets the array of mins for the actions.
      * 
+     * @deprecated  I don't like this anymore.
      * @param none
      * @return double[] Array of the min values for the actions.
      */
@@ -495,19 +450,11 @@ public class TaskSpec {
         return theTSO.getActionMins();
     }
 
-    /**
-     * Sets the array of mins for the actions.
-     * 
-     * @param mins Double array of values corresponding to action min values.
-     * @return none
-     */
-    public void setActionMins(double[] mins) {
-        theTSO.setActionMins(mins);
-    }
 
     /**
      * Gets the array of maxs for the actions.
      * 
+     * @deprecated  I don't like this anymore.
      * @param none
      * @return double[] Array of the max values for the actions.
      */
@@ -515,15 +462,6 @@ public class TaskSpec {
         return theTSO.getActionMaxs();
     }
 
-    /**
-     * Sets the array of maxs for the actions.
-     * 
-     * @param mins Double array of values corresponding to action max values.
-     * @return none
-     */
-    public void setActionMaxs(double[] maxs) {
-        theTSO.setActionMaxs(maxs);
-    }
 
     /**
      * Gets the max reward.
@@ -535,15 +473,6 @@ public class TaskSpec {
         return theTSO.getRewardMax();
     }
 
-    /**
-     * Sets the max reward.
-     * 
-     * @param max Double value of the max reward
-     * @return none
-     */
-    public void setRewardMax(double max) {
-        theTSO.setRewardMax(max);
-    }
 
     /**
      * Gets the min reward.
@@ -553,16 +482,6 @@ public class TaskSpec {
      */
     public double getRewardMin() {
         return theTSO.getRewardMin();
-    }
-
-    /**
-     * Sets the min reward.
-     * 
-     * @param min Double value of the min reward.
-     * @return none
-     */
-    public void setRewardMin(double min) {
-        theTSO.setRewardMin(min);
     }
 
     /**
@@ -578,20 +497,6 @@ public class TaskSpec {
      */
     public String getExtraString() {
         return theTSO.getExtraString();
-    }
-
-    /**
-     * Sets the string value for the ExtraString.
-     * 
-     * 'ExtraString' is new for Task Spec version 3. It allows additional
-     * information to be appended to the end of the Task Spec. When environments
-     * use this feature, agents will require special code to handle this.
-     * 
-     * @param newString the new string to be appended to the TaskSpec.
-     * @return none
-     */
-    public void setExtraString(String newString) {
-        theTSO.setExtraString(newString);
     }
 
     /**
@@ -637,4 +542,67 @@ public class TaskSpec {
         System.out.println(sampleTS+" is version: "+theTSO.getVersion());
          */
     }
+
+    /**
+     * Get the discount factor.
+     * @since RL-Glue-3.0
+     * @return
+     */    
+    public double getDiscountFactor(){
+        return theTSO.getDiscountFactor();
+    }
+    /**
+     * Get the min, max, and special information for the i'th integer observation.
+     * @since RL-Glue-3.0
+     * @param i
+     * @return
+     */
+    public IntRange getDiscreteObservationRange(int i){
+        return theTSO.getDiscreteObservationRange(i);
+    }
+    /**
+     * Get the min, max, and special information for the i'th integer action.
+     * @since RL-Glue-3.0
+     * @param i
+     * @return
+     */
+    public IntRange getDiscreteActionRange(int i){
+        return theTSO.getDiscreteActionRange(i);
+    }
+    /**
+     * Get the min, max, and special information for the i'th double observation.
+     * @since RL-Glue-3.0
+     * @param i
+     * @return
+     */
+    public DoubleRange getContinuousObservationRange(int i){
+        return theTSO.getContinuousObservationRange(i);
+    }
+    /**
+     * Get the min, max, and special information for the i'th double action.
+     * @since RL-Glue-3.0
+     * @param i
+     * @return
+     */
+    public DoubleRange getContinuousActionRange(int i){
+        return theTSO.getContinuousActionRange(i);
+    }
+    /**
+     * Get the range of rewards
+     * @since RL-Glue-3.0
+     * @return
+     */
+    public DoubleRange getRewardRange() {
+        return theTSO.getRewardRange();
+    }
+
+    /**
+     * Replacement for getEpisodic
+     * @return episodic | continuous | something else
+     * @since RL-Glue-3.0
+     */
+    String getProblemType() {
+        return theTSO.getProblemType();
+    }
+
 }

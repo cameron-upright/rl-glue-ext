@@ -22,10 +22,13 @@ Copyright 2008 Matt Radkie
 
 
 
-package org.rlcommunity.rlglue.utilities;
+package org.rlcommunity.rlglue.codec.taskspec;
+
+import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
+import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
 /**
- * TaskSpecDelegate was written to be the medium between the Task Spec object
+ * TaskSpecDelegate was written to be the abstraction between the Task Spec object
  * agents and environments interact with, and the implementation of each version
  * of the Task Spec. This allows for the addition of functionality to the Task
  * Spec by adding new versions without breaking previous Versions.We'll extend 
@@ -34,6 +37,11 @@ package org.rlcommunity.rlglue.utilities;
  * <p>
  * TaskSpecDelegate does not implement any of these functions, it acts as an 
  * interface.
+ * 
+ * Some of these things will be deprecated over time, and some will be added.  If you 
+ * try and call one that isn't supported on the exact task spec version you have, you'll 
+ * get a UnsupportedOperationException.  I am going to just take out the setter methods though, those should be 
+ * used only really through the correct specific object.
  *   
  * @author Matt Radkie
  */
@@ -145,24 +153,10 @@ public abstract class TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#setVersion(int version)
-     */
-    public void setVersion(int version) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setVersion");
-    }
-
-    /**
      * @see rlglue.utilities.TaskSpec#getEpisodic()
      */
     public char getEpisodic() {
         throw new NoSuchMethodError("This version of the task spec does not support: getEpisodic");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setEpisodic(char episodic)
-     */
-    public void setEpisodic(char episodic) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setEpisodic");
     }
 
     /**
@@ -171,68 +165,29 @@ public abstract class TaskSpecDelegate {
     public int getObsDim() {
         throw new NoSuchMethodError("This version of the task spec does not support: getobsDim");
     }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setObsDim(int dim)
-     */
-    public void setObsDim(int dim) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setobsDim");
-    }
-
     /**
      * @see rlglue.utilities.TaskSpec#getNumDiscreteObsDims()
      */
     public int getNumDiscreteObsDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumDiscreteObsDims");
     }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setNumDiscreteObsDims(int numDisc)
-     */
-    public void setNumDiscreteObsDims(int numDisc) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setNumDiscreteObsDims");
-    }
-
     /**
      * @see rlglue.utilities.TaskSpec#getNumContinuousObsDims()
      */
     public int getNumContinuousObsDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumContinuousActionDims");
     }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setNumContinuousObsDims(int numCont)
-     */
-    public void setNumContinuousObsDims(int numCont) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setNumContinuousActionDims");
-    }
-
     /**
      * @see rlglue.utilities.TaskSpec#getObsTypes()
      */
     public char[] getObsTypes() {
         throw new NoSuchMethodError("This version of the task spec does not support: getObsTypes");
     }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setObsTypes(char[] types)
-     */
-    public void setObsTypes(char[] types) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setObsTypes");
-    }
-
     /**
      * @see rlglue.utilities.TaskSpec#getObsMins()
      */
     public double[] getObsMins() {
         throw new NoSuchMethodError("This version of the task spec does not support: getObsMins");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setObsMins(double[] mins)
-     */
-    public void setObsMins(double[] mins) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setObsMins");
     }
 
     /**
@@ -243,52 +198,22 @@ public abstract class TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#setObsMaxs(double[] maxs)
-     */
-    public void setObsMaxs(double[] maxs) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setObsMaxs");
-    }
-
-    /**
      * @see rlglue.utilities.TaskSpec#getActionDim()
      */
     public int getActionDim() {
         throw new NoSuchMethodError("This version of the task spec does not support: getActionDim");
     }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setActionDim(int dim)
-     */
-    public void setActionDim(int dim) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setActionDim");
-    }
-
     /**
      * @see rlglue.utilities.TaskSpec#getNumDiscreteActionDims()
      */
     public int getNumDiscreteActionDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumDiscreteActionDims");
     }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setNumDiscreteActionDims(int numDisc)
-     */
-    public void setNumDiscreteActionDims(int numDisc) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setNumDiscreteActionDims");
-    }
-
     /**
      * @see rlglue.utilities.TaskSpec#getNumContinuousActionDims()
      */
     public int getNumContinuousActionDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumContinuousActionDims");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setNumContinuousActionDims(int numCont)
-     */
-    public void setNumContinuousActionDims(int numCont) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setNumContinuousActionDims");
     }
 
     /**
@@ -299,24 +224,10 @@ public abstract class TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#setActionTypes(char[] types)
-     */
-    public void setActionTypes(char[] types) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setActionTypes");
-    }
-
-    /**
      * @see rlglue.utilities.TaskSpec#getActionMins()
      */
     public double[] getActionMins() {
         throw new NoSuchMethodError("This version of the task spec does not support: getActionMins");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setActionMins(double[] mins)
-     */
-    public void setActionMins(double[] mins) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setActionMins");
     }
 
     /**
@@ -327,13 +238,6 @@ public abstract class TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#setActionMaxs(double[] maxs)
-     */
-    public void setActionMaxs(double[] maxs) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setActionMaxs");
-    }
-
-    /**
      * @see rlglue.utilities.TaskSpec#getRewardMax()
      */
     public double getRewardMax() {
@@ -341,23 +245,9 @@ public abstract class TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#setRewardMax(double max)
-     */
-    public void setRewardMax(double max) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setRewardMax");
-    }
-
-    /**
      * @see rlglue.utilities.TaskSpec#getRewardMin()
      */
     public double getRewardMin() {
-        throw new NoSuchMethodError("This version of the task spec does not support: getRewardMin");
-    }
-
-    /**
-     * @see rlglue.utilities.TaskSpec#setRewardMin(double min)
-     */
-    public void setRewardMin(double min) {
         throw new NoSuchMethodError("This version of the task spec does not support: getRewardMin");
     }
 
@@ -369,16 +259,39 @@ public abstract class TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#setExtraString(String newString)
-     */
-    public void setExtraString(String newString) {
-        throw new NoSuchMethodError("This version of the task spec does not support: setExtraString");
-    }
-
-    /**
      * @see rlglue.utilities.TaskSpec#getParserVersion()
      */
     public int getParserVersion() {
         throw new NoSuchMethodError("This version of the task spec does not support: getParserVersion");
+    }
+
+    public String getVersionString() {
+       throw new NoSuchMethodError("This version of the task spec does not support: getVersionString");
+    }
+
+    public IntRange getDiscreteObservationRange(int i) {
+       throw new NoSuchMethodError("This version of the task spec does not support: getDiscreteObservationRange");
+    }
+    public DoubleRange getContinuousObservationRange(int i) {
+       throw new NoSuchMethodError("This version of the task spec does not support: getContinuousObservationRange");
+    }
+    public IntRange getDiscreteActionRange(int i) {
+       throw new NoSuchMethodError("This version of the task spec does not support: getDiscreteActionRange");
+    }
+    public DoubleRange getContinuousActionRange(int i) {
+       throw new NoSuchMethodError("This version of the task spec does not support: getContinuousActionRange");
+    }
+
+    double getDiscountFactor() {
+        throw new NoSuchMethodError("This version of the task spec does not support: getDiscountFactor");
+    }
+
+
+    String getProblemType() {
+        throw new NoSuchMethodError("This version of the task spec does not support: getProblemType");
+    }
+
+    public DoubleRange getRewardRange() {
+        throw new NoSuchMethodError("This version of the task spec does not support: getRewardRange");
     }
 }

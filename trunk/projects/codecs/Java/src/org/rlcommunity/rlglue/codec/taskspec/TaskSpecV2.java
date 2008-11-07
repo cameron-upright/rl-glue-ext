@@ -22,7 +22,7 @@ Copyright 2008 Matt Radkie
 
 
   
-package org.rlcommunity.rlglue.utilities;
+package org.rlcommunity.rlglue.codec.taskspec;
 
 import java.util.StringTokenizer;
 
