@@ -26,16 +26,10 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
 import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 
 /**
- * The newest version of the Task Spec (May 15th 2008). With the release of
- * version 3, the framework of the Task Spec (in Java atleast) was overhauled.
- * The capability of adding more versions of the Task Spec without affecting
- * old versions was addded. @see rlglue.utilities.TaskSpecDelegate for more 
- * info. TaskSpecV3 now has the capability of appending a string of extra data
- * onto the end of the task spec.
- * 
- * @author mradkie
+ * The newest version of the Task Spec (Nov 1 2008). 
+ * @author Brian TAnner
  */
-class TaskSpecVRLGLUE3Test extends TaskSpecDelegate {
+ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
 
     /**
      * Task Spec version. Should be 3.
@@ -53,13 +47,13 @@ class TaskSpecVRLGLUE3Test extends TaskSpecDelegate {
     private int numActChars = 0;
     private String extra = "";
 
-    public TaskSpecVRLGLUE3Test() {
+    public TaskSpecVRLGLUE3() {
         //defaults
         thisVersion = ourVersion;
         thisProblemType = "episodic";
     }
 
-    public TaskSpecVRLGLUE3Test(TaskSpecV3 V3TaskSpec) {
+    public TaskSpecVRLGLUE3(TaskSpecV3 V3TaskSpec) {
         thisVersion = ourVersion;
         if (V3TaskSpec.getEpisodic() == 'e') {
             thisProblemType = "episodic";
@@ -212,7 +206,7 @@ class TaskSpecVRLGLUE3Test extends TaskSpecDelegate {
      * Parse a task spec string.
      * @param taskSpecString
      */
-    public TaskSpecVRLGLUE3Test(String taskSpecString) {
+    public TaskSpecVRLGLUE3(String taskSpecString) {
         String tmpToken;
         //Default token is space, works for me.
         StringTokenizer T = new StringTokenizer(taskSpecString);
@@ -359,14 +353,14 @@ class TaskSpecVRLGLUE3Test extends TaskSpecDelegate {
         String sampleSpec = "VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 0 OBSERVATIONS INTS (3 0 1) DOUBLES (2 -1.2 0.5) (-.07 .07) CHARCOUNT 1024 ACTIONS INTS (0 4) REWARDS (-5.0 5.0) EXTRA some other stuff goes here";
 
         //No range for ascii characters.
-        TaskSpecVRLGLUE3Test theTaskSpec = new TaskSpecVRLGLUE3Test(sampleSpec);
+        TaskSpecVRLGLUE3 theTaskSpec = new TaskSpecVRLGLUE3(sampleSpec);
         System.out.println("orig:\t" + sampleSpec);
         System.out.println("parsed:\t" + theTaskSpec.toTaskSpec());
 
         //Need to compare the structs also
-        assert (theTaskSpec.toTaskSpec().equals(new TaskSpecVRLGLUE3Test(theTaskSpec.toTaskSpec()).toTaskSpec()));
+        assert (theTaskSpec.toTaskSpec().equals(new TaskSpecVRLGLUE3(theTaskSpec.toTaskSpec()).toTaskSpec()));
 
-        TaskSpecVRLGLUE3Test sampleTSO = new TaskSpecVRLGLUE3Test();
+        TaskSpecVRLGLUE3 sampleTSO = new TaskSpecVRLGLUE3();
         sampleTSO.setEpisodic();
         sampleTSO.setDiscountFactor(0);
         sampleTSO.addIntObservation(new IntRange(0, 1, 3));
@@ -377,7 +371,7 @@ class TaskSpecVRLGLUE3Test extends TaskSpecDelegate {
         sampleTSO.setRewardRange(new DoubleRange(-5, 5));
         sampleTSO.setExtra("some other stuff goes here");
         System.out.println(sampleTSO.toTaskSpec());
-        assert (sampleTSO.toTaskSpec().equals(new TaskSpecVRLGLUE3Test(sampleTSO.toTaskSpec()).toTaskSpec()));
+        assert (sampleTSO.toTaskSpec().equals(new TaskSpecVRLGLUE3(sampleTSO.toTaskSpec()).toTaskSpec()));
         assert (theTaskSpec.toTaskSpec().equals(sampleTSO.toTaskSpec()));
     }
 
