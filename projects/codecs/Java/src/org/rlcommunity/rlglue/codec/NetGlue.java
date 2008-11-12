@@ -361,7 +361,7 @@ public class NetGlue implements RLGlueInterface {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Action RL_agent_end(double theReward) {
+    public void RL_agent_end(double theReward) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
