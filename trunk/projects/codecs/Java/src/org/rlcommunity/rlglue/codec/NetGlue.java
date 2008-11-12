@@ -357,11 +357,11 @@ public class NetGlue implements RLGlueInterface {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Action RL_agent_step(Reward_observation_terminal theROT) {
+    public Action RL_agent_step(double theReward, Observation theObservation) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Action RL_agent_step(double theReward) {
+    public Action RL_agent_end(double theReward) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
