@@ -26,9 +26,12 @@ package org.rlcommunity.rlglue.codec;
 import java.io.IOException;
 import java.net.InetAddress;
 import org.rlcommunity.rlglue.codec.network.Network;
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Observation_action;
 import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 
 /**
  * This is the network connection for an experiment program that will talk to the 
@@ -340,5 +343,25 @@ public class NetGlue implements RLGlueInterface {
             System.exit(1);
         }
 
+    }
+
+    public Observation RL_env_start() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Reward_observation_terminal RL_env_step(Action theAction) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Action RL_agent_start(Observation theObservation) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Action RL_agent_step(Reward_observation_terminal theROT) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Action RL_agent_step(double theReward) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

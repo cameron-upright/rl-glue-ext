@@ -77,6 +77,15 @@ public class DoubleRange extends AbstractRange {
     public DoubleRange(String theRangeString) {
         super(theRangeString);
     }
+    
+    public void setMax(double newMax){
+        this.max=newMax;
+        super.setMaxSpecified();
+    }
+    public void setMin(double newMin){
+        this.min=newMin;
+        super.setMinSpecified();
+    }
 
     @Override
     protected void parseMin(String minString) {

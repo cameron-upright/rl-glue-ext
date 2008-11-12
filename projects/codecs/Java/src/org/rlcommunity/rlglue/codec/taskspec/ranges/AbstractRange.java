@@ -91,17 +91,11 @@ public abstract class AbstractRange {
         }
     }
     
-    public void setMinInf(){
-        minSpecial="POSINF";
-    }
     public void setMaxInf(){
         maxSpecial="POSINF";
     }
     public void setMinNegInf(){
         minSpecial="NEGINF";
-    }
-    public void setMaxNegInf(){
-        maxSpecial="NEGINF";
     }
     public void setMinUnspecified(){
         minSpecial="UNSPEC";
@@ -157,5 +151,18 @@ public abstract class AbstractRange {
     //wRITE A SANITY CEHCK
     
     public static final String specialValues[] = new String[]{"UNSPEC", "NEGINF", "POSINF"};
+
+    /**
+     * Useful if a subclass has its value set after initially not being set.
+     */
+    protected void setMaxSpecified() {
+       maxSpecial="NONE";
+    }
+    /**
+     * Useful if a subclass has its value set after initially not being set.
+     */
+    protected void setMinSpecified() {
+        minSpecial="NONE";
+    }
 
 }

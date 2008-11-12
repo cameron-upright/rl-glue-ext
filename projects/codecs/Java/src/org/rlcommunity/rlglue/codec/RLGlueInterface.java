@@ -7,7 +7,7 @@ http://brian.tannerpages.com
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+   http://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,8 +19,11 @@ http://brian.tannerpages.com
   
 package org.rlcommunity.rlglue.codec;
 
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Observation_action;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 
 /**
  * This is the definition of an RLGlue 'engine'.  The network codec is one such engine.
@@ -30,14 +33,19 @@ import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
  * @author btanner
  */
 public interface RLGlueInterface {
-	public   String RL_init();
-	public   Observation_action RL_start();
-	public   Reward_observation_action_terminal RL_step();
-	public   void RL_cleanup();
-	public   String RL_agent_message(String message);
-	public   String RL_env_message(String message);
-	public   double RL_return();
-	public   int RL_num_steps();
-	public   int RL_num_episodes();
-	public   int RL_episode(int numSteps);
+	public String RL_init();
+	public Observation_action RL_start();
+        public Observation RL_env_start();
+        public Reward_observation_terminal RL_env_step(Action theAction);
+        public Action RL_agent_start(Observation theObservation);
+        public Action RL_agent_step(Reward_observation_terminal theROT);
+        public Action RL_agent_step(double theReward);
+	public Reward_observation_action_terminal RL_step();
+	public void RL_cleanup();
+	public String RL_agent_message(String message);
+	public String RL_env_message(String message);
+	public double RL_return();
+	public int RL_num_steps();
+	public int RL_num_episodes();
+	public int RL_episode(int numSteps);
 }
