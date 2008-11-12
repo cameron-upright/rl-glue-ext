@@ -37,6 +37,10 @@ public class Reward_observation_terminal {
     public Reward_observation_terminal(double reward, Observation observation, int terminal) {
         this(reward,observation,terminal==1);
     }
+    
+    public double getReward(){
+        return r;
+    }
 
    /**
      * @since 2.0 Want to move towards using terminal as a boolean not an int.
