@@ -17,8 +17,11 @@ limitations under the License.
  */
 package org.rlcommunity.rlglue.codec;
 
+import org.rlcommunity.rlglue.codec.types.Action;
+import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Observation_action;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
+import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 
 /**
  * This is the main RLGlue interface class for Experiment Programs.
@@ -202,6 +205,33 @@ public class RLGlue {
         }
         return returnObs;
     }
+    
+    public static Observation RL_env_start(){
+        checkInstance();
+        if (!inited) {
+            System.err.println("-- Warning From RLGlue :: RL_env_start() was called without RL_init().");
+        }
+        currentEpisodeOver = false;
+        Observation returnObs = instance.RL_env_start();
+        if (returnObs == null) {
+            System.err.println("-- Warning From RLGlue :: RL_env_start() response was NULL, that should be impossible.");
+            returnObs = new Observation();
+        }
+        return returnObs;
+    }
+    
+    public static Action RL_agent_start(Observation theObservation){
+        checkInstance();
+        if (!inited) {
+            System.err.println("-- Warning From RLGlue :: RL_agent_start() was called without RL_init().");
+        }
+        Action returnAct=instance.RL_agent_start(theObservation);
+        if (returnAct == null) {
+            System.err.println("-- Warning From RLGlue :: RL_agent_start() response was NULL, that should be impossible.");
+            returnAct = new Action();
+        }
+        return returnAct;
+    }
 
     /**
      * RL-Glue Core Method.
@@ -219,6 +249,43 @@ public class RLGlue {
 
         currentEpisodeOver = (stepResponse.terminal == 1);
         return stepResponse;
+    }
+    /**
+     * RL-Glue Core Method.
+     */
+    public static Reward_observation_terminal RL_env_step(Action theAction) {
+        checkInstance();
+        if (!inited) {
+            System.err.println("-- Warning From RLGlue :: RL_env_step() was called without RL_init().");
+        }
+        Reward_observation_terminal stepResponse = instance.RL_env_step(theAction);
+        if (stepResponse == null) {
+            System.err.println("-- Warning From RLGlue :: RL_env_step() response was NULL, that should be impossible.");
+            stepResponse = new Reward_observation_terminal();
+        }
+        currentEpisodeOver = stepResponse.isTerminal();
+        return stepResponse;
+    }
+    
+    
+    public static Action RL_agent_step(double theReward, Observation theObservation){
+        checkInstance();
+        if (!inited) {
+            System.err.println("-- Warning From RLGlue :: RL_agent_step() was called without RL_init().");
+        }
+        Action theAction=instance.RL_agent_step(theReward, theObservation);
+        if (theAction == null) {
+            System.err.println("-- Warning From RLGlue :: RL_agent_step() response was NULL, that should be impossible.");
+            theAction = new Action();
+        }
+        return theAction;
+    }
+    public static void RL_agent_end(double theReward){
+        checkInstance();
+        if (!inited) {
+            System.err.println("-- Warning From RLGlue :: RL_agent_end() was called without RL_init().");
+        }
+        instance.RL_agent_end(theReward);
     }
 
     /**
