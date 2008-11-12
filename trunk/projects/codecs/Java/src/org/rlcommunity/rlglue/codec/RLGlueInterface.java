@@ -39,7 +39,7 @@ public interface RLGlueInterface {
         public Reward_observation_terminal RL_env_step(Action theAction);
         public Action RL_agent_start(Observation theObservation);
         public Action RL_agent_step(double theReward, Observation theObservation);
-        public Action RL_agent_end(double theReward);
+        public void RL_agent_end(double theReward);
 	public Reward_observation_action_terminal RL_step();
 	public void RL_cleanup();
 	public String RL_agent_message(String message);
