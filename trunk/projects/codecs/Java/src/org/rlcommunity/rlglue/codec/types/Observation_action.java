@@ -48,4 +48,13 @@ public class Observation_action {
     public Observation_action duplicate() {
         return new Observation_action(this);
     }
+
+    
+    public Observation getObservation(){
+        return o;
+    }
+    public Action getAction(){
+        return a;
+    }
+
 }

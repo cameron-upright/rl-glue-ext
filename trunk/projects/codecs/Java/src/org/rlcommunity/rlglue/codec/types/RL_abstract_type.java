@@ -60,6 +60,15 @@ public class RL_abstract_type implements Comparable{
             RLStructCopy(src, this);
         }
         
+        public int getInt(int which){
+            return this.intArray[which];
+        }
+        public double getDouble(int which){
+            return this.doubleArray[which];
+        }
+        public char getChar(int which){
+            return this.charArray[which];
+        }
 	
         /**
          * Useful (maybe?) utility method for deep copying one RL_Abstract_type 

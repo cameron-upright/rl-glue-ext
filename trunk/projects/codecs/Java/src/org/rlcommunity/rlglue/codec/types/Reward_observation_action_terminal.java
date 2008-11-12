@@ -30,6 +30,28 @@ public class Reward_observation_action_terminal {
     public Action a;
     public int terminal;
 
+    
+    public double getReward(){
+        return r;
+    }
+    
+    /**
+     * One day we will make the members private and you'll have to use accessors.
+     * It would be better if you used the version that returns a boolean, but this  is
+     * better than accessing the members directly.
+     * @return
+     */
+    public int getTerminal(){
+        return terminal;
+    }
+    
+    public Observation getObservation(){
+        return o;
+    }
+    public Action getAction(){
+        return a;
+    }
+    
     public Reward_observation_action_terminal() {
         r=0;
         o=new Observation();

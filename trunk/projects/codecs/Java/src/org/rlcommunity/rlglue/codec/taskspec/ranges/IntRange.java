@@ -97,6 +97,15 @@ public class IntRange extends AbstractRange {
         }
         return max;
     }
+    
+        public void setMax(int newMax){
+        this.max=newMax;
+        super.setMaxSpecified();
+    }
+    public void setMin(int newMin){
+        this.min=newMin;
+        super.setMinSpecified();
+    }
 
     protected void parseMin(String lowPart){
             min = Integer.parseInt(lowPart);

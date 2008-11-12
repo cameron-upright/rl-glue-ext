@@ -69,6 +69,20 @@ public class Reward_observation_terminal {
         return terminal==1;
     }
 
+        /**
+     * One day we will make the members private and you'll have to use accessors.
+     * It would be better if you used the version that returns a boolean, but this  is
+     * better than accessing the members directly.
+     * @return
+     */
+    public int getTerminal(){
+        return terminal;
+    }
+    
+    public Observation getObservation(){
+        return o;
+    }
+
 
     public Reward_observation_terminal duplicate() {
         return new Reward_observation_terminal(this);
