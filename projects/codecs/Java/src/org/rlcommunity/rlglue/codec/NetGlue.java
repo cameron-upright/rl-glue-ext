@@ -352,7 +352,7 @@ public class NetGlue implements RLGlueInterface {
         try {
             network.clearSendBuffer();
             network.putInt(theCode);
-            network.putInt(Network.kIntSize);
+            network.putInt(Network.sizeOf(doubleToSend));
             network.putDouble(doubleToSend);
             network.flipSendBuffer();
             network.send();
