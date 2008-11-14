@@ -122,7 +122,7 @@ public class NetGlue implements RLGlueInterface {
         obsact.a = network.getAction();
         return obsact;
     }
-    public Observation RL_env_start() {
+    public synchronized Observation RL_env_start() {
         sendEmpty(Network.kRLEnvStart, "RL_env_start");
         Observation obs = new Observation();
 
@@ -130,7 +130,7 @@ public class NetGlue implements RLGlueInterface {
         return obs;
     }
 
-    public Reward_observation_terminal RL_env_step(Action theAction) {
+    public synchronized Reward_observation_terminal RL_env_step(Action theAction) {
         send_abstract_type(theAction, Network.kRLEnvStep, "RL_env_step");
         Reward_observation_terminal rot = new Reward_observation_terminal();
         rot.terminal = network.getInt();
@@ -139,19 +139,19 @@ public class NetGlue implements RLGlueInterface {
         return rot;
     }
 
-    public Action RL_agent_start(Observation theObservation) {
+    public synchronized Action RL_agent_start(Observation theObservation) {
         send_abstract_type(theObservation,Network.kRLAgentStart,"RL_agent_start");
         Action theAction=network.getAction();
         return theAction;
     }
 
-    public Action RL_agent_step(double theReward, Observation theObservation) {
+    public synchronized Action RL_agent_step(double theReward, Observation theObservation) {
         send_reward_observation(theReward,theObservation,Network.kRLAgentStep,"RL_agent_step");
         Action theAction=network.getAction();
         return theAction;
     }
 
-    public void RL_agent_end(double theReward) {
+    public synchronized void RL_agent_end(double theReward) {
         sendDouble(theReward,Network.kRLAgentEnd,"RL_agent_end");
     }
 
