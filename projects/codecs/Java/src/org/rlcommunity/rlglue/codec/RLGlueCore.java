@@ -47,6 +47,9 @@ public class RLGlueCore {
     private static void printVersion() {
         System.out.println(getSpecVersion());
     }
+    private static void printBuildVersion() {
+        System.out.println(getImplementationVersion());
+    }
     /*
      * Print out the current interface version of RLGlue.  We'll make it do more interesting things with commandline parameters later
      */
@@ -58,6 +61,10 @@ public class RLGlueCore {
         }
         if (args[0].equalsIgnoreCase("-v") || args[0].equalsIgnoreCase("--version")) {
             printVersion();
+            return;
+        }
+        if (args[0].equalsIgnoreCase("-v") || args[0].equalsIgnoreCase("--buildversion")) {
+            printBuildVersion();
             return;
         }
         if (args[0].equalsIgnoreCase("-e") || args[0].equalsIgnoreCase("--environment")) {
@@ -88,4 +95,6 @@ public class RLGlueCore {
     public static String getImplementationVersion() {
         return RLGlueCore.class.getPackage().getImplementationVersion();
     }
+    
+    
 }
