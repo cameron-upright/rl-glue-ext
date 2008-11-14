@@ -50,13 +50,11 @@ public class Network {
     public static final int kAgentEnd = 7;
     public static final int kAgentCleanup = 8;
     public static final int kAgentMessage = 10;
-
     public static final int kEnvInit = 11;
     public static final int kEnvStart = 12;
     public static final int kEnvStep = 13;
     public static final int kEnvCleanup = 14;
     public static final int kEnvMessage = 19;
-    
     public static final int kRLInit = 20;
     public static final int kRLStart = 21;
     public static final int kRLStep = 22;
@@ -67,8 +65,13 @@ public class Network {
     public static final int kRLEpisode = 27;
     public static final int kRLAgentMessage = 33;
     public static final int kRLEnvMessage = 34;
-    
     public static final int kRLTerm = 35;
+    public static final int kRLEnvStart = 36;
+    public static final int kRLEnvStep = 37;
+    public static final int kRLAgentStart = 38;
+    public static final int kRLAgentStep = 39;
+    public static final int kRLAgentEnd = 40;
+
     public static final String kDefaultHost = "127.0.0.1";
     public static final int kDefaultPort = 4096;
     public static final int kRetryTimeout = 2;
@@ -202,13 +205,13 @@ public class Network {
     }
 
     public Observation getObservation() {
-        Observation returnVal=new Observation();
+        Observation returnVal = new Observation();
         fillAbstractType(returnVal);
         return returnVal;
     }
 
     public Action getAction() {
-        Action returnVal=new Action();
+        Action returnVal = new Action();
         fillAbstractType(returnVal);
         return returnVal;
     }
@@ -219,7 +222,7 @@ public class Network {
      * we need to read them once, then make a copy immediately when we change them
      * into specialized supertypes...
      * @deprecated
-     */ 
+     */
     private final RL_abstract_type getAbstractType() {
         final int numInts = this.getInt();
         final int numDoubles = this.getInt();
@@ -236,7 +239,7 @@ public class Network {
 
         return key;
     }
-    
+
     private final void fillAbstractType(RL_abstract_type toFill) {
         final int numInts = getInt();
         final int numDoubles = getInt();
@@ -244,8 +247,8 @@ public class Network {
 
         toFill.intArray = getInts(numInts);
         toFill.doubleArray = getDoubles(numDoubles);
-        
-        toFill.charArray=new char[numChars];
+
+        toFill.charArray = new char[numChars];
         for (int i = 0; i < numChars; ++i) {
             toFill.charArray[i] = this.getChar();
         }
