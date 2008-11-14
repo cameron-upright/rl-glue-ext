@@ -122,7 +122,40 @@ public class NetGlue implements RLGlueInterface {
         obsact.a = network.getAction();
         return obsact;
     }
+    public Observation RL_env_start() {
+        sendEmpty(Network.kRLEnvStart, "RL_env_start");
+        Observation obs = new Observation();
 
+        obs = network.getObservation();
+        return obs;
+    }
+
+    public Reward_observation_terminal RL_env_step(Action theAction) {
+        send_abstract_type(theAction, Network.kRLEnvStep, "RL_env_step");
+        Reward_observation_terminal rot = new Reward_observation_terminal();
+        rot.terminal = network.getInt();
+        rot.r = network.getDouble();
+        rot.o = network.getObservation();
+        return rot;
+    }
+
+    public Action RL_agent_start(Observation theObservation) {
+        send_abstract_type(theObservation,Network.kRLAgentStart,"RL_agent_start");
+        Action theAction=network.getAction();
+        return theAction;
+    }
+
+    public Action RL_agent_step(double theReward, Observation theObservation) {
+        send_reward_observation(theReward,theObservation,Network.kRLAgentStep,"RL_agent_step");
+        Action theAction=network.getAction();
+        return theAction;
+    }
+
+    public void RL_agent_end(double theReward) {
+        sendDouble(theReward,Network.kRLAgentEnd,"RL_agent_end");
+    }
+
+    
     public synchronized Reward_observation_action_terminal RL_step() {
         sendEmpty(Network.kRLStep, "RL_step");
 
@@ -182,9 +215,7 @@ public class NetGlue implements RLGlueInterface {
 
     public synchronized int RL_episode(int numSteps) {
         sendInt(numSteps, Network.kRLEpisode, "RL_episode");
-
         int exitStatus = network.getInt();
-
         return exitStatus;
     }
 
@@ -317,7 +348,26 @@ public class NetGlue implements RLGlueInterface {
         }
 
     }
+    private synchronized void sendDouble(double doubleToSend, int theCode, String callerName) {
+        try {
+            network.clearSendBuffer();
+            network.putInt(theCode);
+            network.putInt(Network.kIntSize);
+            network.putDouble(doubleToSend);
+            network.flipSendBuffer();
+            network.send();
 
+            doStandardRecv(theCode);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            System.exit(1);
+        } catch (NullPointerException nullException) {
+            System.err.println("You must call RL_init before calling " + callerName);
+            nullException.printStackTrace();
+            System.exit(1);
+        }
+
+    }
     /**
      * Added by Brian Tanner to simplify the code in here.
      * @param theObject
@@ -344,24 +394,32 @@ public class NetGlue implements RLGlueInterface {
         }
 
     }
+    /**
+     * Added by Brian Tanner to simplify the code in here.
+     * @param theObject
+     * @param theCode
+     * @param callerName
+     */
+    private synchronized void send_reward_observation(double theReward,RL_abstract_type theObservation, int theCode, String callerName) {
+        try {
+            network.clearSendBuffer();
+            network.putInt(theCode);
+            network.putInt(Network.sizeOf(theObservation)+Network.sizeOf(theReward));
+            network.putDouble(theReward);
+            network.putAbstractType(theObservation);
+            network.flipSendBuffer();
+            network.send();
 
-    public Observation RL_env_start() {
-        throw new UnsupportedOperationException("Not supported yet.");
+            doStandardRecv(theCode);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            System.exit(1);
+        } catch (NullPointerException nullException) {
+            System.err.println("You must call RL_init before calling " + callerName);
+            nullException.printStackTrace();
+            System.exit(1);
+        }
+
     }
 
-    public Reward_observation_terminal RL_env_step(Action theAction) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Action RL_agent_start(Observation theObservation) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Action RL_agent_step(double theReward, Observation theObservation) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void RL_agent_end(double theReward) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }
