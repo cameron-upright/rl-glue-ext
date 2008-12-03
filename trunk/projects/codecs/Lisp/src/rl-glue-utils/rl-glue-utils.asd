@@ -38,5 +38,5 @@
             :components
             ((:file "task-spec-parser"))
             :depends-on ("rl-utils-package")))
-  :depends-on ("cl-ppcre"))
+  :depends-on ("rl-glue-codec" "cl-ppcre"))
 

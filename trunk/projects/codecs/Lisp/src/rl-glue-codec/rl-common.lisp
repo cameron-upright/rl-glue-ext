@@ -20,20 +20,29 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Common RL types.
 
-(defmacro make-adt-array (size type initial-contents)
+(defmacro make-typed-array (size type &optional initial-contents)
+  "Makes an array of SIZE with elements of TYPE."
   `(make-array ,size
                :element-type ,type
                ,@(when initial-contents
-                   `(:initial-contents ,initial-contents))))
+                       `(:initial-contents ,initial-contents))))
 
-(defmacro make-int-array (size &key initial-contents)
-  `(make-adt-array ,size 'integer-t ,initial-contents))
+(declaim (inline make-int-array))
+(defun make-int-array (size &key initial-contents)
+  "Makes an integer array of SIZE with the package supported integer 
+typed elements."
+  (make-typed-array size 'integer-t initial-contents))
 
-(defmacro make-float-array (size &key initial-contents)
-  `(make-adt-array ,size 'double-float ,initial-contents))
+(declaim (inline make-float-array))
+(defun make-float-array (size &key initial-contents)
+  "Makes a float array of SIZE with the package supported floating point 
+typed elements."
+  (make-typed-array size 'double-float initial-contents))
 
-(defparameter *init-integer-array* (make-int-array 0))
-(defparameter *init-float-array* (make-float-array 0))
+(defparameter *init-integer-array* (make-int-array 0)
+  "An empty array typed by the package supported integer numbers.")
+(defparameter *init-float-array* (make-float-array 0)
+  "An empty array typed by the package supported floating point numbers.")
 (declaim (type simple-array +empty-integer-array+ +empty-float-array+))
 
 (defclass rl-abstract-type ()
@@ -60,17 +69,16 @@
 (defclass observation (rl-abstract-type)
   () (:documentation "General RL-Glue observation data representation."))
 
+(defmacro make-observation (&rest args)
+  "Makes an empty observation object."
+  `(make-instance 'observation ,@args))
+
 (defclass action (rl-abstract-type)
   () (:documentation "General RL-Glue action data representation."))
 
-(defmacro make-rl-make (type)
-  "Creating a make-TYPE macro."
-  (let ((typ type))
-    `(defmacro ,(intern (format nil "MAKE-~a" typ)) (&rest args)
-       `(make-instance ',',typ ,@args))))
-
-(make-rl-make observation)
-(make-rl-make action)
+(defmacro make-action (&rest args)
+  "Makes an empty action object."
+  `(make-instance 'action ,@args))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Generic functions.
@@ -142,57 +150,80 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RL read / write.
 
-(defmacro make-rl-read-write (type)
-  (let ((type type))
-    `(progn
-       (setf (symbol-function (intern ,(format nil "RL-READ-~a" type)))
-             (lambda (buffer)
-               (declare #.*optimize-settings*)
-               (rl-read (make-instance ',type) buffer)))
-       (setf (symbol-function (intern ,(format nil "RL-WRITE-~a" type)))
-             (lambda (,type buffer)
-               (declare #.*optimize-settings*)
-               (rl-write ,type buffer))))))
+(declaim (inline rl-read-observation))
+(defun rl-read-observation (buffer)
+  "Reads an observation object from BUFFER."
+  (declare #.*optimize-settings*)
+  (rl-read (make-instance 'observation) buffer))
 
-(make-rl-read-write observation)
-(make-rl-read-write action)
-(make-rl-read-write random-seed-key)
-(make-rl-read-write state-key)
+(declaim (inline rl-write-observation))
+(defun rl-write-observation (observation buffer)
+  "Writes OBSERVATION object into BUFFER."
+  (declare #.*optimize-settings*)
+  (rl-write observation buffer))
 
+(declaim (inline rl-read-action))
+(defun rl-read-action (buffer)
+  "Reads an action object from BUFFER."
+  (declare #.*optimize-settings*)
+  (rl-read (make-instance 'action) buffer))
+
+(declaim (inline rl-write-action))
+(defun rl-write-action (action buffer)
+  "Writes ACTION object into BUFFER."
+  (declare #.*optimize-settings*)
+  (rl-write action buffer))
+
+(declaim (inline rl-read-reward))
 (defun rl-read-reward (buffer)
+  "Reads a reward value from BUFFER."
   (declare #.*optimize-settings*)
   (buffer-read-float buffer))
 
+(declaim (inline rl-write-reward))
 (defun rl-write-reward (reward buffer)
+  "Writes REWARD value into BUFFER."
   (declare #.*optimize-settings*)
   (check-type reward (or integer-t float))
   (buffer-write-float (coerce reward 'double-float) buffer))
 
+(declaim (inline rl-read-message))
 (defun rl-read-message (buffer)
+  "Reads a message string from BUFFER."
   (declare #.*optimize-settings*)
   (buffer-read-string buffer))
 
+(declaim (inline rl-write-message))
 (defun rl-write-message (message buffer)
+  "Writes MESSAGE string into BUFFER."
   (declare #.*optimize-settings*)
   (check-type message string)
   (buffer-write-string message buffer))
 
+(declaim (inline rl-read-task-spec))
 (defun rl-read-task-spec (buffer)
+  "Reads a task specification string from BUFFER."
   (declare #.*optimize-settings*)
   (buffer-read-string buffer))
 
+(declaim (inline rl-write-task-spec))
 (defun rl-write-task-spec (task-spec buffer)
+  "Writes TASK-SPEC task specification string into BUFFER."
   (declare #.*optimize-settings*)
   (check-type task-spec string)
   (buffer-write-string task-spec buffer))
 
+(declaim (inline rl-read-terminal))
 (defun rl-read-terminal (buffer)
+  "Reads a terminal indicator boolean from BUFFER."
   (declare #.*optimize-settings*)
   (ecase (buffer-read-int buffer)
     ((0) nil)
     ((1) t)))
 
+(declaim (inline rl-write-terminal))
 (defun rl-write-terminal (terminal buffer)
+  "Writes TERMINAL terminal indicator boolean into BUFFER."
   (declare #.*optimize-settings*)
   (check-type terminal boolean)
   (let ((boolint (if terminal 1 0)))

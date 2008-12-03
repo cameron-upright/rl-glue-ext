@@ -31,7 +31,8 @@
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"
-  :description "Software protocol for connecting RL agents and environments."
+  :description "Software protocol for connecting reinforcement 
+learning agents, environments and experiments."
   :components
   ((:file "rl-package")
    (:file "rl-version" :depends-on ("rl-package"))

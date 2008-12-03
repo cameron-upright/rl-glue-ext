@@ -16,10 +16,12 @@
 
 (in-package #:org.rl-community.rl-glue-codec)
 
-(defun get-svn-codec-version ()
+(defun get-vc-codec-version ()
+  "Returns the codec version in the version control system."
   (let ((glue-ver "$Revision$"))
     (subseq glue-ver 11 (- (length glue-ver) 2))))
 
 (defun get-codec-version ()
+  "Returns the official codec version."
   "1.0-RC3")
 

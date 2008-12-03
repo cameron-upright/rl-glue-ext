@@ -21,46 +21,72 @@
 ;;; Architecture specific parameters.
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (defconstant +bits-per-byte+ 8)
+  (defconstant +bits-per-byte+ 8
+    "Number of bits in a byte.")
   (deftype byte-t () `(unsigned-byte ,+bits-per-byte+))
   (deftype byte-array-t () `(simple-array byte-t))
 
-  (defconstant +bytes-per-char+ 1)
-  (defconstant +bits-per-char+ (* +bits-per-byte+ +bytes-per-char+))
+  (defconstant +bytes-per-char+ 1
+    "Number of bytes in the character type.")
+  (defconstant +bits-per-char+ (* +bits-per-byte+ +bytes-per-char+)
+    "Number of bits in the character type.")
   (deftype char-code-t () `(unsigned-byte ,+bits-per-char+))
 
-  (defconstant +bytes-per-integer+ 4)
-  (defconstant +bits-per-integer+ (* +bits-per-byte+ +bytes-per-integer+))
-  (defconstant +max-int-pos+ (1- +bits-per-integer+))
-  (defconstant +uint-limit+ (expt 2 (1+ +max-int-pos+)))
+  (defconstant +bytes-per-integer+ 4
+    "Number of bytes in the integer type.")
+  (defconstant +bits-per-integer+ (* +bits-per-byte+ +bytes-per-integer+)
+    "Number of bits in the integer type.")
+  (defconstant +max-int-pos+ (1- +bits-per-integer+)
+    "Maximum integer bit position.")
+  (defconstant +uint-limit+ (expt 2 (1+ +max-int-pos+))
+    "Maximum unsigned integer value.")
   (deftype int-code-t () `(unsigned-byte ,+bits-per-integer+))
   (deftype integer-t () `(signed-byte ,+bits-per-integer+))
   (deftype int-code-t () `(unsigned-byte ,+bits-per-integer+))
 
-  (defconstant +expo-bits+ 11)
-  (defconstant +sigd-bits+ 52)
+  (defconstant +expo-bits+ 11
+    "Number of bits in the exponent part of the floating point type.")
+  (defconstant +sigd-bits+ 52
+    "Number of bits in the significand part of the floating point type.")
+
   ;; Because of the floating point encoding and decoding optimizations,
   ;; only the 32 bit architecture is supported when the code of a double-float 
   ;; is represented by two integer codes. If one wants to add support for the
   ;; 64 bit architectures, one should reimplement the float-encoder, 
   ;; float-decoder, buffer-read-float and buffer-write-float functions.
-  (defconstant +bits-per-float+ (+ 1 +expo-bits+ +sigd-bits+))
-  (defconstant +bytes-per-float+ (/ +bits-per-float+ +bits-per-byte+))
-  (defconstant +max-sigd+ (expt 2 +sigd-bits+))
-  (defconstant +expo-offset+ (1- (expt 2 (1- +expo-bits+))))
+  (defconstant +bits-per-float+ (+ 1 +expo-bits+ +sigd-bits+)
+    "Number of bits in the floating point type.")
+  (defconstant +bytes-per-float+ (/ +bits-per-float+ +bits-per-byte+)
+    "Number of bytes in the floating point type.")
+  (defconstant +max-sigd+ (expt 2 +sigd-bits+)
+    "Maximum significand value of the floating point type.")
+  (defconstant +expo-offset+ (1- (expt 2 (1- +expo-bits+)))
+    "Exponent offset for floating point encoding/decoding.")
   (deftype float-code-t () `(unsigned-byte ,+bits-per-float+)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Byte buffer for network communication.
 
-(defparameter *init-buffer-size* 2048) ; in bytes
+(defparameter *init-buffer-size* 2048 "Initial buffer size in bytes.")
 (declaim (type fixnum *init-buffer-size*))
 
-(defstruct buffer ; An adjustable unsigned byte data buffer.
+(defstruct buffer
+  "An unsigned byte based data buffer."
   (offset 0 :type fixnum) ; Position from/to where reading/writing happens.
   (size 0 :type fixnum) ; Number of bytes in the buffer.
   (bytes (make-array *init-buffer-size* :element-type 'byte-t)
          :type byte-array-t)) ; Data stored in the buffer.
+
+(setf (documentation 'buffer-p 'function)
+      "Returns T if type if OBJECT is buffer.")
+(setf (documentation 'make-buffer 'function)
+      "Makes an unsigned byte based data buffer.")
+(setf (documentation 'buffer-offset 'function)
+      "Returns the pointer of the buffer from/to read/write happens.")
+(setf (documentation 'buffer-size 'function)
+      "Returns the number of (used) bytes in the buffer.")
+(setf (documentation 'buffer-bytes 'function)
+      "Returns the storage (byte array) of the buffer.")
 
 (defun buffer-clear (buffer)
   "Clears the content of BUFFER."
@@ -73,8 +99,13 @@
 ;;; Conditions.
 
 (define-condition empty-buffer-error (error)
-  ((otype :reader otype :initarg :otype))
-  (:documentation "Raised if not enough data to read an object of OTYPE.")
+  ((otype
+    :reader otype
+    :initarg :otype
+    :type symbol
+    :documentation "Object type which is tried to read."))
+  (:documentation "Raised if there is not enough data
+ to read an object of OTYPE.")
   (:report (lambda (condition stream)
              (format stream "Not enough buffer data to read type ~A."
                      (otype condition)))))

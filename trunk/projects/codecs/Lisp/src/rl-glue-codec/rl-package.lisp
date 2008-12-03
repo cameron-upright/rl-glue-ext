@@ -25,7 +25,7 @@
   (:use #:common-lisp #:usocket)
   (:export
    #:get-codec-version
-   #:get-svn-codec-version
+   #:get-vc-codec-version
    #:*init-buffer-size*
    ;; rl-common
    #:make-int-array
@@ -77,5 +77,6 @@
     (safety 0)
     (space 0)
     (debug 1)
-    (compilation-speed 0)))
+    (compilation-speed 0))
+  "General optimization settings of the package.")
 

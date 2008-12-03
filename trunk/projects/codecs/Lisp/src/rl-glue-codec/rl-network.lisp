@@ -22,54 +22,101 @@
 
 ;;; RL-Glue needs to know what type of object is trying to connect.
 
-(defconstant +k-experiment-connection+ 1)
-(defconstant +k-agent-connection+ 2)
-(defconstant +k-environment-connection+ 3)
+(defconstant +k-experiment-connection+ 1
+  "Network code of experiment connection establishment event.")
+(defconstant +k-agent-connection+ 2
+  "Network code of agent connection establishment event.")
+(defconstant +k-environment-connection+ 3
+  "Network code of environment connection establishment event.")
 
 ;;; The server starts by sending one of these values to the client 
 ;;; to let it know what type of event to respond to.
 
-(defconstant +k-agent-init+ 4)
-(defconstant +k-agent-start+ 5)
-(defconstant +k-agent-step+ 6)
-(defconstant +k-agent-end+ 7)
-(defconstant +k-agent-cleanup+ 8)
-(defconstant +k-agent-freeze+ 9) ; deprecated, not handled anymore
-(defconstant +k-agent-message+ 10)
+(defconstant +k-agent-init+ 4
+  "Network code of agent initialization event.")
+(defconstant +k-agent-start+ 5
+  "Network code of agent start event.")
+(defconstant +k-agent-step+ 6
+  "Network code of agent step event.")
+(defconstant +k-agent-end+ 7
+  "Network code of agent episode end event.")
+(defconstant +k-agent-cleanup+ 8
+  "Network code of agent cleanup event.")
+(defconstant +k-agent-freeze+ 9
+  "Network code of agent freeze event (deprecated and ignored).")
+(defconstant +k-agent-message+ 10
+  "Network code of agent message sending event.")
 
-(defconstant +k-env-init+ 11)
-(defconstant +k-env-start+ 12)
-(defconstant +k-env-step+ 13)
-(defconstant +k-env-cleanup+ 14)
-(defconstant +k-env-load-state+ 15)
-(defconstant +k-env-load-random-seed+ 16)
-(defconstant +k-env-save-state+ 17)
-(defconstant +k-env-save-random-seed+ 18)
-(defconstant +k-env-message+ 19)
+(defconstant +k-env-init+ 11
+  "Network code of environment initialization event.")
+(defconstant +k-env-start+ 12
+  "Network code of environment start event.")
+(defconstant +k-env-step+ 13
+  "Network code of environment step event.")
+(defconstant +k-env-cleanup+ 14
+  "Network code of environment cleanup event.")
+(defconstant +k-env-load-state+ 15
+  "Network code of environment state loading event
+ (deprecated and ignored).")
+(defconstant +k-env-load-random-seed+ 16
+  "Network code of environment random seed loading event
+ (deprecated and ignored).")
+(defconstant +k-env-save-state+ 17
+  "Network code of environment state saving event
+ (deprecated and ignored).")
+(defconstant +k-env-save-random-seed+ 18
+  "Network code of environment random seed saving event
+ (deprecated and ignored).")
+(defconstant +k-env-message+ 19
+  "Network code of environment message sending event.")
 
-(defconstant +k-rl-init+ 20)
-(defconstant +k-rl-start+ 21)
-(defconstant +k-rl-step+ 22)
-(defconstant +k-rl-cleanup+ 23)
-(defconstant +k-rl-return+ 24)
-(defconstant +k-rl-numsteps+ 25)
-(defconstant +k-rl-numepisodes+ 26)
-(defconstant +k-rl-episode+ 27)
-(defconstant +k-rl-load-state+ 28)
-(defconstant +k-rl-load-random-seed+ 29)
-(defconstant +k-rl-save-state+ 30)
-(defconstant +k-rl-save-random-seed+ 31)
-(defconstant +k-rl-freeze+ 32) ; deprecated, not handled anymore
-(defconstant +k-rl-agent-message+ 33)
-(defconstant +k-rl-env-message+ 34)
-(defconstant +k-rl-term+ 35)
+(defconstant +k-rl-init+ 20
+  "Network code of experiment initialization event.")
+(defconstant +k-rl-start+ 21
+  "Network code of experiment start event.")
+(defconstant +k-rl-step+ 22
+  "Network code of experiment step event.")
+(defconstant +k-rl-cleanup+ 23
+  "Network code of experiment cleanup event.")
+(defconstant +k-rl-return+ 24
+  "Network code of experiment total reward query event.")
+(defconstant +k-rl-numsteps+ 25
+  "Network code of experiment number of steps query event.")
+(defconstant +k-rl-numepisodes+ 26
+  "Network code of experiment number of episodes query event.")
+(defconstant +k-rl-episode+ 27
+  "Network code of experiment episode running event.")
+(defconstant +k-rl-load-state+ 28
+  "Network code of experiment state loading event
+ (deprecated and ignored).")
+(defconstant +k-rl-load-random-seed+ 29
+  "Network code of experiment random seed loading event
+ (deprecated and ignored).")
+(defconstant +k-rl-save-state+ 30
+  "Network code of experiment state saving event
+ (deprecated and ignored).")
+(defconstant +k-rl-save-random-seed+ 31
+  "Network code of experiment random seed saving event
+ (deprecated and ignored).")
+(defconstant +k-rl-freeze+ 32
+  "Network code of experiment freeze event
+ (deprecated and ignored).")
+(defconstant +k-rl-agent-message+ 33
+  "Network code of experiment message sending to agent event.")
+(defconstant +k-rl-env-message+ 34
+  "Network code of experiment message sending to environment event.")
+(defconstant +k-rl-term+ 35
+  "Network code of experiment termination event.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Network constants.
 
-(defparameter +k-localhost+ "127.0.0.1")
-(defparameter +k-default-port+ 4096)
-(defparameter +k-retry-timeout+ 10)
+(defparameter +k-localhost+ "127.0.0.1"
+  "IP address of the local host.")
+(defparameter +k-default-port+ 4096
+  "Default port on which connection is tried to the rl-glue server.")
+(defparameter +k-retry-timeout+ 10
+  "Default timeout seconds between two connection attempts.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Network connection.
