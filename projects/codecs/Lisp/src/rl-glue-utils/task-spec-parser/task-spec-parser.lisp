@@ -72,7 +72,7 @@
   (:documentation "Task specification parameters."))
 
 (defun parse-task-spec-range (spec-string)
-  "Parses a renge from SPEC-STRING and returns (min max)."
+  "Parses a range from SPEC-STRING and returns the range boundaries."
   (multiple-value-bind (matched matches)
       (cl-ppcre:scan-to-strings "\\[\\s*([^,\\s]*)\\s*,?\\s*([^,\\s]*)\\]"
                                 spec-string)
@@ -87,7 +87,7 @@
         (assert (or (not (numberp min))
                     (not (numberp max))
                     (<= min max)) (min max))
-        (values min max)))))
+        (cons min max)))))
 
 (defun parse-task-spec-oa (spec-string)
   "Parses the observation or the action part of the task specification, 
@@ -106,7 +106,7 @@ and returns (dim ddim cdim types mins maxs)."
          with mins = '()
          with maxs = '()
          for typstr in type-matches
-         for range in matches ; matches list only contains ranges
+         for range-string in matches ; matches list only contains ranges
          do
            (assert (= 1 (length typstr)))
            (let ((typch (char-downcase (char typstr 0))))
@@ -115,10 +115,9 @@ and returns (dim ddim cdim types mins maxs)."
                ((#\i) (incf ddim))
                ((#\f) (incf cdim)))
              (push typch types))
-           (multiple-value-bind (min max)
-               (parse-task-spec-range range)
-             (push min mins)
-             (push max maxs))
+           (let ((range (parse-task-spec-range range-string)))
+             (push (first range) mins)
+             (push (rest range) maxs))
          finally
            (assert (= dim (+ ddim cdim)))
            (return (values dim ddim cdim

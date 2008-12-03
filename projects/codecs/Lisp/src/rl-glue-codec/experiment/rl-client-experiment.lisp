@@ -44,22 +44,22 @@ If the attempt is refused, it is tried again MAX-RETRY times, waiting for
 RETRY-TIMEOUT second between them.
 
 PARAMETERS:
-    exp           : experiment in use [rl-glue:experiment]
+    exp           : experiment in use [experiment]
     host          : host name or address [string]
-                    (key parameter, default is rl-glue:+k-localhost+)
+                    (key parameter, default is +k-localhost+)
     port          : port number [0 <= integer <= 65535]
-                    (key parameter, default is rl-glue:+k-default-port+)
+                    (key parameter, default is +k-default-port+)
     max-retry     : maximum number of connection trials [nil or 0 < integer]
                     (key parameter, default is nil)
     retry-timeout : duration in seconds waited between retries [0 <= integer]
-                    (key parameter, default is rl-glue:+k-retry-timeout+)
+                    (key parameter, default is +k-retry-timeout+)
 RETURNS:
     task specification [string]"
   (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (unless socket
       (forced-format "RL-Glue Lisp Experiment Codec Version ~a, Build ~a~%"
-                     (get-codec-version) (get-svn-codec-version))
+                     (get-codec-version) (get-vc-codec-version))
       (setf socket (rl-wait-for-connection host
                                            port
                                            max-retry
@@ -78,11 +78,11 @@ RETURNS:
 the upcoming-action slot so that it can be used on the next step.
 
 PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
+    exp : experiment in use [experiment]
 
 RETURNS:
-    first observation [rl-glue:observation]
-    first action [rl-glue:action]"
+    first observation [observation]
+    first action [action]"
   (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
@@ -102,13 +102,13 @@ the user doesn't have to keep track of the action. If the
 end-of-episode observation occurs, then no action is returned.
 
 PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
+    exp : experiment in use [experiment]
 
 RETURNS:
-    reward of the step [double-float]
-    observation after the step [rl-glue:observation]
+    reward of the step [float]
+    observation after the step [observation]
     terminal flag after the step [boolean]
-    next action (nil on terminal state) [rl-glue:action]"
+    next action (nil on terminal state) [action]"
   (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
@@ -126,10 +126,10 @@ RETURNS:
   "Provides an opportunity to reclaim resources allocated by rl-init.
 
 PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
+    exp : experiment in use [experiment]
 
 RETURNS:
-    used experiment [rl-glue:experiment]"
+    used experiment [experiment]"
   (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
@@ -143,10 +143,10 @@ RETURNS:
   "Finishes the experiment by closing its network resources (socket).
 
 PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
+    exp : experiment in use [experiment]
 
 RETURNS:
-    used experiment [rl-glue:experiment]"
+    used experiment [experiment]"
   (with-accessors ((socket exp-socket)) exp
     (when socket
       (rl-close-socket socket)
@@ -160,10 +160,10 @@ done within rl-return however, any discounting of rewards must be done
 inside the environment or agent.
 
 PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
+    exp : experiment in use [experiment]
 
 RETURNS:
-    cummulated total reward [double-float]"
+    cummulated total reward [float]"
   (declare #.*optimize-settings*)
   (with-accessors ((socket exp-socket) (buffer exp-buffer)) exp
     (buffer-clear buffer)
@@ -177,7 +177,7 @@ RETURNS:
   "Return the number of steps elapsed in the current or just completed episode.
 
 PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
+    exp : experiment in use [experiment]
 
 RETURNS:
     number of steps [0 <= integer]"
@@ -194,7 +194,7 @@ RETURNS:
   "Return the number of episodes finished after rl-init.
 
 PARAMETERS:
-    exp : experiment in use [rl-glue:experiment]
+    exp : experiment in use [experiment]
 
 RETURNS:
     number of episodes [0 <= integer]"
@@ -218,7 +218,7 @@ before max-num-steps is reached, the agent does not call agent-end, it
 simply stops.
 
 PARAMETERS:
-    exp           : experiment in use [rl-glue:experiment]
+    exp           : experiment in use [experiment]
     max-num-steps : maximum number of steps [0 < integer]
                     [optional parameter, default is no limit]
 RETURNS:
@@ -238,7 +238,7 @@ RETURNS:
 reply string given by the agent. See agent-message for more details.
 
 PARAMETERS:
-    exp     : experiment in use [rl-glue:experiment]
+    exp     : experiment in use [experiment]
     message : message to send [string]
 
 RETURNS:
@@ -258,7 +258,7 @@ RETURNS:
 reply string given by the environment. See env-message for more details.
 
 PARAMETERS:
-    exp     : experiment in use [rl-glue:experiment]
+    exp     : experiment in use [experiment]
     message : message to send [string]
 
 RETURNS:

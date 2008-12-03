@@ -33,7 +33,7 @@ observation and action space, as well as whether the task is episodic
 or continuous.
 
 PARAMETERS:
-    env : environment object in use [rl-glue:environment]
+    env : environment object in use [environment]
 
 RETURNS:
     task specification [string]"))
@@ -46,10 +46,10 @@ first observation given the agent is in the start state. Note the start
 state cannot also be a terminal state.
 
 PARAMETERS:
-    env : environment object in use [rl-glue:environment]
+    env : environment object in use [environment]
 
 RETURNS:
-    1st observation of an episode [rl-glue:observation]"))
+    1st observation of an episode [observation]"))
 
 (defgeneric env-step (env action)
   (:documentation
@@ -57,12 +57,12 @@ RETURNS:
 determine what the reward and next state are for that transition.
 
 PARAMETERS:
-    env    : environment object in use [rl-glue:environment]
-    action : action to be performed [rl-glue:action]
+    env    : environment object in use [environment]
+    action : action to be performed [action]
 
 RETURNS:
-    reward        : reward of the step [double-float]
-    observation   : observation after the step [rl-glue:observation]
+    reward        : reward of the step [float]
+    observation   : observation after the step [observation]
     terminal flag : shows whether the episode is ended [boolean]"))
 
 (defgeneric env-cleanup (env)
@@ -71,7 +71,7 @@ RETURNS:
 once for every call to env-init.
 
 PARAMETERS:
-    env : environment object in use [rl-glue:environment]
+    env : environment object in use [environment]
 
 RETURNS:
     (none)"))
@@ -84,7 +84,7 @@ to modify the environment mid experiment. Any information that needs to
 passed in or out of the environment can be handled by this function.
 
 PARAMETERS:  
-    env           : environment object in use [rl-glue:environment]
+    env           : environment object in use [environment]
     input-message : recieved message [string]
 
 RETURNS:
@@ -94,6 +94,7 @@ RETURNS:
 ;;; Environment client methods surrounded by buffer handling.
 
 (defun on-env-init (env buffer)
+  "Handles the buffer operations for env-init."
   (declare #.*optimize-settings*)
   (let ((task-spec (env-init env)))
     (buffer-clear buffer)
@@ -101,6 +102,7 @@ RETURNS:
   env)
 
 (defun on-env-start (env buffer)
+  "Handles the buffer operations for env-start."
   (declare #.*optimize-settings*)
   (let ((observation (env-start env)))
     (buffer-clear buffer)
@@ -108,6 +110,7 @@ RETURNS:
   env)
 
 (defun on-env-step (env buffer)
+  "Handles the buffer operations for env-step."
   (declare #.*optimize-settings*)
   (let ((action (rl-read-action buffer)))
     (multiple-value-bind (reward observation terminal)
@@ -119,12 +122,14 @@ RETURNS:
   env)
 
 (defun on-env-cleanup (env buffer)
+  "Handles the buffer operations for env-cleanup."
   (declare #.*optimize-settings*)
   (env-cleanup env)
   (buffer-clear buffer)
   env)
 
 (defun on-env-message (env buffer)
+  "Handles the buffer operations for env-message."
   (declare #.*optimize-settings*)
   (let ((input-msg (rl-read-message buffer)))
     (let ((output-msg (env-message env input-msg)))
@@ -136,6 +141,7 @@ RETURNS:
 ;;; Environment client event loop.
 
 (defun run-env-event-loop (env socket buffer)
+  "Communication loop of an environment with the rl-glue server."
   (declare #.*optimize-settings*)
   (loop do
        (buffer-clear buffer)
@@ -173,21 +179,21 @@ attempt is refused, it is tried again MAX-RETRY times, waiting for
 RETRY-TIMEOUT second between them.
 
 PARAMETERS:
-    env           : environment object in use [rl-glue:environment]
+    env           : environment object in use [environment]
     host          : host name or address [string]
-                    (key parameter, default is rl-glue:+k-localhost+)
+                    (key parameter, default is +k-localhost+)
     port          : port number [0 <= integer <= 65535]
-                    (key parameter, default is rl-glue:+k-default-port+)
+                    (key parameter, default is +k-default-port+)
     max-retry     : maximum number of connection trials [nil or 0 < integer]
                     (key parameter, default is nil)
     retry-timeout : duration in seconds waited between retries [0 <= integer]
-                    (key parameter, default is rl-glue:+k-retry-timeout+)
+                    (key parameter, default is +k-retry-timeout+)
     autoreconnect : reconnecting after a finished experiment [boolean]
                     (key parameter, default is nil)
 RETURNS:
     (none)"
   (forced-format "RL-Glue Lisp Environment Codec Version ~a, Build ~a~%"
-                 (get-codec-version) (get-svn-codec-version))
+                 (get-codec-version) (get-vc-codec-version))
   (rl-runner env +k-environment-connection+ #'run-env-event-loop
              host port max-retry retry-timeout autoreconnect))
 
