@@ -63,7 +63,7 @@ public class IntRange extends AbstractRange {
      * for big of an array you need to hold all possible values.
      * 
      * Behavior is undefined if min or max has a special value.
-     * @return
+     * @return The size of the range (max-min+1) if neither is a special value (NEGINF, UNSPEC, etc)
      */
     public int getRangeSize(){
         return getMax()-getMin()+1;

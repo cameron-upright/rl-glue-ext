@@ -55,7 +55,7 @@ public class DoubleRange extends AbstractRange {
      * Get the range size.  If the range is [0,10] then the range is 10.0. If the
      * range is [.5,1.5], the range is 1.0, etc.  Useful for normalizing.  Behavior
      * is undefined if min or max has a special value.
-     * @return
+     * @return The size of the range (max-min) if neither is a special value (NEGINF, UNSPEC, etc)
      */
     public double getRangeSize(){
         return getMax()-getMin();
