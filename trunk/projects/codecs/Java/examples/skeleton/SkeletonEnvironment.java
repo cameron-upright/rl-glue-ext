@@ -28,6 +28,10 @@ import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
+import org.rlcommunity.rlglue.codec.taskspec.TaskSpecVRLGLUE3;
+import org.rlcommunity.rlglue.codec.taskspec.TaskSpec;
+import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
+import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
 
 /**
  *  This is a very simple environment with discrete observations corresponding to states labeled {0,1,...,19,20}
@@ -43,7 +47,30 @@ public class SkeletonEnvironment implements EnvironmentInterface {
     private int currentState=10;
     
     public String env_init() {
-       return "2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]";
+	
+	//Create a task spec programatically.  This task spec encodes that state, action, and reward space for the problem.
+	//You could forgo the task spec if your agent and environment have been created specifically to work with each other
+	//ie, there is no need to share this information at run time.  You could also use your own ad-hoc task specification language,
+	//or use the official one but just hard code the string instead of constructing it this way.
+	    TaskSpecVRLGLUE3 theTaskSpecObject = new TaskSpecVRLGLUE3();
+        theTaskSpecObject.setEpisodic();
+        theTaskSpecObject.setDiscountFactor(1.0d);
+	//Specify that there will be an integer observation [0,20] for the state
+        theTaskSpecObject.addDiscreteObservation(new IntRange(0, 20));
+	//Specify that there will be an integer action [0,1]
+        theTaskSpecObject.addDiscreteAction(new IntRange(0, 1));
+	//Specify the reward range [-1,1]
+        theTaskSpecObject.setRewardRange(new DoubleRange(-1, 1));
+
+        String taskSpecString = theTaskSpecObject.toTaskSpec();
+        TaskSpec.checkTaskSpec(taskSpecString);
+
+		//This actual string this makes is:
+		//VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1.0 OBSERVATIONS INTS (1 0 20)  ACTIONS INTS (1 0 1)  REWARDS (1 -1.0 1.0)  EXTRA
+		
+		//This could be simplified a bit if you made it manually to
+		//VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1.0 OBSERVATIONS INTS (0 20)  ACTIONS INTS (0 1)  REWARDS (-1.0 1.0)  EXTRA
+		return taskSpecString;
     }
 
     public Observation env_start() {

@@ -28,6 +28,9 @@ import org.rlcommunity.rlglue.codec.AgentInterface;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.util.AgentLoader;
+import org.rlcommunity.rlglue.codec.taskspec.TaskSpec;
+import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
+import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
 
 /**
  *
@@ -40,6 +43,20 @@ public class SkeletonAgent implements AgentInterface {
     Observation lastObservation;
 
     public void agent_init(String taskSpecification) {
+		TaskSpec theTaskSpec=new TaskSpec(taskSpecification);
+		System.out.println("Skeleton agent parsed the task spec.");
+		System.out.println("Observation have "+theTaskSpec.getNumDiscreteObsDims()+" integer dimensions");
+		System.out.println("Actions have "+theTaskSpec.getNumDiscreteActionDims()+" integer dimensions");
+		IntRange theObsRange=theTaskSpec.getDiscreteObservationRange(0);
+		System.out.println("Observation (state) range is: "+theObsRange.getMin()+" to "+theObsRange.getMax());
+		IntRange theActRange=theTaskSpec.getDiscreteActionRange(0);
+		System.out.println("Action range is: "+theActRange.getMin()+" to "+theActRange.getMax());
+		DoubleRange theRewardRange=theTaskSpec.getRewardRange();
+		System.out.println("Reward range is: "+theRewardRange.getMin()+" to "+theRewardRange.getMax());
+		
+		//In more complex agents, you would also check for continuous observations and actions, discount factors, etc.
+		//Also, these ranges can have special values like "NEGINF, POSINF, UNSPEC (unspecified)".  There is no guarantee
+		//that they are all specified and that they are all nice numbers.
     }
 
     public Action agent_start(Observation observation) {

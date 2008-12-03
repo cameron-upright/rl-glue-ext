@@ -29,7 +29,7 @@ This software project is licensed under the Apache-2.0\footnote{\url{http://www.
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 This project has a home here:\\
-\url{http://rl-glue-ext.googlecode.com}
+\url{http://glue.rl-community.org/Home/Extensions/java-codec}
 
 
 
@@ -60,7 +60,7 @@ Technically all you really \textbf{need} is the JAR archive of the codec:\newlin
 \subsection{Installing the Codec}
 There is no real ``installation'' for the codec per-se.  The important thing is to put the \texttt{JavaRLGlueCodec.jar} somewhere that is easy to get at.  If you want to be fancy, you can probably put \texttt{JavaRLGlueCodec.jar}
 into a directory on your Java system classpath.  For the rest of this document, we'll assume you've put this project in a subdirectory of your 
-home directory called PythonCodec: \texttt{\~{}/JavaCodec/JavaRLGlueCodec.jar}.
+home directory called JavaCodec:\\ \texttt{\~{}/JavaCodec/JavaRLGlueCodec.jar}.
 
 \textbf{POSSIBLE CONTRIBUTION}: IF someone wants to investigate the options for having a script ``install'' \texttt{JavaRLGlueCodec.jar} into a system classpath, we would like to have your help!
 
@@ -219,7 +219,16 @@ You should see output like the following if it worked:
 	     Experiment Codec Connected
 	     RL-Glue :: Experiment connected.
 
-	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]
+	     Skeleton agent parsed the task spec.
+	     Observation have 1 integer dimensions
+	     Actions have 1 integer dimensions
+	     Observation (state) range is: 0 to 20
+	     Action range is: 0 to 1
+	     Reward range is: -1.0 to 1.0
+	     RL_init called, the environment sent task spec:
+VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1.0 
+OBSERVATIONS INTS (1 0 20)  ACTIONS INTS (1 0 1)  REWARDS (1 -1.0 1.0)  EXTRA 
+
 
 
 	----------Sending some sample messages----------
@@ -256,9 +265,52 @@ you want to keep beyond the method it was given to you.  The same rules of thumb
 
 
 \section{Advanced Features}
-This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
+\subsection{Task Specification Parser}
+As of fall 2008, we've updated the task specification language:\\
+\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}
 
-Someone should write this later (Opportunity to contribute!).
+As of writing, the Java codec is the only codec that has a valid task spec parser implementation.  The specific class is:\\
+\texttt{org.rlcommunity.rlglue.codec.taskspec.TaskSpecVRLGLUE3}
+
+\texttt{TaskSpecVRLGlue3} should be used in environments to create task specification strings in \texttt{env\_init}.  The Skeleton Environment provides an example of creating a task spec in this way.  There are several advanced examples of this in the RL-Library.
+
+\texttt{TaskSpecVRLGlue3} can also be used in the agent to get the ranges of the actions, observations, and rewards, etc.  The Skeleton Agent provides an example of how to do this.
+
+
+
+
+
+\subsection{Connecting on custom ports to custom hosts}
+This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
+Sometimes you will want run the \texttt{rl\_glue} server on a port other than the default
+($4096$) either because of firewall issues, or because you want to run multiple instances on the same machine.
+
+In these cases, you can tell your Java agent, environment, or experiment program to connect on a custom port and/or to a custom host using the environment variables \texttt{RLGLUE\_PORT} and \texttt{RLGLUE\_HOST}.
+
+For example, try the following code:
+\begin{verbatim}
+> $ RLGLUE_PORT=1025 RLGLUE_HOST=yahoo.ca java -classpath \
+ ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgentSkeletonAgent
+\end{verbatim}
+
+That command could give output like:
+\begin{verbatim}
+	RL-Glue Java Agent Codec Version: 2.0 (Build:390M)
+		Connecting to yahoo.ca on port 1025...
+\end{verbatim}
+
+This works for agents, environments, and experiments.  In practice, yahoo.ca probably isn't running an RL-Glue server.
+
+You can specify the port, the host, neither, or both.  Ports must be numbers, hosts can be hostnames or ip addresses. Default port value is $4096$ and host is $127.0.0.1$.
+
+If you don't like typing these variables every time, you can export them so that the value will be set for future
+calls  in the same session:
+\begin{verbatim}
+	> $ export RLGLUE_PORT=1025
+	> $ export RLGLUE_HOST=mydomain.com
+\end{verbatim}
+
+Remember, on most *nix systems, you need \texttt{superuser} privileges to listen on ports lower than $1024$, so you probably want to pick one higher than that.
 
 \section{Codec Specification Reference}
 This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
@@ -333,7 +385,12 @@ rlglue.agent.Agent               ==>    org.rlcommunity.rlglue.codec.AgentInterf
 rlglue.environment.Environment   ==>    org.rlcommunity.rlglue.codec.EnvironmentInterface
 \end{verbatim}
 
-Those three things should cover most of it.  If someone makes a very strong case, we can probably create a codec that is completely compatible with the old naming conventions.  However, I assure you that I uploaded
+4) \texttt{org.rlcommunity.rlglue.codec.types.Reward\_observation} has been renamed to:\\
+\texttt{org.rlcommunity.rlglue.codec.types.Reward\_observation\_terminal}
+
+5) \texttt{Random\_seed\_key} and \texttt{State\_key} have been removed
+
+Those few things should cover most of it.  If someone makes a very strong case, we can probably create a codec that is completely compatible with the old naming conventions.  However, I assure you that I uploaded
 several tens of thousands of lines of code for the RL-Viz, RL-Library, and BT-AgentLib projects in only about 30 minutes total.
 
 \textbf{POSSIBLE CONTRIBUTION}: If we've missed anything, or there is an easier way, please let us know!
@@ -351,11 +408,11 @@ The first (original) method was to call the main() method of the AgentLoader/Env
 Agent/Env class you wanted to load.  Hopefully you remembered to put it in your classpath.  This approach inevitably lead to lots of typing to load an agent, as frustrating run-time failures when paths weren't set right.
 Here is an example of how that looks:
 \begin{verbatim}
-	java -classpath $CODECJAR:/to/Agent/classes org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
+	java -classpath $CODECJAR:/to/classes org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
 \end{verbatim}
 
 The second method was to bypass the AgentLoader and go through \htmladdnormallink{\texttt{RLGlueCore}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlueCore.html}, 
-which is contains the default \texttt{main} method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
+which contains the default \texttt{main} method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
 \begin{verbatim}
 	java -classpath /to/Agent/classes -jar $CODECJAR myAgent
 \end{verbatim}
@@ -383,7 +440,7 @@ We're waiting to hear your questions!
 
 \subsection{Where can I get more help?}
 \subsubsection{Online FAQ}
-We suggest checking out the online RL-Glue C/C++ Codec FAQ:\newline
+We suggest checking out the online RL-Glue Java Codec FAQ:\newline
 \url{http://glue.rl-community.org/Home/Extensions/java-codec#TOC-Frequently-Asked-Questions}
 
 The online FAQ may be more current than this document, which may have been distributed some time ago.
@@ -394,17 +451,6 @@ First, you should join the RL-Glue Google Group Mailing List:\newline
 
 We're happy to answer any questions about RL-Glue.  Of course, try to search through previous messages first in case your question has been answered before.
 
-
-\subsection{What's up with the Task Spec Parser?}
-We've distributed the existing task spec parser from the previous version of RL-Glue with this codec. 
-However, it is not officially supported as we are trying to ratify a new and improved task 
-specification language.
-
-We will release an updated codec with certified task spec parser once the new language has been 
-ratified.
-
-For more information, please go here:\newline
-\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}
 
 \section{Credits and Acknowledgements}
 Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.

@@ -124,14 +124,14 @@ public abstract class AbstractRange {
     
     /**
      * Override this is descendant classes and only use super method if min is special.
-     * @return
+     * @return The minimum value special status as a string (one of NEGINF, POSINF, UNSPEC, NONE
      */
     public String getMinAsString(){
         return minSpecial;
     }
     /**
      * Override this is descendant classes and only use super method if max is special.
-     * @return
+     * @return The maximum value special status as a string (one of NEGINF, POSINF, UNSPEC, NONE
      */
     public String getMaxAsString(){
         return maxSpecial;

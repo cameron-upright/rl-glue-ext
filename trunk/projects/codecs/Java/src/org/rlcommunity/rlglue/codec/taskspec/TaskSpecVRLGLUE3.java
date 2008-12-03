@@ -353,7 +353,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
 
     /**
      * Returns a person-friendly string  version of the object.
-     * @return
+     * @return a person friendly, human readable verson of the task spec.
      */
     @Override
     public String toString() {
@@ -397,7 +397,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
 
     /**
      * Return a valid RLGLUEV3 task spec for this object.
-     * @return
+     * @return a string representing a valid RLGLUEV3 task spec for this object.
      */
     public String toTaskSpec() {
         StringBuilder TS = new StringBuilder();
@@ -567,7 +567,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
     //I pasted all of the taskSpecDelegate methods below.
     /**
-     * @see rlglue.utilities.TaskSpec#getStringRepresentation()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getStringRepresentation()
      */
     @Override
     protected String getStringRepresentation() {
@@ -575,7 +575,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMinNegInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMinNegInfinity(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -584,7 +584,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMinNegInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMinNegInfinity(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -593,7 +593,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMaxPosInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMaxPosInfinity(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -602,7 +602,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMaxPosInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMaxPosInfinity(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -611,7 +611,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMinUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMinUnknown(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -620,7 +620,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMaxUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMaxUnknown(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -629,7 +629,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMinUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMinUnknown(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -638,7 +638,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMaxUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMaxUnknown(int index)
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -647,7 +647,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMinRewardNegInf()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMinRewardNegInf()
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -656,7 +656,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMaxRewardInf()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMaxRewardInf()
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -665,7 +665,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMinRewardUnknown()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMinRewardUnknown()
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -674,7 +674,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMaxRewardUnknown()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMaxRewardUnknown()
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -683,7 +683,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getVersion() 
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getVersion() 
      */
     @Override
     public double getVersion() {
@@ -691,7 +691,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getEpisodic()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getEpisodic()
      * @deprecated Use getProblemType
      */
     @Override
@@ -711,7 +711,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getNumContinuousObsDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumContinuousObsDims()
      */
     @Override
     public int getNumContinuousObsDims() {
@@ -719,7 +719,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getNumDiscreteObsDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumDiscreteObsDims()
      */
     @Override
     public int getNumDiscreteObsDims() {
@@ -727,7 +727,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getNumDiscreteActionDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumDiscreteActionDims()
      */
     @Override
     public int getNumDiscreteActionDims() {
@@ -735,7 +735,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getNumContinuousActionDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumContinuousActionDims()
      */
     @Override
     public int getNumContinuousActionDims() {
@@ -743,7 +743,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getRewardMax()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getRewardMax()
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -752,7 +752,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getRewardMin()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getRewardMin()
      * @deprecated Just get the range and ask that object this question.
      */
     @Override
@@ -761,7 +761,7 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getExtraString()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getExtraString()
      */
     @Override
     public String getExtraString() {

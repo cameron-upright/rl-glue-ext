@@ -77,7 +77,7 @@ public class Reward_observation_terminal {
      * One day we will make the members private and you'll have to use accessors.
      * It would be better if you used the version that returns a boolean, but this  is
      * better than accessing the members directly.
-     * @return
+     * @return an integer, 1 if terminal, 0 if not
      */
     public int getTerminal(){
         return terminal;

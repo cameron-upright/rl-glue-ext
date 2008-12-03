@@ -48,218 +48,218 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 public abstract class TaskSpecDelegate {
 
     /**
-     * @see rlglue.utilities.TaskSpec#dump()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#dump()
      */
     protected String dump() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getStringRepresentation()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getStringRepresentation()
      */
     protected String getStringRepresentation() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMinNegInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMinNegInfinity(int index)
      */
     public boolean isObsMinNegInfinity(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isObsMinNegInfinity");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMinNegInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMinNegInfinity(int index)
      */
     public boolean isActionMinNegInfinity(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isActionMinNegInfinity");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMaxPosInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMaxPosInfinity(int index)
      */
     public boolean isObsMaxPosInfinity(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isObsMaxPosInfinity");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMaxPosInfinity(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMaxPosInfinity(int index)
      */
     public boolean isActionMaxPosInfinity(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isActionMaxPosInfinity");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMinUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMinUnknown(int index)
      */
     public boolean isObsMinUnknown(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isObsMinUnknown");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isObsMaxUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isObsMaxUnknown(int index)
      */
     public boolean isObsMaxUnknown(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isObsMaxUnknown");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMinUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMinUnknown(int index)
      */
     public boolean isActionMinUnknown(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isActionMinUnknown");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isActionMaxUnknown(int index)
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isActionMaxUnknown(int index)
      */
     public boolean isActionMaxUnknown(int index) {
         throw new NoSuchMethodError("This version of the task spec does not support: isActionMaxUnknown");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMinRewardNegInf()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMinRewardNegInf()
      */
     public boolean isMinRewardNegInf() {
         throw new NoSuchMethodError("This version of the task spec does not support: isMinRewardNegInf");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMaxRewardInf()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMaxRewardInf()
      */
     public boolean isMaxRewardInf() {
         throw new NoSuchMethodError("This version of the task spec does not support: isMaxRewardInf");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMinRewardUnknown()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMinRewardUnknown()
      */
     public boolean isMinRewardUnknown() {
         throw new NoSuchMethodError("This version of the task spec does not support: isMinRewardUnknown");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#isMaxRewardUnknown()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#isMaxRewardUnknown()
      */
     public boolean isMaxRewardUnknown() {
         throw new NoSuchMethodError("This version of the task spec does not support: isMaxRewardUnknown");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getVersion() 
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getVersion() 
      */
     public double getVersion() {
         throw new NoSuchMethodError("This version of the task spec does not support: getVersion");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getEpisodic()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getEpisodic()
      */
     public char getEpisodic() {
         throw new NoSuchMethodError("This version of the task spec does not support: getEpisodic");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getObsDim()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getObsDim()
      */
     public int getObsDim() {
         throw new NoSuchMethodError("This version of the task spec does not support: getobsDim");
     }
     /**
-     * @see rlglue.utilities.TaskSpec#getNumDiscreteObsDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumDiscreteObsDims()
      */
     public int getNumDiscreteObsDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumDiscreteObsDims");
     }
     /**
-     * @see rlglue.utilities.TaskSpec#getNumContinuousObsDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumContinuousObsDims()
      */
     public int getNumContinuousObsDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumContinuousActionDims");
     }
     /**
-     * @see rlglue.utilities.TaskSpec#getObsTypes()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getObsTypes()
      */
     public char[] getObsTypes() {
         throw new NoSuchMethodError("This version of the task spec does not support: getObsTypes");
     }
     /**
-     * @see rlglue.utilities.TaskSpec#getObsMins()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getObsMins()
      */
     public double[] getObsMins() {
         throw new NoSuchMethodError("This version of the task spec does not support: getObsMins");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getObsMaxs()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getObsMaxs()
      */
     public double[] getObsMaxs() {
         throw new NoSuchMethodError("This version of the task spec does not support: getObsMaxs");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getActionDim()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getActionDim()
      */
     public int getActionDim() {
         throw new NoSuchMethodError("This version of the task spec does not support: getActionDim");
     }
     /**
-     * @see rlglue.utilities.TaskSpec#getNumDiscreteActionDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumDiscreteActionDims()
      */
     public int getNumDiscreteActionDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumDiscreteActionDims");
     }
     /**
-     * @see rlglue.utilities.TaskSpec#getNumContinuousActionDims()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getNumContinuousActionDims()
      */
     public int getNumContinuousActionDims() {
         throw new NoSuchMethodError("This version of the task spec does not support: getNumContinuousActionDims");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getActionTypes()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getActionTypes()
      */
     public char[] getActionTypes() {
         throw new NoSuchMethodError("This version of the task spec does not support: getActionTypes");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getActionMins()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getActionMins()
      */
     public double[] getActionMins() {
         throw new NoSuchMethodError("This version of the task spec does not support: getActionMins");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getActionMaxs()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getActionMaxs()
      */
     public double[] getActionMaxs() {
         throw new NoSuchMethodError("This version of the task spec does not support: getActionMaxs");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getRewardMax()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getRewardMax()
      */
     public double getRewardMax() {
         throw new NoSuchMethodError("This version of the task spec does not support: getRewardMax");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getRewardMin()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getRewardMin()
      */
     public double getRewardMin() {
         throw new NoSuchMethodError("This version of the task spec does not support: getRewardMin");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getExtraString()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getExtraString()
      */
     public String getExtraString() {
         throw new NoSuchMethodError("This version of the task spec does not support: getExtraString");
     }
 
     /**
-     * @see rlglue.utilities.TaskSpec#getParserVersion()
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getParserVersion()
      */
     public int getParserVersion() {
         throw new NoSuchMethodError("This version of the task spec does not support: getParserVersion");

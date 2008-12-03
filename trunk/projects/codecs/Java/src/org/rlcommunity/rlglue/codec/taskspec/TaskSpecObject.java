@@ -20,7 +20,7 @@ See the License for the specific language governing permissions and
 import java.util.StringTokenizer;
 /**
  * @author mradkie
- * @deprecated As of TaskSpec v3, now use {@link rlglue.utilities.TaskSpec TaskSpec}
+ * @deprecated As of TaskSpec v3, now use {@link org.rlcommunity.rlglue.codec.taskspec.TaskSpec}
  */
 @Deprecated public class TaskSpecObject {
 
