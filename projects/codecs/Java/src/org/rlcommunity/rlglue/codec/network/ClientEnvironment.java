@@ -82,6 +82,7 @@ public class ClientEnvironment
 
 	protected void onEnvCleanup()
 	{
+                env.env_cleanup();
 		network.clearSendBuffer();
 		network.putInt(Network.kEnvCleanup);
 		network.putInt(0);
