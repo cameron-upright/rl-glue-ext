@@ -106,6 +106,7 @@ public class EnvironmentLoader implements Runnable {
             theClient.close();
         } catch (Exception e) {
             System.err.println("EnvironmentLoader run(" + theEnvironment.getClass() + ") threw Exception: " + e);
+            e.printStackTrace();
         }
     }
 

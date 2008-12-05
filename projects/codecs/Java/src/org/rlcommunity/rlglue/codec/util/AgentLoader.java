@@ -69,20 +69,22 @@ public class AgentLoader implements Runnable {
                 System.err.println("Problem resolving requested hostname: " + hostString + " so using default.");
             }
         }
-        
-        if(portString!=null){
 
-        try {
-            int parsedPort = Integer.parseInt(portString);
+        if (portString != null) {
 
-            if (parsedPort < 0 || parsedPort > 65535) {
-                System.err.println("Could not use port you requested: " + parsedPort + " is not a valid port number.\n");
-            } else {
-                port = parsedPort;
+            try {
+                int parsedPort = Integer.parseInt(portString);
+
+                if (parsedPort < 0 || parsedPort > 65535) {
+                    System.err.println("Could not use port you requested: " + parsedPort + " is not a valid port number.\n");
+                } else {
+                    port = parsedPort;
+                }
+            } catch (Exception e) {
+                System.err.println("Could not use port you requested: " + portString + " could not be parsed as an int.");
+                e.printStackTrace();
+
             }
-        } catch (Exception e) {
-            System.err.println("Could not use port you requested: " + portString + " could not be parsed as an int.");
-        }
         }
     }
 
