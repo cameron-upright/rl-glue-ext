@@ -30,10 +30,11 @@ This software project is licensed under the Apache-2.0\footnote{\url{http://www.
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 This project has a home here:\\
-\url{http://rl-glue-ext.googlecode.com}
+\url{http://glue.rl-community.org/Home/Extensions/c-c-codec}
 
 This document should be used in combinations with the technical manual for RL-Glue 3.0.  The RL-Glue 3.0 technical manual explains the data types, function prototypes, etc. for the main C/C++ RL-Glue implementation that is used
-by this codec.  The RL-Glue 3.0 technical manual can be found in the \texttt{docs} section of the RL-Glue project.
+by this codec.  The RL-Glue 3.0 technical manual can be found in the \texttt{docs} section of the RL-Glue project or online:\\
+\url{http://rl-glue.googlecode.com/svn/trunk/docs/tech_html/index.html}
 
 \subsection{Software Requirements}
 This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools\footnote{\url{http://sources.redhat.com/autobook/}}, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN\footnote{\url{http://www.cygwin.com/}}). 
@@ -476,14 +477,7 @@ Check out the source code in the example, and feel free to ask questions in the 
 
 
 \section{Changes and 2.x Backward Compatibility}
-There were many changes from RL-Glue 2.x to RL-Glue 3.x.  Most of them are at the level of the API and project organization, and are addressed in the \htmladdnormallink{RL-Glue overview documentation}{http://rl-glue.googlecode.com/svn/trunk/docs/html/index.html}.
-
-\subsection{Types}
-All of the types that existed in the 2.x codec (ex: \texttt{Observation} instead of \texttt{observation\_t}) are still supported through a definition file called 
-\texttt{legacy\_types.h}.  If you don't want to update your old agents to the new types, you can use the old names by doing the following in your source files:
-\begin{verbatim}
-	#include<rlglue/legacy_types.h>
-\end{verbatim}
+There were many changes from RL-Glue 2.x to RL-Glue 3.x.  Most of them are at the level of the API and project organization, and are addressed in the \htmladdnormallink{RL-Glue overview documentation}{http://rl-glue.googlecode.com/svn/trunk/docs/html/index.html}.  The technical changes are available in the \htmladdnormallink{RL-Glue Technical Manual}{http://rl-glue.googlecode.com/svn/trunk/docs/tech_html/index.html}.
 
 
 
