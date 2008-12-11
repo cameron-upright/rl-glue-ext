@@ -294,7 +294,7 @@ fast:
 
 \subsubsection{Structure Types}
 \label{sec:structure-types}
-All of the major structure types (observations, actions, random seed keys, and state keys) extend the \texttt{\rat} class, which has there lists: for integers, doubles, and chars.
+All of the major structure types (observations, actions) extend the \texttt{\rat} class, which has there lists: for integers, doubles, and chars.
 
 The class is defined as:
 \begin{verbatim}
@@ -320,8 +320,6 @@ The other types that inherit from \texttt{\rat} but add no specialization are:
 \begin{verbatim}
 class Action(RL_Abstract_Type)
 class Observation(RL_Abstract_Type)
-class Random_seed_key(RL_Abstract_Type)
-class State_key(RL_Abstract_Type)
 \end{verbatim}
 
 The structure of the composite types are listed below.  Note that this code is not accurate in terms of the available constructors, 
@@ -332,7 +330,7 @@ class Observation_action:
         self.o = theObservation
         self.a = theAction
 
-class Reward_observation:
+class Reward_observation_terminal:
     def __init__(self,reward, theObservation, terminal):
         self.r = reward
         self.o = theObservation
@@ -389,17 +387,6 @@ In this case we'll include their prototypes, because the source file is full of 
 	# (int) -> int
 	def RL_episode(num_steps):
 
-	# (State_key) -> void
-	def RL_load_state(sk):
-
-	# (Random_seed_key) -> void
-	def RL_load_random_seed(rsk):
-
-	# () -> State_key
-	def RL_save_state():
-
-	# () -> Random_seed_key
-	def RL_save_random_seed():
 \end{verbatim}
 
 \section{Changes and 2.x Backward Compatibility}

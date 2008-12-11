@@ -475,7 +475,7 @@ fast:
 <BR>
 Structure Types
 </H3>
-All of the major structure types (observations, actions, random seed keys, and state keys) extend the <TT>RL_Abstract_Type </TT> class, which has there lists: for integers, doubles, and chars.
+All of the major structure types (observations, actions) extend the <TT>RL_Abstract_Type </TT> class, which has there lists: for integers, doubles, and chars.
 
 <P>
 The class is defined as:
@@ -503,8 +503,6 @@ The other types that inherit from <TT>RL_Abstract_Type </TT> but add no speciali
 <PRE>
 class Action(RL_Abstract_Type)
 class Observation(RL_Abstract_Type)
-class Random_seed_key(RL_Abstract_Type)
-class State_key(RL_Abstract_Type)
 </PRE>
 
 <P>
@@ -516,7 +514,7 @@ class Observation_action:
         self.o = theObservation
         self.a = theAction
 
-class Reward_observation:
+class Reward_observation_terminal:
     def __init__(self,reward, theObservation, terminal):
         self.r = reward
         self.o = theObservation
@@ -592,18 +590,6 @@ In this case we'll include their prototypes, because the source file is full of 
 
 	# (int) -&gt; int
 	def RL_episode(num_steps):
-
-	# (State_key) -&gt; void
-	def RL_load_state(sk):
-
-	# (Random_seed_key) -&gt; void
-	def RL_load_random_seed(rsk):
-
-	# () -&gt; State_key
-	def RL_save_state():
-
-	# () -&gt; Random_seed_key
-	def RL_save_random_seed():
 </PRE>
 
 <P>
@@ -740,9 +726,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 294 $
+Revision Number: $Rev: 363 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-10-01 21:24:00 -0600 (Wed, 01 Oct 2008) $
+Last Updated   : $Date: 2008-11-03 10:25:22 -0700 (Mon, 03 Nov 2008) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python/docs/PythonCodec.tex $
 </PRE>
 
@@ -766,7 +752,7 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>PythonCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Python Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2008-10-05
+The translation was initiated by Brian Tanner on 2008-12-10
 <BR><HR><H4>Footnotes</H4>
 <DL>
 <DT><A NAME="foot152">... RL-Glue</A><A
@@ -790,7 +776,7 @@ The translation was initiated by Brian Tanner on 2008-10-05
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2008-10-05
+2008-12-10
 </ADDRESS>
 </BODY>
 </HTML>
