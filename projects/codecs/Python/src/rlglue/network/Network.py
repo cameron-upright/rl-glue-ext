@@ -26,6 +26,13 @@ import array
 import time
 import sys
 import StringIO
+try:
+    import numpy
+    numpy_int_type = numpy.dtype('int32').newbyteorder('>')
+    numpy_float_type = numpy.dtype('float64').newbyteorder('>')
+    numpy_char_type = numpy.dtype('uint8').newbyteorder('>')
+except:
+    pass
 
 from rlglue.types import Action
 from rlglue.types import Observation
@@ -80,6 +87,11 @@ class Network:
 		self.sock = None
 		self.recvBuffer = StringIO.StringIO('')
 		self.sendBuffer = StringIO.StringIO('')
+
+                if 'numpy' in globals():
+                    self.getAbstractType = self.getAbstractType_numpy
+                else:
+                    self.getAbstractType = self.getAbstractType_list
 	
 	def connect(self, host=kLocalHost, port=kDefaultPort, retryTimeout=kRetryTimeout):
 		while self.sock == None:
@@ -135,7 +147,7 @@ class Network:
 		return self.recvBuffer.read(length)
 	
 	
-	def getAbstractType(self):
+	def getAbstractType_list(self):
 		numInts = self.getInt()
 		numDoubles = self.getInt()		
 		numChars = self.getInt()		
@@ -150,6 +162,28 @@ class Network:
 		if numChars > 0:
 			s = self.recvBuffer.read(numChars*kCharSize)
 			returnStruct.charArray = list(struct.unpack("!%dc" % (numChars),s))
+		return returnStruct
+
+	def getAbstractType_numpy(self):
+		numInts = self.getInt()
+		numDoubles = self.getInt()		
+		numChars = self.getInt()		
+		returnStruct=RL_Abstract_Type()
+		
+		if numInts > 0:
+			s = self.recvBuffer.read(numInts*kIntSize)
+                        assert kIntSize == 4
+                        returnStruct.intArray = numpy.frombuffer(s,
+                                dtype=numpy_int_type,
+                                count=numInts)
+		if numDoubles > 0:
+			s = self.recvBuffer.read(numDoubles*kDoubleSize)
+                        returnStruct.doubleArray = numpy.frombuffer(s, count=numDoubles,
+                                dtype=numpy_float_type)
+		if numChars > 0:
+			s = self.recvBuffer.read(numChars*kCharSize)
+			returnStruct.charArray = numpy.frombuffer(s, count=numChars,
+                                dtype=numpy_double_type)
 		return returnStruct
 		
 	def getObservation(self):
