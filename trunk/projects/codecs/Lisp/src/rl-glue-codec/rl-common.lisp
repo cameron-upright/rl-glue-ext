@@ -27,17 +27,15 @@
                ,@(when initial-contents
                        `(:initial-contents ,initial-contents))))
 
-(declaim (inline make-int-array))
-(defun make-int-array (size &key initial-contents)
+(defmacro make-int-array (size &key initial-contents)
   "Makes an integer array of SIZE with the package supported integer 
 typed elements."
-  (make-typed-array size 'integer-t initial-contents))
+  `(make-typed-array ,size 'integer-t ,initial-contents))
 
-(declaim (inline make-float-array))
-(defun make-float-array (size &key initial-contents)
+(defmacro make-float-array (size &key initial-contents)
   "Makes a float array of SIZE with the package supported floating point 
 typed elements."
-  (make-typed-array size 'double-float initial-contents))
+  `(make-typed-array ,size 'double-float ,initial-contents))
 
 (defparameter *init-integer-array* (make-int-array 0)
   "An empty array typed by the package supported integer numbers.")
