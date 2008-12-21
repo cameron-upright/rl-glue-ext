@@ -34,9 +34,12 @@
   :description "Utilities for RL-Glue components."
   :components
   ((:file "rl-utils-package")
+   (:file "generic" :depends-on ("rl-utils-package"))
    (:module task-spec-parser
             :components
-            ((:file "task-spec-parser"))
-            :depends-on ("rl-utils-package")))
-  :depends-on ("rl-glue-codec" "cl-ppcre"))
+            ((:file "parser")
+             (:file "range" :depends-on ("parser"))
+             (:file "task-spec-parser" :depends-on ("range")))
+            :depends-on ("generic")))
+  :depends-on ("rl-glue-codec"))
 

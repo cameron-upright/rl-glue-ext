@@ -63,7 +63,7 @@ Required libraries for the codec (rl-glue-codec package).
 
 Required libraries for the utilities (rl-glue-utils package).
 \begin{itemize}
-\item[] cl-ppcre (\selfref{http://www.weitz.de/cl-ppcre/})
+\item[] none
 \end{itemize}
 
 These libraries are very portable among various Lisp implementations, so we
@@ -391,14 +391,42 @@ The utilities has an own (ASDF) package named \prompttext{rl-glue-utils}. \\
 
 This is a parser for the
 \footref{task specification language}
-{http://glue.rl-community.org/Home/rl-glue/task-spec-language}.
+{http://glue.rl-community.org/Home/rl-glue/task-spec-language}. Only the
+RL-Glue version 3.0 specification type is supported.
 
-It can parse the task specification string into a \prompttext{task-spec}
-structure, e.g. \\
-\lispprompt{(parse-task-spec "2:e:1\_[i]\_[0,107]:1\_[i]\_[0,3]:[-10,10]")}
+The parser can return a \prompttext{task-spec} object from a specification
+string, e.g. \\
+\lispprompt{(parse-task-spec \\
+\mbox{~~~~}"VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 \\
+\mbox{~~~~~}OBSERVATIONS INTS (3 0 1) ACTIONS DOUBLES (3.2 6.5) CHARCOUNT 50 \\
+\mbox{~~~~~}REWARDS (-1.0 1.0) EXTRA extra specification") \\
+\#<TASK-SPEC>}
 
-Because the language is under construction, the parser can change in the
-near future.
+The \prompttext{task-spec} object has the following slots.
+
+\prompttext{version}, \prompttext{problem-type}, \prompttext{discount-factor}, \\
+\prompttext{int-observations}, \prompttext{float-observations},
+\prompttext{char-observations}, \\ \prompttext{int-actions},
+\prompttext{float-actions}, \prompttext{char-actions}, \\
+\prompttext{rewards}, \prompttext{extra-spec}
+
+Their names are appropriately show their functionalities according to the task
+specification documentation. The \prompttext{int-} and \prompttext{float-}
+observation and action slot values contain \prompttext{int-range} and
+\prompttext{float-range} objects appropriately. These have the
+\prompttext{repeat-count}, \prompttext{min-value} and \prompttext{max-value}
+slots. For the latter two there are three special symbols which are
+\prompttext{'-inf}, \prompttext{'+inf} and \prompttext{'unspec}. They are used
+to represent the NEGINF, POSINF and UNSPEC specification keywords.
+
+The \prompttext{task-spec} type supports the \prompttext{to-string} generic
+function with which it can be converted to a string. There are also two other
+helper functions, namely \prompttext{across-ranges} and
+\prompttext{ranges-dimension}, which can be useful for range vector handling.
+Their documentation can be checked by the \prompttext{documentation} function.
+
+\lispprompt{(documentation 'rl-glue-utils:across-ranges 'function)} \\
+\lispprompt{(documentation 'rl-glue-utils:ranges-dimension 'function)}
 
 \hypertarget{examples}{\subsection{Examples}}
 
@@ -433,10 +461,13 @@ episodes to be run. The other arguments are the same as of the
 and port 4096 the following is enough (which will run 50 episodes). \\
 \lispprompt{(start-episode-avg 50)}
 
+\newpage
+
 The experiment will prompt something like this (each dot denotes an episode). \\
 \prompttext{RL-Glue Lisp Experiment Codec Version 1.0-RC2, Build 345 \\
 \mbox{~~~~~~~~}Connecting to 127.0.0.1:4096 .~ok \\
-Task spec was:~2:e:1\_[i]\_[0,107]:1\_[i]\_[0,3]:[-10,10] \\
+Task spec was:~VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 \\
+OBSERVATIONS INTS (0 107) ACTIONS INTS (0 3) REWARDS (-10 10) EXTRA \\
 .................................................. \\
 ----------------------------------------------- \\
 Number of episodes:~50 \\

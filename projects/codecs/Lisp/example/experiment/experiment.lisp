@@ -27,7 +27,6 @@
 (in-package #:rl-episode-avg)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Episode average experiment.
 
 (defclass episode-avg (rl-glue-codec:experiment)
   ((steps
@@ -41,7 +40,6 @@
   (:documentation "Experiment printing average episode results."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Running the episodes.
 
 (defun run-episode-avg (ep-avg num-episodes &rest args)
   "Plays NUM-EPISODES episodes and prints the averaged result."
@@ -79,7 +77,6 @@
   (rl-glue-codec::rl-close ep-avg))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
 (defmacro start-episode-avg (num-episodes &rest args)
   "Starting an episode-avg experiment."

@@ -18,29 +18,33 @@
 (in-package #:cl-user)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; RL-Glue utility package.
 
 (defpackage #:org.rl-community.rl-glue-utils
   (:nicknames #:rl-glue-utils)
-  (:use #:common-lisp)
+  (:use #:common-lisp #:rl-glue-codec)
   (:export
+   ;; generic
+   #:to-string
    ;; task-spec-parser
+   #:range
+   #:int-range
+   #:float-range
+   #:repeat-count
+   #:min-value
+   #:max-value
    #:task-spec
    #:version
-   #:episodic
-   #:obs-dim
-   #:num-discrete-obs-dims
-   #:num-continuous-obs-dims
-   #:obs-types
-   #:obs-mins
-   #:obs-maxs
-   #:action-dim
-   #:num-discrete-action-dims
-   #:num-continuous-action-dims
-   #:action-types
-   #:action-mins
-   #:action-maxs
-   #:reward-min
-   #:reward-max
-   #:parse-task-spec))
+   #:problem-type
+   #:discount-factor
+   #:int-observations
+   #:float-observations
+   #:char-observations
+   #:int-actions
+   #:float-actions
+   #:char-actions
+   #:rewards
+   #:extra-spec
+   #:parse-task-spec
+   #:across-ranges
+   #:ranges-dimension))
 

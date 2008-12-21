@@ -18,152 +18,230 @@
 (in-package #:rl-glue-utils)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Parser for the task specification language.
+
+(defun make-empty-int-range-array ()
+  "Makes empty array of int-range element type."
+  (make-array 0
+              :element-type 'int-range
+              :initial-element (make-instance 'int-range)))
+
+(defun make-empty-float-range-array ()
+  "An empty array of float-range element type."
+  (make-array 0
+              :element-type 'float-range
+              :initial-element (make-instance 'float-range)))
 
 (defclass task-spec ()
   ((version
     :accessor version
-    :documentation "Version number of the task specification language.")
-   (episodic
-    :accessor episodic
-    :documentation "Type of task being solved.")
-   (obs-dim
-    :accessor obs-dim
-    :documentation "Dimension of the observation space.")
-   (num-discrete-obs-dims
-    :accessor num-discrete-obs-dims
-    :documentation "Dimension of the discrete type observation space.")
-   (num-continuous-obs-dims
-    :accessor num-continuous-obs-dims
-    :documentation "Dimension of the continuous type observation space.")
-   (obs-types
-    :accessor obs-types
-    :documentation "Types of the observation space components.")
-   (obs-mins
-    :accessor obs-mins
-    :documentation "Minimum values of the observation space components.")
-   (obs-maxs
-    :accessor obs-maxs
-    :documentation "Maximum values of the observation space components.")
-   (action-dim
-    :accessor action-dim
-    :documentation "Dimension of the action space.")
-   (num-discrete-action-dims
-    :accessor num-discrete-action-dims
-    :documentation "Dimension of the discrete type action space.")
-   (num-continuous-action-dims
-    :accessor num-continuous-action-dims
-    :documentation "Dimension of the continuous type action space.")
-   (action-types
-    :accessor action-types
-    :documentation "Types of the action space components.")
-   (action-mins
-    :accessor action-mins
-    :documentation "Minimum values of the action space components.")
-   (action-maxs
-    :accessor action-maxs
-    :documentation "Maximum values of the action space components.")
-   (reward-min
-    :accessor reward-min
-    :documentation "Minimum reward value for the task.")
-   (reward-max
-    :accessor reward-max
-    :documentation "Maximum reward value for the task."))
+    :type string
+    :documentation "Version name of the task specification language.")
+   (problem-type
+    :accessor problem-type
+    :type string
+    :documentation "Type of the problem to be solved.")
+   (discount-factor
+    :accessor discount-factor
+    :type (float 0.0 1.0)
+    :documentation "Discount factor.")
+   (int-observations
+    :accessor int-observations
+    :initform (make-empty-int-range-array)
+    :type (simple-array int-range)
+    :documentation "Observation ranges with integer values.")
+   (float-observations
+    :accessor float-observations
+    :initform (make-empty-float-range-array)
+    :type (simple-array float-range)
+    :documentation "Observation ranges with floating point values.")
+   (char-observations
+    :accessor char-observations
+    :initform 0
+    :type (integer 0 *)
+    :documentation "Number of characters specified for observations.")
+   (int-actions
+    :accessor int-actions
+    :initform (make-empty-int-range-array)
+    :type (simple-array int-range)
+    :documentation "Action ranges with integer values.")
+   (float-actions
+    :accessor float-actions
+    :initform (make-empty-float-range-array)
+    :type (simple-array float-range)
+    :documentation "Action ranges with floating point values.")
+   (char-actions
+    :accessor char-actions
+    :initform 0
+    :type (integer 0 *)
+    :documentation "Number of characters specified for actions.")
+   (rewards
+    :accessor rewards
+    :type float-range
+    :documentation "Range of rewards.")
+   (extra-spec
+    :accessor extra-spec
+    :initform ""
+    :type string
+    :documentation "An optional extra specification."))
   (:documentation "Task specification parameters."))
 
-(defun parse-task-spec-range (spec-string)
-  "Parses a range from SPEC-STRING and returns the range boundaries."
-  (multiple-value-bind (matched matches)
-      (cl-ppcre:scan-to-strings "\\[\\s*([^,\\s]*)\\s*,?\\s*([^,\\s]*)\\]"
-                                spec-string)
-    (declare (ignore matched))
-    (assert (= 2 (length matches)))
-    (flet ((read-match (str)
-             (and str (read-from-string str nil))))
-      (let ((min (or (read-match (aref matches 0)) '-inf))
-            (max (or (read-match (aref matches 1)) 'inf)))
-        (assert (or (numberp min) (eq min '-inf)) (min max))
-        (assert (or (numberp max) (eq max 'inf)) (min max))
-        (assert (or (not (numberp min))
-                    (not (numberp max))
-                    (<= min max)) (min max))
-        (cons min max)))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun parse-task-spec-oa (spec-string)
-  "Parses the observation or the action part of the task specification, 
-and returns (dim ddim cdim types mins maxs)."
-  (let ((matches (cl-ppcre:all-matches-as-strings "[^_]+" spec-string)))
-    (assert (<= 3 (length matches)))
-    (let ((dim (read-from-string (pop matches)))
-          (type-matches (cl-ppcre:all-matches-as-strings "[^\\[\\],\\s]"
-                                                         (pop matches))))
-      (assert (and (numberp dim) (plusp dim)))
-      (assert (= (length type-matches) (length matches)))
-      (loop
-         with ddim = 0
-         with cdim = 0
-         with types = '()
-         with mins = '()
-         with maxs = '()
-         for typstr in type-matches
-         for range-string in matches ; matches list only contains ranges
-         do
-           (assert (= 1 (length typstr)))
-           (let ((typch (char-downcase (char typstr 0))))
-             (assert (or (char= #\i typch) (char= #\f typch)))
-             (ecase typch
-               ((#\i) (incf ddim))
-               ((#\f) (incf cdim)))
-             (push typch types))
-           (let ((range (parse-task-spec-range range-string)))
-             (push (first range) mins)
-             (push (rest range) maxs))
-         finally
-           (assert (= dim (+ ddim cdim)))
-           (return (values dim ddim cdim
-                           (nreverse types)
-                           (nreverse mins)
-                           (nreverse maxs)))))))
+(defun parse-version ()
+  "Parses the version of the task specification language."
+  (next-token)
+  (expect-token "VERSION")
+  (next-token)
+  (expect-token "RL-Glue-3.0")
+  (setf (version (get-spec)) (get-token)))
+
+(defun parse-problem-type ()
+  "Parses the type of the specified problem."
+  (next-token)
+  (expect-token "PROBLEMTYPE")
+  (next-token)
+  (setf (problem-type (get-spec)) (get-token)))
+
+(defun parse-discount-factor ()
+  "Parses the discount factor of the problem."
+  (next-token)
+  (expect-token "DISCOUNTFACTOR")
+  (next-token)
+  (setf (discount-factor (get-spec))
+        (get-token-as-float :min 0 :max 1)))
+
+(defmacro parse-observations-or-actions (expected-token
+                                         int-ranges-fn
+                                         float-ranges-fn
+                                         char-count-fn)
+  "Parses the observations or the actions specification parts."
+  `(progn
+     (next-token)
+     (expect-token ,expected-token)
+     (next-token)
+     (when (string= (get-token) "INTS")
+       (setf (,int-ranges-fn (get-spec))
+             (collect-int-ranges))
+       (next-token))
+     (when (string= (get-token) "DOUBLES")
+       (setf (,float-ranges-fn (get-spec))
+             (collect-float-ranges))
+       (next-token))
+     (when (string= (get-token) "CHARCOUNT")
+       (next-token)
+       (setf (,char-count-fn (get-spec))
+             (get-token-as-integer))
+       (next-token))
+     (putback-token)))
+
+(defun parse-observations ()
+  "Parses the observation specification part."
+  (parse-observations-or-actions "OBSERVATIONS"
+                                 int-observations
+                                 float-observations
+                                 char-observations))
+
+(defun parse-actions ()
+  "Parses the actions specification part."
+  (parse-observations-or-actions "ACTIONS"
+                                 int-actions
+                                 float-actions
+                                 char-actions))
+
+(defun parse-rewards ()
+  "Parses the reward specification part."
+  (next-token)
+  (expect-token "REWARDS")
+  (next-token)
+  (setf (rewards (get-spec))
+        (parse-float-range)))
+
+(defun parse-extra ()
+  "Parses the extra specification."
+  (next-token)
+  (expect-token "EXTRA")
+  (setf (extra-spec (get-spec))
+        (string-left-trim *space-char-bag*
+                          (get-spec-string))))
 
 (defun parse-task-spec (task-spec-string)
-  "Parses the TASK-SPEC-STRING into a task-spec structure and returns it."
-  (let ((matches (cl-ppcre:all-matches-as-strings "[^:\\s]+"
-                                                  task-spec-string)))
-    (assert (= 5 (length matches)))
-    (let ((ts (make-instance 'task-spec)))
-      ;; language version
-      (let ((ver (read-from-string (pop matches))))
-        (assert (and (numberp ver) (<= 2 ver 2)) (ver))
-        (setf (version ts) ver))
-      ;; task type
-      (let ((typ (pop matches)))
-        (assert (= 1 (length typ)) (typ))
-        (let ((typch (char-downcase (char typ 0))))
-          (assert (or (char= typch #\e) (char= typch #\c)) (typch))
-          (setf (episodic ts) typch)))
-      ;; observation
-      (multiple-value-bind (dim ddim cdim types mins maxs)
-          (parse-task-spec-oa (pop matches))
-        (setf (obs-dim ts) dim)
-        (setf (num-discrete-obs-dims ts) ddim)
-        (setf (num-continuous-obs-dims ts) cdim)
-        (setf (obs-types ts) types)
-        (setf (obs-mins ts) mins)
-        (setf (obs-maxs ts) maxs))
-      ;; action
-      (multiple-value-bind (dim ddim cdim types mins maxs)
-          (parse-task-spec-oa (pop matches))
-        (setf (action-dim ts) dim)
-        (setf (num-discrete-action-dims ts) ddim)
-        (setf (num-continuous-action-dims ts) cdim)
-        (setf (action-types ts) types)
-        (setf (action-mins ts) mins)
-        (setf (action-maxs ts) maxs))
-      ;; reward
-      (multiple-value-bind (min max)
-          (parse-task-spec-range (pop matches))
-        (setf (reward-min ts) min)
-        (setf (reward-max ts) max))
-      (assert (null matches))
-      ts)))
+  "Parses TASK-SPEC-STRING and stores it into a task-spec structure.
+
+PARAMETERS.
+  task-spec-string : task specification string [string]
+
+RETURNS:
+  task specification object [task-spec]"
+  (let ((*parser* (make-parser :spec-string task-spec-string)))
+    (parse-version)
+    (parse-problem-type)
+    (parse-discount-factor)
+    (parse-observations)
+    (parse-actions)
+    (parse-rewards)
+    (parse-extra)
+    (get-spec)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmethod to-string ((object task-spec))
+  "Returns the string representation of a task-spec object."
+  (with-output-to-string (s)
+    (flet ((format-ranges (tag range-vector)
+             "Formats the range elements of a range vector."
+             (when (plusp (length range-vector))
+               (format s " ~a" tag)
+               (loop for range across range-vector
+                  do (format s " ~a" (to-string range)))))
+           (format-charcount (char-count)
+             "Formats a char count element."
+             (when (plusp char-count)
+               (format s " CHARCOUNT ~d" char-count))))
+      (format s "VERSION ~a" (version object))
+      (format s " PROBLEMTYPE ~a" (problem-type object))
+      (format s " DISCOUNTFACTOR ~f" (discount-factor object))
+      (format s " OBSERVATIONS")
+      (format-ranges "INTS" (int-observations object))
+      (format-ranges "DOUBLES" (float-observations object))
+      (format-charcount (char-observations object))
+      (format s " ACTIONS")
+      (format-ranges "INTS" (int-actions object))
+      (format-ranges "DOUBLES" (float-actions object))
+      (format-charcount (char-actions object))
+      (format s " REWARDS ~a" (to-string (rewards object)))
+      (format s " EXTRA ~a" (extra-spec object)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun across-ranges (fn range-vector)
+  "Goes across a RANGE-VECTOR and applies the FN function to each range with
+ handling the repeat-count transparently. It means that FN is called by the
+ minimum and maximum value of the range as many times as the repeat-count of
+ the currently processed range. The result of the function calls are collected
+ into a list.
+
+PARAMETERS:
+  fn           : function which is called with every range min and max value
+                 [function : min max -> result (number number -> t)]
+  range-vector : vector of ranges on which processing happens [vector (range)]
+
+RESULT:
+  result list of the function calls [list]"
+  (loop
+     for range across range-vector
+     nconc (loop
+              repeat (repeat-count range)
+              collect (funcall fn (min-value range) (max-value range)))))
+
+(defun ranges-dimension (range-vector)
+  "Returns the range vector dimension by summarizing the repeat counts.
+
+PARAMETERS:
+  range-vector : vector of ranges which dimension is asked [vector (range)]
+
+RETURNS:
+  dimension [0 <= integer]"
+  (loop
+     for range across range-vector
+     sum (repeat-count range)))
 

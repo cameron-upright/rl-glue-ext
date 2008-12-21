@@ -150,7 +150,12 @@
   (setf (agent-row env) (start-row env))
   (setf (agent-col env) (start-col env))
   ;; returning the task specification
-  (format nil "2:e:1_[i]_[0,~a]:1_[i]_[0,~a]:[-10,10]"
+  (format nil
+          (concatenate
+            'string
+            "VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 "
+            "OBSERVATIONS INTS (0 ~a) ACTIONS INTS (0 ~a) "
+            "REWARDS (-10 10) EXTRA")
           (1- (* (row env) (col env))) 3))
 
 (defmethod rl-glue-codec:env-start ((env mines))
