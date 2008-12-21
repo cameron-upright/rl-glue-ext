@@ -67,5 +67,5 @@
             ((:file "test-speed-environment")
              (:file "test-speed-experiment"))
             :depends-on ("test-1")))
-  :depends-on ("rl-glue-codec" "rl-glue-utils"))
+  :depends-on ("cl-ppcre" "rl-glue-codec" "rl-glue-utils"))
 

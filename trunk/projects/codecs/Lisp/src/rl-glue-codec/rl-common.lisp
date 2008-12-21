@@ -20,22 +20,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Common RL types.
 
-(defmacro make-typed-array (size type &optional initial-contents)
+(defun make-typed-array (size type &optional initial-contents)
   "Makes an array of SIZE with elements of TYPE."
-  `(make-array ,size
-               :element-type ,type
-               ,@(when initial-contents
-                       `(:initial-contents ,initial-contents))))
+  (assert (or (null initial-contents)
+              (= size (length initial-contents)))
+          (size initial-contents))
+  (let ((array (make-array size :element-type type)))
+    (when initial-contents
+      (loop
+         for e in initial-contents
+         for i from 0
+         do (setf (aref array i) e)))
+    array))
 
-(defmacro make-int-array (size &key initial-contents)
+(defun make-int-array (size &key initial-contents)
   "Makes an integer array of SIZE with the package supported integer 
 typed elements."
-  `(make-typed-array ,size 'integer-t ,initial-contents))
+  (make-typed-array size 'integer-t initial-contents))
 
-(defmacro make-float-array (size &key initial-contents)
+(defun make-float-array (size &key initial-contents)
   "Makes a float array of SIZE with the package supported floating point 
 typed elements."
-  `(make-typed-array ,size 'double-float ,initial-contents))
+  (make-typed-array size 'double-float initial-contents))
 
 (defparameter *init-integer-array* (make-int-array 0)
   "An empty array typed by the package supported integer numbers.")
@@ -67,16 +73,16 @@ typed elements."
 (defclass observation (rl-abstract-type)
   () (:documentation "General RL-Glue observation data representation."))
 
-(defmacro make-observation (&rest args)
+(defun make-observation (&rest args)
   "Makes an empty observation object."
-  `(make-instance 'observation ,@args))
+  (apply #'make-instance 'observation args))
 
 (defclass action (rl-abstract-type)
   () (:documentation "General RL-Glue action data representation."))
 
-(defmacro make-action (&rest args)
+(defun make-action (&rest args)
   "Makes an empty action object."
-  `(make-instance 'action ,@args))
+  (apply #'make-instance 'action args))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Generic functions.

@@ -26,7 +26,6 @@
 (in-package #:rl-random-agent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Randomized agent for any task.
 
 (defclass random-agent (agent)
   ((task-spec
@@ -39,32 +38,25 @@
   (:documentation "Random RL agent."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Helper functions.
 
 (defun select-random-action (agent)
   (with-accessors ((task-spec task-spec) (rstate rand-state)) agent
-    (let ((i-actions (make-int-array (num-discrete-action-dims task-spec)))
-          (f-actions (make-float-array (num-continuous-action-dims task-spec))))
-      (loop
-         with ii = 0
-         with fi = 0
-         for min in (action-mins task-spec)
-         for max in (action-maxs task-spec)
-         for type in (action-types task-spec)
-         do
-           (ecase type
-             ((#\i)
-              (assert (and (integerp min) (integerp max)) (min max))
-              (setf (aref i-actions ii) (+ min (random max rstate)))
-              (incf ii))
-             ((#\f)
-              (setf (aref f-actions fi)
-                    (+ min (random (coerce max 'double-float) rstate)))
-              (incf fi))))
-      (make-action :int-array i-actions :float-array f-actions))))
+    (flet ((get-random (min max)
+             "Returns a random number between min and max."
+             (+ min (random max rstate))))
+      (make-action
+       :int-array (let ((values (across-ranges
+                                 #'get-random
+                                 (int-actions task-spec))))
+                    (make-int-array (length values)
+                                    :initial-contents values))
+       :float-array (let ((values (across-ranges
+                                   #'get-random
+                                   (float-actions task-spec))))
+                      (make-float-array (length values)
+                                        :initial-contents values))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface methods.
 
 (defmethod agent-init ((agent random-agent) task-spec)
   (setf (task-spec agent) (parse-task-spec task-spec))
@@ -87,7 +79,6 @@
   "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
 (defmacro start-random-agent (&rest args)
   "Starting a random agent."
