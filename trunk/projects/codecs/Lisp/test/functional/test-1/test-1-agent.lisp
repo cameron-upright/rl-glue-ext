@@ -17,6 +17,8 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-1-agent (agent)
   ((step-count
     :accessor step-count
@@ -24,7 +26,6 @@
   (:documentation "Test agent which mostly sends back what it recieves."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface implementation.
 
 (defmethod agent-init ((agent test-1-agent) task-spec)
   agent)
@@ -49,9 +50,8 @@
   (create-answer-message (step-count agent) input-message))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-1-agent (&rest args)
+(defun start-test-1-agent (&rest args)
   "Starting a test-1-agent agent."
-  `(run-agent (make-instance 'test-1-agent) ,@args))
+  (apply #'run-agent (make-instance 'test-1-agent) args))
 

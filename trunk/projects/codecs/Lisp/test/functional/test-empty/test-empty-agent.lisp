@@ -17,6 +17,8 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-empty-agent (agent)
   ((empty-action
     :accessor empty-action
@@ -31,7 +33,6 @@
 episodes and a non-empty one in the other cases."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface implementation.
 
 (defmethod agent-init ((agent test-empty-agent) task-spec)
   (setf (which-episode agent) 0)
@@ -62,9 +63,8 @@ episodes and a non-empty one in the other cases."))
   "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-empty-agent (&rest args)
+(defun start-test-empty-agent (&rest args)
   "Starting a test-empty-agent agent."
-  `(run-agent (make-instance 'test-empty-agent) ,@args))
+  (apply #'run-agent (make-instance 'test-empty-agent) args))
 

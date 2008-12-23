@@ -18,16 +18,17 @@
 (in-package #:cl-user)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; RL-Glue Utilities ASDF System
 
 (defpackage #:org.rl-community.rl-glue-utils-asdf
   (:use #:asdf #:common-lisp))
 
 (in-package #:org.rl-community.rl-glue-utils-asdf)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defsystem rl-glue-utils
   :name "RL-Glue Common Lisp Codec Utilities"
-  :version "1.0"
+  :version "1.1"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"

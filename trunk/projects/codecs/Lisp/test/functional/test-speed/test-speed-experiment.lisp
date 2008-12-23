@@ -17,10 +17,11 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-speed-experiment (test-experiment) ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Implementation.
 
 (defun test-speed-measurement (exp)
   (let ((time-string (with-output-to-string (*trace-output*)
@@ -43,11 +44,10 @@
   (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-speed-experiment (&rest args)
+(defun start-test-speed-experiment (&rest args)
   "Starting a test-speed-experiment experiment."
-  `(time (run-test-speed-experiment
-          (make-instance 'test-speed-experiment
-                         :test-name "test-speed") ,@args)))
+  (time (apply #'run-test-speed-experiment
+               (make-instance 'test-speed-experiment
+                              :test-name "test-speed") args)))
 

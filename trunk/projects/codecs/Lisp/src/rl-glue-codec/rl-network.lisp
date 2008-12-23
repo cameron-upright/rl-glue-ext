@@ -18,7 +18,6 @@
 (in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; State constants.
 
 ;;; RL-Glue needs to know what type of object is trying to connect.
 
@@ -109,7 +108,6 @@
   "Network code of experiment termination event.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Network constants.
 
 (defparameter +k-localhost+ "127.0.0.1"
   "IP address of the local host.")
@@ -119,13 +117,11 @@
   "Default timeout seconds between two connection attempts.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Network connection.
 
-(defmacro forced-format (fmtstr &rest args)
+(defun forced-format (fmtstr &rest args)
   "Writes to the standard output without any delay."
-  `(progn
-     (format *standard-output* ,fmtstr ,@args)
-     (force-output *standard-output*)))
+  (apply #'format *standard-output* fmtstr args)
+  (force-output *standard-output*))
 
 (defun rl-wait-for-connection (host port max-retry retry-timeout)
   "Waiting for a connection to be established. Returns the obtained socket 
@@ -151,7 +147,6 @@ descriptor on success, or nil on failure."
   (usocket:socket-close socket))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Buffer sending / receiving.
 
 (defun rl-send-buffer (socket buffer state)
   "Sends the BUFFER content with STATE identifier."
@@ -165,7 +160,6 @@ descriptor on success, or nil on failure."
   (buffer-recv buffer (usocket:socket-stream socket)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; RL runner.
 
 (defun rl-runner (obj conn-state event-loop
                   host port max-retry retry-timeout autoreconnect)

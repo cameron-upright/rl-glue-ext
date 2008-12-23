@@ -18,7 +18,6 @@
 (in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Common RL types.
 
 (defun make-typed-array (size type &optional initial-contents)
   "Makes an array of SIZE with elements of TYPE."
@@ -85,7 +84,6 @@ typed elements."
   (apply #'make-instance 'action args))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Generic functions.
 
 (defgeneric rl-equalp (object-1 object-2)
   (declare #.*optimize-settings*)
@@ -100,7 +98,6 @@ typed elements."
   (:documentation "Writes an object to BYTE-STREAM."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; ADT read / write.
 
 (defmethod rl-equalp ((object-1 t) (object-2 t))
   "By default it works than the equalp function."
@@ -152,7 +149,6 @@ typed elements."
   self)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; RL read / write.
 
 (declaim (inline rl-read-observation))
 (defun rl-read-observation (buffer)

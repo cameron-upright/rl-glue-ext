@@ -78,7 +78,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defmacro start-episode-avg (num-episodes &rest args)
+(defun start-episode-avg (num-episodes &rest args)
   "Starting an episode-avg experiment."
-  `(run-episode-avg (make-instance 'episode-avg) ,num-episodes ,@args))
+  (apply #'run-episode-avg (make-instance 'episode-avg) num-episodes args))
 

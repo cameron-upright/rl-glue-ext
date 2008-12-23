@@ -17,6 +17,8 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-speed-environment (environment)
   ((episode-count
     :accessor episode-count
@@ -33,7 +35,6 @@ shorter episodes for every even and smaller observations with longer
 episodes for every odd episodes."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface implementation.
 
 (defmethod env-init ((env test-speed-environment))
   (setf (episode-count env) 0)
@@ -68,9 +69,8 @@ episodes for every odd episodes."))
   "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-speed-environment (&rest args)
+(defun start-test-speed-environment (&rest args)
   "Starting a test-speed-environment environment."
-  `(run-env (make-instance 'test-speed-environment) ,@args))
+  (apply #'run-env (make-instance 'test-speed-environment) args))
 

@@ -17,13 +17,14 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-message-environment (environment)
   ()
   (:documentation "An environment which always sends empty observations, but 
 tests the message transmitting mechanism."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface implementation.
 
 (defmethod env-init ((env test-message-environment))
   "")
@@ -45,9 +46,8 @@ tests the message transmitting mechanism."))
     (t input-message)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-message-environment (&rest args)
+(defun start-test-message-environment (&rest args)
   "Starting a test-message-environment environment."
-  `(run-env (make-instance 'test-message-environment) ,@args))
+  (apply #'run-env (make-instance 'test-message-environment) args))
 

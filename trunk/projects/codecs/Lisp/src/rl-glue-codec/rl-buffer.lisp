@@ -18,7 +18,6 @@
 (in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Architecture specific parameters.
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +bits-per-byte+ 8
@@ -65,7 +64,6 @@
   (deftype float-code-t () `(unsigned-byte ,+bits-per-float+)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Byte buffer for network communication.
 
 (defparameter *init-buffer-size* 2048 "Initial buffer size in bytes.")
 (declaim (type fixnum *init-buffer-size*))
@@ -96,7 +94,6 @@
   buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Conditions.
 
 (define-condition empty-buffer-error (error)
   ((otype
@@ -111,7 +108,6 @@
                      (otype condition)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Data encoding and decoding.
 
 (declaim (inline char-encoder))
 (defun char-encoder (ch)
@@ -196,7 +192,6 @@
                    (- expo (+ +expo-offset+ +sigd-bits+))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Helper macros and functions.
 
 (defmacro with-empty-buffer-check ((chk-p buffer type type-size) &body body)
   "Checks whether there is enough bytes in BUFFER to read an object of TYPE."
@@ -225,7 +220,6 @@ If not, it automatically adjust the buffer."
   buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Read/write operations on buffers.
 
 (defmacro buffer-read (size buffer)
   "Reads an encoded value (CODE) from BUFFER, where SIZE is the length 
@@ -387,7 +381,6 @@ WRITE-SIZE-P is T, it is written to the BUFFER before writing the sequence."
                     buffer-write-char buffer nil write-size-p))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Sending/receiving buffer to/from a stream.
 
 (defun read-int (stream)
   "Returns a read integer from STREAM."

@@ -3,5 +3,3 @@ AGENT='test-message-agent'
 ENVIRONMENT='test-message-environment'
 EXPERIMENT='test-message-experiment'
 
-source '../run-test'
-

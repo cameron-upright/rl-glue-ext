@@ -17,10 +17,11 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-1-experiment (test-experiment) ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Implementation.
 
 (defmacro check-test-1-adt (exp adt exp-i0)
   "Checks the ADT values during test-1 test."
@@ -80,10 +81,9 @@
   (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-1-experiment (&rest args)
+(defun start-test-1-experiment (&rest args)
   "Starting a test-1-experiment experiment."
-  `(run-test-1-experiment (make-instance 'test-1-experiment
-                                         :test-name "test-1") ,@args))
+  (apply #'run-test-1-experiment (make-instance 'test-1-experiment
+                                                :test-name "test-1") args))
 

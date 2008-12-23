@@ -17,10 +17,11 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-empty-experiment (test-experiment) ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Implementation.
 
 (defun check-test-empty (exp which-ep observation action
                          &key reward terminal-p)
@@ -59,10 +60,10 @@
   (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-empty-experiment (&rest args)
+(defun start-test-empty-experiment (&rest args)
   "Starting a test-empty-experiment experiment."
-  `(run-test-empty-experiment (make-instance 'test-empty-experiment
-                                             :test-name "test-empty") ,@args))
+  (apply #'run-test-empty-experiment
+         (make-instance 'test-empty-experiment
+                        :test-name "test-empty") args))
 
