@@ -26,7 +26,6 @@
 (in-package #:rl-mines)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Mines environment.
 
 (defclass mines (rl-glue-codec:environment)
   ((rand-state
@@ -79,7 +78,6 @@
   (:documentation "Environment about passing through a mine field."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Helper functions.
 
 (defun make-observation (mines &key row col terminal)
   "Creates an observation of a mines environment state."
@@ -122,7 +120,6 @@
           (t (values -1.0d0 nil)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface methods.
 
 (defmethod rl-glue-codec:env-init ((env mines))
   ;; setting field marks
@@ -194,9 +191,8 @@
   "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-mines (&rest args)
+(defun start-mines (&rest args)
   "Starting a mines environment."
-  `(rl-glue-codec:run-env (make-instance 'mines) ,@args))
+  (apply #'rl-glue-codec:run-env (make-instance 'mines) args))
 

@@ -18,7 +18,6 @@
 (in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Experiment client interface.
 
 (defclass experiment ()
   ((exp-socket

@@ -18,7 +18,6 @@
 (in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Environment client interface.
 
 (defclass environment () () (:documentation "The RL-Glue environment."))
 
@@ -91,7 +90,6 @@ RETURNS:
     output message to send [string]"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Environment client methods surrounded by buffer handling.
 
 (defun on-env-init (env buffer)
   "Handles the buffer operations for env-init."
@@ -138,7 +136,6 @@ RETURNS:
   env)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Environment client event loop.
 
 (defun run-env-event-loop (env socket buffer)
   "Communication loop of an environment with the rl-glue server."
@@ -165,7 +162,6 @@ RETURNS:
   env)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Environment client running.
 
 (defun run-env (env
                 &key

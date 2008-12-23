@@ -17,10 +17,11 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-message-experiment (test-experiment) ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Implementation.
 
 (defun run-test-message-experiment (exp &rest args)
   "Runs the experiment of test-message test."
@@ -51,10 +52,10 @@
   (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-message-experiment (&rest args)
+(defun start-test-message-experiment (&rest args)
   "Starting a test-message-experiment experiment."
-  `(run-test-message-experiment (make-instance 'test-message-experiment
-                                               :test-name "test-message") ,@args))
+  (apply #'run-test-message-experiment
+         (make-instance 'test-message-experiment
+                        :test-name "test-message") args))
 

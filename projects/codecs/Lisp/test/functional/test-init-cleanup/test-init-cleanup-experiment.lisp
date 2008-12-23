@@ -17,10 +17,11 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-init-cleanup-experiment (test-experiment) ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Implementation.
 
 (defun check-test-init-cleanup (exp step-num exp-terminal-p exp-step-num)
   (let ((terminal-p (rl-episode exp step-num)))
@@ -47,11 +48,10 @@
   (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-init-cleanup-experiment (&rest args)
+(defun start-test-init-cleanup-experiment (&rest args)
   "Starting a test-init-cleanup-experiment experiment."
-  `(run-test-init-cleanup-experiment
-    (make-instance 'test-init-cleanup-experiment
-                   :test-name "test-init-cleanup") ,@args))
+  (apply #'run-test-init-cleanup-experiment
+         (make-instance 'test-init-cleanup-experiment
+                        :test-name "test-init-cleanup") args))
 

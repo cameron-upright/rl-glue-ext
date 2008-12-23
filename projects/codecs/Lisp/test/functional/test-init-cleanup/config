@@ -3,5 +3,3 @@ AGENT='test-1-agent'
 ENVIRONMENT='test-1-environment'
 EXPERIMENT='test-init-cleanup-experiment'
 
-source '../run-test'
-

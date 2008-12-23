@@ -18,7 +18,6 @@
 (in-package #:cl-user)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; RL-Glue package interface.
 
 (defpackage #:org.rl-community.rl-glue-codec
   (:nicknames #:rl-glue-codec)
@@ -70,6 +69,8 @@
    #:rl-env-message))
 
 (in-package #:org.rl-community.rl-glue-codec)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar *optimize-settings*
   '(optimize

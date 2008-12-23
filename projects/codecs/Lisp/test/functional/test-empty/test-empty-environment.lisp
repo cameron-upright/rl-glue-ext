@@ -17,6 +17,8 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-empty-environment (environment)
   ((empty-observation
     :accessor empty-observation
@@ -31,7 +33,6 @@
 second episodes and a non-empty one in the other cases."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface implementation.
 
 (defmethod env-init ((env test-empty-environment))
   (setf (which-episode env) 0)
@@ -59,9 +60,8 @@ second episodes and a non-empty one in the other cases."))
   "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-empty-environment (&rest args)
+(defun start-test-empty-environment (&rest args)
   "Starting a test-empty-environment environment."
-  `(run-env (make-instance 'test-empty-environment) ,@args))
+  (apply #'run-env (make-instance 'test-empty-environment) args))
 

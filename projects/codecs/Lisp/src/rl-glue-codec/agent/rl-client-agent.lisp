@@ -18,7 +18,6 @@
 (in-package #:org.rl-community.rl-glue-codec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Agent client interface.
 
 (defclass agent () () (:documentation "The RL-Glue agent."))
 
@@ -117,7 +116,6 @@ RETURNS:
     output message to send [string]"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Agent client methods surrounded by buffer handling.
 
 (defun on-agent-init (agent buffer)
   "Handles the buffer operations for agent-init."
@@ -171,7 +169,6 @@ RETURNS:
   agent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Agent client event loop.
 
 (defun run-agent-event-loop (agent socket buffer)
   "Communication loop of an agent with the rl-glue server."
@@ -193,7 +190,6 @@ RETURNS:
   agent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Agent client running.
 
 (defun run-agent (agent
                   &key

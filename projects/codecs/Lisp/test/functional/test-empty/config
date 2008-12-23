@@ -3,5 +3,3 @@ AGENT='test-empty-agent'
 ENVIRONMENT='test-empty-environment'
 EXPERIMENT='test-empty-experiment'
 
-source '../run-test'
-

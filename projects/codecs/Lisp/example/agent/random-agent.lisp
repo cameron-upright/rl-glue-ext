@@ -80,7 +80,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defmacro start-random-agent (&rest args)
+(defun start-random-agent (&rest args)
   "Starting a random agent."
-  `(run-agent (make-instance 'random-agent) ,@args))
+  (apply #'run-agent (make-instance 'random-agent) args))
 

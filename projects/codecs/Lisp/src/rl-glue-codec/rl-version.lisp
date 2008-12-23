@@ -16,6 +16,8 @@
 
 (in-package #:org.rl-community.rl-glue-codec)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun get-vc-codec-version ()
   "Returns the codec version in the version control system."
   (let ((glue-ver "$Revision$"))

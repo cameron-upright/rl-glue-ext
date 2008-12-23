@@ -18,7 +18,6 @@
 (in-package #:rl-glue-tests)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Common purpose test functions.
 
 (defun gen-adt-array (make-fn old-arr size elem-gen-fn)
   "Generates and returns an ADT array of SIZE number of TYPE elements 
@@ -65,7 +64,6 @@ from the input one used during testing."
                "|" input-message))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Test experiment.
 
 (defclass test-experiment (experiment)
   ((test-name

@@ -17,6 +17,8 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-message-agent (agent)
   ((empty-action
     :accessor empty-action
@@ -25,7 +27,6 @@
 tests the message transmitting mechanism."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface implementation.
 
 (defmethod agent-init ((agent test-message-agent) task-spec)
   (setf (empty-action agent) (make-action))
@@ -51,9 +52,8 @@ tests the message transmitting mechanism."))
     (t input-message)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-message-agent (&rest args)
+(defun start-test-message-agent (&rest args)
   "Starting a test-message-agent agent."
-  `(run-agent (make-instance 'test-message-agent) ,@args))
+  (apply #'run-agent (make-instance 'test-message-agent) args))
 

@@ -17,10 +17,11 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-sanity-experiment (test-experiment) ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Implementation.
 
 (defun run-test-sanity-experiment (exp &rest args)
   "Runs the experiment of test-sanity test."
@@ -30,10 +31,10 @@
   (rl-close exp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-sanity-experiment (&rest args)
+(defun start-test-sanity-experiment (&rest args)
   "Starting a test-sanity-experiment experiment."
-  `(run-test-sanity-experiment (make-instance 'test-sanity-experiment
-                                              :test-name "test-sanity") ,@args))
+  (apply #'run-test-sanity-experiment
+         (make-instance 'test-sanity-experiment
+                        :test-name "test-sanity") args))
 

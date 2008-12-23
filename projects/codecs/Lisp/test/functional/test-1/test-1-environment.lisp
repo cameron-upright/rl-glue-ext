@@ -17,6 +17,8 @@
 
 (in-package #:rl-glue-tests)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defclass test-1-environment (environment)
   ((step-count
     :accessor step-count
@@ -25,7 +27,6 @@
   (:documentation "A simple never terminating environment."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Interface implementation.
 
 (defmethod env-init ((env test-1-environment))
   "sample task spec")
@@ -69,9 +70,8 @@
   (create-answer-message (step-count env) input-message))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Starter macro.
 
-(defmacro start-test-1-environment (&rest args)
+(defun start-test-1-environment (&rest args)
   "Starting a test-1-environment environment."
-  `(run-env (make-instance 'test-1-environment) ,@args))
+  (apply #'run-env (make-instance 'test-1-environment) args))
 
