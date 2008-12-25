@@ -1,0 +1,5 @@
+
+LISPBIN="lisp"
+LISP="${LISPBIN} -quiet -batch"
+EVAL="-eval"
+

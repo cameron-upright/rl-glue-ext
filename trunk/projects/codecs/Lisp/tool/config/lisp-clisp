@@ -1,0 +1,5 @@
+
+LISPBIN="clisp"
+LISP="${LISPBIN} -q -q -K full -on-error exit"
+EVAL="-x"
+
