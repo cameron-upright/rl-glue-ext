@@ -50,11 +50,11 @@
 (let ((*random-state* (make-random-state t))
       (*init-buffer-size* 4))
   (fiveam:test basic-read/write
-    "Basic read/write operations on buffers."
+    "Test of basic read/write operations on buffers."
     (let ((buffer (make-buffer)))
       (fiveam:is (= *init-buffer-size*
                     (length (buffer-bytes buffer))))
-      ;; dirty read/write
+      ;; dirty cases
       (fiveam:signals empty-buffer-error
         (buffer-read-char buffer))
       (fiveam:signals empty-buffer-error
@@ -67,7 +67,7 @@
                                                 (invoke-restart 'use-value
                                                                 'any-value))))
                                   (buffer-read-float buffer))))
-      ;; clean read/write
+      ;; clean cases
       (fiveam:for-all ((ch (fiveam:gen-character :code-limit
                                                  *test-char-code-limit*))
                        (int (fiveam:gen-integer))
@@ -87,5 +87,33 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; TODO : seq-read/write, string-read/write
+(let ((*random-state* (make-random-state t))
+      (*init-buffer-size* 8))
+  (fiveam:test sequence-read/write
+    "Test of sequence read/write operations on buffers."
+    (let ((buffer (make-buffer)))
+      (fiveam:for-all ((str (fiveam:gen-string
+                             :length (fiveam:gen-integer
+                                      :min 0 :max 1024)
+                             :elements (fiveam:gen-character
+                                        :code-limit *test-char-code-limit*)))
+                       (int (fiveam:gen-list
+                             :length (fiveam:gen-integer
+                                      :min 0 :max 1024)
+                             :elements (fiveam:gen-integer)))
+                       (flt (fiveam:gen-list
+                             :length (fiveam:gen-integer
+                                      :min 0 :max 1024)
+                             :elements (fiveam:gen-float
+                                        :type 'double-float))))
+        (let ((aint (make-int-array (length int) :initial-contents int))
+              (aflt (make-float-array (length flt) :initial-contents flt)))
+          (buffer-clear buffer)
+          (buffer-write-string str buffer)
+          (buffer-write-int-seq aint buffer)
+          (buffer-write-float-seq aflt buffer)
+          (setf (buffer-offset buffer) 0)
+          (fiveam:is (string= str (buffer-read-string buffer)))
+          (fiveam:is (equalp aint (buffer-read-int-seq buffer)))
+          (fiveam:is (equalp aflt (buffer-read-float-seq buffer))))))))
 
