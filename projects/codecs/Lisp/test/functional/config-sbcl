@@ -1,4 +1,0 @@
-
-LISP='sbcl --noinform'
-EVAL='--eval'
-
