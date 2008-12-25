@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Runs all the functional tests with the selected lisp implementation.
+# Runs all the unit tests with the selected lisp implementation.
 # If the lisp implementation is not specified, the test are run with all
 # the supported and available ones. It prints the result and a summary
 # to the standard output and into a log file as well.
@@ -9,7 +9,7 @@
 # $Date$
 
 if [ ${#} -gt 1 ]; then
-    echo "Usage: ${0} [<lisp-implementation>]"
+echo "Usage: ${0} [<lisp-implementation>]"
     exit -1
 fi
 
@@ -22,7 +22,7 @@ fi
 
 ###############################################################################
 
-LOGFILE="${tooldir}/log/run-all-functional-tests.log"
+LOGFILE="${tooldir}/log/run-all-unit-tests.log"
 echo -en "`date`\n\n" > ${LOGFILE}
 
 {
@@ -36,27 +36,14 @@ echo -en "`date`\n\n" > ${LOGFILE}
             continue
         fi
 
-        for t in `ls -d "${tooldir}/../test/functional/test-"*`; do
-            if [ -d "${t}" ]; then
-                echo " ---- TEST : ${t}"
-                ${tooldir}/run-functional-test.sh ${l} `basename ${t}`
+        for p in `ls -d "${tooldir}/../src/"*`; do
+            if [ -d "${p}" ]; then
+                echo " ---- PACKAGE : ${p}"
+                ${tooldir}/run-package-unit-tests.sh ${l} `basename ${p}`
             fi
         done
     done
 } 2>&1 | tee -a ${LOGFILE}
-
-###############################################################################
-
-TMPLOGFILE="${LOGFILE}.tmp"
-cp ${LOGFILE} ${TMPLOGFILE}
-{
-    echo -en "\n----------------------------------------"
-    echo -en "----------------------------------------\n"
-    grep -P 'FT>' ${TMPLOGFILE}
-    echo -en "----------------------------------------"
-    echo -en "----------------------------------------\n\n"
-} 2>&1 | tee -a ${LOGFILE}
-rm ${TMPLOGFILE}
 
 exit 0
 
