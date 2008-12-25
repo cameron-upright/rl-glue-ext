@@ -35,13 +35,13 @@
        :accessor min-value
        :initarg :min-value
        :initform 'unspec
-       :type (or ,number-type (member '-inf 'unspec))
+       :type (or ,number-type (member -inf unspec))
        :documentation "Minimum of the range.")
       (max-value
        :accessor max-value
        :initarg :max-value
        :initform 'unspec
-       :type (or ,number-type (member '+inf 'unspec))
+       :type (or ,number-type (member +inf unspec))
        :documentation "Maximum of the range."))
      (:documentation "Number range.")))
 
