@@ -3,7 +3,9 @@
 \usepackage[footnotesep=8mm]{geometry}
 \usepackage{verbatim}
 \usepackage{fullpage}
-\usepackage[colorlinks=true]{hyperref}
+\usepackage[colorlinks=true,
+            linkcolor=cyan,
+            urlcolor=blue]{hyperref}
 
 % do not indent paragraphs
 \setlength{\parindent}{0pt}
@@ -289,7 +291,7 @@ between the trials. Its detailed description can be checked this way. \\
 
 It will prompt something like this, where each dot denotes a connection
 trial. \\
-\prompttext{RL-Glue Lisp Agent Codec Version 1.0-RC2, Build 345} \\
+\prompttext{RL-Glue Lisp Agent Codec Version 1.0, Build 414} \\
 \prompttext{\mbox{~~~~~~~~}Connecting to 192.168.1.1:4096 ....~ok}
 
 \subsection{Environments}
@@ -321,7 +323,7 @@ between the trials. Its detailed description is here. \\
 
 It will prompt something like this, where each dot denotes a connection
 trial. \\
-\prompttext{RL-Glue Lisp Environment Codec Version 1.0-RC2, Build 345} \\
+\prompttext{RL-Glue Lisp Environment Codec Version 1.0, Build 414} \\
 \prompttext{\mbox{~~~~~~~~}Connecting to 192.168.1.1:4096 ....~ok}
 
 \subsection{Experiments}
@@ -362,7 +364,7 @@ First start the server. \\
 \shprompt{rl\_glue}
 
 You should see this kind of output on the server side. \\
-\prompttext{RL-Glue Version 3.0-RC2, Build 909 \\
+\prompttext{RL-Glue Version 3.0, Build 909 \\
 RL-Glue is listening for connections on port=4096 \\
 \mbox{~~~~~~~~}RL-Glue ::~Agent connected. \\
 \mbox{~~~~~~~~}RL-Glue ::~Environment connected. \\
@@ -371,15 +373,15 @@ RL-Glue is listening for connections on port=4096 \\
 Then start the agent, the environment and the experiment.
 
 The output of the Lisp agent. \\
-\prompttext{RL-Glue Lisp Agent Codec Version 1.0-RC2, Build 345 \\
+\prompttext{RL-Glue Lisp Agent Codec Version 1.0, Build 414 \\
 \mbox{~~~~~~~~}Connecting to 127.0.0.1:4096 .~ok}
 
 The output of the Lisp environment. \\
-\prompttext{RL-Glue Lisp Environment Codec Version 1.0-RC2, Build 345 \\
+\prompttext{RL-Glue Lisp Environment Codec Version 1.0, Build 414 \\
 \mbox{~~~~~~~~}Connecting to 127.0.0.1:4096 .~ok}
 
 The output of the Lisp experiment. \\
-\prompttext{RL-Glue Lisp Experiment Codec Version 1.0-RC2, Build 345 \\
+\prompttext{RL-Glue Lisp Experiment Codec Version 1.0, Build 414 \\
 \mbox{~~~~~~~~}Connecting to 127.0.0.1:4096 .~ok}
 
 \hypertarget{rlutils}{\subsection{Utilities}}
@@ -464,7 +466,7 @@ and port 4096 the following is enough (which will run 50 episodes). \\
 \newpage
 
 The experiment will prompt something like this (each dot denotes an episode). \\
-\prompttext{RL-Glue Lisp Experiment Codec Version 1.0-RC2, Build 345 \\
+\prompttext{RL-Glue Lisp Experiment Codec Version 1.0, Build 414 \\
 \mbox{~~~~~~~~}Connecting to 127.0.0.1:4096 .~ok \\
 Task spec was:~VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 \\
 OBSERVATIONS INTS (0 107) ACTIONS INTS (0 3) REWARDS (-10 10) EXTRA \\
