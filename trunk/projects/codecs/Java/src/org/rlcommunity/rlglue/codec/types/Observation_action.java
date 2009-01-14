@@ -11,14 +11,13 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-* 
-*  $Revision$
-*  $Date$
-*  $Author$
-*  $HeadURL$
-* 
-*/
-
+ *
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
+ *
+ */
 package org.rlcommunity.rlglue.codec.types;
 
 public class Observation_action {
@@ -27,8 +26,8 @@ public class Observation_action {
     public Action a;
 
     public Observation_action() {
-        o=new Observation();
-        a=new Action();
+        o = new Observation();
+        a = new Action();
     }
 
     public Observation_action(Observation theObservation, Action theAction) {
@@ -49,12 +48,27 @@ public class Observation_action {
         return new Observation_action(this);
     }
 
-    
-    public Observation getObservation(){
-        return o;
+    /**
+     * @since 2.0
+     * @param newAction
+     */
+    public void setAction(Action newAction) {
+        a = newAction;
     }
-    public Action getAction(){
+
+    public Action getAction() {
         return a;
     }
 
+    /**
+     * @since 2.0
+     * @param newObservation
+     */
+    public void setObservation(Observation newObservation) {
+        o = newObservation;
+    }
+
+    public Observation getObservation() {
+        return o;
+    }
 }

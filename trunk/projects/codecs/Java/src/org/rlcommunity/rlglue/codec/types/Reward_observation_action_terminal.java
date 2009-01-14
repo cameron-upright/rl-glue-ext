@@ -23,6 +23,12 @@ limitations under the License.
  */
 package org.rlcommunity.rlglue.codec.types;
 
+/**
+ * Composite type for holding reward, observation, action, and terminal.
+ * We're trying to move towards not directly accessing the underlying members,
+ * which is why we have the getters and setters.
+ * @author btanner
+ */
 public class Reward_observation_action_terminal {
 
     public double r;
@@ -30,37 +36,79 @@ public class Reward_observation_action_terminal {
     public Action a;
     public int terminal;
 
-    
-    public double getReward(){
+    /**
+     * Set the reward value.
+     * @since 2.0
+     * @param newReward
+     */
+    public void setReward(double newReward) {
+        this.r = newReward;
+    }
+
+    public double getReward() {
         return r;
     }
-    
+
+    /**
+     * Adding this method in an effort to get us away from the integer terminal
+     * type.  Eventually we can just use the methods and privatize the members.
+     * @since 2.0
+     * @param newTerminal
+     * @return
+     */
+    public void setTerminal(boolean newTerminal) {
+        if (newTerminal) {
+            this.terminal = 1;
+        } else {
+            this.terminal = 0;
+        }
+    }
+
+    /**
+     * @since 2.0
+     * @param o
+     */
+    public void setObservation(Observation o) {
+        this.o = o;
+    }
+
     /**
      * One day we will make the members private and you'll have to use accessors.
      * It would be better if you used the version that returns a boolean, but this  is
      * better than accessing the members directly.
+     * @deprecated use isTerminal
      * @return an integer, 1 if terminal, 0 if not
      */
-    public int getTerminal(){
+    public int getTerminal() {
         return terminal;
     }
-    
-    public Observation getObservation(){
+
+    public Observation getObservation() {
         return o;
     }
-    public Action getAction(){
+
+    /**
+     * Set the action.
+     * @since 2.0
+     * @param newAction
+     */
+    public void setAction(Action newAction) {
+        this.a = newAction;
+    }
+
+    public Action getAction() {
         return a;
     }
-    
+
     public Reward_observation_action_terminal() {
-        r=0;
-        o=new Observation();
-        a=new Action();
-        terminal=0;
+        r = 0;
+        o = new Observation();
+        a = new Action();
+        terminal = 0;
     }
 
     public Reward_observation_action_terminal(double reward, Observation observation, Action action, int terminal) {
-        this(reward, observation,action,terminal==1);
+        this(reward, observation, action, terminal == 1);
     }
 
     /**
@@ -73,18 +121,17 @@ public class Reward_observation_action_terminal {
 
         if (terminal) {
             this.terminal = 1;
-        }
-        else{
+        } else {
             this.terminal = 0;
         }
     }
-    
+
     /**
      * @since 2.0 Want to move towards using terminal as a boolean not an int.
      * @return boolean representation of whether the episode is over.
      */
-    public boolean isTerminal(){
-        return terminal==1;
+    public boolean isTerminal() {
+        return terminal == 1;
     }
 
     public Reward_observation_action_terminal(Reward_observation_action_terminal src) {

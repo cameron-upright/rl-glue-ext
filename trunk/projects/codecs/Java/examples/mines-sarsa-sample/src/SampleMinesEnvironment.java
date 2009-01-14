@@ -98,11 +98,16 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
 
     public Reward_observation_terminal env_step(Action thisAction) {
 	/* Make sure the action is valid */
-	assert(thisAction.==1);
-	assert(this_action->intArray[0]>=0);
-	assert(this_action->intArray[0]<4);
+	assert(thisAction.getNumInts()==1): "Expecting a 1-dimensional integer action. "+thisAction.getNumInts()+"D was provided";
+	assert(thisAction.getInt(0)>=0): "Action should be in [0,4], "+thisAction.getInt(0)+" was provided";
+	assert(thisAction.getInt(0)<4) : "Action should be in [0,4], "+thisAction.getInt(0)+" was provided";
 
-	updatePosition(&the_world,this_action->intArray[0]);
+    theWorld.updatePosition(thisAction.getInt(0));
+
+
+    Reward_observation_terminal ROT=new Reward_observation_terminal();
+    ROT.setObservation(theWorld.makeObservation());
+    updatePosition(&the_world,this_action->intArray[0]);
 	this_reward_observation.observation->intArray[0] = calculate_flat_state(the_world);
 	this_reward_observation.reward = calculate_reward(the_world);
 	this_reward_observation.terminal = check_terminal(the_world.agentRow,the_world.agentCol);
@@ -190,6 +195,10 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
                 }
             }
             return valid;
+        }
+
+        private void updatePosition(int aInt) {
+            throw new UnsupportedOperationException("Not yet implemented");
         }
     }
 }
