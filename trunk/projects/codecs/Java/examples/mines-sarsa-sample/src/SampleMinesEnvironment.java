@@ -93,35 +93,19 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
     public Observation env_start() {
         theWorld.setRandomAgentState();
 
-        Observation returnObservation = new Observation(1, 0, 0);
-        returnObservation.intArray[0] = currentState;
-        return returnObservation;
+        return theWorld.makeObservation();
     }
 
     public Reward_observation_terminal env_step(Action thisAction) {
-        boolean episodeOver = false;
-        double theReward = 0.0d;
+	/* Make sure the action is valid */
+	assert(thisAction.==1);
+	assert(this_action->intArray[0]>=0);
+	assert(this_action->intArray[0]<4);
 
-        if (thisAction.intArray[0] == 0) {
-            currentState--;
-        }
-        if (thisAction.intArray[0] == 1) {
-            currentState++;
-        }
-
-        if (currentState <= 0) {
-            currentState = 0;
-            theReward = -1.0d;
-            episodeOver = true;
-        }
-
-        if (currentState >= 20) {
-            currentState = 20;
-            episodeOver = true;
-            theReward = 1.0d;
-        }
-        Observation returnObservation = new Observation(1, 0, 0);
-        returnObservation.intArray[0] = currentState;
+	updatePosition(&the_world,this_action->intArray[0]);
+	this_reward_observation.observation->intArray[0] = calculate_flat_state(the_world);
+	this_reward_observation.reward = calculate_reward(the_world);
+	this_reward_observation.terminal = check_terminal(the_world.agentRow,the_world.agentCol);
 
         Reward_observation_terminal returnRewardObs = new Reward_observation_terminal(theReward, returnObservation, episodeOver);
         return returnRewardObs;
@@ -172,7 +156,7 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
             int startRow = randGen.nextInt(numRows);
             int startCol = randGen.nextInt(numCols);
 
-            while (check_terminal(startRow, startCol) || !check_valid(startRow, startCol)) {
+            while (checkTerminal(startRow, startCol) || !checkValid(startRow, startCol)) {
                 startRow = randGen.nextInt(numRows);
                 startCol = randGen.nextInt(numCols);
             }
@@ -183,23 +167,22 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
 
         private Observation makeObservation(){
             Observation theObservation=new Observation(1,0,0);
-            theObservation.intArray[0] = calculate_flat_state();
+            theObservation.setInt(0, calculateFlatState());
             return theObservation;
-
         }
 
-        int calculate_flat_state() {
+        int calculateFlatState() {
             return agentCol * numRows + agentRow;
         }
 
-        boolean check_terminal(int row, int col) {
+        boolean checkTerminal(int row, int col) {
             if (theMap[row][col] == WORLD_GOAL || theMap[row][col] == WORLD_MINE) {
                 return true;
             }
             return false;
         }
 
-        boolean check_valid(int row, int col) {
+        boolean checkValid(int row, int col) {
             boolean valid = false;
             if (row < numRows && row >= 0 && col < numCols && col >= 0) {
                 if (world_map[row][col] != WORLD_OBSTACLE) {
