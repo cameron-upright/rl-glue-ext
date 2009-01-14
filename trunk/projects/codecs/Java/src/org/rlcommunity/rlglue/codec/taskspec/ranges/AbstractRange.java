@@ -36,10 +36,7 @@ public abstract class AbstractRange {
     
  
     public AbstractRange(String rangeString){
-        //First eat the (
-//        System.out.println(taskSpecTokenizer.nextToken("("));
         //Now get a string that has either 2 or 3 tokens ... either num low high or low high
-        
         StringTokenizer rangeTokenizer=new StringTokenizer(rangeString);
         if(rangeTokenizer.countTokens()==3){
             howMany=Integer.parseInt(rangeTokenizer.nextToken());
