@@ -11,37 +11,33 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-* 
-*  $Revision$
-*  $Date$
-*  $Author$
-*  $HeadURL$
-* 
-*/
-
+ *
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
+ *
+ */
 package org.rlcommunity.rlglue.codec.types;
 
 public class Observation extends RL_abstract_type {
 
-  	public Observation() 
-	{
-		this(0,0,0);
-	}
+    public Observation() {
+        this(0, 0, 0);
+    }
 
-	/**
-         * For backwards compatibility with RL-Glue 2.x
-         * @param numInts
-         * @param numDoubles
-         */
-        public Observation(int numInts, int numDoubles)
-	{
-		this(numInts,numDoubles,0);
-	}
+    /**
+     * For backwards compatibility with RL-Glue 2.x
+     * @param numInts
+     * @param numDoubles
+     */
+    public Observation(int numInts, int numDoubles) {
+        this(numInts, numDoubles, 0);
+    }
 
-        public Observation(int numInts, int numDoubles, int numChars)
-	{
-		super(numInts,numDoubles,numChars);
-	}       
+    public Observation(int numInts, int numDoubles, int numChars) {
+        super(numInts, numDoubles, numChars);
+    }
 
     public Observation(RL_abstract_type src) {
         super(src);

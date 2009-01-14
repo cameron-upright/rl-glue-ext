@@ -70,32 +70,41 @@ public class RL_abstract_type implements Comparable {
         return this.charArray[which];
     }
 
-    public void setInt(int which,int value){
-        assert (intArray!=null && which<intArray.length) : "Tried to set int: "+which+" but intArray only has length "+intArray.length+".";
-        intArray[which]=value;
-    }
-    public void setDouble(int which,double value){
-        assert (doubleArray!=null && which<doubleArray.length) : "Tried to set double: "+which+" but doubleArray only has length "+doubleArray.length+".";
-        doubleArray[which]=value;
-    }
-    public void setChar(int which,char value){
-        assert (charArray!=null && which<charArray.length) : "Tried to set char: "+which+" but charArray only has length "+charArray.length+".";
-        charArray[which]=value;
+    public void setInt(int which, int value) {
+        assert (intArray != null && which < intArray.length) : "Tried to set int: " + which + " but intArray only has length " + intArray.length + ".";
+        intArray[which] = value;
     }
 
-    public int getNumInts(){
-        if(intArray==null)intArray=new int[0];
+    public void setDouble(int which, double value) {
+        assert (doubleArray != null && which < doubleArray.length) : "Tried to set double: " + which + " but doubleArray only has length " + doubleArray.length + ".";
+        doubleArray[which] = value;
+    }
+
+    public void setChar(int which, char value) {
+        assert (charArray != null && which < charArray.length) : "Tried to set char: " + which + " but charArray only has length " + charArray.length + ".";
+        charArray[which] = value;
+    }
+
+    public int getNumInts() {
+        if (intArray == null) {
+            intArray = new int[0];
+        }
         return intArray.length;
     }
-    public int getNumDoubles(){
-        if(doubleArray==null)doubleArray=new double[0];
+
+    public int getNumDoubles() {
+        if (doubleArray == null) {
+            doubleArray = new double[0];
+        }
         return doubleArray.length;
     }
-    public int getNumChars(){
-        if(charArray==null)charArray=new char[0];
+
+    public int getNumChars() {
+        if (charArray == null) {
+            charArray = new char[0];
+        }
         return charArray.length;
     }
-
 
     /**
      * Useful (maybe?) utility method for deep copying one RL_Abstract_type
