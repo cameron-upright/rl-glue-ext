@@ -82,6 +82,8 @@ public class SampleSarsaAgent implements AgentInterface {
         assert (!theTaskSpec.getDiscreteActionRange(0).hasSpecialMaxStatus());
         numActions = theTaskSpec.getDiscreteActionRange(0).getMax() + 1;
 
+        sarsa_gamma=theTaskSpec.getDiscountFactor();
+
         valueFunction = new double[numActions][numStates];
 
     }

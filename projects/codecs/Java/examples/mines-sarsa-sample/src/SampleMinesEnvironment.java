@@ -16,10 +16,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
 
-
-This code is adapted from the Mines.cpp code written by Adam White
-for earlier versions of RL-Glue.
-
  *  $Revision: 821 $
  *  $Date: 2008-09-14 14:21:41 -0600 (Sun, 14 Sep 2008) $
  *  $Author: brian@tannerpages.com $
@@ -40,13 +36,24 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
 
 /**
- *  This is a very simple environment with discrete observations corresponding to states labeled {0,1,...,19,20}
-The starting state is 10.
-
-There are 2 actions = {0,1}.  0 decrements the state, 1 increments the state.
-
-The problem is episodic, ending when state 0 or 20 is reached, giving reward -1 or +1, respectively.  The reward is 0 on 
-all other steps.
+ * This code is adapted from the Mines.cpp code written by Adam White
+ * for earlier versions of RL-Glue.
+ *
+ *	This is a very simple discrete-state, episodic grid world that has
+ *	exploding mines in it.  If the agent steps on a mine, the episode
+ *	ends with a large negative reward.
+ *
+ *	The reward per step is -1, with +10 for exiting the game successfully
+ *	and -100 for stepping on a mine.
+ *
+ * This example follow my (Brian Tanner) favorite pattern of keeping the dynamics
+ * of the world fairly separate from the class that implements EnvironmentInterface.
+ * In this case, I've put it in the clss WorldDescription, which is inside this
+ * same Java file as SampleMinesEnvironment.  Usually I would put it in a separate
+ * file.  This separation means that SampleMinesEnvironment doesn't need to know
+ * much about the dynamics of the world, and WorldDescription doesn't need to know
+ * much about RL-Glue.
+ * 
  * @author Brian Tanner
  */
 public class SampleMinesEnvironment implements EnvironmentInterface {
@@ -55,17 +62,31 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
     static final int WORLD_OBSTACLE = 1;
     static final int WORLD_MINE = 2;
     static final int WORLD_GOAL = 3;
-    int world_map[][] = new int[][]{
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    };
+
+    //WorldDescription contains the state of the world and manages the dynamics.
     WorldDescription theWorld;
 
+
+    //These are used if the environment has been sent a message to use a fixed
+    //starting state.
+    boolean fixedStartState=false;
+    int startRow=0;
+    int startCol=0;
+
     public String env_init() {
+        //This is hard coded, but there is no reason it couldn't be automatically
+        //generated or read from a file.
+
+        int world_map[][] = new int[][]{
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 1, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+        };
+
+
         theWorld = new WorldDescription(world_map);
 
 
@@ -80,9 +101,11 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
         //Specify that there will be an integer observation [0,108] for the state
         theTaskSpecObject.addDiscreteObservation(new IntRange(0, theWorld.getNumStates() - 1));
         //Specify that there will be an integer action [0,1]
-        theTaskSpecObject.addDiscreteAction(new IntRange(0, 1));
+        theTaskSpecObject.addDiscreteAction(new IntRange(0, 3));
         //Specify the reward range [-1,1]
-        theTaskSpecObject.setRewardRange(new DoubleRange(-1, 1));
+        theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d));
+
+        theTaskSpecObject.setExtra("SampleMinesEnvironment by Brian Tanner.");
 
         String taskSpecString = theTaskSpecObject.toTaskSpec();
         TaskSpec.checkTaskSpec(taskSpecString);
@@ -90,41 +113,67 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
         return taskSpecString;
     }
 
+    /**
+     * Put the environment in a random state and return the appropriate observation.
+     * @return
+     */
     public Observation env_start() {
+        if(fixedStartState){
+            boolean stateIsValid=theWorld.setAgentState(startRow,startCol);
+            if(!stateIsValid){
+                theWorld.setRandomAgentState();
+            }
+        }else{
         theWorld.setRandomAgentState();
+        }
+        Observation theObservation = new Observation(1, 0, 0);
+        theObservation.setInt(0, theWorld.getState());
+        return theObservation;
 
-        return theWorld.makeObservation();
     }
 
+    /**
+     * Make sure the action is in the appropriate range, update the state,
+     * generate the new observation, reward, and whether the episode is over.
+     * @param thisAction
+     * @return
+     */
     public Reward_observation_terminal env_step(Action thisAction) {
-	/* Make sure the action is valid */
-	assert(thisAction.getNumInts()==1): "Expecting a 1-dimensional integer action. "+thisAction.getNumInts()+"D was provided";
-	assert(thisAction.getInt(0)>=0): "Action should be in [0,4], "+thisAction.getInt(0)+" was provided";
-	assert(thisAction.getInt(0)<4) : "Action should be in [0,4], "+thisAction.getInt(0)+" was provided";
+        /* Make sure the action is valid */
+        assert (thisAction.getNumInts() == 1) : "Expecting a 1-dimensional integer action. " + thisAction.getNumInts() + "D was provided";
+        assert (thisAction.getInt(0) >= 0) : "Action should be in [0,4], " + thisAction.getInt(0) + " was provided";
+        assert (thisAction.getInt(0) < 4) : "Action should be in [0,4], " + thisAction.getInt(0) + " was provided";
 
-    theWorld.updatePosition(thisAction.getInt(0));
+        theWorld.updatePosition(thisAction.getInt(0));
 
 
-    Reward_observation_terminal ROT=new Reward_observation_terminal();
-    ROT.setObservation(theWorld.makeObservation());
-    updatePosition(&the_world,this_action->intArray[0]);
-	this_reward_observation.observation->intArray[0] = calculate_flat_state(the_world);
-	this_reward_observation.reward = calculate_reward(the_world);
-	this_reward_observation.terminal = check_terminal(the_world.agentRow,the_world.agentCol);
+        Observation theObservation = new Observation(1, 0, 0);
+        theObservation.setInt(0, theWorld.getState());
+        Reward_observation_terminal RewardObs = new Reward_observation_terminal();
+        RewardObs.setObservation(theObservation);
+        RewardObs.setTerminal(theWorld.isTerminal());
+        RewardObs.setReward(theWorld.getReward());
 
-        Reward_observation_terminal returnRewardObs = new Reward_observation_terminal(theReward, returnObservation, episodeOver);
-        return returnRewardObs;
+        return RewardObs;
     }
 
     public void env_cleanup() {
     }
 
     public String env_message(String message) {
-        if (message.equals("what is your name?")) {
-            return "my name is skeleton_environment, Java edition!";
+        if(message.startsWith("set-random-start-state")){
+            fixedStartState=false;
+            return "Message understood.  Using random start state.";
         }
-
-        return "I don't know how to respond to your message";
+        
+        if(message.startsWith("set-start-state")){
+            String[] theTokens=message.split(" ");
+            startRow=Integer.parseInt(theTokens[1]);
+            startCol=Integer.parseInt(theTokens[1]);
+            fixedStartState=true;
+            return "Message understood.  Using fixed start state.";
+        }
+        return "SamplesMinesEnvironment does not understand your message.";
     }
 
     /**
@@ -135,70 +184,135 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
         EnvironmentLoader theLoader = new EnvironmentLoader(new SampleMinesEnvironment());
         theLoader.run();
     }
+}
 
-    class WorldDescription {
+/**
+ * This class holds all of the internal state information about the environment,
+ * and manages the dynamics, state update, reward calculation, etc.
+ * @author btanner
+ */
+class WorldDescription {
 
-        private final int numRows;
-        private final int numCols;
-        public int agentRow;
-        public int agentCol;
-        private final int[][] theMap;
-        private Random randGen = new Random();
+    private final int numRows;
+    private final int numCols;
+    public int agentRow;
+    public int agentCol;
+    private final int[][] theMap;
+    private Random randGen = new Random();
 
-        private WorldDescription(int[][] worldMap) {
-            this.theMap = worldMap;
+    public WorldDescription(int[][] worldMap) {
+        this.theMap = worldMap;
 
-            this.numRows = theMap.length;
-            this.numCols = theMap[0].length;
+        this.numRows = theMap.length;
+        this.numCols = theMap[0].length;
+    }
+
+    public int getNumStates() {
+        return numRows * numCols;
+    }
+
+    /**
+     * Puts the agent into a random state.  Uses a generate and test method, in
+     * a loop, only accepts the state if it is valid and not terminal.
+     */
+    public void setRandomAgentState() {
+
+        int startRow = randGen.nextInt(numRows);
+        int startCol = randGen.nextInt(numCols);
+
+        while (isTerminal(startRow, startCol) || !isValid(startRow, startCol)) {
+            startRow = randGen.nextInt(numRows);
+            startCol = randGen.nextInt(numCols);
         }
 
-        private int getNumStates() {
-            return numRows * numCols;
+        this.agentRow = startRow;
+        this.agentCol = startCol;
+    }
+
+    /**
+     * Convert the row/col state into a single number.
+     * @return
+     */
+    public int getState() {
+        return agentCol * numRows + agentRow;
+    }
+
+    /**
+     * Sets the agent current state to startRow,startCol.
+     * @param startRow
+     * @param startCol
+     * @return true if the state is valid and not terminal, otherewise
+     * return false.
+     */
+    boolean setAgentState(int startRow, int startCol) {
+        this.agentRow=startRow;
+        this.agentCol=startCol;
+
+        return isValid(startRow, startCol) && !isTerminal();
+    }
+
+
+    public boolean isTerminal() {
+        return isTerminal(agentRow, agentCol);
+    }
+
+    private boolean isTerminal(int row, int col) {
+        if (theMap[row][col] == SampleMinesEnvironment.WORLD_GOAL || theMap[row][col] == SampleMinesEnvironment.WORLD_MINE) {
+            return true;
         }
+        return false;
+    }
 
-        private void setRandomAgentState() {
-
-            int startRow = randGen.nextInt(numRows);
-            int startCol = randGen.nextInt(numCols);
-
-            while (checkTerminal(startRow, startCol) || !checkValid(startRow, startCol)) {
-                startRow = randGen.nextInt(numRows);
-                startCol = randGen.nextInt(numCols);
+    private boolean isValid(int row, int col) {
+        boolean valid = false;
+        if (row < numRows && row >= 0 && col < numCols && col >= 0) {
+            if (theMap[row][col] != SampleMinesEnvironment.WORLD_OBSTACLE) {
+                valid = true;
             }
+        }
+        return valid;
+    }
 
-            this.agentRow = startRow;
-            this.agentCol = startCol;
+    /**
+     * Calculate the reward for the current agent state.
+     * @return
+     */
+    public double getReward() {
+        if (theMap[agentRow][agentCol] == SampleMinesEnvironment.WORLD_GOAL) {
+            return 10.0f;
         }
 
-        private Observation makeObservation(){
-            Observation theObservation=new Observation(1,0,0);
-            theObservation.setInt(0, calculateFlatState());
-            return theObservation;
+        if (theMap[agentRow][agentCol] == SampleMinesEnvironment.WORLD_MINE) {
+            return -100.0f;
         }
 
-        int calculateFlatState() {
-            return agentCol * numRows + agentRow;
+        return -1.0f;
+    }
+
+    public void updatePosition(int theAction) {
+        /* When the move would result in hitting an obstacles, the agent simply doesn't move */
+        int newRow = agentRow;
+        int newCol = agentCol;
+
+
+        if (theAction == 0) {/*move down*/
+            newCol = agentCol - 1;
+        }
+        if (theAction == 1) { /*move up*/
+            newCol = agentCol + 1;
+        }
+        if (theAction == 2) {/*move left*/
+            newRow = agentRow - 1;
+        }
+        if (theAction == 3) {/*move right*/
+            newRow = agentRow + 1;
         }
 
-        boolean checkTerminal(int row, int col) {
-            if (theMap[row][col] == WORLD_GOAL || theMap[row][col] == WORLD_MINE) {
-                return true;
-            }
-            return false;
-        }
 
-        boolean checkValid(int row, int col) {
-            boolean valid = false;
-            if (row < numRows && row >= 0 && col < numCols && col >= 0) {
-                if (world_map[row][col] != WORLD_OBSTACLE) {
-                    valid = true;
-                }
-            }
-            return valid;
-        }
-
-        private void updatePosition(int aInt) {
-            throw new UnsupportedOperationException("Not yet implemented");
+        /*Check if new position is out of bounds or inside an obstacle */
+        if (isValid(newRow, newCol)) {
+            agentRow = newRow;
+            agentCol = newCol;
         }
     }
 }
