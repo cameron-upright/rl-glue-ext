@@ -102,9 +102,8 @@ public class SampleExperiment {
         return new evaluationPoint(mean, Math.sqrt(variance));
     }
     /*
-    This function will freeze the agent's policy and test it after every 25 episodes.
+        This function will freeze the agent's policy and test it after every 25 episodes.
      */
-
     void printScore(int afterEpisodes, evaluationPoint theScore) {
         System.out.printf("%d\t\t%.2f\t\t%.2f\n", afterEpisodes, theScore.mean, theScore.standardDeviation);
     }
@@ -166,7 +165,6 @@ public class SampleExperiment {
         RLGlue.RL_env_message("set-random-start-state");
         thisScore=evaluateAgent();
         printScore(0, thisScore);
-
 
         System.out.println("\nProgram Complete.");
         RLGlue.RL_cleanup();
