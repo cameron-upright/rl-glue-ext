@@ -184,7 +184,7 @@ typed elements."
 (defun rl-write-reward (reward buffer)
   "Writes REWARD value into BUFFER."
   (declare #.*optimize-settings*)
-  (check-type reward (or integer-t float))
+  (check-type reward real)
   (buffer-write-float (coerce reward 'double-float) buffer))
 
 (declaim (inline rl-read-message))

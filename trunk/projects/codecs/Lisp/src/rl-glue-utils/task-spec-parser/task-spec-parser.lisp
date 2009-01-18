@@ -199,7 +199,8 @@ RETURNS:
                (format s " CHARCOUNT ~d" char-count))))
       (format s "VERSION ~a" (version object))
       (format s " PROBLEMTYPE ~a" (problem-type object))
-      (format s " DISCOUNTFACTOR ~f" (discount-factor object))
+      (format s " DISCOUNTFACTOR ~f"
+              (coerce (discount-factor object) 'single-float))
       (format s " OBSERVATIONS")
       (format-ranges "INTS" (int-observations object))
       (format-ranges "DOUBLES" (float-observations object))

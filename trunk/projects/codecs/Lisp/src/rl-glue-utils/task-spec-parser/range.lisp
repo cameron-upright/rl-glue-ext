@@ -127,11 +127,9 @@
              (+inf "POSINF")
              (unspec "UNSPEC")
              (t (assert (numberp value))
-                (format nil
-                        (etypecase value
-                          (integer "~d")
-                          (float "~f"))
-                        value)))))
+                (etypecase value
+                  (integer (format nil "~d" value))
+                  (float (format nil "~f" (coerce value 'single-float))))))))
     (with-output-to-string (s)
       (format s "(")
       (unless (= 1 (repeat-count object))
