@@ -107,6 +107,11 @@
              (format stream "Not enough buffer data to read type ~A."
                      (otype condition)))))
 
+(defun emit-empty-buffer-error (type)
+  "Emits an empty-buffer-error with a use-value restart option."
+  (restart-case (error 'empty-buffer-error :otype type)
+    (use-value (value) value)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (declaim (inline char-encoder))
@@ -198,8 +203,7 @@
   (let ((buffer buffer))
     `(if (and ,chk-p (< (- (buffer-size ,buffer)
                            (buffer-offset ,buffer)) ,type-size))
-         (restart-case (error 'empty-buffer-error :otype ,type)
-           (use-value (value) value))
+         (emit-empty-buffer-error ,type)
          (progn ,@body))))
 
 (defun auto-adjust (buffer size)

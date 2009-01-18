@@ -24,12 +24,17 @@ if [ ! -e "${LISPCFGFILE}" ]; then
     exit -2
 fi
 source "${LISPCFGFILE}"
+source "${tooldir}/config/init.sh"
 
 ###############################################################################
 
-${LISP} ${EVAL} "(asdf:oos 'asdf:load-op :${package}-tests :verbose nil)" \
-        ${EVAL} "(fiveam:run! '${package}::main-suite)" \
-        ${EVAL} "(quit)"
+${LISP} <<- EOF
+  `lisp-init`
+  (handler-bind ((condition #'(lambda (condition)
+                                (continue))))
+    (asdf:oos 'asdf:load-op :${package}-tests :verbose nil))
+  (fiveam:run! '${package}::main-suite)
+EOF
 
 exit 0
 

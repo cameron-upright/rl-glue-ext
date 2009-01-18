@@ -25,14 +25,12 @@
 
 (defun test-speed-measurement (exp)
   "Measures the speed of an episode run."
-  (let ((time-string (with-output-to-string (*trace-output*)
-                       (time (rl-episode exp 0)))))
-    (multiple-value-bind (matched matches)
-        (cl-ppcre:scan-to-strings (get-time-regex-string) time-string)
-      (when matched
-        (let ((ms (* 1000 (read-from-string (aref matches 0)))))
-          (format t "~a Elapsed time in ms: ~a, per step is ~a~%"
-                  *test-prefix* ms (/ ms (rl-num-steps exp))))))))
+  (let ((start-time (get-internal-real-time)))
+    (rl-episode exp 0)
+    (let ((ms (float (/ (* 1000 (- (get-internal-real-time) start-time))
+                        internal-time-units-per-second))))
+      (format t "~a Elapsed time in ms: ~f, per step is ~f~%"
+                *test-prefix* ms (/ ms (rl-num-steps exp))))))
 
 (defun run-test-speed-experiment (exp &rest args)
   "Runs the experiment of test-speed test."

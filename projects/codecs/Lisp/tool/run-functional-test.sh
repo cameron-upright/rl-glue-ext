@@ -24,28 +24,41 @@ if [ ! -e "${LISPCFGFILE}" ]; then
     exit -2
 fi
 source "${LISPCFGFILE}"
+source "${tooldir}/config/init.sh"
 source "${tooldir}/../test/functional/${testname}/config"
 
 ###############################################################################
 
-${LISP} ${EVAL} "(asdf:oos 'asdf:compile-op :rl-glue-tests :verbose nil)" \
-        ${EVAL} "(quit)"
+${LISP} <<- EOF
+  `lisp-init`
+  (asdf:oos 'asdf:compile-op :rl-glue-tests :verbose nil)
+EOF
 
 ###############################################################################
 
 rl_glue &
 
-${LISP} ${EVAL} "(asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)" \
-        ${EVAL} "(rl-glue-tests:start-${AGENT})" \
-        ${EVAL} "(quit)" &
+{
+${LISP} <<- EOF
+  `lisp-init`
+  (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
+  (rl-glue-tests:start-${AGENT})
+EOF
+} &
 
-${LISP} ${EVAL} "(asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)" \
-        ${EVAL} "(rl-glue-tests:start-${ENVIRONMENT})" \
-        ${EVAL} "(quit)" &
+{
+${LISP} <<- EOF
+  `lisp-init`
+  (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
+  (rl-glue-tests:start-${ENVIRONMENT})
+EOF
+} &
 
-${LISP} ${EVAL} "(asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)" \
-        ${EVAL} "(rl-glue-tests:start-${EXPERIMENT})" \
-        ${EVAL} "(quit)"
+${LISP} <<- EOF 
+  `lisp-init`
+  (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
+  (rl-glue-tests:start-${EXPERIMENT})
+EOF
 
 exit 0
 

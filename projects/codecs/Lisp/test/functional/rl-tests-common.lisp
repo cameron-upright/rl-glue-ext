@@ -72,15 +72,6 @@ from the input one used during testing."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun get-time-regex-string ()
-  "Returns the implementation dependent regexp to cut the real time
- from the result of the time function call."
-  #+(or sbcl cmu) "([^\\s]+) seconds of real time"
-  #+clisp "Real time: ([^\\s]+) sec"
-  #-(or sbcl cmu clisp) (error "Not implemented!"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (defclass test-experiment (experiment)
   ((test-name
     :reader test-name
