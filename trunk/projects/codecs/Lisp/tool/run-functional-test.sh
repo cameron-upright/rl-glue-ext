@@ -32,6 +32,7 @@ source "${tooldir}/../test/functional/${testname}/config"
 ${LISP} <<- EOF
   `lisp-init`
   (asdf:oos 'asdf:compile-op :rl-glue-tests :verbose nil)
+  (quit)
 EOF
 
 ###############################################################################
@@ -43,6 +44,7 @@ ${LISP} <<- EOF
   `lisp-init`
   (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
   (rl-glue-tests:start-${AGENT})
+  (quit)
 EOF
 } &
 
@@ -51,6 +53,7 @@ ${LISP} <<- EOF
   `lisp-init`
   (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
   (rl-glue-tests:start-${ENVIRONMENT})
+  (quit)
 EOF
 } &
 
@@ -58,6 +61,7 @@ ${LISP} <<- EOF
   `lisp-init`
   (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
   (rl-glue-tests:start-${EXPERIMENT})
+  (quit)
 EOF
 
 exit 0
