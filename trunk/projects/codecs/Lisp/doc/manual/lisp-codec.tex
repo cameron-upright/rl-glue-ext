@@ -65,10 +65,6 @@ Required libraries for the codec.
 
 \subsection{Supported Lisp implementations}
 
-The library has been written in the sense to be as portable as possible,
-but because of the limited resources we couldn't test it with all the
-Lisp implementations. Here is the list of the officially supported ones.
-
 \begin{itemize}
 \item[] SBCL (\selfref{http://www.sbcl.org/})
 \item[] CMUCL (\selfref{http://www.cons.org/cmucl/})
@@ -490,28 +486,28 @@ Average return per episode:~-55.4d0 \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Further issues}
+%\section{Further issues}
+%
+%\subsection{Numerical encoding/decoding}
+%
+%Because Lisp has a platform independent internal structure for variable
+%representation, we have to encode and decode from the platform dependent
+%ones supported by C. This generates some overhead which can be seen on the
+%performance measurements (especially for floating point numbers). The related
+%conversion functions can be found in the \textsl{rl-buffer.lisp} file. 
 
-\subsection{Numerical encoding/decoding}
-
-Because Lisp has a platform independent internal structure for variable
-representation, we have to encode and decode from the platform dependent
-ones supported by C. This generates some overhead which can be seen on the
-performance measurements (especially for floating point numbers). The related
-conversion functions can be found in the \textsl{rl-buffer.lisp} file. 
-
-\subsection{64 bit architectures}
-
-By default the Lisp codec (even with 32 or 64 bit Lisp implementation) is
-configured for a 32 bit compiled RL-Glue component, but it is possible to
-reconfigure it for a 64 bit one. To do so, one has to modify the constants
-at the top of the \textsl{rl-buffer.lisp} file, and rewrite the floating
-point encoder/decoder functions. These are optimalized for 32 bit
-architectures because of performance issues. For a quick try, it can worth
-to probe the ieee-floats library
-at \selfref{http://common-lisp.net/project/ieee-floats/}. It is not used by
-default, because it turned to be slow on the 32 bit architecture performance
-tests.
+%\subsection{64 bit architectures}
+%
+%By default the Lisp codec (even with 32 or 64 bit Lisp implementation) is
+%configured for a 32 bit compiled RL-Glue component, but it is possible to
+%reconfigure it for a 64 bit one. To do so, one has to modify the constants
+%at the top of the \textsl{rl-buffer.lisp} file, and rewrite the floating
+%point encoder/decoder functions. These are optimalized for 32 bit
+%architectures because of performance issues. For a quick try, it can worth
+%to probe the ieee-floats library
+%at \selfref{http://common-lisp.net/project/ieee-floats/}. It is not used by
+%default, because it turned to be slow on the 32 bit architecture performance
+%tests.
 
 %\hypertarget{perfmeas}{\subsection{Performance measurements}}
 %

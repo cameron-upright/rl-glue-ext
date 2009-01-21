@@ -77,7 +77,7 @@
     (speed 3)
     (safety 0)
     (space 0)
-    (debug 1)
+    (debug 0)
     (compilation-speed 0))
   "General optimization settings of the package.")
 
