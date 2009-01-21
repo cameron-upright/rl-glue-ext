@@ -17,8 +17,6 @@
 #
 
 
-#Brian Tanner thinks we should be able to use inheritance here to make
-#this not suck so bad.
 import copy
 
 class RL_Abstract_Type:
