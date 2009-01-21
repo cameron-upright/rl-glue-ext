@@ -323,6 +323,7 @@ of the encoded value in bytes."
   (declare (type double-float float))
   (when adjust-p (auto-adjust buffer +bytes-per-float+))
   (multiple-value-bind (l-code r-code) (float-encoder float)
+    (declare (type int-code-t l-code r-code))
     (buffer-write #.+bytes-per-integer+ l-code buffer)
     (buffer-write #.+bytes-per-integer+ r-code buffer))
   float)

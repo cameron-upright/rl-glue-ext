@@ -3,8 +3,8 @@
 # Runs a specified functional test with a selected Lisp implementation
 # and prints the result to the standard output.
 #
-# $Revision$
-# $Date$
+# $Revision: 427 $
+# $Date: 2009-01-20 22:03:11 +0100 (Tue, 20 Jan 2009) $
 
 if [ ${#} -ne 2 ]; then
     echo "Usage: ${0} <lisp-implementation> <testcase-name>"
