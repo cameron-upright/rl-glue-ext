@@ -147,6 +147,17 @@
   "Returns the codes of FLOAT."
   (declare #.*optimize-settings*)
   (declare (type double-float float))
+  #+sbcl
+  (values
+   (sb-kernel:double-float-high-bits float)
+   (sb-kernel:double-float-low-bits float))
+  #+cmu
+  (values
+   (kernel:double-float-high-bits float)
+   (kernel:double-float-low-bits float))
+  #+ccl
+  (ccl::double-float-bits float)
+  #-(or sbcl cmu ccl)
   (flet ((create-float-code (sign expo sigd)
            (declare #.*optimize-settings*)
            (declare (type fixnum sign expo))
@@ -165,6 +176,8 @@
         (multiple-value-bind (sigd expo sign) (decode-float float)
           (declare (type double-float sigd sign))
           (declare (type fixnum expo))
+          (when (minusp sigd)
+            (setf sigd (- sigd)))
           (let ((expo (+ expo (1- +expo-offset+)))
                 (sign (if (plusp sign) 0 1)))
             (declare (type fixnum expo sign))
@@ -180,7 +193,13 @@
 (defun float-decoder (l-code r-code)
   "Returns the float generated from the L-CODE and R-CODE codes."
   (declare #.*optimize-settings*)
-  (declare (type int-code-t l-code r-code))
+  #+sbcl
+  (sb-kernel:make-double-float l-code r-code)
+  #+cmu
+  (kernel:make-double-float l-code r-code)
+  #+ccl
+  (ccl::double-float-from-bits l-code r-code)
+  #-(or sbcl cmu ccl)
   (let ((sign (ldb (byte 1 (1- +bits-per-integer+)) l-code))
         (expo (ldb (byte +expo-bits+ (- +bits-per-integer+ 1 +expo-bits+))
                    l-code))

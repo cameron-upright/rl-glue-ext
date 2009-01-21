@@ -76,17 +76,14 @@
   ((expected
     :reader expected
     :initarg :expected
-    :type string
     :documentation "The expected token during parsing.")
    (found
     :reader found
     :initarg :found
-    :type string
     :documentation "The found token during parsing.")
    (spec-string
     :reader spec-string
     :initarg :spec-string
-    :type string
     :documentation "The unparsed part of the source string."))
   (:documentation "Parse error.")
   (:report (lambda (condition stream)
