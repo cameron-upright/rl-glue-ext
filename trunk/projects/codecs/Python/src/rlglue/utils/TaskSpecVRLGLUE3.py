@@ -159,6 +159,7 @@ class TaskSpecParser:
             return ""
         str_r = self.getValue(i,str_o,self.v)
         str_r = str_r.replace(") (",")#(")
+        str_r = str_r.replace(")(",")#(")  # Ok I can parse it but this (there is no space between consecutiive ranges) should be checked since this means that the taskspec is malformed.
         parts = str_r.split("#")
         obs=[]
         for p in parts:
@@ -202,7 +203,7 @@ class TaskSpecParser:
 
 def test():
     # you can cut the taskspec by the main words with new line
-    ts= """VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 OBSERVATIONS INTS (3 0 1) DOUBLES (2 -1.2 0.5) (-.07 .07) CHARCOUNT 1024
+    ts= """VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 OBSERVATIONS INTS (3 0 1) DOUBLES (2 -1.2 0.5)(-.07 .07) CHARCOUNT 1024
          ACTIONS INTS (2 0 4) CHARCOUNT 1024 REWARDS (5.0 UNSPEC) EXTRA some other stuff goes here"""
     print ts
     print
