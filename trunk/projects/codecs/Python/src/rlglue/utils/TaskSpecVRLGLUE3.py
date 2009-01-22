@@ -9,7 +9,7 @@ you are allowed to use it (and see it) fully but subject to the next conditions
 This code is a 'parser' for the RL-Glue 3.0 TaskSpec.
 It does not make any duplication of information, that is, what you get is always a view of the original string.
 This is not the classic state-machine or automata approach to parsing languages so in particular you will se that
-the parser is robust to a big set of taskpec string malformations still getting the right information.
+the parser is robust to a big set of taskpec string malformations still getting the right information. blablabla
 
 
 Last modifed 22-1-2009 by Jose Antonio Martin H.
@@ -69,7 +69,7 @@ class TaskSpecParser:
                 self.valid = False
                 return ""
 
-        return ts[a:b]
+        return ts[a:b].strip()
 
     def getProblemType(self):
         if not self.Validate():
@@ -89,10 +89,12 @@ class TaskSpecParser:
         if self.v[0] not in str_in:
             str_in = self.v[0]+" (0 0 0) " + str_in
         if self.v[2] not in str_in:
-            str_in+=self.v[2]+" 0 "
+            str_in= str_in.rstrip()+" "+self.v[2]+" 0 "
         if self.v[1] not in str_in:
             i = str_in.find(self.v[2])
             str_in= str_in[0:i]+self.v[1]+" (0 0 0) "+str_in[i:]
+
+        
         return str_in
 
     def getObservations(self):
@@ -120,7 +122,6 @@ class TaskSpecParser:
     def getRange(self,str_input):
         if not self.Validate():
             return ""
-
         try:
             str_input = str_input.replace("UNSPEC","'UNSPEC'")
             str_input = str_input.replace("NEGINF","'NEGINF'")
@@ -157,12 +158,18 @@ class TaskSpecParser:
     def GetVarValue(self,i,str_o):
         if not self.Validate():
             return ""
-        str_r = self.getValue(i,str_o,self.v)
+        str_r = self.getValue(i,str_o,self.v)        
         str_r = str_r.replace(") (",")#(")
-        str_r = str_r.replace(")(",")#(")  # Ok I can parse it but this (there is no space between consecutiive ranges) should be checked since this means that the taskspec is malformed.
+        # Ok I can parse it but this (there is no space or there is an extra space in ranges)
+        # should be checked since this means that the taskspec is malformed        
+        str_r = str_r.replace("( ","(")
+        str_r = str_r.replace(" )",")")
+        str_r = str_r.replace(")(",")#(")
+
+        
         parts = str_r.split("#")
         obs=[]
-        for p in parts:
+        for p in parts:            
             obs.extend(self.getRange(p))
         return obs
 
@@ -202,9 +209,11 @@ class TaskSpecParser:
 
 
 def test():
-    # you can cut the taskspec by the main words with new line
-    ts= """VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 OBSERVATIONS INTS (3 0 1) DOUBLES (2 -1.2 0.5)(-.07 .07) CHARCOUNT 1024
-         ACTIONS INTS (2 0 4) CHARCOUNT 1024 REWARDS (5.0 UNSPEC) EXTRA some other stuff goes here"""
+    # you can cut the taskspec by the main words with new line    
+    ts ="""VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR .7 OBSERVATIONS INTS (NEGINF 1) ( 2 -5 POSINF ) DOUBLES (2 -1.2 0.5 )(-.07 .07) (UNSPEC 3.3) (0 100.5) CHARCOUNT 32
+         ACTIONS INTS (5 0 4) DOUBLES (-.5 2) (2 7.8 9) (NEGINF UNSPEC) REWARDS (-5.0 5.0) EXTRA some other stuff goes here"""
+
+    
     print ts
     print
     print
@@ -218,19 +227,19 @@ def test():
         print "======================================================================================================="
         print "\t \t \t \t Observations"
         print "======================================================================================================="
-        #print "Observations: ["+TaskSpec.getObservations()+"]"
+        print "Observations: ["+TaskSpec.getObservations()+"]"
         print "Integers:",TaskSpec.getIntObservations()
         print "Doubles: ",TaskSpec.getDoubleObservations()
         print "Chars:   ",TaskSpec.getCharCountObservations()
         print "======================================================================================================="
         print "\t \t \t \t Actions"
         print "======================================================================================================"
-        #print "Actions: ["+TaskSpec.getActions()+"]"
+        print "Actions: ["+TaskSpec.getActions()+"]"
         print "Integers:",TaskSpec.getIntActions()
         print "Doubles: ",TaskSpec.getDoubleActions()
         print "Chars:   ",TaskSpec.getCharCountActions()
         print "======================================================================================================="        
-        #print "Reward :["+TaskSpec.getReward()+"]")
+        print "Reward :["+TaskSpec.getReward()+"]"
         print "Reward Range:",TaskSpec.getRewardRange()
         print "Extra: ["+TaskSpec.getExtra()+"]"
         print "remeber that by using len() you get the cardinality of lists!"
