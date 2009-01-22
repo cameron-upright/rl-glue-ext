@@ -20,7 +20,7 @@
 
 import sys
 
-import TaskSpecVRLGLUE3
+from rlglue.utils import TaskSpecVRLGLUE3 
 from glue_test import glue_test
 tester =glue_test("test_taskspec")
 
