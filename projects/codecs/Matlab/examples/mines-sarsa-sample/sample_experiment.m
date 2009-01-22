@@ -1,0 +1,163 @@
+%  Copyright 2008 Brian Tanner
+%  http://rl-glue-ext.googlecode.com/
+%  brian@tannerpages.com
+%  http://brian.tannerpages.com
+%  
+%   Licensed under the Apache License, Version 2.0 (the "License");
+%  you may not use this file except in compliance with the License.
+%   You may obtain a copy of the License at
+%  
+%       http://www.apache.org/licenses/LICENSE-2.0
+%  
+%   Unless required by applicable law or agreed to in writing, software
+%   distributed under the License is distributed on an "AS IS" BASIS,
+%   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%   See the License for the specific language governing permissions and
+%   limitations under the License.
+%  
+%   $Revision$
+%   $Date$
+%   $Author$
+%  $HeadURL$
+%
+function sample_experiment()
+%  * Experiment program that does some of the things that might be important when
+%  * running an experiment.  It runs an agent on the environment and periodically
+%  * asks the agent to "freeze learning": to stop updating its policy for a number
+%  * of episodes in order to get an estimate of the quality of what has been learned
+%  * so far.
+%  *
+%  * The experiment estimates statistics such as the mean and standard deviation of
+%  * the return gathered by the policy.  Instead of writing them to a file like the C/Java/Python
+%  * sample experiments, this matlab experiment will plot them.
+%  *
+%  * This experiment also shows off some other features that can be achieved easily
+%  * through the RL-Glue env/agent messaging system by freezing learning (described
+%  * above), having the environment start in specific starting states, and saving
+%  * and loading the agent's value function to/from a binary data file.
+%  * @author Brian Tanner
+
+
+%TO USE THIS EXPERIMENT [order doesn't matter]
+%   -  Start the rl_glue executable socket server on your computer
+%   -  Run the SampleSarsaAgent and SampleMinesEnvironment from a
+%   different codec (Python, Java, C, Lisp should all be fine)
+%   -  Execution this sample_experiment() function
+%   NOTE: Matlab is touchy with sockets and sometimes will lock up if there
+%   is a bug.  If you need to, and are able to ctrl-c to abort this
+%   experiment, remember to call disconnectGlue()
+ 
+ 
+    fprintf(1,'Starting offline demo\n----------------------------\nWill alternate learning for 25 episodes, then freeze policy and evaluate for 100 episodes.\n\n');
+	fprintf(1,'After Episode\tMean Return\tStandard Deviation\n-------------------------------------------------------------------------\n');
+	RL_init();
+	offline_demo();
+	
+	
+	fprintf(1,'\nNow we will save the agent''s learned value function to a file....\n');
+
+	RL_agent_message('save_policy results.dat');
+
+	fprintf(1,'\nCalling RL_cleanup and RL_init to clear the agent''s memory...\n');
+
+	RL_cleanup();
+	RL_init();
+
+
+	fprintf(1,'Evaluating the agent''s default policy:\n\t\tMean Return\tStandardDeviation\n------------------------------------------------------\n');
+    
+	[theMean,theStdDev]=evaluate_agent();
+	print_score(0,theMean,theStdDev);
+	
+	fprintf(1,'\nLoading up the value function we saved earlier.\n');
+	RL_agent_message('load_policy results.dat');
+
+	fprintf(1,'Evaluating the agent after loading the value function:\n\t\tMean Return\tStandardDeviation\n------------------------------------------------------\n');
+	[theMean,theStdDev]=evaluate_agent();
+	print_score(0,theMean,theStdDev);
+
+    fprintf(1,'Evaluating the agent a few times from a fixed start state of 3,3:\n\t\tMean Return\tStandardDeviation\n-------------------------------------------\n');
+    RL_env_message('set-start-state 3 3');
+	[theMean,theStdDev]=evaluate_agent();
+	print_score(0,theMean,theStdDev);
+
+	fprintf(1,'Evaluating the agent again with the random start state:\n\t\tMean Return\tStandardDeviation\n-----------------------------------------------------\n');
+    RL_env_message('set-random-start-state');
+	[theMean,theStdDev]=evaluate_agent();
+	print_score(0,theMean,theStdDev);
+
+    
+	fprintf(1,'\nProgram Complete.\n');
+	RL_cleanup();
+    disconnectGlue();
+
+end
+
+
+% /**
+% * Tell the agent to stop learning, then execute n episodes with his current
+% * policy.  Estimate the mean and variance of the return over these episodes.
+% * @return
+% */
+function[theMean,theStdDev]= evaluate_agent()
+    n=10;
+    sum=0;
+    sum_of_squares=0;
+ 
+    RL_agent_message('freeze learning');
+    for i=1:n
+        % We use a cutoff here in case the policy is bad and will never end
+        % an episode
+        RL_episode(5000);
+        this_return=RL_return();
+        sum=sum+this_return;
+        sum_of_squares=sum_of_squares+this_return*this_return;
+    end
+ 
+    theMean=sum/n;
+    variance = (sum_of_squares - n*theMean*theMean)/(n - 1.0);
+    theStdDev=sqrt(variance);
+
+    RL_agent_message('unfreeze learning');
+end
+ 
+
+%
+%	This function will freeze the agent's policy and test it after every 25 episodes.
+%
+function offline_demo()
+
+    statistics=[];
+    
+	[theMean,theStdDev]=evaluate_agent();
+	print_score(0,theMean,theStdDev);
+    
+    %This is probably a bad way to do this, but
+        %First column is the episode number
+        %Second column is the mean at that evaluation
+        %Third is the std deviation at that evaluation
+    %Statistics are estimated from not many samples.  Beware!
+      
+    statistics=[statistics; 0,theMean,theStdDev];
+
+    
+    for i=1:20
+        for j=1:25
+			RL_episode(0);
+        end
+    	[theMean,theStdDev]=evaluate_agent();
+		print_score(i*25,theMean,theStdDev);
+        statistics=[statistics; i*25,theMean,theStdDev];
+    end
+	
+    errorbar(statistics(:,1),statistics(:,2),statistics(:,3))
+
+end
+
+
+function print_score(afterEpisodes, theMean, theStdDev)
+    fprintf(1,'%d\t\t%.2f\t\t%.2f\n', afterEpisodes,theMean, theStdDev);
+end
+
+
+

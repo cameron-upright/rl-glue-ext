@@ -1,14 +1,38 @@
+%  Copyright 2008 Brian Tanner
+%  http://rl-glue-ext.googlecode.com/
+%  brian@tannerpages.com
+%  http://brian.tannerpages.com
+%  
+%   Licensed under the Apache License, Version 2.0 (the "License");
+%  you may not use this file except in compliance with the License.
+%   You may obtain a copy of the License at
+%  
+%       http://www.apache.org/licenses/LICENSE-2.0
+%  
+%   Unless required by applicable law or agreed to in writing, software
+%   distributed under the License is distributed on an "AS IS" BASIS,
+%   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%   See the License for the specific language governing permissions and
+%   limitations under the License.
+%  
+%   $Revision$
+%   $Date$
+%   $Author$
+%  $HeadURL$
+%
 function connectAgent(theAgent)
+    checkForJavaCodec();
+
     global p__rlglueAgentStruct;
-    
     if isfield(p__rlglueAgentStruct,'network')
 		disconnectAgent();
     end
-    
+
     p__rlglueAgentStruct.theAgent=theAgent;
     host='localhost';
     port=4096;
     timeout=60;
+    
     
     fprintf(1,'RL-Glue Matlab Agent Codec Version: %s (%s)\n',RL_get_codec_version(),RL_get_svn_version());
     fprintf(1,'\tConnecting to rl_glue at host: %s on port %d\n', host, port);
