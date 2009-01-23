@@ -1,3 +1,8 @@
+#
+#  $Revision$
+#  $Date$
+#  $Author$
+#  $HeadURL$
 
 def get_svn_codec_version():
 	SVN_GLUE_VERSION="$Revision$"

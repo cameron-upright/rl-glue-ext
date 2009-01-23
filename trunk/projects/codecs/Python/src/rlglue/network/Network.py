@@ -15,6 +15,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
+#  $Revision$
+#  $Date$
+#  $Author$
+#  $HeadURL$
 
 #
 #The Network class is defined in here

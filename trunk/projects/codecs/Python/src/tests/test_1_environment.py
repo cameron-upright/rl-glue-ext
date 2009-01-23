@@ -15,6 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
+#  $Revision$
+#  $Date$
+#  $Author$
+#  $HeadURL$
+
 
 import random
 import sys
