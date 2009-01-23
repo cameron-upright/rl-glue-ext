@@ -4,19 +4,11 @@ CFLAGS := $(CFLAGS) -Wall -pedantic
 all: SampleExperiment
 
 SampleExperiment: SampleExperiment.o 
-	$(CC)  $(LDFLAGS) SampleExperiment.o  -lrlexperiment -lrlutils -lrlgluenetdev -o SampleExperiment      
+	$(CC)  $(LDFLAGS) SampleExperiment.o -lm -lrlexperiment -lrlutils -lrlgluenetdev -o SampleExperiment
 
 SampleExperiment.o: SampleExperiment.c
 	$(CC)  $(CFLAGS) -c SampleExperiment.c -o SampleExperiment.o 
 
 clean:
 	rm -rf SampleExperiment SampleExperiment.exe *.o
-
-
-
-
-
-
-
-
 
