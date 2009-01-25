@@ -127,8 +127,8 @@ without that (you have to test it on your own). A description can be found on
 \selfref{http://sean-ross.blogspot.com/2007/05/asdf-install-windows.html}.
 
 Create the compressed ASDF packages. \\
-\shprompt{tool/make-asdf-package.sh rl-glue-codec} \\
-\shprompt{tool/make-asdf-package.sh rl-glue-utils} \\
+\shprompt{tools/make-asdf-package.sh rl-glue-codec} \\
+\shprompt{tools/make-asdf-package.sh rl-glue-utils} \\
 
 Start the Lisp interpreter. \\
 \shprompt{lisp} \\
@@ -435,7 +435,7 @@ Their documentation can be checked by the \prompttext{documentation} function.
 
 There is an (ASDF) package named \prompttext{rl-glue-examples} located
 in the \prompttext{example} directory. \\
-\lispprompt{(push \#P"/path/to/Lisp-Codec/example/" asdf:*central-registry*)} \\
+\lispprompt{(push \#P"/path/to/Lisp-Codec/examples/" asdf:*central-registry*)} \\
 \lispprompt{(asdf:oos 'asdf:load-op :rl-glue-examples)}
 
 \subsubsection{The mines-sarsa example}
