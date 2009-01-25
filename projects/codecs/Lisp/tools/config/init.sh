@@ -6,7 +6,7 @@ function lisp-init
 cat <<- EOF
     (load #p"${tooldir}/config/init")
     (progn
-      (dolist (relpath (list #p"${basedir}/example/"
+      (dolist (relpath (list #p"${basedir}/examples/"
                              #p"${basedir}/src/rl-glue-codec/"
                              #p"${basedir}/src/rl-glue-utils/"
                              #p"${basedir}/test/functional/"
