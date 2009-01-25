@@ -17,3 +17,13 @@ cat <<- EOF
 EOF
 }
 
+function lisp-quit
+{
+cat <<- EOF
+    #+allegro
+    (exit)
+    #-allegro
+    (quit)
+EOF
+}
+

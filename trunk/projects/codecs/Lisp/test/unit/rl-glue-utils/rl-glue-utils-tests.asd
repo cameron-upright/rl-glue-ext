@@ -28,18 +28,18 @@
 
 (defsystem rl-glue-utils-tests
   :name "RL-Glue Common Lisp Codec Utility Tests"
-  :version "1.0"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"
   :description "Unit tests for the RL-Glue utilities."
+  :serial t
   :components
   ((:file "main-suite")
    (:module "task-spec-parser"
+            :serial t
             :components
             ((:file "task-spec-parser")
-             (:file "parser" :depends-on ("task-spec-parser"))
-             (:file "range" :depends-on ("parser")))
-            :depends-on ("main-suite")))
+             (:file "parser")
+             (:file "range"))))
   :depends-on ("fiveam" "rl-glue-utils"))
 

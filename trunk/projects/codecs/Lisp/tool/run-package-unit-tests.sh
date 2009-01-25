@@ -34,7 +34,7 @@ ${LISP} <<- EOF
                                 (continue))))
     (asdf:oos 'asdf:load-op :${package}-tests :verbose nil))
   (fiveam:run! '${package}::main-suite)
-  (quit)
+  `lisp-quit`
 EOF
 
 exit 0
