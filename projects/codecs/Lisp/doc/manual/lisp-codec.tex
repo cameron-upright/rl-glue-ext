@@ -75,12 +75,6 @@ Required libraries for the codec.
 \item[] CCL / OpenMCL (\selfref{http://www.clozure.com/clozurecl.html})
 \end{itemize}
 
-%These libraries are very portable among various Lisp implementations, so we
-%hope the codec can be used most of them. However the
-%\hyperlink{perfmeas}{performance section} can worth to take a
-%glance before choosing among them. If you have problems with your favorite,
-%do not hesitate to contact us.
-
 \subsection{Getting the codec}
 
 The codec can be downloaded either as a tarball or can be checked out of the
@@ -444,110 +438,27 @@ in the \prompttext{example} directory. \\
 \lispprompt{(push \#P"/path/to/Lisp-Codec/example/" asdf:*central-registry*)} \\
 \lispprompt{(asdf:oos 'asdf:load-op :rl-glue-examples)}
 
-The \prompttext{random-agent} chooses its actions randomly from the action
-space obtained from the task specification. An instance of this agent can be
-started by the \prompttext{start-random-agent} macro of which arguments are the
-same as of the \prompttext{run-agent} function. For connecting to a RL-Glue
-server on localhost and port 4096 the following is enough. \\
-\lispprompt{(start-random-agent)}
+\subsubsection{The mines-sarsa example}
 
-The \prompttext{mines} environment is an episodic one. At the beginning of
-each episode the agents is put randomly onto the mine field. Its goal is to
-find the exit point without stepping to a mine. The rewards are $-1$ for each
-intermediate step, $-10$ for stepping to a mine and $+10$ for reaching the exit.
-An instance of this environment can be started by the \prompttext{start-mines}
-macro of which arguments are the same as of the \prompttext{run-env} function.
-For connecting to a RL-Glue server on localhost and port 4096 the following is
-enough. \\
-\lispprompt{(start-mines)}
+The \prompttext{mines-sarsa} example has an episodic environment. At the
+beginning of each episode the agents is put somewhere onto the mine field.
+Its goal is to find the exit point without stepping to a mine. The rewards
+are $-1$ for each intermediate step, $-100$ for stepping to a mine and $+10$
+for reaching the exit. The example contains a simple sarsa agent with epsilon
+greedy action selection policy and a simple lookup table to store the action
+values. A few basic functionalities like turning learning or exploration on/off,
+saving the value function and setting the starting position are implemented by
+the message system of RL-Glue.
 
-The \prompttext{episode-avg} experiment is simply runs the given number of
-episodes and prints a shy statistics at the end. An instance of this
-experiment can be started by the \prompttext{start-episode-avg} macro. This
-requires a \prompttext{num-episodes} argument which specifies the number of
-episodes to be run. The other arguments are the same as of the
-\prompttext{rl-init} function. For connecting to a RL-Glue server on localhost
-and port 4096 the following is enough (which will run 50 episodes). \\
-\lispprompt{(start-episode-avg 50)}
-
-\newpage
-
-The experiment will prompt something like this (each dot denotes an episode). \\
-\prompttext{RL-Glue Lisp Experiment Codec Version 1.0, Build 414 \\
-\mbox{~~~~~~~~}Connecting to 127.0.0.1:4096 .~ok \\
-Task spec was:~VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 \\
-OBSERVATIONS INTS (0 107) ACTIONS INTS (0 3) REWARDS (-10 10) EXTRA \\
-.................................................. \\
------------------------------------------------ \\
-Number of episodes:~50 \\
-Average number of steps per episode:~46.8 \\
-Average return per episode:~-55.4d0 \\
------------------------------------------------}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\section{Further issues}
-%
-%\subsection{Numerical encoding/decoding}
-%
-%Because Lisp has a platform independent internal structure for variable
-%representation, we have to encode and decode from the platform dependent
-%ones supported by C. This generates some overhead which can be seen on the
-%performance measurements (especially for floating point numbers). The related
-%conversion functions can be found in the \textsl{rl-buffer.lisp} file. 
-
-%\subsection{64 bit architectures}
-%
-%By default the Lisp codec (even with 32 or 64 bit Lisp implementation) is
-%configured for a 32 bit compiled RL-Glue component, but it is possible to
-%reconfigure it for a 64 bit one. To do so, one has to modify the constants
-%at the top of the \textsl{rl-buffer.lisp} file, and rewrite the floating
-%point encoder/decoder functions. These are optimalized for 32 bit
-%architectures because of performance issues. For a quick try, it can worth
-%to probe the ieee-floats library
-%at \selfref{http://common-lisp.net/project/ieee-floats/}. It is not used by
-%default, because it turned to be slow on the 32 bit architecture performance
-%tests.
-
-%\hypertarget{perfmeas}{\subsection{Performance measurements}}
-%
-%A few ad-hoc tests have been run of which results should be taken with caution.
-%These were executed on a $1.8$ Ghz IBM $T42$ laptop with $1$ GB memory on Linux.
-%
-%Test 1 contains big observations and shorter episodes. $50000$ integers and
-%$50000$ double floats are allocated on each step and $200$ steps are made by
-%an episode.
-%
-%Test 2 contains more typical observations and longer episodes. $5$ integers
-%and $5$ doubles are allocated on each step and $5000$ steps are made by an
-%episode.
-%
-%A few other codecs are also listed to make the results comparable.
-%
-%\begin{center}
-%\begin{tabular}{|l|c|c|c|}
-%\hline
-%Language & Version & \multicolumn{2}{|c|}{Steps per second} \\
-%         &         & Test 1 & Test 2 \\
-%\hline
-%GCC      & $4.1.2$ & $27.0$ & $10729.6$ \\
-%\hline
-%Java     & $1.6.0\_07$ & $23.4$ & $9920.6$ \\
-%\hline
-%Python   & $2.5.2$ & $1.8$ & $2423.7$ \\
-%\hline
-%SBCL     & $1.0.19$ & $4.8$ & $9107.5$ \\
-%\hline
-%CMUCL    & $19d$ & $4.0$ & $8865.2$ \\
-%\hline
-%CLISP    & $2.46$ & $0.6$ & $2742.7$ \\
-%\hline
-%\end{tabular}
-%\end{center}
-%
-%These measurements are just hints, they should not be used to compare the
-%languages generally. The values may vary on different platforms, language versions
-%and executing circumstances.
+To run the example one has to do the following. \\
+Running the RL-Glue core. \\
+\shprompt{rl\_glue} \\
+Starting the agent (in the first lisp thread). \\
+\lispprompt{(rl-glue-mines-sarsa:start-agent)} \\
+Starting the environment (in the second lisp thread). \\
+\lispprompt{(rl-glue-mines-sarsa:start-environment)} \\
+Starting the experiment (in the third lisp thread). \\
+\lispprompt{(rl-glue-mines-sarsa:start-experiment)}
 
 \end{document}
 

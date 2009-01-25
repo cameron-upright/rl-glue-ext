@@ -28,19 +28,19 @@
 
 (defsystem rl-glue-utils
   :name "RL-Glue Common Lisp Codec Utilities"
-  :version "1.1"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"
   :description "Utilities for RL-Glue components."
+  :serial t
   :components
   ((:file "rl-utils-package")
-   (:file "generic" :depends-on ("rl-utils-package"))
+   (:file "generic")
    (:module task-spec-parser
+            :serial t
             :components
             ((:file "parser")
-             (:file "range" :depends-on ("parser"))
-             (:file "task-spec-parser" :depends-on ("range")))
-            :depends-on ("generic")))
+             (:file "range")
+             (:file "task-spec-parser"))))
   :depends-on ("rl-glue-codec"))
 

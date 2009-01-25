@@ -1,5 +1,5 @@
 
-;;; Copyright 2008 Gabor Balazs
+;;; Copyright 2009 Gabor Balazs
 ;;; Licensed under the Apache License, Version 2.0 (the "License");
 ;;; you may not use this file except in compliance with the License.
 ;;; You may obtain a copy of the License at
@@ -15,26 +15,17 @@
 ;;; $Revision$
 ;;; $Date$
 
-(in-package #:cl-user)
+(in-package :cl-user)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defpackage #:org.rl-community.rl-glue-codec-tests-asdf
-  (:use #:asdf #:common-lisp))
-
-(in-package #:org.rl-community.rl-glue-codec-tests-asdf)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defsystem rl-glue-codec-tests
-  :name "RL-Glue Common Lisp Codec Tests"
-  :licence "Apache v2"
-  :author "Gabor Balazs <gabalz@gmail.com>"
-  :maintainer "Gabor Balazs <gabalz@gmail.com>"
-  :description "Unit tests for the RL-Glue codec."
-  :serial t
-  :components
-  ((:file "main-suite")
-   (:file "rl-buffer"))
-  :depends-on ("fiveam" "rl-glue-codec"))
+(defpackage #:rl-glue-mines-sarsa
+  (:use #:common-lisp)
+  (:export
+   #:sarsa-agent
+   #:mines
+   #:experiment
+   #:start-agent
+   #:start-environment
+   #:start-experiment))
 

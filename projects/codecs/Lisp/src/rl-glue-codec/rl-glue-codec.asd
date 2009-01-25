@@ -28,32 +28,29 @@
 
 (defsystem rl-glue-codec
   :name "RL-Glue Common Lisp Codec"
-  :version "1.1"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"
   :description "Software protocol for connecting reinforcement 
 learning agents, environments and experiments."
+  :serial t
   :components
   ((:file "rl-package")
-   (:file "rl-version" :depends-on ("rl-package"))
-   (:file "rl-buffer" :depends-on ("rl-package"))
-   (:file "rl-common" :depends-on ("rl-package" "rl-buffer"))
-   (:file "rl-network" :depends-on ("rl-package" "rl-buffer"))
+   (:file "rl-version")
+   (:file "rl-buffer")
+   (:file "rl-common")
+   (:file "rl-network")
    (:module agent
+            :serial t
             :components
-            ((:file "rl-client-agent"))
-            :depends-on ("rl-package" "rl-buffer"
-                         "rl-common" "rl-network" "rl-version"))
+            ((:file "rl-client-agent")))
    (:module environment
+            :serial t
             :components
-            ((:file "rl-client-environment"))
-            :depends-on ("rl-package" "rl-buffer"
-                         "rl-common" "rl-network" "rl-version"))
+            ((:file "rl-client-environment")))
    (:module experiment
+            :serial t
             :components
-            ((:file "rl-client-experiment"))
-            :depends-on ("rl-package" "rl-buffer"
-                         "rl-common" "rl-network" "rl-version")))
+            ((:file "rl-client-experiment"))))
   :depends-on ("usocket"))
 

@@ -28,20 +28,18 @@
 
 (defsystem rl-glue-examples
   :name "RL-Glue Common Lisp Codec Examples"
-  :version "1.1"
   :licence "Apache v2"
   :author "Gabor Balazs <gabalz@gmail.com>"
   :maintainer "Gabor Balazs <gabalz@gmail.com>"
   :description "Examples for RL-Glue components."
+  :serial t
   :components
-  ((:module agent
+  ((:module mines-sarsa
+            :serial t
             :components
-            ((:file "random-agent")))
-   (:module environment
-            :components
-            ((:file "mines")))
-   (:module experiment
-            :components
-            ((:file "experiment"))))
+            ((:file "package")
+             (:file "sarsa-agent")
+             (:file "mines")
+             (:file "experiment"))))
   :depends-on ("rl-glue-codec" "rl-glue-utils"))
 
