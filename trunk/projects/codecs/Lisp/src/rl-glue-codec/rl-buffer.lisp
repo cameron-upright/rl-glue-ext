@@ -35,10 +35,10 @@
     "Number of bytes in the integer type.")
   (defconstant +bits-per-integer+ (* +bits-per-byte+ +bytes-per-integer+)
     "Number of bits in the integer type.")
-  (defconstant +max-int-pos+ (1- +bits-per-integer+)
-    "Maximum integer bit position.")
-  (defconstant +uint-limit+ (expt 2 (1+ +max-int-pos+))
+  (defconstant +uint-limit+ (expt 2 +bits-per-integer+)
     "Maximum unsigned integer value.")
+  (defconstant +uint-minneg+ (/ +uint-limit+ 2)
+    "Minimum unsigned integer value which is a negative singed.")
   (deftype int-code-t () `(unsigned-byte ,+bits-per-integer+))
   (deftype integer-t () `(signed-byte ,+bits-per-integer+))
   (deftype int-code-t () `(unsigned-byte ,+bits-per-integer+))
@@ -133,14 +133,14 @@
   "Returns the code of INT."
   (declare #.*optimize-settings*)
   (declare (type integer-t int))
-  (if (logbitp +max-int-pos+ int) (+ int +uint-limit+) int))
+  (if (minusp int) (+ int +uint-limit+) int))
 
 (declaim (inline integer-decoder))
 (defun integer-decoder (code)
   "Returns the decoded sigend integer of CODE."
   (declare #.*optimize-settings*)
   (declare (type int-code-t code))
-  (if (logbitp +max-int-pos+ code) (- code +uint-limit+) code))
+  (if (<= +uint-minneg+ code) (- code +uint-limit+) code))
 
 (declaim (inline float-encoder))
 (defun float-encoder (float)
