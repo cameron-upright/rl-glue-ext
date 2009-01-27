@@ -24,3 +24,10 @@
 
 (fiveam:in-suite main-suite)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun gen-32-integer ()
+  "Generates an integer representable in 32 bit dword."
+  (fiveam:gen-integer :min (- rl-glue-codec::+uint-minneg+)
+                      :max (1- rl-glue-codec::+uint-minneg+)))
+
