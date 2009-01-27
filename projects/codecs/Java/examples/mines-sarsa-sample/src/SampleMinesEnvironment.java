@@ -65,13 +65,11 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
 
     //WorldDescription contains the state of the world and manages the dynamics.
     WorldDescription theWorld;
-
-
     //These are used if the environment has been sent a message to use a fixed
     //starting state.
-    boolean fixedStartState=false;
-    int startRow=0;
-    int startCol=0;
+    boolean fixedStartState = false;
+    int startRow = 0;
+    int startCol = 0;
 
     public String env_init() {
         //This is hard coded, but there is no reason it couldn't be automatically
@@ -100,12 +98,12 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
 
         //Specify that there will be an integer observation [0,108] for the state
         theTaskSpecObject.addDiscreteObservation(new IntRange(0, theWorld.getNumStates() - 1));
-        //Specify that there will be an integer action [0,1]
+        //Specify that there will be an integer action [0,4]
         theTaskSpecObject.addDiscreteAction(new IntRange(0, 3));
-        //Specify the reward range [-1,1]
+        //Specify the reward range [-100,10]
         theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d));
 
-        theTaskSpecObject.setExtra("SampleMinesEnvironment by Brian Tanner.");
+        theTaskSpecObject.setExtra("SampleMinesEnvironment(Java) by Brian Tanner.");
 
         String taskSpecString = theTaskSpecObject.toTaskSpec();
         TaskSpec.checkTaskSpec(taskSpecString);
@@ -118,18 +116,17 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
      * @return
      */
     public Observation env_start() {
-        if(fixedStartState){
-            boolean stateIsValid=theWorld.setAgentState(startRow,startCol);
-            if(!stateIsValid){
+        if (fixedStartState) {
+            boolean stateIsValid = theWorld.setAgentState(startRow, startCol);
+            if (!stateIsValid) {
                 theWorld.setRandomAgentState();
             }
-        }else{
-        theWorld.setRandomAgentState();
+        } else {
+            theWorld.setRandomAgentState();
         }
         Observation theObservation = new Observation(1, 0, 0);
         theObservation.setInt(0, theWorld.getState());
         return theObservation;
-
     }
 
     /**
@@ -161,16 +158,24 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
     }
 
     public String env_message(String message) {
-        if(message.startsWith("set-random-start-state")){
-            fixedStartState=false;
+        /*	Message Description
+         * 'set-random-start-state'
+         * Action: Set flag to do random starting states (the default)
+         */
+        if (message.startsWith("set-random-start-state")) {
+            fixedStartState = false;
             return "Message understood.  Using random start state.";
         }
-        
-        if(message.startsWith("set-start-state")){
-            String[] theTokens=message.split(" ");
-            startRow=Integer.parseInt(theTokens[1]);
-            startCol=Integer.parseInt(theTokens[1]);
-            fixedStartState=true;
+
+        /*	Message Description
+         * 'set-start-state X Y'
+         * Action: Set flag to do fixed starting states (row=X, col=Y)
+         */
+        if (message.startsWith("set-start-state")) {
+            String[] theTokens = message.split(" ");
+            startRow = Integer.parseInt(theTokens[1]);
+            startCol = Integer.parseInt(theTokens[2]);
+            fixedStartState = true;
             return "Message understood.  Using fixed start state.";
         }
         return "SamplesMinesEnvironment does not understand your message.";
@@ -245,12 +250,11 @@ class WorldDescription {
      * return false.
      */
     boolean setAgentState(int startRow, int startCol) {
-        this.agentRow=startRow;
-        this.agentCol=startCol;
+        this.agentRow = startRow;
+        this.agentCol = startCol;
 
         return isValid(startRow, startCol) && !isTerminal();
     }
-
 
     public boolean isTerminal() {
         return isTerminal(agentRow, agentCol);

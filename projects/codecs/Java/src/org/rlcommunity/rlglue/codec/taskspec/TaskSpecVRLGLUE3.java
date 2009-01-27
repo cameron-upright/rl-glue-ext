@@ -150,6 +150,11 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
 
     }
 
+    TaskSpecVRLGLUE3(TaskSpecVersionOnly versionOnlySpec) {
+        this.thisVersion=versionOnlySpec.getVersionString();
+        System.err.println("Task spec was parsed as non-standard version.  Only version information is available.");
+    }
+
     public void setEpisodic() {
         thisProblemType = "episodic";
     }

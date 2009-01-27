@@ -9,14 +9,13 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-* 
-*  $Revision$
-*  $Date$
-*  $Author$
-*  $HeadURL$
-* 
-*/
-
+ *
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
+ *
+ */
 package org.rlcommunity.rlglue.codec.taskspec;
 
 import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
@@ -61,14 +60,14 @@ public class TaskSpec {
      * @return Integer value of the Task Spec version.
      */
     public int getVersion() {
-        try{
-            return(Integer.parseInt(TSVersion));
-        }catch(NumberFormatException ex){
-            System.err.println("Asked for version of task spec through deprecated int method and could not make it work. Version is: "+getVersionString());
+        try {
+            return (Integer.parseInt(TSVersion));
+        } catch (NumberFormatException ex) {
+            System.err.println("Asked for version of task spec through deprecated int method and could not make it work. Version is: " + getVersionString());
             return 0;
         }
     }
-    
+
     /**
      * Quick sanity check.  It parses the task spec into an Task Spec TSA.  Then, it 
      * uses the string representation of TSA to make TSAB.  Finally, it makes sure that the 
@@ -76,18 +75,18 @@ public class TaskSpec {
      * @param theTaskSpecString
      * @return Whether this task spec appears to be valid
      */
-    public static boolean checkTaskSpec(String theTaskSpecString){
-        TaskSpec TS=new TaskSpec(theTaskSpecString);
-        try{
-        boolean match=TS.getStringRepresentation().equals(new TaskSpec(TS.getStringRepresentation()).getStringRepresentation());
-        if(!match){
-            System.err.println("Task spec check failed: if the task spec means what we think it means, these two should be equal:");
-            System.err.println("First Construction:\t"+TS.getStringRepresentation());
-            System.err.println("Second Construction:\t"+new TaskSpec(TS.getStringRepresentation()).getStringRepresentation());
-        }
-        return match;
-        }catch(Throwable T){
-            System.err.println("There is a problem parsing the task spec you were checking: "+T);
+    public static boolean checkTaskSpec(String theTaskSpecString) {
+        TaskSpec TS = new TaskSpec(theTaskSpecString);
+        try {
+            boolean match = TS.getStringRepresentation().equals(new TaskSpec(TS.getStringRepresentation()).getStringRepresentation());
+            if (!match) {
+                System.err.println("Task spec check failed: if the task spec means what we think it means, these two should be equal:");
+                System.err.println("First Construction:\t" + TS.getStringRepresentation());
+                System.err.println("Second Construction:\t" + new TaskSpec(TS.getStringRepresentation()).getStringRepresentation());
+            }
+            return match;
+        } catch (Throwable T) {
+            System.err.println("There is a problem parsing the task spec you were checking: " + T);
             return false;
         }
     }
@@ -96,9 +95,10 @@ public class TaskSpec {
      * @since RL-Glue3.0
      * @return a string representing the version of the task spec that has been parsed
      */
-    public String getVersionString(){
+    public String getVersionString() {
         return theTSO.getVersionString();
     }
+
     /**
      * Constructor that takes a string adhereing to the Task Spec language
      * protocol. This string is parsed out by the appropriate version of the
@@ -108,30 +108,43 @@ public class TaskSpec {
      */
     public TaskSpec(String taskSpec) {
         String errorAccumulator = "Task Spec Parse Results:";
-        
-        try{
-            theTSO=new TaskSpecVRLGLUE3(taskSpec);
+
+        try {
+            theTSO = new TaskSpecVRLGLUE3(taskSpec);
             TSVersion = theTSO.getVersionString();
         } catch (Exception e) {
             errorAccumulator += "\nParsing as TaskSpecVRLGLUE3: " + e.toString();
         }
-        try {
-            TaskSpecV3 theV3TSO = new TaskSpecV3(taskSpec);
-            //Later in here, make a taskSpecVRLGlue3 constructor that takes a taskspecv3
-            theTSO=new TaskSpecVRLGLUE3(theV3TSO);
-            TSVersion = "3";
-        } catch (Exception e) {
-            errorAccumulator += "\nParsing as V3: " + e.toString();
+
+        if (theTSO == null) {
+
+            try {
+                TaskSpecV3 theV3TSO = new TaskSpecV3(taskSpec);
+                //Later in here, make a taskSpecVRLGlue3 constructor that takes a taskspecv3
+                theTSO = new TaskSpecVRLGLUE3(theV3TSO);
+                TSVersion = "3";
+            } catch (Exception e) {
+                errorAccumulator += "\nParsing as V3: " + e.toString();
+            }
         }
 
         if (theTSO == null) {
             try {
-                TaskSpecV2 oldV2Spec= new TaskSpecV2(taskSpec);
-                TaskSpecV3 newerV3Spec=new TaskSpecV3(oldV2Spec);
-                theTSO=new TaskSpecVRLGLUE3(newerV3Spec);
+                TaskSpecV2 oldV2Spec = new TaskSpecV2(taskSpec);
+                TaskSpecV3 newerV3Spec = new TaskSpecV3(oldV2Spec);
+                theTSO = new TaskSpecVRLGLUE3(newerV3Spec);
                 TSVersion = "2";
             } catch (Exception e) {
                 errorAccumulator += "\nParsing as V2: " + e.toString();
+            }
+        }
+        if (theTSO == null) {
+            try {
+                TaskSpecVersionOnly versionOnlySpec = new TaskSpecVersionOnly(taskSpec);
+                theTSO = new TaskSpecVRLGLUE3(versionOnlySpec);
+                TSVersion = theTSO.getVersionString();
+            } catch (Exception e) {
+                errorAccumulator += "\nParsing as TaskSpecVersionOnly: " + e.toString();
             }
         }
 
@@ -141,10 +154,10 @@ public class TaskSpec {
         }
 
     }
-    
-    public TaskSpec(TaskSpecDelegate theTaskSpecDelegate){
-        this.theTSO=theTaskSpecDelegate;
-        this.TSVersion=theTaskSpecDelegate.getVersionString();
+
+    public TaskSpec(TaskSpecDelegate theTaskSpecDelegate) {
+        this.theTSO = theTaskSpecDelegate;
+        this.TSVersion = theTaskSpecDelegate.getVersionString();
     }
 
     /**
@@ -160,7 +173,7 @@ public class TaskSpec {
     public String toString() {
         return getStringRepresentation();
     }
-    
+
     /**
      * Returns the string representation of the Task Spec object. This string
      * representation follows the Task Spec language as outlined
@@ -169,7 +182,7 @@ public class TaskSpec {
      * 
      * @return String representation of the Task Spec
      */
-    public String getStringRepresentation(){
+    public String getStringRepresentation() {
         return theTSO.getStringRepresentation();
     }
 
@@ -316,7 +329,7 @@ public class TaskSpec {
     /**
      * Gets the version of the Task spec.
      * 
-     * 
+     * @deprecated Use getVersionString
      * @return the version of the Task Spec used.
      */
     public double getTaskSpecVersion() {
@@ -333,7 +346,8 @@ public class TaskSpec {
     public char getEpisodic() {
         return theTSO.getEpisodic();
     }
-/**
+
+    /**
      * Gets the size of the observation array (Number of observations)
      * @deprecated This is useless.
      * 
@@ -342,7 +356,6 @@ public class TaskSpec {
     public int getObsDim() {
         return theTSO.getObsDim();
     }
-
 
     /**
      * Gets the number of descrete observations.
@@ -364,7 +377,6 @@ public class TaskSpec {
         return theTSO.getNumContinuousObsDims();
     }
 
-
     /**
      * Gets the types for the observations.
      * @deprecated  I don't like this anymore.
@@ -374,7 +386,6 @@ public class TaskSpec {
     public char[] getObsTypes() {
         return theTSO.getObsTypes();
     }
-
 
     /**
      * Gets the array of mins for the observations.
@@ -426,7 +437,6 @@ public class TaskSpec {
         return theTSO.getNumContinuousActionDims();
     }
 
-
     /**
      * Gets the types for the actions.
      * 
@@ -437,7 +447,6 @@ public class TaskSpec {
     public char[] getActionTypes() {
         return theTSO.getActionTypes();
     }
-
 
     /**
      * Gets the array of mins for the actions.
@@ -450,7 +459,6 @@ public class TaskSpec {
         return theTSO.getActionMins();
     }
 
-
     /**
      * Gets the array of maxs for the actions.
      * 
@@ -462,7 +470,6 @@ public class TaskSpec {
         return theTSO.getActionMaxs();
     }
 
-
     /**
      * Gets the max reward.
      * 
@@ -472,7 +479,6 @@ public class TaskSpec {
     public double getRewardMax() {
         return theTSO.getRewardMax();
     }
-
 
     /**
      * Gets the min reward.
@@ -545,42 +551,47 @@ public class TaskSpec {
     /**
      * Get the discount factor.
      * @since RL-Glue-3.0
-     */    
-    public double getDiscountFactor(){
+     */
+    public double getDiscountFactor() {
         return theTSO.getDiscountFactor();
     }
+
     /**
      * Get the min, max, and special information for the i'th integer observation.
      * @since RL-Glue-3.0
      * @param i
      */
-    public IntRange getDiscreteObservationRange(int i){
+    public IntRange getDiscreteObservationRange(int i) {
         return theTSO.getDiscreteObservationRange(i);
     }
+
     /**
      * Get the min, max, and special information for the i'th integer action.
      * @since RL-Glue-3.0
      * @param i
      */
-    public IntRange getDiscreteActionRange(int i){
+    public IntRange getDiscreteActionRange(int i) {
         return theTSO.getDiscreteActionRange(i);
     }
+
     /**
      * Get the min, max, and special information for the i'th double observation.
      * @since RL-Glue-3.0
      * @param i
      */
-    public DoubleRange getContinuousObservationRange(int i){
+    public DoubleRange getContinuousObservationRange(int i) {
         return theTSO.getContinuousObservationRange(i);
     }
+
     /**
      * Get the min, max, and special information for the i'th double action.
      * @since RL-Glue-3.0
      * @param i
      */
-    public DoubleRange getContinuousActionRange(int i){
+    public DoubleRange getContinuousActionRange(int i) {
         return theTSO.getContinuousActionRange(i);
     }
+
     /**
      * Get the range of rewards
      * @since RL-Glue-3.0
@@ -597,5 +608,4 @@ public class TaskSpec {
     String getProblemType() {
         return theTSO.getProblemType();
     }
-
 }

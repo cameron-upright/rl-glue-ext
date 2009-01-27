@@ -57,8 +57,8 @@ public class SampleSarsaAgent implements AgentInterface {
     private double sarsa_gamma = 1.0;
     private int numActions = 0;
     private int numStates = 0;
-    private boolean policy_frozen = false;
-    private boolean exploring_frozen = false;
+    private boolean policyFrozen = false;
+    private boolean exploringFrozen = false;
 
     /**
      * Parse the task spec, make sure it is only 1 integer observation and
@@ -71,7 +71,7 @@ public class SampleSarsaAgent implements AgentInterface {
 
         /* Lots of assertions to make sure that we can handle this problem.  */
         assert (theTaskSpec.getNumDiscreteObsDims() == 1);
-        assert (theTaskSpec.getNumDiscreteObsDims() == 0);
+        assert (theTaskSpec.getNumContinuousObsDims() == 0);
         assert (!theTaskSpec.getDiscreteObservationRange(0).hasSpecialMinStatus());
         assert (!theTaskSpec.getDiscreteObservationRange(0).hasSpecialMaxStatus());
         numStates = theTaskSpec.getDiscreteObservationRange(0).getMax() + 1;
@@ -130,7 +130,7 @@ public class SampleSarsaAgent implements AgentInterface {
 
         double new_Q_sa = Q_sa + sarsa_stepsize * (reward + sarsa_gamma * Q_sprime_aprime - Q_sa);
         /*	Only update the value function if the policy is not frozen */
-        if (!policy_frozen) {
+        if (!policyFrozen) {
             valueFunction[lastActionInt][lastStateInt] = new_Q_sa;
         }
 
@@ -156,7 +156,7 @@ public class SampleSarsaAgent implements AgentInterface {
         double new_Q_sa = Q_sa + sarsa_stepsize * (reward - Q_sa);
 
         /*	Only update the value function if the policy is not frozen */
-        if (!policy_frozen) {
+        if (!policyFrozen) {
             valueFunction[lastActionInt][lastStateInt] = new_Q_sa;
         }
         lastObservation = null;
@@ -181,19 +181,19 @@ public class SampleSarsaAgent implements AgentInterface {
     public String agent_message(String message) {
 
         if (message.equals("freeze learning")) {
-            policy_frozen = true;
+            policyFrozen = true;
             return "message understood, policy frozen";
         }
         if (message.equals("unfreeze learning")) {
-            policy_frozen = false;
+            policyFrozen = false;
             return "message understood, policy unfrozen";
         }
         if (message.equals("freeze exploring")) {
-            exploring_frozen = true;
+            exploringFrozen = true;
             return "message understood, exploring frozen";
         }
         if (message.equals("unfreeze exploring")) {
-            exploring_frozen = false;
+            exploringFrozen = false;
             return "message understood, exploring unfrozen";
         }
         if (message.startsWith("save_policy")) {
@@ -217,14 +217,13 @@ public class SampleSarsaAgent implements AgentInterface {
      *
      * Selects a random action with probability 1-sarsa_epsilon,
      * and the action with the highest value otherwise.  This is a
-     * quick'n'dirty implementation, it does not do tie-breaking or
-     * even use a good method of random generation.
+     * quick'n'dirty implementation, it does not do tie-breaking.
 
      * @param theState
      * @return
      */
     private int egreedy(int theState) {
-        if (!exploring_frozen) {
+        if (!exploringFrozen) {
             if (randGenerator.nextDouble() <= sarsa_epsilon) {
                 return randGenerator.nextInt(numActions);
             }
