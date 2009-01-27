@@ -37,7 +37,7 @@
       (fiveam:is (char= ch (char-decoder (char-encoder ch))))))
   (fiveam:test integer-encode/decode
     "Test of integer encode/decode operations."
-    (fiveam:for-all ((int (fiveam:gen-integer)))
+    (fiveam:for-all ((int (gen-32-integer)))
       (fiveam:is (= int (integer-decoder (integer-encoder int))))))
   (fiveam:test float-encode/decode
     "Test of float encode/decode operations."
@@ -70,7 +70,7 @@
       ;; clean cases
       (fiveam:for-all ((ch (fiveam:gen-character :code-limit
                                                  *test-char-code-limit*))
-                       (int (fiveam:gen-integer))
+                       (int (gen-32-integer))
                        (fl (fiveam:gen-float :type 'double-float)))
         (buffer-clear buffer)
         (buffer-write-char ch buffer)
@@ -100,7 +100,7 @@
                        (int (fiveam:gen-list
                              :length (fiveam:gen-integer
                                       :min 0 :max 1024)
-                             :elements (fiveam:gen-integer)))
+                             :elements (gen-32-integer)))
                        (flt (fiveam:gen-list
                              :length (fiveam:gen-integer
                                       :min 0 :max 1024)
