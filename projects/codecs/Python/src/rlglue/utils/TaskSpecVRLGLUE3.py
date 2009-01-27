@@ -1,6 +1,6 @@
-# 
+#
 # Copyright (C) 2009, Jose Antonio Martin H.
-# 
+#
 #http://rl-glue-ext.googlecode.com/
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,14 +22,14 @@
 #  $HeadURL$
 
 """
-Brian Tanner: The license above is what matters most. I think you can all 
-take the comments below as non-binding suggestions ;)  
+Brian Tanner: The license above is what matters most. I think you can all
+take the comments below as non-binding suggestions ;)
 
 This file was written by Jose Antonio Martin H. for the RL-Glue Extensions project.
 you are allowed to use it (and see it) fully but subject to the next conditions
 
 1. to not cause damage to any person
-2. to not use it to earn money except when you give me the 50% 
+2. to not use it to earn money except when you give me the 50%
 3. to use it to produce a state of the art RL agent, if not, think a lot and then come back to write a super agent.
 
 This code is a 'parser' for the RL-Glue 3.0 TaskSpec.
@@ -58,23 +58,25 @@ class TaskSpecParser:
 	expected_version = "RL-Glue-3.0"
 	valid			= True
 	last_error	   = ""
-	
+
 	def __init__(self,ts):
 		self.ts = ts
-		if self.expected_version != self.getVersion():				   
+		if self.expected_version != self.getVersion():
 			print "Warning: TaskSpec Version is not "+self.expected_version+" but "+self.getVersion()
 			self.valid = False
+		while self.ts.find("  ")!=-1:
+			self.ts = self.ts.replace("  "," ")
 
-	def getVersion(self):		
-		a = len(self.w[0])+1				
-		return self.ts[a:self.ts.find(" ",a)] 
+	def getVersion(self):
+		a = len(self.w[0])+1
+		return self.ts[a:self.ts.find(" ",a)]
 
 	def Validate(self):
 		if not self.valid:
 			print "Warning: TaskSpec String is invalid: "+self.last_error
 			return False
 		return True
-	
+
 	def getValue(self,i,ts,w):
 		try:
 			a = ts.index(w[i]) + len(w[i]) + 1
@@ -120,7 +122,7 @@ class TaskSpecParser:
 			i = str_in.find(self.v[2])
 			str_in= str_in[0:i]+self.v[1]+" (0 0 0) "+str_in[i:]
 
-		
+
 		return str_in
 
 	def getObservations(self):
@@ -146,11 +148,13 @@ class TaskSpecParser:
 		return self.getValue(6,self.ts,self.w)
 
 	def isSpecial(self,maxOrMin):
+                if type(maxOrMin)!=type(""):
+                        return False
 		if maxOrMin=="UNSPEC" or maxOrMin=="NEGINF" or maxOrMin=="POSINF":
 			return True;
 		else:
 			return False;
-			
+
 	def getRange(self,str_input):
 		if not self.Validate():
 			return ""
@@ -165,15 +169,15 @@ class TaskSpecParser:
 
 			out = r[0]*([[r[1],r[2]]])
 			return out
-		
+
 		except:
 			self.last_error = "error ocurred while parsing a Range in "+str_input
 			print "Warning: Malformed TaskSpec String: " +self.last_error
 			print sys.exc_info()
 			self.valid = False
 			return ""
-			
-		
+
+
 
 	def getRewardRange(self):
 		if not self.Validate():
@@ -190,18 +194,18 @@ class TaskSpecParser:
 	def GetVarValue(self,i,str_o):
 		if not self.Validate():
 			return ""
-		str_r = self.getValue(i,str_o,self.v)		
+		str_r = self.getValue(i,str_o,self.v)
 		str_r = str_r.replace(") (",")#(")
 		# Ok I can parse it but this (there is no space or there is an extra space in ranges)
-		# should be checked since this means that the taskspec is malformed		
+		# should be checked since this means that the taskspec is malformed
 		str_r = str_r.replace("( ","(")
 		str_r = str_r.replace(" )",")")
 		str_r = str_r.replace(")(",")#(")
 
-		
+
 		parts = str_r.split("#")
 		obs=[]
-		for p in parts:			
+		for p in parts:
 			obs.extend(self.getRange(p))
 		return obs
 
@@ -241,7 +245,7 @@ class TaskSpecParser:
 
 
 def test():
-	# you can cut the taskspec by the main words with new line	
+	# you can cut the taskspec by the main words with new line
 	ts ="""VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR .7 OBSERVATIONS INTS (NEGINF 1) ( 2 -5 POSINF ) DOUBLES (2 -1.2 0.5 )(-.07 .07) (UNSPEC 3.3) (0 100.5) CHARCOUNT 32
 		 ACTIONS INTS (5 0 4) DOUBLES (-.5 2) (2 7.8 9) (NEGINF UNSPEC) REWARDS (-5.0 5.0) EXTRA some other stuff goes here"""
 
@@ -270,21 +274,20 @@ def test():
 		print "Integers:",TaskSpec.getIntActions()
 		print "Doubles: ",TaskSpec.getDoubleActions()
 		print "Chars:   ",TaskSpec.getCharCountActions()
-		print "======================================================================================================="		
+		print "======================================================================================================="
 		print "Reward :["+TaskSpec.getReward()+"]"
 		print "Reward Range:",TaskSpec.getRewardRange()
 		print "Extra: ["+TaskSpec.getExtra()+"]"
 		print "remeber that by using len() you get the cardinality of lists!"
 		print "Thus:"
 		print "len(",TaskSpec.getDoubleObservations(),") ==> ",len(TaskSpec.getDoubleObservations())," Double Observations"
+		print TaskSpec.isSpecial("NEGINF");
 
-		print ""+TaskSpec.isSpecial("NEGINF");
-		
 
 
 
 if __name__=="__main__":
 	test()
-	
+
 
 
