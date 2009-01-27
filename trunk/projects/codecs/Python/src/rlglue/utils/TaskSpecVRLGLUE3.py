@@ -107,7 +107,7 @@ class TaskSpecParser:
 	def getDiscountFactor(self):
 		if not self.Validate():
 			return ""
-		return self.getValue(2,self.ts,self.w)
+		return float(self.getValue(2,self.ts,self.w))	
 
 	def CompleteVars(self,str_in):
 		if not self.Validate():
