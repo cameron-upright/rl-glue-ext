@@ -265,6 +265,9 @@ public abstract class TaskSpecDelegate {
         throw new NoSuchMethodError("This version of the task spec does not support: getParserVersion");
     }
 
+    /**
+     * @see org.rlcommunity.rlglue.codec.taskspec.TaskSpec#getVersionString()
+     */
     public String getVersionString() {
        throw new NoSuchMethodError("This version of the task spec does not support: getVersionString");
     }

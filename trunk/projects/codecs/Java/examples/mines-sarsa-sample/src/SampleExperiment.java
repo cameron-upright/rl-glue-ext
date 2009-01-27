@@ -77,6 +77,11 @@ public class SampleExperiment {
         }
     }
 
+    /**
+     * Tell the agent to stop learning, then execute n episodes with his current
+     * policy.  Estimate the mean and variance of the return over these episodes.
+     * @return
+     */
     evaluationPoint evaluateAgent() {
         int i = 0;
         double sum = 0;
@@ -84,10 +89,10 @@ public class SampleExperiment {
         double this_return = 0;
         double mean;
         double variance;
-        double n = 100.0f;
+        int n = 10;
 
         RLGlue.RL_agent_message("freeze learning");
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < n; i++) {
             /* We use a cutoff here in case the policy is bad
             and will never end an episode */
             RLGlue.RL_episode(5000);
@@ -97,8 +102,8 @@ public class SampleExperiment {
         }
         RLGlue.RL_agent_message("unfreeze learning");
 
-        mean = sum / n;
-        variance = (sum_of_squares - n * mean * mean) / (n - 1.0f);
+        mean = sum / (double)n;
+        variance = (sum_of_squares - (double)n * mean * mean) / ((double)n - 1.0f);
         return new evaluationPoint(mean, Math.sqrt(variance));
     }
     /*
@@ -129,7 +134,7 @@ public class SampleExperiment {
     }
 
     public void runExperiment() {
-        System.out.println("Starting offline demo\n----------------------------\nWill alternate learning for 25 episodes, then freeze policy and evaluate for 100 episodes.\n");
+        System.out.println("Starting offline demo\n----------------------------\nWill alternate learning for 25 episodes, then freeze policy and evaluate for 10 episodes.\n");
         System.out.println("After Episode\tMean Return\tStandard Deviation\n-------------------------------------------------------------------------");
         RLGlue.RL_init();
         offlineDemo();
