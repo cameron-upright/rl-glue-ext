@@ -1,5 +1,6 @@
 
-basedir="`realpath ${tooldir}/../`"
+basedir="`echo ${PWD}/${tooldir} | grep -oP '^.*/rl-glue-ext/.*/Lisp'`"
+echo "base directory : ${basedir}"
 
 function lisp-init
 {
@@ -12,8 +13,7 @@ cat <<- EOF
                              #p"${basedir}/test/functional/"
                              #p"${basedir}/test/unit/rl-glue-codec/"
                              #p"${basedir}/test/unit/rl-glue-utils/"))
-        (push relpath asdf:*central-registry*))
-      'initialization-done)
+        (push relpath asdf:*central-registry*)))
 EOF
 }
 
