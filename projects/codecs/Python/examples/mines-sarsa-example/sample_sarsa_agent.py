@@ -32,7 +32,7 @@ from rlglue.utils import TaskSpecVRLGLUE3
 from random import Random
 
 
-#I guess this sample is going to require numpy
+#This example project requires numPy
 import numpy;
 
 # This is a very simple Sarsa agent for discrete-action, discrete-state
@@ -41,6 +41,15 @@ import numpy;
 # We've made a decision to store the previous action and observation in 
 # their raw form, as structures.  This code could be simplified and you
 # could store them just as ints.
+
+
+# TO USE THIS Agent [order doesn't matter]
+# NOTE: I'm assuming the Python codec is installed an is in your Python path
+#   -  Start the rl_glue executable socket server on your computer
+#   -  Run the SampleMinesEnvironment and SampleExperiment from this or a
+#   different codec (Matlab, Python, Java, C, Lisp should all be fine)
+#   -  Start this agent like:
+#   $> python sample_sarsa_agent.py
 
 class sarsa_agent(Agent):
 	randGenerator=Random()
