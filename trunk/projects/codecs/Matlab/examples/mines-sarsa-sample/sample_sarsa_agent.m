@@ -24,7 +24,7 @@
 %   -  Start the rl_glue executable socket server on your computer
 %   -  Run the SampleMinesEnvironment and SampleExperiment from a
 %   different codec (Python, Java, C, Lisp should all be fine)
-%   -  Load this environment like:
+%   -  Load this agent like:
 %       >> theAgent=sample_sarsa_agent()
 %       >> runAgent(theAgent);
 %   NOTE: Matlab is touchy with sockets and sometimes will lock up if there
