@@ -25,6 +25,9 @@
   (deftype byte-t () `(unsigned-byte ,+bits-per-byte+))
   (deftype byte-array-t () `(simple-array byte-t))
 
+  (defconstant +bits-per-short+ (* +bits-per-byte+ 2)
+    "Number of bits in a short.")
+
   (defconstant +bytes-per-char+ 1
     "Number of bytes in the character type.")
   (defconstant +bits-per-char+ (* +bits-per-byte+ +bytes-per-char+)
@@ -151,13 +154,24 @@
   (values
    (sb-kernel:double-float-high-bits float)
    (sb-kernel:double-float-low-bits float))
-  #+cmu
+  #+(or cmu (and scl (not 64bit)))
   (values
    (kernel:double-float-high-bits float)
    (kernel:double-float-low-bits float))
+  #+(and scl 64bit)
+  (let ((code (kernel:double-float-bits float)))
+    (values
+     (ldb (byte #.+bytes-per-integer+ #.+bytes-per-integer+) code)
+     (ldb (byte #.+bytes-per-integer+ 0) code)))
   #+ccl
   (ccl::double-float-bits float)
-  #-(or sbcl cmu ccl)
+  #+allegro
+  (multiple-value-bind (ll lr rl rr)
+      (excl:double-float-to-shorts float)
+    (values
+     (+ (ash ll #.+bits-per-short+) lr)
+     (+ (ash rl #.+bits-per-short+) rr)))
+  #-(or sbcl cmu ccl scl allegro)
   (flet ((create-float-code (sign expo sigd)
            (declare #.*optimize-settings*)
            (declare (type fixnum sign expo))
@@ -195,11 +209,19 @@
   (declare #.*optimize-settings*)
   #+sbcl
   (sb-kernel:make-double-float l-code r-code)
-  #+cmu
+  #+(or cmu (and scl (not 64bit)))
   (kernel:make-double-float l-code r-code)
+  #+(and scl 64bit)
+  (kernel:make-double-float (+ (ash l-code #.+bytes-per-integer+) r-code))
   #+ccl
   (ccl::double-float-from-bits l-code r-code)
-  #-(or sbcl cmu ccl)
+  #+allegro
+  (excl:shorts-to-double-float
+   (ldb (byte #.+bits-per-short+ #.+bits-per-short+) l-code)
+   (ldb (byte #.+bits-per-short+ 0) l-code)
+   (ldb (byte #.+bits-per-short+ #.+bits-per-short+) r-code)
+   (ldb (byte #.+bits-per-short+ 0) r-code))
+  #-(or sbcl cmu ccl scl allegro)
   (let ((sign (ldb (byte 1 (1- +bits-per-integer+)) l-code))
         (expo (ldb (byte +expo-bits+ (- +bits-per-integer+ 1 +expo-bits+))
                    l-code))
