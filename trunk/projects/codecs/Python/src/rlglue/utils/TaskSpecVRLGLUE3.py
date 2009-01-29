@@ -148,8 +148,8 @@ class TaskSpecParser:
 		return self.getValue(6,self.ts,self.w)
 
 	def isSpecial(self,maxOrMin):
-                if type(maxOrMin)!=type(""):
-                        return False
+		if type(maxOrMin)!=type(""):
+			return False
 		if maxOrMin=="UNSPEC" or maxOrMin=="NEGINF" or maxOrMin=="POSINF":
 			return True;
 		else:
@@ -259,7 +259,7 @@ def test():
 		print "======================================================================================================="
 		print "Version: ["+TaskSpec.getVersion()+"]"
 		print "ProblemType: ["+TaskSpec.getProblemType()+"]"
-		print "DiscountFactor: ["+TaskSpec.getDiscountFactor()+"]"
+		print "DiscountFactor: ["+str(TaskSpec.getDiscountFactor())+"]"
 		print "======================================================================================================="
 		print "\t \t \t \t Observations"
 		print "======================================================================================================="
