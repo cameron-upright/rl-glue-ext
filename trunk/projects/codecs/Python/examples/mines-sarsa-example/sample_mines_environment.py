@@ -27,16 +27,14 @@ from rlglue.environment import EnvironmentLoader as EnvironmentLoader
 from rlglue.types import Observation
 from rlglue.types import Action
 from rlglue.types import Reward_observation_terminal
-# #*
-#  *  This is a very simple environment with discrete observations corresponding to states labeled :0,1,...,19,20
-#     The starting state is 10.
+
+# This is a very simple discrete-state, episodic grid world that has 
+# exploding mines in it.  If the agent steps on a mine, the episode
+# ends with a large negative reward.
 # 
-#     There are 2 actions = :0,1.  0 decrements the state, 1 increments the state.
-# 
-#     The problem is episodic, ending when state 0 or 20 is reached, giving reward -1 or +1, respectively.  The reward is 0 on 
-#     all other steps.
-#  * @author Brian Tanner
-#  
+# The reward per step is -1, with +10 for exiting the game successfully
+# and -100 for stepping on a mine.
+
 
 # TO USE THIS Environment [order doesn't matter]
 # NOTE: I'm assuming the Python codec is installed an is in your Python path
