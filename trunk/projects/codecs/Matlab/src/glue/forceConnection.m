@@ -27,9 +27,19 @@ function forceConnection()
 	    checkForJavaCodec();
         p__rlglueStruct.network = org.rlcommunity.rlglue.codec.network.Network;
 
-        host=org.rlcommunity.rlglue.codec.network.Network.kDefaultHost;
+
+%Set defaults for host and port
+        host=char(org.rlcommunity.rlglue.codec.network.Network.kDefaultHost);
         port=org.rlcommunity.rlglue.codec.network.Network.kDefaultPort;
         timeout=org.rlcommunity.rlglue.codec.network.Network.kRetryTimeout;
+
+%Pick up user specifications if there are any
+		if isfield(p__rlglueStruct,'port')
+			port=p__rlglueStruct.port;
+		end
+		if isfield(p__rlglueStruct,'host')
+			host=p__rlglueStruct.host;
+		end
 
         fprintf(1,'RL-Glue Matlab Experiment Codec Version: %s (%s)\n',RL_get_codec_version(),RL_get_svn_version());
         fprintf(1,'\tConnecting to rl_glue at host: %s on port %d\n', char(host), port);
