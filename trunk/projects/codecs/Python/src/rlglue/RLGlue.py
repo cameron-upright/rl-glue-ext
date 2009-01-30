@@ -22,7 +22,7 @@
 #  $HeadURL$
 
 import sys
-
+import os
 import rlglue.network.Network as Network
 from rlglue.types import Observation_action
 from rlglue.types import Reward_observation_action_terminal
@@ -40,8 +40,20 @@ def forceConnection():
 		
 		theSVNVersion=get_svn_codec_version()
 		theCodecVersion=get_codec_version()
-		host=Network.kLocalHost
+
+		host = Network.kLocalHost
 		port = Network.kDefaultPort
+
+		hostString = os.getenv("RLGLUE_HOST")
+		portString = os.getenv("RLGLUE_PORT")
+
+		if (hostString != None):
+			host = hostString
+
+		try:
+			port = int(portString)
+		except TypeError:
+			port = Network.kDefaultPort
 		
 		print "RL-Glue Python Experiment Codec Version: "+theCodecVersion+" (Build "+theSVNVersion+")"
 		print "\tConnecting to " + host + " on port " + str(port) + "..."

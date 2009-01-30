@@ -29,10 +29,25 @@ from ClientAgent import ClientAgent
 from rlglue.versions import get_svn_codec_version
 from rlglue.versions import get_codec_version
 
-def loadAgent(theAgent, host=Network.kLocalHost, port=Network.kDefaultPort):
+def loadAgent(theAgent):
 	theSVNVersion=get_svn_codec_version()
 	theCodecVersion=get_codec_version()
 	client = ClientAgent(theAgent)
+
+	host = Network.kLocalHost
+	port = Network.kDefaultPort
+
+	hostString = os.getenv("RLGLUE_HOST")
+	portString = os.getenv("RLGLUE_PORT")
+
+	if (hostString != None):
+		host = hostString
+
+	try:
+		port = int(portString)
+	except TypeError:
+		port = Network.kDefaultPort
+		
 
 	print "RL-Glue Python Agent Codec Version: "+theCodecVersion+" (Build "+theSVNVersion+")"
 	print "\tConnecting to " + host + " on port " + str(port) + "..."
@@ -51,18 +66,4 @@ def loadAgentLikeScript():
 
 	client = ClientAgent(agent)
 
-	host = Network.kLocalHost
-	port = Network.kDefaultPort
-
-	hostString = os.getenv("RLGLUE_HOST")
-	portString = os.getenv("RLGLUE_PORT")
-
-	if (hostString != None):
-		host = hostString
-
-	try:
-		port = int(portString)
-	except TypeError:
-		port = Network.kDefaultPort
-
-	loadAgent(agent,host,port)
+	loadAgent(agent)
