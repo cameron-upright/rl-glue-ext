@@ -23,15 +23,26 @@
 function connectEnviroment(theEnviroment)
     checkForJavaCodec();
     global p__rlglueEnvStruct;
+	global p__rlglueStruct;
     
     if isfield(p__rlglueEnvStruct,'network')
 		disconnectEnvironment();
     end
     
     p__rlglueEnvStruct.theEnviroment=theEnviroment;
-    host='localhost';
-    port=4096;
-    timeout=60;
+
+%Set defaults for host and port
+    host=char(org.rlcommunity.rlglue.codec.network.Network.kDefaultHost);
+    port=org.rlcommunity.rlglue.codec.network.Network.kDefaultPort;
+    timeout=org.rlcommunity.rlglue.codec.network.Network.kRetryTimeout;
+
+%Pick up user specifications if there are any
+	if isfield(p__rlglueStruct,'port')
+		port=p__rlglueStruct.port;
+	end
+	if isfield(p__rlglueStruct,'host')
+		host=p__rlglueStruct.host;
+	end
     
     
     fprintf(1,'RL-Glue Matlab Environment Codec Version: %s (%s)\n',RL_get_codec_version(),RL_get_svn_version());
