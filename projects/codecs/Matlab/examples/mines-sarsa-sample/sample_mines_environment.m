@@ -3,7 +3,7 @@
 %  brian@tannerpages.com
 %  http://brian.tannerpages.com
 %  
-%   Licensed under the Apache License, Version 2.0 (the "License");
+%   Licensed under the Apache License, Version 2.0 (the "License');
 %  you may not use this file except in compliance with the License.
 %   You may obtain a copy of the License at
 %  
@@ -179,7 +179,7 @@ function returnMessage=mines_message(theMessageJavaObject)
     %'set-random-start-state'
     %Action: Set flag to do random starting states (the default)
     if strcmp(inMessage,'set-random-start-state')
-        mines_struct.fixedStartState=true;
+        mines_struct.fixedStartState=false;
         returnMessage='Message understood.  Using random start state.';
         return;
     end
@@ -188,15 +188,25 @@ function returnMessage=mines_message(theMessageJavaObject)
     %Message Description
     %'set-start-state X Y'
     %Action: Set flag to do fixed starting states, (row=X, col=Y)
+    %This will be 0-indexed, so we should add 1 to it
 	if strncmp(inMessage,'set-start-state',15)
         [firstPart,Remainder]=strtok(inMessage);
         [rowString,Remainder]=strtok(Remainder);
         colString=strtok(Remainder);
 
-        mines_struct.startRow=str2double(rowString);
-        mines_struct.startCol=str2double(colString);
-        mines_struct.fixedStartState=false;
+        mines_struct.startRow=str2double(rowString)+1;
+        mines_struct.startCol=str2double(colString)+1;
+        mines_struct.fixedStartState=true;
         returnMessage='Message understood.  Using fixed start state.';
+        return;
+    end
+    
+    %Message Description
+    %'print-state'
+    %Action: Print the map and the current agent location
+    if strcmp(inMessage,'print-state')
+        printState();
+        returnMessage='Message understood.  Printed the state.';
         return;
     end
 
@@ -345,6 +355,46 @@ global mines_struct;
     end
         
     theReward=-1.0;
+end
+
+
+%These are 1-indexed, so decrement them when printing to make them 0-index
+function printState()
+global mines_struct;
+    agentRow=mines_struct.theWorld.agentRow;
+    agentCol=mines_struct.theWorld.agentCol;
+
+    fprintf(1,'Agent is at: %d,%d\n',agentRow-1,agentCol-1);
+	fprintf(1,'  Columns:0-10                10-17\n');
+	fprintf(1,'Col      ');
+    
+    for col=1:18
+		fprintf(1,'%d ',mod(col-1,10));
+    end
+
+    for row=1:6
+        fprintf(1,'\nRow: %d   ',row-1);
+
+        for col=1:18
+            if(agentRow==row && agentCol==col)
+                fprintf(1,'A ');
+            else
+                if(mines_struct.theWorld.map(row,col)==mines_struct.WORLD_GOAL)
+                    fprintf(1,'G ');
+                end
+                if(mines_struct.theWorld.map(row,col)==mines_struct.WORLD_MINE)
+                    fprintf(1,'M ');
+                end
+                if(mines_struct.theWorld.map(row,col)==mines_struct.WORLD_OBSTACLE)
+                    fprintf(1,'* ');
+                end
+                if(mines_struct.theWorld.map(row,col)==mines_struct.WORLD_FREE)
+                    fprintf(1,'  ');
+                end
+            end
+        end
+    end
+	fprintf(1,'\n');
 end
 
 

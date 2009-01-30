@@ -76,8 +76,13 @@ function sample_experiment()
 	[theMean,theStdDev]=evaluate_agent();
 	print_score(0,theMean,theStdDev);
 
-    fprintf(1,'Evaluating the agent a few times from a fixed start state of 3,3:\n\t\tMean Return\tStandardDeviation\n-------------------------------------------\n');
-    RL_env_message('set-start-state 3 3');
+    fprintf(1,'Telling the environment to use fixed start state of 2,3.\n');
+    RL_env_message('set-start-state 2 3');
+    RL_start();
+    fprintf(1,'Telling the environment to print the current state to the screen\n');
+    RL_env_message('print-state');
+
+    fprintf(1,'Evaluating the agent a few times from a fixed start state of 2,3:\n\t\tMean Return\tStandardDeviation\n-------------------------------------------\n');
 	[theMean,theStdDev]=evaluate_agent();
 	print_score(0,theMean,theStdDev);
 
@@ -87,9 +92,9 @@ function sample_experiment()
 	print_score(0,theMean,theStdDev);
 
     
-	fprintf(1,'\nProgram Complete.\n');
 	RL_cleanup();
     disconnectGlue();
+	fprintf(1,'\nProgram Complete.\n');
 
 end
 
