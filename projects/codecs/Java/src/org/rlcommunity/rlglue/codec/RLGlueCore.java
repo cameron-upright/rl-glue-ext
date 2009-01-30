@@ -22,6 +22,7 @@ limitations under the License.
 
 package org.rlcommunity.rlglue.codec;
 
+import org.rlcommunity.rlglue.codec.installer.Installer;
 import org.rlcommunity.rlglue.codec.util.AgentLoader;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 
@@ -35,13 +36,31 @@ import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
  */
 public class RLGlueCore {
 
+    private static void printDiagnostics(){
+        System.out.println("--------------------------------");
+        System.out.println("RL-Glue Java Codec");
+        System.out.println("--------------------------------");
+        System.out.println("\t\tInterface Version: "+getSpecVersion());
+        System.out.println("\t\tBuild Version: "+getImplementationVersion());
+
+        boolean isInstalled=Installer.isInstalled();
+
+        if(isInstalled){
+            System.out.println("Installed in: "+Installer.getInstallDir());
+        }else{
+            System.out.println("In free-float mode at: "+Installer.getFloatDir());
+        }
+
+    }
     private static void printHelp() {
         System.out.println("--------------------------------");
         System.out.println("RL-Glue.jar main diagnostic program");
         System.out.println("--------------------------------");
         System.out.println("-v or --version will print out the interface version");
+        System.out.println("-b or --buildversion will print out the build version");
         System.out.println("-e ENVIRONMENTCLASSNAME or --environment ENVIRONMENTCLASSNAME will load class ENVIRONMENTCLASSNAME (make sure it's in the class path)");
         System.out.println("-a AGENTCLASSNAME or --agent AGENTCLASSNAME will load class AGENTCLASSNAME (make sure it's in the class path)");
+        System.out.println("--install Install RL-Glue into a system extensions directory");
     }
 
     private static void printVersion() {
@@ -56,6 +75,7 @@ public class RLGlueCore {
 
     public static void main(String[] args) {
         if (args.length == 0) {
+            printDiagnostics();
             printHelp();
             return;
         }
@@ -63,7 +83,7 @@ public class RLGlueCore {
             printVersion();
             return;
         }
-        if (args[0].equalsIgnoreCase("-v") || args[0].equalsIgnoreCase("--buildversion")) {
+        if (args[0].equalsIgnoreCase("-b") || args[0].equalsIgnoreCase("--buildversion")) {
             printBuildVersion();
             return;
         }
@@ -72,6 +92,12 @@ public class RLGlueCore {
         }
         if (args[0].equalsIgnoreCase("-a") || args[0].equalsIgnoreCase("--agent")) {
             AgentLoader.loadAgent(args[1]).run();
+        }
+        if (args[0].equalsIgnoreCase("--install")) {
+            Installer.install();
+        }
+        if (args[0].equalsIgnoreCase("--uninstall")) {
+            Installer.uninstall();
         }
 
     }
