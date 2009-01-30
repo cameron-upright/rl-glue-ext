@@ -121,8 +121,8 @@ class mines_environment(Environment):
 			return "Message understood.  Using fixed start state.";
 
 		#	Message Description
-		# 'print-state
-		# Action: Print the map and the current agent location
+		#	'print-state'
+		#	Action: Print the map and the current agent location
 		if inMessage.startswith("print-state"):
 			self.printState();
 			return "Message understood.  Printed the state.";
