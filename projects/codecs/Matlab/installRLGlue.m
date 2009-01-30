@@ -74,7 +74,7 @@ pathSeparator=char(java.io.File.separator);
     
     fprintf(1,'Adding paths...\n');
     fprintf(1,'\t%s\n',mainLocation);
-    addpath(installLocation);
+    addpath(mainLocation);
     fprintf(1,'\t%s\n',agentLocation);
     addpath(agentLocation);
     fprintf(1,'\t%s\n',envLocation);
