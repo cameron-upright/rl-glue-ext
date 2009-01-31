@@ -178,7 +178,17 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
             fixedStartState = true;
             return "Message understood.  Using fixed start state.";
         }
-        return "SamplesMinesEnvironment does not understand your message.";
+
+        /*	Message Description
+		*	'print-state'
+		*	Action: Print the map and the current agent location
+        */
+		if (message.startsWith("print-state")){
+			theWorld.print_state();
+			return "Message understood.  Printed the state.";
+        }
+
+        return "SamplesMinesEnvironment(Java) does not understand your message.";
     }
 
     /**
@@ -323,33 +333,36 @@ class WorldDescription {
     /**
      * Print out the current state to the screen
      */
-    void print_state(){
-	System.out.printf("Agent is at: %d,%d\n",agentRow,agentCol);
-	System.out.printf("Columns:0-10                10-17\n");
-	System.out.printf("Col    ");
-	for(int col=0;col<18;col++){
-		System.out.printf("%d ",col%10);
-	}
+    void print_state() {
+        System.out.printf("Agent is at: %d,%d\n", agentRow, agentCol);
+        System.out.printf("Columns:0-10                10-17\n");
+        System.out.printf("Col    ");
+        for (int col = 0; col < 18; col++) {
+            System.out.printf("%d ", col % 10);
+        }
 
-	for(int row=0;row<6;row++){
-		System.out.printf("\nRow: %d ",row);
+        for (int row = 0; row < 6; row++) {
+            System.out.printf("\nRow: %d ", row);
 
-		for(int col=0;col<18;col++){
-			if(agentRow==row && agentCol==col)
-				System.out.printf("A ");
-			else{
-				if(theMap[row][col]==SampleMinesEnvironment.WORLD_GOAL)
-					System.out.printf("G ");
-				if(theMap[row][col]==SampleMinesEnvironment.WORLD_MINE)
-					System.out.printf("M ");
-				if(theMap[row][col]==SampleMinesEnvironment.WORLD_OBSTACLE)
-					System.out.printf("* ");
-				if(theMap[row][col]==SampleMinesEnvironment.WORLD_FREE)
-					System.out.printf("  ");
-			}
-		}
-	}
-	System.out.printf("\n");
-}
-
+            for (int col = 0; col < 18; col++) {
+                if (agentRow == row && agentCol == col) {
+                    System.out.printf("A ");
+                } else {
+                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_GOAL) {
+                        System.out.printf("G ");
+                    }
+                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_MINE) {
+                        System.out.printf("M ");
+                    }
+                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_OBSTACLE) {
+                        System.out.printf("* ");
+                    }
+                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_FREE) {
+                        System.out.printf("  ");
+                    }
+                }
+            }
+        }
+        System.out.printf("\n");
+    }
 }
