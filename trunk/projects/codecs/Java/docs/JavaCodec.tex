@@ -316,7 +316,7 @@ Finally, the experiment sends a message to specify that the environment should u
 
 \section{Who creates and frees memory?}
 The RL-Glue technical manual has a section called \textit{Who creates and frees memory?}.  The general approach recommended there is to make a copy of data
-you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Java codec.
+you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Java codec.  Both sample projects make copies of observations and actions in the appropriate way, and they can be used as a guide.
 
 
 \section{Advanced Features}
@@ -324,15 +324,7 @@ you want to keep beyond the method it was given to you.  The same rules of thumb
 As of fall 2008, we've updated the task specification language:\\
 \url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}
 
-As of writing, the Java codec is the only codec that has a valid task spec parser implementation.  The specific class is:\\
-\texttt{org.rlcommunity.rlglue.codec.taskspec.TaskSpecVRLGLUE3}
-
-\texttt{TaskSpecVRLGlue3} should be used in environments to create task specification strings in \texttt{env\_init}.  The Skeleton Environment provides an example of creating a task spec in this way.  There are several advanced examples of this in the RL-Library.
-
-\texttt{TaskSpecVRLGlue3} can also be used in the agent to get the ranges of the actions, observations, and rewards, etc.  The Skeleton Agent provides an example of how to do this.
-
-
-
+The new task specification string parser should be used in environments to create task specification strings in \texttt{env\_init}.  Both sample environments provide an example of creating a task spec in this way.  There are also several advanced examples of this in the RL-Library\footnote{\url{http://library.rl-community.org}}.  The task spec parser/builder can also be used by agents to decode the task spec string for \texttt{agent\_init}.  The sample sarsa agent in Section \ref{sarsa-sample} demonstrates how to do this.
 
 
 \subsection{Connecting on custom ports to custom hosts}
@@ -344,8 +336,7 @@ In these cases, you can tell your Java agent, environment, or experiment program
 
 For example, try the following code:
 \begin{verbatim}
-> $ RLGLUE_PORT=1025 RLGLUE_HOST=yahoo.ca java -classpath \
- ~/JavaCodec/JavaRLGlueCodec.jar:. SkeletonAgentSkeletonAgent
+> $ RLGLUE_PORT=1025 RLGLUE_HOST=yahoo.ca java SkeletonAgent
 \end{verbatim}
 
 That command could give output like:
@@ -453,23 +444,11 @@ several tens of thousands of lines of code for the RL-Viz, RL-Library, and BT-Ag
 \subsection{Agent/Environment Loading}
 Historically, there have been a few different approaches for loading agents and environments.
 
-For all these examples, lets pretend that the \texttt{JavaRLGlue.jar} path and JAR are in an environment variable called CODECJAR.  We could actually do that (with a bash shell) like:
-\begin{verbatim}
-	export CODECJAR=/path/to/JavaRLGlueCodec.jar
-\end{verbatim}
-
-
 The first (original) method was to call the main() method of the AgentLoader/EnvironmentLoader class, passing it the name of the 
 Agent/Env class you wanted to load.  Hopefully you remembered to put it in your classpath.  This approach inevitably lead to lots of typing to load an agent, as frustrating run-time failures when paths weren't set right.
 Here is an example of how that looks:
 \begin{verbatim}
-	java -classpath $CODECJAR:/to/classes org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
-\end{verbatim}
-
-The second method was to bypass the AgentLoader and go through \htmladdnormallink{\texttt{RLGlueCore}}{http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/javadocs/org/rlcommunity/rlglue/codec/RLGlueCore.html}, 
-which contains the default \texttt{main} method in the JAR.  This method is a bit better, but it is still long and depends on run-time checking in a way that we (I?) really didn't like.  Here is how it looks:
-\begin{verbatim}
-	java -classpath /to/Agent/classes -jar $CODECJAR myAgent
+	java org.rlcommunity.rlglue.codec.util.AgentLoader myAgent
 \end{verbatim}
 
 The \textbf{new and improved} method is to put a \texttt{main} method inside your agent/environment that calls the applicable loader so that the agent/env can load itself.  So, in your agent (for example) you'd have code like:
@@ -485,7 +464,7 @@ The \textbf{new and improved} method is to put a \texttt{main} method inside you
 
 So, for the price of that tiny bit of code inside your agent, you can now run the agent class directly:
 \begin{verbatim}
-	java -classpath $CODECJAR:/to/Agent/classes myAgent
+	java myAgent
 \end{verbatim}
 
 We feel that this is a useful step forward, and will be encouraging this approach.

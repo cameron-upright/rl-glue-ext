@@ -58,8 +58,6 @@ public class RLGlueCore {
         System.out.println("--------------------------------");
         System.out.println("-v or --version will print out the interface version");
         System.out.println("-b or --buildversion will print out the build version");
-        System.out.println("-e ENVIRONMENTCLASSNAME or --environment ENVIRONMENTCLASSNAME will load class ENVIRONMENTCLASSNAME (make sure it's in the class path)");
-        System.out.println("-a AGENTCLASSNAME or --agent AGENTCLASSNAME will load class AGENTCLASSNAME (make sure it's in the class path)");
         System.out.println("--install install the RL-Glue Java Extension into a system extensions directory");
         System.out.println("--uninstall remove the RL-Glue Java Extension from the system extensions directory");
     }
@@ -88,12 +86,7 @@ public class RLGlueCore {
             printBuildVersion();
             return;
         }
-        if (args[0].equalsIgnoreCase("-e") || args[0].equalsIgnoreCase("--environment")) {
-            EnvironmentLoader.loadEnvironment(args[1]);
-        }
-        if (args[0].equalsIgnoreCase("-a") || args[0].equalsIgnoreCase("--agent")) {
-            AgentLoader.loadAgent(args[1]).run();
-        }
+
         if (args[0].equalsIgnoreCase("--install")) {
             Installer.install();
         }
