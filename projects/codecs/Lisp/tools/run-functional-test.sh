@@ -25,12 +25,12 @@ load_functional_test_config ${testname}
 
 ###############################################################################
 
-rl_glue &
+execute_rl_glue
 
 {
 ${LISP} <<- EOF
   `lisp_init`
-  (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
+  `lisp_load_asdf :rl-glue-tests`
   (rl-glue-tests:start-${AGENT})
   `lisp_quit`
 EOF
@@ -39,7 +39,7 @@ EOF
 {
 ${LISP} <<- EOF
   `lisp_init`
-  (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
+  `lisp_load_asdf :rl-glue-tests`
   (rl-glue-tests:start-${ENVIRONMENT})
   `lisp_quit`
 EOF
@@ -47,7 +47,7 @@ EOF
 
 ${LISP} <<- EOF 
   `lisp_init`
-  (asdf:oos 'asdf:load-op :rl-glue-tests :verbose nil)
+  `lisp_load_asdf :rl-glue-tests`
   (rl-glue-tests:start-${EXPERIMENT})
   `lisp_quit`
 EOF

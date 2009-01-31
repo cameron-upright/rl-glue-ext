@@ -23,8 +23,7 @@ fi
 
 ###############################################################################
 
-LOGFILE="${logdir}/run-all-functional-tests.log"
-echo -en "`date`\n\n" > ${LOGFILE}
+LOGFILE=`open_log_file "run-all-functional-tests.log"`
 
 {
     for c in `ls "${tooldir}/config/lisp-${lispimpl}"*`; do

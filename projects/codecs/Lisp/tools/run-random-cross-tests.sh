@@ -23,9 +23,7 @@ fi
 
 ###############################################################################
 
-LOGFILE="${logdir}/run-random-cross-tests.log"
-echo -en "`date`\n\n" > ${LOGFILE}
-
+LOGFILE=`open_log_file "run-random-cross-tests.log"`
 
 {
     for c in `ls "${tooldir}/config/lisp-${lispimpl}"*`; do
