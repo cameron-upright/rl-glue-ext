@@ -48,7 +48,7 @@ public class RLGlueCore {
         if(isInstalled){
             System.out.println("Installed in: "+Installer.getInstallDir());
         }else{
-            System.out.println("In free-float mode at: "+Installer.getFloatDir());
+            System.out.println("NOT Installed: free-floating at: "+Installer.getFloatDir());
         }
 
     }
@@ -60,7 +60,8 @@ public class RLGlueCore {
         System.out.println("-b or --buildversion will print out the build version");
         System.out.println("-e ENVIRONMENTCLASSNAME or --environment ENVIRONMENTCLASSNAME will load class ENVIRONMENTCLASSNAME (make sure it's in the class path)");
         System.out.println("-a AGENTCLASSNAME or --agent AGENTCLASSNAME will load class AGENTCLASSNAME (make sure it's in the class path)");
-        System.out.println("--install Install RL-Glue into a system extensions directory");
+        System.out.println("--install install the RL-Glue Java Extension into a system extensions directory");
+        System.out.println("--uninstall remove the RL-Glue Java Extension from the system extensions directory");
     }
 
     private static void printVersion() {
