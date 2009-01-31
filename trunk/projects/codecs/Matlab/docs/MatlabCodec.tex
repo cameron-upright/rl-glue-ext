@@ -60,6 +60,9 @@ To run the installer, use the \texttt{installRLGlue()} function from within Matl
 	>>installRLGlue('~/desired/path/to/codec')
 \end{verbatim}
 
+\subsection{Removing the Codec}
+The Matlab codec can be uninstalled by deleting the directory that you installed it (eg. \texttt{\~{}/rl-glue/codecs/matlab}), and using the Matlab path editor to remove the associated directories from your path.
+
 
 \section{Gotchas!}
 \subsection{Disconnect your Agent/Environment/Experiment}
@@ -93,9 +96,9 @@ The \texttt{skeleton} contains all of the bare-bones plumbing that is required t
 
 The \texttt{mines-sarsa-sample} contains a fully functional tabular Sarsa learning algorithm, a discrete-observation grid world problem, and an experiment program that can run these together and gather results.  More details below in Section \ref{mines-sarsa-sample}.
 
-In the following sections, we will describe the skeleton project.  Running and using the \texttt{mines-sarsa-sample} is analagous.
+In the following sections, we will describe the skeleton project.  Running and using the \texttt{mines-sarsa-sample} is analogous.
 
-\subsection{Agents}
+\subsection{Skeleton Agent}
 \label{sec:agent}
 We have provided a skeleton agent with the codec that is a good starting point for agents that you may write in the future.
 It implements all the required functions and provides a good example of how create and run a simple agent.
@@ -165,7 +168,7 @@ make this codec better!
 The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
 
-\subsection{Environments}
+\subsection{Skeleton Environment}
 \label{sec:env}
 
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
@@ -203,7 +206,7 @@ The Skeleton environment is very simple and well documented, so we won't spend a
 Please open it up and take a look.
 
 
-\subsection{Experiments}
+\subsection{Skeleton Experiment}
 We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
 pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
