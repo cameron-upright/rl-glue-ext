@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -24,7 +22,8 @@ import java.util.logging.Logger;
 import org.rlcommunity.rlglue.codec.RLGlueCore;
 
 /**
- *
+ * This class can be used to check the installation status of the RL-Glue
+ * Java Extension,  It can install or uninstall that codec also.
  * @author btanner
  */
 public class Installer {
@@ -212,12 +211,6 @@ public class Installer {
             theJarFile = new File(jarFileName);
         }
         return theJarFile;
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
     }
 
     /**
