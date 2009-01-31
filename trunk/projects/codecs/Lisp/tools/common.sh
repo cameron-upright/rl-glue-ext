@@ -11,7 +11,7 @@ basedir="`echo ${PWD}/${tooldir} | grep -oP '^.*/rl-glue-ext/.*/Lisp'`"
 
 function load_lisp_config
 {
-    lispimpl=${1}
+    local lispimpl=${1}
     LISPCFGFILE="${tooldir}/config/lisp-${lispimpl}"
     if [ ! -e "${LISPCFGFILE}" ]; then
         echo "Not supported lisp implementation: ${lispimpl}!"
@@ -22,7 +22,7 @@ function load_lisp_config
 
 function load_functional_test_config
 {
-    testname=${1}
+    local testname=${1}
     source "${tooldir}/../test/functional/${testname}/config"
 }
 
@@ -30,7 +30,7 @@ function load_functional_test_config
 
 function check_test_component_name
 {
-    compname=${1}
+    local compname=${1}
     case ${compname} in
         "agent" ) ;;
         "environment" ) ;;
@@ -56,14 +56,37 @@ cat <<- EOF
 EOF
 }
 
+function lisp_load_asdf
+{
+local asdf=${1}
+cat <<- EOF
+  (asdf:oos 'asdf:load-op ${asdf} :verbose nil)
+EOF
+}
+
 function lisp_quit
 {
 cat <<- EOF
-    #+allegro
-    (exit)
-    #-allegro
-    (quit)
+  #+allegro
+  (exit)
+  #-allegro
+  (quit)
 EOF
+}
+
+###############################################################################
+
+function execute_rl_glue
+{
+    rl_glue &
+}
+
+function open_log_file
+{
+    local filename=${1}
+    local logfile="${logdir}/${filename}"
+    echo -en "`date`\n\n" > ${logfile}
+    echo ${logfile}
 }
 
 ###############################################################################

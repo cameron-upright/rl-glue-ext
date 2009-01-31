@@ -24,12 +24,12 @@ load_lisp_config ${lispimpl}
 
 ###############################################################################
 
-rl_glue &
+execute_rl_glue
 
 {
 ${LISP} <<- EOF
   `lisp_init`
-  (asdf:oos 'asdf:load-op :rl-glue-examples :verbose nil)
+  `lisp_load_asdf :rl-glue-examples`
   (rl-glue-${example}:start-agent)
   `lisp_quit`
 EOF
@@ -38,7 +38,7 @@ EOF
 {
 ${LISP} <<- EOF
   `lisp_init`
-  (asdf:oos 'asdf:load-op :rl-glue-examples :verbose nil)
+  `lisp_load_asdf :rl-glue-examples`
   (rl-glue-${example}:start-environment)
   `lisp_quit`
 EOF
@@ -46,7 +46,7 @@ EOF
 
 ${LISP} <<- EOF
   `lisp_init`
-  (asdf:oos 'asdf:load-op :rl-glue-examples :verbose nil)
+  `lisp_load_asdf :rl-glue-examples`
   (rl-glue-${example}:start-experiment)
   `lisp_quit`
 EOF
