@@ -1,9 +1,9 @@
-#!/bin/sh
+#/bin/sh
 #
-# Runs all the functional tests with the selected lisp implementation.
-# If the lisp implementation is not specified, the tests are run with all
-# the supported and available ones. It prints the result and a summary
-# to the standard output and into a log file as well.
+# Runs a random cross test of each functional test type with the selected lisp
+# implementation. If it is not specified, the full round is run with all the
+# supported and available ones. It prints the result and a summary to the
+# standard output and into a log file as well.
 #
 # $Revision$
 # $Date$
@@ -23,8 +23,9 @@ fi
 
 ###############################################################################
 
-LOGFILE="${logdir}/run-all-functional-tests.log"
+LOGFILE="${logdir}/run-random-cross-tests.log"
 echo -en "`date`\n\n" > ${LOGFILE}
+
 
 {
     for c in `ls "${tooldir}/config/lisp-${lispimpl}"*`; do
@@ -39,8 +40,16 @@ echo -en "`date`\n\n" > ${LOGFILE}
 
         for t in `ls -d "${tooldir}/../test/functional/test-"*`; do
             if [ -d "${t}" ]; then
-                echo " ---- TEST : ${t}"
-                ${tooldir}/run-functional-test.sh ${l} `basename ${t}`
+                lispcomp=
+                let r="${RANDOM} % 3"
+                case ${r} in
+                    0 ) lispcomp="agent"; ;;
+                    1 ) lispcomp="environment"; ;;
+                    2 ) lispcomp="experiment"; ;;
+                esac
+
+                echo " ---- TEST : ${t} (${lispcomp})"
+                ${tooldir}/run-cross-test.sh ${l} `basename ${t}` ${lispcomp}
             fi
         done
     done
@@ -53,7 +62,7 @@ cp ${LOGFILE} ${TMPLOGFILE}
 {
     echo -en "\n----------------------------------------"
     echo -en "----------------------------------------\n"
-    grep -P 'FT>' ${TMPLOGFILE}
+    grep -P '(FT>|Passed|Failed|elapsed time)' ${TMPLOGFILE}
     echo -en "----------------------------------------"
     echo -en "----------------------------------------\n\n"
 } 2>&1 | tee -a ${LOGFILE}
