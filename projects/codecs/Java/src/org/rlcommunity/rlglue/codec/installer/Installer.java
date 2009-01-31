@@ -58,9 +58,7 @@ public class Installer {
 
             System.err.println("To remove me, try:\n java org.rlcommunity.rlglue.codec.RLGlueCore --uninstall");
             System.exit(1);
-        } else {
-            System.out.println("Weird,  isInstalled says: " + isInstalled() + ", but my jar is: " + theJarFile.getAbsolutePath());
-        }
+        } 
 
         if (theJarFile == null) {
             System.err.println("Could not get the JAR that you are " +
