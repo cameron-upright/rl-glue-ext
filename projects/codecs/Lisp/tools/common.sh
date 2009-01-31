@@ -5,7 +5,7 @@
 # $Date$
 
 logdir="${tooldir}/log"
-basedir="`echo ${PWD}/${tooldir} | grep -oP '^.*/rl-glue-ext/.*/Lisp'`"
+basedir="`echo ${PWD}/${tooldir} | grep -oP '^.*/rl-glue-ext.*/Lisp'`"
 
 ###############################################################################
 
