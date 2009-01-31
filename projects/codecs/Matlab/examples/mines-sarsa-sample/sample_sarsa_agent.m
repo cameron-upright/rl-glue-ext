@@ -182,7 +182,6 @@ global sarsa_vars;
         return;
     end
 
-    fprintf(1,'Did not catch message %s\n',inMessage);
 	
 	returnMessage='SampleSarsaAgent(Matlab) does not understand your message.';
     

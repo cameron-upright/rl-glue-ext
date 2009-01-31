@@ -27,7 +27,8 @@ function theEnvironment=skeleton_environment()
 	theEnvironment.env_step=@skeleton_environment_step;
 	theEnvironment.env_cleanup=@skeleton_environment_cleanup;
 	theEnvironment.env_message=@skeleton_environment_message;
-end
+    
+ end
 
 	% This is a very simple environment with discrete observations corresponding to states labeled {0,1,...,19,20}
 	%     The starting state is 10.
@@ -39,7 +40,8 @@ end
 function taskSpec=skeleton_environment_init()
 	global skeleton_environment_struct;
 	skeleton_environment_struct.currentState=10;
-    taskSpec='2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]';
+
+    taskSpec='VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1.0 OBSERVATIONS INTS (0 20)  ACTIONS INTS (0 1)  REWARDS (-1.0 1.0)  EXTRA skeleton_environment(Matlab) by Brian Tanner.';
 end    
 
 function theObservation=skeleton_environment_start()
