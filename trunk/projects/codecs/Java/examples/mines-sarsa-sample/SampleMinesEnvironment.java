@@ -16,10 +16,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
 
- *  $Revision: 821 $
- *  $Date: 2008-09-14 14:21:41 -0600 (Sun, 14 Sep 2008) $
- *  $Author: brian@tannerpages.com $
- *  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/src/RL_direct_agent.c $
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
 
  *
  */

@@ -113,6 +113,7 @@ public class Installer {
                 System.out.println();
                 System.out.println("If you would like to proceed, select a location to install:");
                 int counter = 1;
+                System.out.println("0. Cancel Installation (Quit)");
                 for (File file : writeableChoices) {
                     choiceMap.put(counter, file);
                     System.out.println(counter + ".  " + file.getAbsolutePath());
@@ -130,7 +131,7 @@ public class Installer {
                 if (choiceMap.containsKey(theIntChoice)) {
                     theChoice = choiceMap.get(theIntChoice);
                 } else {
-                    System.err.println("You did not enter a valid selection, quitting.");
+                    System.err.println("You did not enter a valid selection or chose to quit, cancelling installation.");
                     System.exit(1);
                 }
 

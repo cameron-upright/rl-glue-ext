@@ -9,11 +9,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
  * 
- *  $Revision: 135 $
+ *  $Revision$
 tmpToken=T.nextToken();
- *  $Date: 2008-09-16 21:07:20 -0600 (Tue, 16 Sep 2008) $
- *  $Author: brian@tannerpages.com $
- *  $HeadURL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/src/org/rlcommunity/rlglue/utilities/TaskSpecV3.java $
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
  * 
  */
 package org.rlcommunity.rlglue.codec.taskspec;
