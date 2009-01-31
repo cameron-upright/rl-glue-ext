@@ -132,7 +132,6 @@ print "Starting offline demo\n----------------------------\nWill alternate learn
 print "After Episode\tMean Return\tStandard Deviation\n-------------------------------------------------------------------------"
 RLGlue.RL_init()
 offlineDemo()
-RLGlue.RL_cleanup()
 
 print "\nNow we will save the agent's learned value function to a file...."
 

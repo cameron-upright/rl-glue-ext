@@ -50,7 +50,7 @@ function foundCodec=tryToFindJavaCodec()
     
     javaCodecJarPath=strcat(justPath,'../libs/JavaRLGlueCodec.jar');
     javaaddpath(javaCodecJarPath);
-    foundCodec=false;    
+    foundCodec=true;    
 end
 
 %This is the old code before we had an installer.  Yay installer!
