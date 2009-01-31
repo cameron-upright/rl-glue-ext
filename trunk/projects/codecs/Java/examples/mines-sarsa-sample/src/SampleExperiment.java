@@ -147,7 +147,6 @@ public class SampleExperiment {
 
         RLGlue.RL_cleanup();
         RLGlue.RL_init();
-        RLGlue.RL_agent_message("freeze learning");
 
 
         System.out.println("Evaluating the agent's default policy:\n\t\tMean Return\tStandardDeviation\n------------------------------------------------------");
@@ -161,8 +160,15 @@ public class SampleExperiment {
         thisScore=evaluateAgent();
         printScore(0, thisScore);
 
-        System.out.println("Evaluating the agent a few times from a fixed start state of 3,3:\n\t\tMean Return\tStandardDeviation\n------------------------------------------------------");
-        RLGlue.RL_env_message("set-start-state 3 3");
+        System.out.println("Telling the environment to use fixed start state of 2,3.");
+        RLGlue.RL_env_message("set-start-state 2 3");
+
+        RLGlue.RL_start();
+
+        System.out.println("Telling the environment to print the current state to the screen.");
+        RLGlue.RL_env_message("print-state");
+
+        System.out.println("Evaluating the agent a few times from a fixed start state of 2,3:\n\t\tMean Return\tStandardDeviation\n-------------------------------------------");
         thisScore=evaluateAgent();
         printScore(0, thisScore);
 
