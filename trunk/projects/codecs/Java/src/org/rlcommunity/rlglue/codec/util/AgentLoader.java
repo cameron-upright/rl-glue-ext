@@ -126,6 +126,7 @@ public class AgentLoader implements Runnable {
             theClient.close();
         } catch (Exception e) {
             System.err.println("AgentLoader run(" + theAgent.getClass() + ") threw Exception: " + e);
+            e.printStackTrace();
         }
     }
 
