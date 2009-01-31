@@ -6,11 +6,27 @@ $key = q/sec:custom-flags/;
 $ref_files{$key} = "$dir".q|JavaCodec.html|; 
 $noresave{$key} = "$nosave";
 
-$key = q/sec:agent/;
+$key = q/mines-sample/;
+$ref_files{$key} = "$dir".q|JavaCodec.html|; 
+$noresave{$key} = "$nosave";
+
+$key = q/sec:env/;
+$ref_files{$key} = "$dir".q|JavaCodec.html|; 
+$noresave{$key} = "$nosave";
+
+$key = q/sarsa-sample/;
 $ref_files{$key} = "$dir".q|JavaCodec.html|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:gotchas-shared-libs/;
+$ref_files{$key} = "$dir".q|JavaCodec.html|; 
+$noresave{$key} = "$nosave";
+
+$key = q/mines-sarsa-sample/;
+$ref_files{$key} = "$dir".q|JavaCodec.html|; 
+$noresave{$key} = "$nosave";
+
+$key = q/sec:agent/;
 $ref_files{$key} = "$dir".q|JavaCodec.html|; 
 $noresave{$key} = "$nosave";
 
