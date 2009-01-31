@@ -28,6 +28,7 @@ ${LISP} <<- EOF
   `lisp_init`
   (handler-bind ((condition #'(lambda (condition)
                                 (continue))))
+    (asdf:oos 'asdf:load-op :${package} :verbose nil)
     (asdf:oos 'asdf:load-op :${package}-tests :verbose nil))
   (fiveam:run! '${package}::main-suite)
   `lisp_quit`

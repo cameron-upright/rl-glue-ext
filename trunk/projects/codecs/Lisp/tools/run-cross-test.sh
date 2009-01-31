@@ -3,6 +3,8 @@
 # Runs a specified cross functional test with two C codec components and
 # one Lisp codec component. The result is printed to the standard output.
 #
+# For running cross tests the C codec has to be compiled!
+#
 # $Revision$
 # $Date$
 
