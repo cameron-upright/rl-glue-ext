@@ -15,10 +15,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  * 
- *  $Revision: 151 $
- *  $Date: 2008-09-17 20:09:24 -0600 (Wed, 17 Sep 2008) $
- *  $Author: brian@tannerpages.com $
- *  $HeadURL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/src/org/rlcommunity/rlglue/codec/RLGlue.java $
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
  * 
  */
 package org.rlcommunity.rlglue.codec;
