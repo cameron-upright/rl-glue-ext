@@ -121,7 +121,19 @@ You'll need to make sure that either you haven't reconfigured the directory you 
 That's it!  This will remove all of the headers and libraries from \texttt{/Users/btanner/tmp/rlglue}.
 
 
-\section{Agents}
+\section{Sample Project}
+We have included three example projects with this codec, located in the \texttt{examples} directory.  The  \texttt{skeleton} and \texttt{mines-sarsa-sample} projects each contain an agent, environment, and experiment written for this C/C++ codec.  
+
+The \texttt{skeleton} contains all of the bare-bones plumbing that is required to create an agent/environment/experiment with this codec and might be a good starting point for creating your own components.
+
+The \texttt{mines-sarsa-sample} contains a fully functional tabular Sarsa learning algorithm, a discrete-observation grid world problem, and an experiment program that can run these together and gather results.  More details below in Section \ref{mines-sarsa-sample}.
+
+the \texttt{custom\_integrated\_env} in Section \ref{custom-env} shows how you can adapt this codec to help programs not originally meant for RL-Glue (Atari emulators, real-time strategy games, etc.) work with RL-Glue.
+
+In the following sections, we will describe the skeleton project.  Running and using the \texttt{mines-sarsa-sample} is analogous.
+
+
+\subsection{Skeleton Agent}
 \label{sec:agent}
 We have provided a skeleton agent with the codec that is a good starting point for agents that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple agent.
@@ -155,9 +167,6 @@ See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in
 
 The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
-
-\textbf{POSSIBLE CONTRIBUTION}: If you take a look at the agent and you think it's not easy to understand, think it could be better documented, 
-or just that it should do some fancier things, let us know and we'll be happy to do it!
 
 We will spend a little bit talking about how to compile the agent, because not everyone is comfortable with using a \texttt{Makefile}.  To compile
 the agent from the command line, you could do:
@@ -216,7 +225,11 @@ When you open a new terminal window, all of these environment variables will be 
 
 The permanent solution requires \texttt{root} or \texttt{sudo} access to the machine.  You can  edit the file \texttt{/etc/ld.so.conf} and add a line like: \texttt{/usr/local/lib} to the file.  Then, if you call \texttt{sudo ldconfig}, the loader will know to look there for libraries in the future.
 
-\section{Environments}
+
+
+
+\subsection{Skeleton Environment}
+\label{sec:env}
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
 pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
@@ -252,9 +265,6 @@ See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in
 The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
 
-\textbf{POSSIBLE CONTRIBUTION}: If you take a look at the environment and you think it's not easy to understand, think it could be better documented, 
-or just that it should do some fancier things, let us know and we'll be happy to do it!
-
 Compiling the environment is almost identical to compiling the skeleton agent, except you need to link to the \texttt{RLEnvironment} library instead of \texttt{RLAgent}.
 \begin{verbatim}
 	>$ cc SkeletonEnvironment.c -lrlutils -lrlenvironment -o SkeletonEnvironment
@@ -262,7 +272,7 @@ Compiling the environment is almost identical to compiling the skeleton agent, e
 
 On some platforms, you may need to add \texttt{-lrlgluenetdev}
 
-\section{Experiments}
+\subsection{Skeleton Experiment}
 We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
 pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
@@ -297,8 +307,6 @@ See Section \ref{sec:custom-flags} if RL-Glue or this Codec are not installed in
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
 
-\textbf{POSSIBLE CONTRIBUTION}: If you take a look at the experiment and you think it's not easy to understand, think it could be better documented, 
-or just that it should do some fancier things, let us know and we'll be happy to do it!
 
 Compiling the experiment is almost identical to compiling the skeleton agent, except you need to link to the \texttt{RLExperiment} library instead of \texttt{RLAgent}.
 \begin{verbatim}
@@ -306,6 +314,7 @@ Compiling the experiment is almost identical to compiling the skeleton agent, ex
 \end{verbatim}
 
 On some platforms, you may need to add \texttt{-lrlgluenetdev}
+
 
 \subsection{Gotchas!}
 \subsubsection{Crashes and Bus Errors in Experiment Program}
@@ -370,8 +379,11 @@ You should see output like the following if it worked:
 		Connecting to host=127.0.0.1 on port=4096...
 		RL-Glue C Experiment Codec :: Connected
 		RL-Glue :: Experiment connected.
-	RL_init called, the environment sent task spec: 2:e:1_[i]_[0,5]:1_[i]_[0,1]:[-1,1]
-
+	RL_init called, the environment sent task spec: VERSION RL-Glue-3.0 
+		PROBLEMTYPE episodic DISCOUNTFACTOR 1.0 OBSERVATIONS INTS (0 20) 
+		ACTIONS INTS (0 1)  REWARDS (-1.0 1.0)  
+		EXTRA skeleton_environment(C/C++) by Brian Tanner.
+	
 
 	----------Sending some sample messages----------
 	Agent responded to "what is your name?" with: 
@@ -402,6 +414,61 @@ You should see output like the following if it worked:
 	It ran for 144 steps, total reward was: -1.000000
 	
 \end{verbatim}
+
+
+
+\subsection{Going Further -- Mines Sarsa Example Project}
+\label{mines-sarsa-sample}
+The \texttt{skeleton} sample project is extremely limited and only shows the mechanics of how RL-Glue components are structured using the C/C++ codec.  The \texttt{mines-sarsa} sample project is much richer.
+
+\subsubsection{Sample-Mines-Environment}
+\label{mines-sample}
+The 
+\htmladdnormallink{mines
+ environment}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/mines-sarsa-example/SampleMinesEnvironment.c} 
+is internally a two-dimensional, discrete grid world where the agent receives a penalty per step until reaching a goal state, hopefully without stepping on any exploding land-mines along the way.  The (x,y) state is flattened into a discrete, scalar observation for the agent.  This environment can receive special messages from the experiment program to print the current state to the screen, and also to toggle between random starting states and a fixed starting-state specified by the experiment.
+
+The task specification string\footnote{\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}} is manually because there is not yet a task spec builder for C/C++. 
+
+\subsubsection{Samples-Sarsa-Agent}
+\label{sarsa-sample}
+The 
+\htmladdnormallink{SARSA agent}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/mines-sarsa-example/SampleSarsaAgent.c}
+is a tabular learning agent that uses $\epsilon-greedy$ exploration as described in \htmladdnormallink{Reinforcement Learning: An Introduction}{http://www.cs.ualberta.ca/~sutton/book/ebook/node64.html} by Sutton and Barto.
+
+The SARSA agent parses the task specification string using the C/C++ task spec parser.  This agent can receive special messages from the experiment program to pause/unpause learning, pause/unpause exploring, save the current value function to a file, and load the the value function from a file.
+
+\subsubsection{Sample-Experiment}
+The sample experiment program runs the show.  First, it alternates running the agent in the environment for a number of episodes, and telling the agent to pause learning so that the current performance can be evaluated.  These results are saved to a comma-separated-value file.
+
+The sample experiment then tells the agent to save the value function to a file, and then resets the experiment (and agent) to initial conditions.  After verifying that the agent's initial policy is bad, the experiment tells the agent to load the value function from the file.  The agent is evaluated again using this previously-learned value function, and performance is dramatically better.
+
+Finally, the experiment sends a message to specify that the environment should use a fixed (instead of random) starting state, and runs the agent from that fixed start state for a while.
+
+\subsubsection{Customized Codec for Flexible Integration}
+\label{custom-env}
+From time to time, someone wants to connect an agent or environment to RL-Glue which comes from 
+an third-party code base that is not easy to fit into the mod of a standard RL-Glue module.  Often the 
+integration problems are related to the third-party code base defining a main method and controlling 
+the execution flow of the program directly (instead of waiting for commands from the \texttt{rl\_glue} server).
+
+Two such examples that have happened already are Marc Lanctot's real time strategy engine that was used
+in the 2008 RL-Competition, and also the project to connect the Stella Atari emulator to RL-Glue.
+
+We support a path for integrating these projects with RL-Glue that involves customizing this C/C++ codec, rather than trying too hard to link to it.  We have provided an example in: \texttt{examples/custom\_integrated\_env}.
+
+The relevant files are:\newline
+\htmladdnormallink{\texttt{TheGame.h}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/TheGame.h} \newline
+\htmladdnormallink{\texttt{TheGame.c}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/TheGame.c} \newline
+\htmladdnormallink{\texttt{Custom\_Integrated\_Env\_Codec.c}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/Custom\_Integrated\_Env\_Codec.c} \newline
+
+The idea in the example is that you have a game (called \texttt{TheGame}) which was never meant to be used
+with RL-Glue.  To integrate it, a copy of \texttt{src/RL\_client\_environment.c} was modified to work 
+specifically with \texttt{TheGame}.  For example, all of the calls to \texttt{env\_init}, \texttt{env\_start}, \texttt{env\_step}, etc. were replaced with calls to functions defined in \texttt{TheGame}.  The input and output to those \texttt{TheGame} functions need to be wrapped up a little
+ bit, but the end result is a fairly easy way to connect \texttt{TheGame} to RL-Glue!
+
+Check out the source code in the example, and feel free to ask questions in the RL-Glue Google Group!
+
 
 \section{Codec Specification, Memory Allocation, Types, and Function Prototypes}
 There is some important information about memory management practices in RL-Glue, as well as detailed information about the C/C++ RL-Glue type definitions available in the 
@@ -452,28 +519,7 @@ If you don't like typing them every time, you can export them:
 	> $ skeleton_agent/SkeletonAgent 
 \end{verbatim}
 
-\subsection{Customize the Codec for Flexible Integration}
-From time to time, someone wants to connect an agent or environment to RL-Glue which comes from 
-an third-party code base that is not easy to fit into the mod of a standard RL-Glue module.  Often the 
-integration problems are related to the third-party code base defining a main method and controlling 
-the execution flow of the program directly (instead of waiting for commands from the \texttt{rl\_glue} server).
 
-Two such examples that have happened already are Marc Lanctot's real time strategy engine that was used
-in the 2008 RL-Competition, and also the project to connect the Stella Atari emulator to RL-Glue.
-
-We support a path for integrating these projects with RL-Glue that involves customizing this C/C++ codec, rather than trying too hard to link to it.  We have provided an example in: \texttt{examples/custom\_integrated\_env}.
-
-The relevant files are:\newline
-\htmladdnormallink{\texttt{TheGame.h}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/TheGame.h} \newline
-\htmladdnormallink{\texttt{TheGame.c}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/TheGame.c} \newline
-\htmladdnormallink{\texttt{Custom\_Integrated\_Env\_Codec.c}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/custom\_integrated\_env/src/Custom\_Integrated\_Env\_Codec.c} \newline
-
-The idea in the example is that you have a game (called \texttt{TheGame}) which was never meant to be used
-with RL-Glue.  To integrate it, a copy of \texttt{src/RL\_client\_environment.c} was modified to work 
-specifically with \texttt{TheGame}.  For example, all of the calls to \texttt{env\_init}, \texttt{env\_start}, \texttt{env\_step}, etc. were replaced with calls to functions defined in \texttt{TheGame}.  The input and output to those \texttt{TheGame} functions need to be wrapped up a little
- bit, but the end result is a fairly easy way to connect \texttt{TheGame} to RL-Glue!
-
-Check out the source code in the example, and feel free to ask questions in the RL-Glue Google Group!
 
 
 \section{Changes and 2.x Backward Compatibility}
@@ -498,22 +544,12 @@ First, you should join the RL-Glue Google Group Mailing List:\newline
 We're happy to answer any questions about RL-Glue.  Of course, try to search through previous messages first in case your question has been answered before.
 
 
-\subsection{What's up with the Task Spec Parser?}
-We've distributed the existing task spec parser from the previous version of RL-Glue with this codec. 
-However, it is not officially supported as we are trying to ratify a new and improved task 
-specification language.
-
-We will release an updated codec with certified task spec parser once the new language has been 
-ratified.
-
-For more information, please go here:\newline
-\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}
-
-
 \section{Credits and Acknowledgements}
 Andrew Butcher originally wrote the RL-Glue network library and first version of this codec.  Thanks Andrew.
 
 Brian Tanner has since grabbed the torch and has continued to develop the codec.
+
+Special thanks to Scott Livingston for creating the new C/C++ task spec parser.
 
 \subsection{Contributing}
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.

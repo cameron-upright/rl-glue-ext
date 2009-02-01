@@ -4,7 +4,7 @@ CFLAGS := $(CFLAGS) -Wall -pedantic
 all: SampleSarsaAgent
 
 SampleSarsaAgent: SampleSarsaAgent.o 
-	$(CC)  $(LDFLAGS) SampleSarsaAgent.o -lrlutils -lrlagent -lrlgluenetdev -o SampleSarsaAgent      
+	$(CC)  $(LDFLAGS) SampleSarsaAgent.o -lm -lrlutils -lrlagent -lrlgluenetdev -o SampleSarsaAgent      
 
 SampleSarsaAgent.o: SampleSarsaAgent.c
 	$(CC)  $(CFLAGS) -c SampleSarsaAgent.c -o SampleSarsaAgent.o 
