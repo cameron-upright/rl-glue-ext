@@ -32,6 +32,7 @@ class skeleton_agent(Agent):
 	lastObservation=Observation()
 	
 	def agent_init(self,taskSpec):
+		#See the sample_sarsa_agent in the mines-sarsa-example project for how to parse the task spec
 		self.lastAction=Action()
 		self.lastObservation=Observation()
 		

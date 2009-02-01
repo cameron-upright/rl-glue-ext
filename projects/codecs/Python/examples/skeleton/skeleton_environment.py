@@ -37,7 +37,7 @@ from rlglue.types import Reward_observation_terminal
 class skeleton_environment(Environment):
 	currentState=10
 	def env_init(self):
-		return "2:e:1_[i]_[0,20]:1_[i]_[0,1]:[-1,1]"
+		return "VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1.0 OBSERVATIONS INTS (0 20)  ACTIONS INTS (0 1)  REWARDS (-1.0 1.0)  EXTRA skeleton_environment(Python) by Brian Tanner."
 	
 	def env_start(self):
 		self.currentState=10
