@@ -2,6 +2,22 @@
 # Associate internals original text with physical files.
 
 
+$key = q/mines-sample/;
+$ref_files{$key} = "$dir".q|PythonCodec.html|; 
+$noresave{$key} = "$nosave";
+
+$key = q/sec:env/;
+$ref_files{$key} = "$dir".q|PythonCodec.html|; 
+$noresave{$key} = "$nosave";
+
+$key = q/sarsa-sample/;
+$ref_files{$key} = "$dir".q|PythonCodec.html|; 
+$noresave{$key} = "$nosave";
+
+$key = q/mines-sarsa-sample/;
+$ref_files{$key} = "$dir".q|PythonCodec.html|; 
+$noresave{$key} = "$nosave";
+
 $key = q/sec:agent/;
 $ref_files{$key} = "$dir".q|PythonCodec.html|; 
 $noresave{$key} = "$nosave";
