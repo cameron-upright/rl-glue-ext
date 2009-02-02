@@ -7,7 +7,8 @@ mkdir install_root/usr
 mkdir install_root/usr/local
 svn export http://rl-glue.googlecode.com/svn/trunk rl-glue-trunk
 cd rl-glue-trunk
-./configure --prefix=$INSTALLDIR
+#Disable shared so that we can package them up and relocate the libraries.
+./configure --prefix=$INSTALLDIR --disable-shared
 make
 make install
 cd ..
