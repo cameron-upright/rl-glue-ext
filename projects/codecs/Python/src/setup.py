@@ -1,11 +1,13 @@
 #! /usr/bin/env python
 
 from distutils.core import setup
-
+from rlglue.versions import get_codec_version
 import rlglue
 
+
+
 setup(name="RL_Glue_PythonCodec",
-      version='2.0',
+      version=get_codec_version(),
       description="RL-Glue Python Codec",
       author="Brian Tanner",
       author_email=" brian@tannerpages.com",
