@@ -1,7 +1,7 @@
 ==[Downloads Downloads]==
-  * [Python Python Codec]
-  * [Java Java Codec]
   * [CandCPP C/C++ Codec]
+  * [Java Java Codec]
+  * [Python Python Codec]
   * [Matlab Matlab Codec]
   * [LISP LISP Codec]
  
