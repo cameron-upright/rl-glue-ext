@@ -1,0 +1,13 @@
+#summary This page contains links and information about all of the current Lisp Codec downloads for RL-Glue.
+
+*Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
+
+=== Available Downloads ===
+
+ * [LISP-USER-DEV-LINK Matlab User/Dev Distribution LISP-USER-DEV-VERSION] [LISP-USER-DEV-DETAILS-LINK (File Details)]
+ 
+  This is a platform-independent RL-Glue codec written in Lisp.  This codec supports a variety of Lisp variants, including: SBCL, CMUCL, Lispworks, Allegro CL, CLISP, Scieneer, and CCL/OpenMCL.
+
+=== Official Documentation ===
+ * Lisp Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Lisp/doc/reference/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Lisp/doc/manual/lisp-codec.pdf (PDF)] 
+
