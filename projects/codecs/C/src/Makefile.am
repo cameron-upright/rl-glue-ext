@@ -2,7 +2,9 @@ CODEC_RELEASE=1:0:0
 CODEC_VERSION=1:0:0
 
 lib_LTLIBRARIES = librlagent.la librlenvironment.la librlexperiment.la
- 
+
+noinst_HEADERS = RL_codec_common.h
+
 librlagent_la_SOURCES = RL_client_agent.c RL_debug.c
 librlagent_la_LDFLAGS= -version-info $(CODEC_VERSION) -release $(CODEC_RELEASE)
 librlagent_la_CFLAGS = $(AM_CFLAGS) -Wall -pedantic -std=c99 -g

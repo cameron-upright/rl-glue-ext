@@ -12,30 +12,31 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
+
 * 
-*  $Revision$
-*  $Date$
-*  $Author$
-*  $HeadURL$
+*  $Revision: 957 $
+*  $Date: 2009-02-03 09:07:49 -0700 (Tue, 03 Feb 2009) $
+*  $Author: brian@tannerpages.com $
+*  $HeadURL: https://rl-glue.googlecode.com/svn/trunk/src/rlglue/RL_common.h $
 * 
 */
-#ifdef HAVE_CONFIG_H
-#include <config.h>
+
+
+#ifndef RL_CODEC_COMMON_H
+#define RL_CODEC_COMMON_H
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#include <assert.h>
-#include <string.h>
-#include <rlglue/RL_common.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-/*This is an easier trick to get the version */
-char svnVersionString[1024];
-char* __rlglue_get_codec_svn_version(){
-	int howMuchToCopy=0;
-	char *theVersion="$Revision$";
-	howMuchToCopy=strlen(theVersion+11) - 2;
-	assert(howMuchToCopy>0);
-	memcpy(svnVersionString,  theVersion+11, howMuchToCopy);
-    svnVersionString[howMuchToCopy] = '\0';
-	return svnVersionString;
+	char* __rlglue_get_codec_svn_version();
+
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif
