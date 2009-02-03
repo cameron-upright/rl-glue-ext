@@ -38,6 +38,8 @@
 /* Include the utility methods*/
 #include <rlglue/utils/C/RLStruct_util.h>
 
+/* Gives us __rlglue_get_codec_svn_version */
+#include <RL_codec_common.h>
 
 #define DEBUGAGENT 1
 /*
@@ -276,7 +278,7 @@ int main(int argc, char** argv) {
 	  	host = inet_ntoa(*(struct in_addr*)host_ent->h_addr_list[0]);
 	}
 
-	fprintf(stdout, "RL-Glue C Agent Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_svn_version(),host, port);
+	fprintf(stdout, "RL-Glue C Agent Codec Version %s, Build %s\n\tConnecting to host=%s on port=%d...\n", VERSION,__rlglue_get_codec_svn_version(),host, port);
 	fflush(stdout);
 
 /* Allocate what should be plenty of space for the buffer - it will dynamically resize if it is too small */
