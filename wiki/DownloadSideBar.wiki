@@ -1,5 +1,6 @@
 ==[Downloads Downloads]==
-  * [CandCPP RLGlue Core and C/C++ Codec]
+  * [RLGlueCore RL-Glue Core]
+  * [CandCPP C/C++ Codec]
   * [Java Java Codec]
   * [Python Python Codec]
   * [Matlab Matlab Codec]
