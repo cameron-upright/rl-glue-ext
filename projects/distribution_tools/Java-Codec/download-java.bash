@@ -25,8 +25,22 @@ tar -cf $USERTAR $USERDIR
 gzip $DEVTAR
 gzip $USERTAR
 
+DEVZIP=$DISTDIR/$DEVTAR.gz
+USERZIP=$DISTDIR/$USERTAR.gz
+
 mv *.gz $DISTDIR
 
 rm -Rf $USERDIR
 rm -Rf $DEVDIR
 
+#Upload to Google Code
+python ../googlecode_upload.py -s "Developer version of the RL-Glue Java Codec $VERSION" -p rl-glue-ext --labels=Type-Installer,OpSys-All,Language-Java,Audience-Dev $DEVZIP
+python ../googlecode_upload.py -s "End-User version of the RL-Glue Java Codec $VERSION" -p rl-glue-ext --labels=Type-Installer,OpSys-All,Language-Java,Audience-User $USERZIP
+
+# Update the Wiki
+python substitute-java-strings.py $VERSION $DEVDIR-$VERSION $USERDIR-$VERSION
+cp Java.wiki ../wiki/java.new
+cd ../wiki
+svn up
+mv java.new Java.wiki
+svn commit Java.wiki -m "Automated update of Java wiki page."
