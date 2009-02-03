@@ -1,19 +1,25 @@
 #summary This page contains links and information about all of the current Matlab Codec downloads for RL-Glue.
 
-= Introduction =
+*Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
-This information could be much better.
+=== Available Downloads ===
 
-
-= Available Downloads = 
-
- * [MATLAB-USER-DEV-LINK Matlab User/Dev Distribution MATLAB-USER-DEV-VERSION] 
+ * [MATLAB-USER-DEV-LINK Matlab User/Dev Distribution MATLAB-USER-DEV-VERSION] [MATLAB-USER-DEV-DETAILS-LINK (File Details)]
 
 
-= Details =
-Brian is awesome.
+=== Official Documentation ===
+ * Matlab Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab/docs/MatlabCodec.pdf (PDF)] 
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=== Project Update Feed === 
+
+[http://code.google.com/feeds/p/rl-glue-ext/updates/basic]
+
+=== Frequently Asked Questions === 
+We're waiting for your questions!
+
+=== Matlab Codec Speed Tests ===
+These are ad-hoc tests done without being careful.  They are meant to give a flavor of the speed of this codec.  The Matlab codec is based on Java, so there isn't a lot of extra optimization we can do on top of making the Java codec as good as possible.
+
+|| *Type* || *Milliseconds per Step* || *Steps Per Second)* ||
+|| Big Observations || 27 || 37 ||
+|| Regular Observations || 1.8 || 556 ||

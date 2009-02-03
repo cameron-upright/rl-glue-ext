@@ -33,10 +33,9 @@ rm -Rf $DEVDIR
 
 python ../googlecode_upload.py -s "RL-Glue Matlab Codec $VERSION" -p rl-glue-ext --labels=Type-Installer,OpSys-All,Language-Matlab $DEVZIP
 
-fileURL=http://rl-glue-ext.googlecode.com/files/$ZIPNAME
 
 # Update the Wiki
-python substitute-matlab-strings.py $VERSION $fileURL
+python substitute-matlab-strings.py $VERSION $ZIPNAME
 cp Matlab.wiki ../wiki/
 cd ../wiki
 svn commit Matlab.wiki -m "Automated update of Matlab wiki page."
