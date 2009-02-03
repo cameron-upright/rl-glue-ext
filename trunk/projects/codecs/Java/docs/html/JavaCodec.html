@@ -194,7 +194,7 @@ Below are two examples of how you would work with the code, and then you can cho
 
 <P>
 <PRE>
-#Not installed (free-float) mode
+//Not installed (free-float) mode
 &gt;$ javac -cp path/to/codecs/Java/products/JavaRLGlueCodec.jar MyAgent.java
 &gt;$ java -cp path/to/codecs/Java/products/JavaRLGlueCodec.jar:. MyAgent
 
@@ -206,7 +206,16 @@ Below are two examples of how you would work with the code, and then you can cho
 <P>
 To install the RL-Glue Java Extension, do the following:
 <PRE>
+//This location will depend on if you have the developer distribution
+//or the user distribution
+
+//User Distribution do this
+&gt;$ cd path/to/downloaded/codec/Java/
+
+//Developer Distribution do this
 &gt;$ cd path/to/downloaded/codec/Java/products
+
+//Both distributions install the same way
 &gt;$ java -jar JavaRLGlueCodec.jar --install
 </PRE>
 
@@ -840,9 +849,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 490 $
+Revision Number: $Rev: 497 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2009-01-31 16:37:26 -0700 (Sat, 31 Jan 2009) $
+Last Updated   : $Date: 2009-02-02 00:23:20 -0700 (Mon, 02 Feb 2009) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/docs/JavaCodec.tex $
 </PRE>
 
@@ -866,7 +875,7 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>JavaCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Java Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2009-02-01
+The translation was initiated by Brian Tanner on 2009-02-03
 <BR><HR><H4>Footnotes</H4>
 <DL>
 <DT><A NAME="foot209">... RL-Glue</A><A
@@ -908,7 +917,7 @@ The translation was initiated by Brian Tanner on 2009-02-01
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2009-02-01
+2009-02-03
 </ADDRESS>
 </BODY>
 </HTML>
