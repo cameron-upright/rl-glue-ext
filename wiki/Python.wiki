@@ -4,16 +4,16 @@
 
 === Available Downloads ===
 
- * [http://rl-glue-ext.googlecode.com/files/python-codec-dev-2.0-RC1.tar.gz Python User Distribution 2.0-RC1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=python-codec-dev-2.0-RC1.tar.gz (File Details)]
+ * [http://rl-glue-ext.googlecode.com/files/python-codec-2.0-RC1.tar.gz Python User Distribution 2.0-RC1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=python-codec-2.0-RC1.tar.gz (File Details)]
  * [http://rl-glue-ext.googlecode.com/files/python-codec-dev-2.0-RC1.tar.gz Python Developer Distribution 2.0-RC1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=python-codec-dev-2.0-RC1.tar.gz (File Details)]
 
 === User Quick Install ===
 {{{
 #Unpack the files
->$ tar -zxf python-codec-dev-2.0-RC1.tar.gz
+>$ tar -zxf python-codec-2.0-RC1.tar.gz
 
 #Change to unpacked directory
->$ cd /path/to/python-codec-dev-2.0-RC1
+>$ cd /path/to/python-codec-2.0-RC1
 
 #Go into the src directory
 >$ cd src
