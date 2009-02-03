@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Download Matlab
+#
 if [ -z $1 ]
 then
   VERSION=UNKNOWN
@@ -22,8 +25,18 @@ DEVTAR=$DEVDIR-$VERSION.tar
 
 tar -cf $DEVTAR $DEVDIR
 gzip $DEVTAR
-
-mv *.gz $DISTDIR
+mv *.gz $DISTDIR/
+ZIPNAME=$DEVTAR.gz
+DEVZIP=$DISTDIR/$ZIPNAME
 
 rm -Rf $DEVDIR
 
+python ../googlecode_upload.py -s "RL-Glue Matlab Codec $VERSION" -p rl-glue-ext --labels=Type-Installer,OpSys-All,Language-Matlab $DEVZIP
+
+fileURL=http://rl-glue-ext.googlecode.com/files/$ZIPNAME
+
+# Update the Wiki
+python substitute-matlab-strings.py $VERSION $fileURL
+cp Matlab.wiki ../wiki/
+cd ../wiki
+svn commit Matlab.wiki -m "Automated update of Matlab wiki page."
