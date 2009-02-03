@@ -4,16 +4,18 @@
 
 === Available Downloads ===
 
- * [http://rl-glue-ext.googlecode.com/files/matlab-codec-1.0-RCFinal.tar.gz Matlab User/Dev Distribution 1.0-RCFinal] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=matlab-codec-1.0-RCFinal.tar.gz (File Details)]
+ * [http://rl-glue-ext.googlecode.com/files/matlab-codec-1.0-RC-FINAL-1.tar.gz Matlab User/Dev Distribution 1.0-RC-FINAL-1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=matlab-codec-1.0-RC-FINAL-1.tar.gz (File Details)]
+ 
+  This is a platform-independent RL-Glue codec written in Matlab.  This codec builds on the Java codec to provide its functionality, so Matlab must be run with the Java Virtual Machine enabled (this is the default).  There is an automated installer script in Matlab that will add the RL-Glue m-files and Java classes to your path so they can be used easily by your Matlab programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
 
 === Quick Install ===
 {{{
 #Unpack the files
-tar -zxf matlab-codec-1.0-RCFinal.tar.gz
+tar -zxf matlab-codec-1.0-RC-FINAL-1.tar.gz
 
 #Start Matlab
 #Change to unpacked directory
->>cd /path/to/matlab-codec-1.0-RCFinal
+>>cd /path/to/matlab-codec-1.0-RC-FINAL-1
 
 #Install the Codec
 >>installRLGlue()
@@ -23,3 +25,9 @@ tar -zxf matlab-codec-1.0-RCFinal.tar.gz
 === Official Documentation ===
  * Matlab Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab/docs/MatlabCodec.pdf (PDF)] 
 
+=== Matlab Codec Homepage ===
+For more information about the Matlab codec, and others, please visit the RL-Glue homepage:
+[http://glue.rl-community.org]
+
+And the Matlab Codec Homepage:
+[http://glue.rl-community.org/Home/Extensions/matlab-codec]
