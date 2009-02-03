@@ -20409,6 +20409,7 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 
 
+
 if test "${TERM}" = "cygwin"; then
 
 { echo "$as_me:$LINENO: checking for clearRLStruct in -lrlutils" >&5
