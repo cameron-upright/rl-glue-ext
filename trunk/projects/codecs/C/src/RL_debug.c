@@ -29,13 +29,13 @@
 #include <stdio.h>
 
 /*This is an easier trick to get the version */
-char svnVersionString[1024];
+static char svnVersionCodecString[1024];
 char* __rlglue_get_codec_svn_version(){
 	int howMuchToCopy=0;
 	char *theVersion="$Revision$";
 	howMuchToCopy=strlen(theVersion+11) - 2;
 	assert(howMuchToCopy>0);
-	memcpy(svnVersionString,  theVersion+11, howMuchToCopy);
-    svnVersionString[howMuchToCopy] = '\0';
-	return svnVersionString;
+	memcpy(svnVersionCodecString,  theVersion+11, howMuchToCopy);
+    svnVersionCodecString[howMuchToCopy] = '\0';
+	return svnVersionCodecString;
 }
