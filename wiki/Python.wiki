@@ -1,13 +1,28 @@
 #summary This page contains links and information about all of the current Python Codec downloads for RL-Glue.
 
-= Introduction =
+*Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
-Add your content here.
+=== Available Downloads ===
 
+ * [Python-USER-LINK Python User Distribution Python-USER-VERSION] [Python-USER-DETAILS-LINK (File Details)]
+ * [Python-DEV-LINK Python Developer Distribution Python-DEV-VERSION] [Python-DEV-DETAILS-LINK (File Details)]
 
-= Details =
+=== User Quick Install ===
+{{{
+#Unpack the files
+>$ tar -zxf Python-USER-FILE-BASE.tar.gz
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+#Change to unpacked directory
+>$ cd /path/to/Python-USER-FILE-BASE
+
+#Go into the src directory
+>$ cd src
+
+#Install the Codec
+>$ python setup.py install
+
+}}}
+
+=== Official Documentation ===
+ * Python Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python/docs/PythonCodec.pdf (PDF)] 
+
