@@ -20,7 +20,6 @@ We're waiting for your questions!
 === Matlab Codec Speed Tests ===
 These are ad-hoc tests done without being careful.  They are meant to give a flavor of the speed of this codec.  The Matlab codec is based on Java, so there isn't a lot of extra optimization we can do on top of making the Java codec as good as possible.
 
-
-Type 1 (Big Observations)      27 milliseconds per step (37 steps per second)
-
-Type 2 (Regular Observations) 1.8 milliseconds per step (556 steps per second)
+|| *Type* || *Milliseconds per Step* || *Steps Per Second)* ||
+|| Big Observations || 27 || 37 ||
+|| Regular Observations || 1.8 || 556 ||
