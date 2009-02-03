@@ -1,13 +1,24 @@
 #summary This page contains links and information about all of the current Java Codec downloads for RL-Glue.
 
-= Introduction =
+*Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
-Add your content here.
+=== Available Downloads ===
 
+ * [http://rl-glue-ext.googlecode.com/files/java-codec-2.0.tar.gz Java User Distribution 2.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-2.0.tar.gz (File Details)]
+ * [http://rl-glue-ext.googlecode.com/files/java-codec-dev-2.0.tar.gz Java Developer Distribution 2.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-dev-2.0.tar.gz (File Details)]
 
-= Details =
+=== User Quick Install ===
+{{{
+#Unpack the files
+>$ tar -zxf java-codec-2.0.tar.gz
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+#Change to unpacked directory
+>$ cd /path/to/java-codec-2.0
+
+#Install the Codec
+>$ java -jar JavaRLGlueCodec.jar --install
+}}}
+
+=== Official Documentation ===
+ * Java Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/docs/JavaCodec.pdf (PDF)] 
+
