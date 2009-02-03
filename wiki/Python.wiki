@@ -2,7 +2,7 @@
 
 *Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
-=== Available Downloads ===
+=== Available Downloads (only one is required)===
 
  * [http://rl-glue-ext.googlecode.com/files/python-codec-2.0-RC1.tar.gz Python User Distribution 2.0-RC1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=python-codec-2.0-RC1.tar.gz (File Details)]
  * [http://rl-glue-ext.googlecode.com/files/python-codec-dev-2.0-RC1.tar.gz Python Developer Distribution 2.0-RC1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=python-codec-dev-2.0-RC1.tar.gz (File Details)]
