@@ -4,5 +4,5 @@
   * [Java Java Codec]
   * [Python Python Codec]
   * [Matlab Matlab Codec]
-  * [Lisp LISP Codec]
+  * [Lisp Lisp Codec]
  
