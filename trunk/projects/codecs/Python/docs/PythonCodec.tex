@@ -52,7 +52,7 @@ To check the code out of subversion:\newline
 \small \texttt{svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python Python-Codec} \normalsize
 
 \subsection{Installing the Codec}
-There are several different ways to install the Python codec.  This depends party on the platform (Windows, Mac, Linux) and on whether you are installing the codec as a developer (improving/changing the codec) or a user (using the code to create agents, environments, and experiments).  Some of the usual situations are explained in more details below.
+There are two options on how you can install the Python codec, depending on whether you'd like to use the automated method, or if you'd like to setup your Python paths yourself.
 
 \subsection{setup.py}
 You can install the Python codec the ``usual'' way, using the \texttt{setup.py} script that is made possible by Python Distutils\footnote{\url{http://docs.python.org/distutils/index.html}}.
@@ -71,10 +71,10 @@ To install the Python codec into your system (you may need sudo or root access t
 	>$ python setup.py install
 \end{verbatim}
 
-If you are not able to install the codec because it requires root access on your system and you do not have these privileges, you can do a local install of the codec in your user directory.  Please seethe  \htmladdnormallink{Python installation docs}{http://docs.python.org/install/index.html\#the-new-standard-distutils} for more details.
+If you are not able to install the codec because it requires root access on your system and you do not have these privileges, you can do a local install of the codec in your user directory.  Please see the  \htmladdnormallink{Python installation docs}{http://docs.python.org/install/index.html\#the-new-standard-distutils} for more details.
 
-
-After installing the Python codec, you will be able to access all of the RL-Glue Python classes and functions without needing to specify them in your \texttt{\$PYTHONPATH} environment variable.
+After installing the Python codec, you will be able to access all of the RL-Glue Python classes and functions without needing to specify them in your 
+\texttt{\$PYTHONPATH} environment variable.
 
 \subsubsection{Removing the Codec}
 Distutils does not provide an automated way to remove the Python modules that it installs, because in general there may be dependencies between modules and it does not want to break your system. We recommend that you only remove the installed Python codec from your system manually if you know what you are doing.  Future versions of the codec will install over the existing one.
