@@ -2,13 +2,13 @@
 
 *Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
-=== Available Downloads ===
+=== Available Downloads (only one is required)===
 
  * [CODEC-DEV-LINK C/C++ Codec Distribution CODEC-DEV-VERSION] [CODEC-DEV-DETAILS-LINK (File Details)]
-  This is a platform-independent project that was built using the GNU Autotools.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows under Cygwin.
+  This is a platform-independent project that was built using the GNU Autotools.  It should install on most Linux and Unix platforms, including Mac OS X (Intel and PowerPC) and on Microsoft Windows under Cygwin.
 
  * [MAC-LINK Mac OS X RL-Glue Core Project and C/C++ Codec Disk Image GLUE-DEV-VERSION] [MAC-DETAILS-LINK (File Details)]
- This is an OS X disk image with familiar installer that will install both RL-Glue Core and the C/C++ Codec onto your Mac.  Intel Mac only.
+ This is an OS X disk image with familiar installer that will install both RL-Glue Core and the C/C++ Codec onto your Mac.  Intel Mac only. You do not need to install RL-Glue Core separately if you use this option.
 
 === User Quick Install ===
 {{{
