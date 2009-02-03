@@ -7,11 +7,10 @@ This information could be much better.
 
 = Available Downloads = 
 
- * [http://rl-glue-ext.googlecode.com/files/matlab-codec-1.0-RCFinal.tar.gz Matlab User/Dev Distribution 1.0-RCFinal] 
+ * [http://rl-glue-ext.googlecode.com/files/matlab-codec-1.0-RCFinal.tar.gz Matlab User/Dev Distribution 1.0-RCFinal] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=matlab-codec-1.0-RCFinal.tar.gz (File Details)]
 
 
 = Details =
-Brian is awesome.
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
