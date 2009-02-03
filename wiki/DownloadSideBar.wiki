@@ -1,4 +1,4 @@
-==[Downloads Downloads]==
+==[DownloadSideBar Downloads]==
   * [RLGlueCore RL-Glue Core]
   * [CandCPP C/C++ Codec]
   * [Java Java Codec]
