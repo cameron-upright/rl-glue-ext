@@ -35,7 +35,9 @@ python ../googlecode_upload.py -s "RL-Glue Matlab Codec $VERSION" -p rl-glue-ext
 
 
 # Update the Wiki
-python substitute-matlab-strings.py $VERSION $ZIPNAME
-cp Matlab.wiki ../wiki/
+python substitute-matlab-strings.py $VERSION $DEVDIR-$VERSION
+cp Matlab.wiki ../wiki/matlab.new
 cd ../wiki
+svn up
+mv matlab.new Matlab.wiki
 svn commit Matlab.wiki -m "Automated update of Matlab wiki page."
