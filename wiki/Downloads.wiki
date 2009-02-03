@@ -2,12 +2,10 @@
 
 = Introduction =
 
-Add your content here.
+Because of the large number of downloads associated with the RL-Glue-Ext project, we have provided some structure that can help you navigate to the codec that you're looking for.
 
+The sidebar on the left lists all of the different extensions that are currently available.
 
-= Details =
+*NOTE:* Remember that you need to install [RLGlueCore RL-Glue Core] before you can use any of the other codecs.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+If you would like to look at the list of all downloads in the default Google file sorter, that option is available [http://code.google.com/p/rl-glue-ext/downloads/list here].
