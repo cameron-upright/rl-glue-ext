@@ -31,7 +31,7 @@ DEVZIP=$DISTDIR/$ZIPNAME
 
 rm -Rf $DEVDIR
 
-python ../googlecode_upload.py -s "RL-Glue Matlab Codec $VERSION" -p rl-glue-ext --labels=Type-Installer,OpSys-All,Language-Matlab $DEVZIP
+python ../googlecode_upload.py -s "RL-Glue Matlab Codec $VERSION" -p rl-glue-ext --labels=Type-Installer,OpSys-All,Language-Matlab,Audience-User,Audience-Dev $DEVZIP
 
 
 # Update the Wiki

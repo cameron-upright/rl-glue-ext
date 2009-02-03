@@ -7,6 +7,8 @@
  * [PYTHON-USER-LINK Python User Distribution PYTHON-USER-VERSION] [PYTHON-USER-DETAILS-LINK (File Details)]
  * [PYTHON-DEV-LINK Python Developer Distribution PYTHON-DEV-VERSION] [PYTHON-DEV-DETAILS-LINK (File Details)]
 
+ These are both platform-independent RL-Glue codecs written in Python.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
+
 === User Quick Install ===
 {{{
 #Unpack the files

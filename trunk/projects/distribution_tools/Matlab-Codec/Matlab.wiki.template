@@ -5,6 +5,8 @@
 === Available Downloads ===
 
  * [MATLAB-USER-DEV-LINK Matlab User/Dev Distribution MATLAB-USER-DEV-VERSION] [MATLAB-USER-DEV-DETAILS-LINK (File Details)]
+ 
+  This is a platform-independent RL-Glue codec written in Matlab.  This codec builds on the Java codec to provide its functionality, so Matlab must be run with the Java Virtual Machine enabled (this is the default).  There is an automated installer script in Matlab that will add the RL-Glue m-files and Java classes to your path so they can be used easily by your Matlab programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
 
 === Quick Install ===
 {{{
