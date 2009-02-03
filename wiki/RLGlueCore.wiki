@@ -4,23 +4,23 @@
 
 === Available Downloads ===
 
- * [http://rl-glue-ext.googlecode.com/files/rl-glue-3.0-RC-FINAL-1.tar.gz Java Developer Distribution 3.0-RC-FINAL-1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.0-RC-FINAL-1.tar.gz (File Details)]
+ * [http://rl-glue-ext.googlecode.com/files/rlglue-3.0-RC-FINAL-1.tar.gz RL-Glue Core Project Distribution 3.0-RC-FINAL-1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rlglue-3.0-RC-FINAL-1.tar.gz (File Details)]
 
 === Quick Install ===
 {{{
-#Unpack the files
->$ tar -zxf rl-glue-3.0-RC-FINAL-1.tar.gz
+//Unpack the files
+>$ tar -zxf rlglue-3.0-RC-FINAL-1.tar.gz
 
-#Change to unpacked directory
->$ cd /path/to/rl-glue-3.0-RC-FINAL-1
+//Change to unpacked directory
+>$ cd /path/to/rlglue-3.0-RC-FINAL-1
 
-#Configure the installation (for advanced options see the manual)
+//Configure the installation (for advanced options see the manual)
 >$ ./configure
 
-#Build the software
+//Build the software
 >$ make
 
-#Install the software (requires admin privileges)
+//Install the software (requires admin privileges)
 >$ sudo make install
 }}}
 
