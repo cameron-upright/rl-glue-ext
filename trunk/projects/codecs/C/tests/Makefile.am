@@ -5,7 +5,7 @@ check_PROGRAMS = test_sanity_experiment test_1_agent test_1_environment test_1_e
 
 AM_CFLAGS=-g -Wall -pedantic -std=c99
 
-EXTRA_LIBS=-lrlgluenetdev
+EXTRA_LIBS=-lrlgluenetdev -lrlutils
 test_sanity_experiment_SOURCES = test_sanity_experiment.c useful_functions.c useful_functions.h
 test_sanity_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 
