@@ -1,13 +1,29 @@
-#summary This page contains links and information about all of the current C/C++ Codec downloads for RL-Glue.
+#summary This page contains links and information about all of the current Java Codec downloads for RL-Glue.
 
-= Introduction =
+*Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
-Add your content here.
+=== Available Downloads ===
 
+ * [http://rl-glue-ext.googlecode.com/files/c-codec-2.0-RC-FINAL-1.tar.gz C/C++ Codec Distribution 2.0-RC-FINAL-1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=c-codec-2.0-RC-FINAL-1.tar.gz (File Details)]
 
-= Details =
+=== User Quick Install ===
+{{{
+#Unpack the files
+>$ tar -zxf c-codec-2.0-RC-FINAL-1.tar.gz
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+#Change to unpacked directory
+>$ cd /path/to/c-codec-2.0-RC-FINAL-1
+
+#Configure the installation (for advanced options see the manual)
+>$ ./configure
+
+#Build the software
+>$ make
+
+#Install the software (requires admin privileges)
+>$ sudo make install
+}}}
+
+=== Official Documentation ===
+ * C/C++ Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.pdf (PDF)] 
+

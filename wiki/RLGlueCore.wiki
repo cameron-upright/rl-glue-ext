@@ -1,13 +1,31 @@
-#summary One-sentence summary of this page.
+#summary This page contains links and information about all of the current RL-Glue Core downloads.
 
-= Introduction =
+*Notes:* To use this or any other codec, you must have *THIS* installed first.
 
-Add your content here.
+=== Available Downloads ===
+
+ * [http://rl-glue-ext.googlecode.com/files/rl-glue-3.0-RC-FINAL-1.tar.gz Java Developer Distribution 3.0-RC-FINAL-1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.0-RC-FINAL-1.tar.gz (File Details)]
+
+=== Quick Install ===
+{{{
+#Unpack the files
+>$ tar -zxf rl-glue-3.0-RC-FINAL-1.tar.gz
+
+#Change to unpacked directory
+>$ cd /path/to/rl-glue-3.0-RC-FINAL-1
+
+#Configure the installation (for advanced options see the manual)
+>$ ./configure
+
+#Build the software
+>$ make
+
+#Install the software (requires admin privileges)
+>$ sudo make install
+}}}
+
+=== Official Documentation ===
+ * RL-Glue Overview [http://rl-glue.googlecode.com/svn/trunk/docs/html/index.html (HTML)] [http://rl-glue.googlecode.com/svn/trunk/docs/Glue-Overview.pdf (PDF)]
+ * RL-Glue Technical Manual [http://rl-glue.googlecode.com/svn/trunk/docs/tech_html/index.html (HTML)] [http://rl-glue.googlecode.com/svn/trunk/docs/TechnicalManual.pdf (PDF)]
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
