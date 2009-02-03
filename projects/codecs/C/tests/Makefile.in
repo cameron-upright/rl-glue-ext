@@ -274,7 +274,7 @@ target_alias = @target_alias@
 TESTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_empty.sh test_speed.sh
 check_SCRIPTS = test_sanity.sh test_1.sh test_message.sh test_rl_episode.sh test_init_cleanup.sh test_empty.sh test_speed.sh
 AM_CFLAGS = -g -Wall -pedantic -std=c99
-EXTRA_LIBS = -lrlgluenetdev
+EXTRA_LIBS = -lrlgluenetdev -lrlutils
 test_sanity_experiment_SOURCES = test_sanity_experiment.c useful_functions.c useful_functions.h
 test_sanity_experiment_LDADD = ../src/librlexperiment.la  $(EXTRA_LIBS)
 test_1_agent_SOURCES = test_1_agent.c useful_functions.c useful_functions.h
