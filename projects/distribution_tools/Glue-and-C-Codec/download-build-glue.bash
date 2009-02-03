@@ -11,5 +11,5 @@ cd rl-glue-trunk
 ./configure --prefix=$INSTALLDIR
 make
 make install
-cd ..
+VERSION=`./install_root/usr/local/bin/rl_glue --pv`
 

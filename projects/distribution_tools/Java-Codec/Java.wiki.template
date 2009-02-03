@@ -7,6 +7,8 @@
  * [JAVA-USER-LINK Java User Distribution JAVA-USER-VERSION] [JAVA-USER-DETAILS-LINK (File Details)]
  * [JAVA-DEV-LINK Java Developer Distribution JAVA-DEV-VERSION] [JAVA-DEV-DETAILS-LINK (File Details)]
 
+ These are both platform-independent RL-Glue codecs written in Java.  Java 1.5 or higher is required to use them.  Both distributions include a pre-compiled JAR file that has all of the Java classes already built and packaged.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
+
 === User Quick Install ===
 {{{
 #Unpack the files
