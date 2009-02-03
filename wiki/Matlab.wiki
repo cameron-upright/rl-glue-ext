@@ -7,7 +7,7 @@ This information could be much better.
 
 = Available Downloads = 
 
- * [http://rl-glue-ext.googlecode.com/files/matlab-codec-UNKNOWN.tar.gz Matlab User/Dev Distribution UNKNOWN] 
+ * [http://rl-glue-ext.googlecode.com/files/matlab-codec-1.0-RCFinal.tar.gz Matlab User/Dev Distribution 1.0-RCFinal] 
 
 
 = Details =
