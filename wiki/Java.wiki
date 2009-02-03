@@ -2,7 +2,7 @@
 
 *Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
-=== Available Downloads ===
+=== Available Downloads (only one is required)===
 
  * [http://rl-glue-ext.googlecode.com/files/java-codec-2.0.tar.gz Java User Distribution 2.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-2.0.tar.gz (File Details)]
  * [http://rl-glue-ext.googlecode.com/files/java-codec-dev-2.0.tar.gz Java Developer Distribution 2.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-dev-2.0.tar.gz (File Details)]
