@@ -2,7 +2,8 @@ import sys
 
 
 theVersion=sys.argv[1]
-uploadedFileName=sys.argv[2]
+uploadedFileBase=sys.argv[2]
+uploadedFileName=uploadedFileBase+".tar.gz"
 theLink="http://rl-glue-ext.googlecode.com/files/"+uploadedFileName
 detailsLink="http://code.google.com/p/rl-glue-ext/downloads/detail?name="+uploadedFileName
 
@@ -13,6 +14,7 @@ subs={}
 subs['MATLAB-USER-DEV-VERSION']=theVersion
 subs['MATLAB-USER-DEV-LINK']=theLink
 subs['MATLAB-USER-DEV-DETAILS-LINK']=detailsLink
+subs['MATLAB-USER-DEV-FILE-BASE']=uploadedFileBase
 f = file(fileName)
 newlines = []
 for line in f:
