@@ -1,4 +1,4 @@
-#summary This page contains links and information about all of the current Java Codec downloads for RL-Glue.
+#summary This page contains links and information about all of the current C/C++ Codec downloads for RL-Glue.
 
 *Notes:* To use this or any other codec, you must have RL-Glue Core installed first.
 
