@@ -43,6 +43,7 @@ tester.check_fail("one|1.|one"!=RLGlue.RL_env_message("one"));
 tester.check_fail("one|1.|one"!=RLGlue.RL_agent_message("one"));
 
 tester.check_fail(roat.terminal!=0);
+tester.check_fail(roat.reward!=1.0);
 
 
 roat=RLGlue.RL_step();
@@ -50,6 +51,7 @@ roat=RLGlue.RL_step();
 tester.check_fail("two|2.2.|two"!=RLGlue.RL_env_message("two"));
 tester.check_fail("two|2.2.|two"!=RLGlue.RL_agent_message("two"));
 tester.check_fail(roat.terminal!=0);
+tester.check_fail(roat.reward!=1.0);
 tester.check_fail(len(roat.o.intArray)!=1);
 tester.check_fail(len(roat.o. doubleArray)!=0);
 tester.check_fail(len(roat.o. charArray)!=0);
@@ -60,6 +62,7 @@ roat=RLGlue.RL_step();
 tester.check_fail("three||three"!=RLGlue.RL_env_message("three"));
 tester.check_fail("three||three"!=RLGlue.RL_agent_message("three"));
 tester.check_fail(roat.terminal!=0);
+tester.check_fail(roat.reward!=1.0);
 tester.check_fail(len(roat.o.intArray)!=1);
 tester.check_fail(len(roat.o. doubleArray)!=0);
 tester.check_fail(len(roat.o. charArray)!=0);	
@@ -69,6 +72,7 @@ roat=RLGlue.RL_step();
 tester.check_fail("four|4.|four"!=RLGlue.RL_env_message("four"));
 tester.check_fail("four|4.|four"!=RLGlue.RL_agent_message("four"));
 tester.check_fail(roat.terminal!=0);
+tester.check_fail(roat.reward!=1.0);
 tester.check_fail(len(roat.o.intArray)!=1);
 tester.check_fail(len(roat.o. doubleArray)!=0);
 tester.check_fail(len(roat.o. charArray)!=0);
@@ -79,6 +83,29 @@ roat=RLGlue.RL_step();
 tester.check_fail("five|5.5.|five"!=RLGlue.RL_env_message("five"));
 tester.check_fail("five|4.|five"!=RLGlue.RL_agent_message("five"));
 tester.check_fail(roat.terminal==0);
+tester.check_fail(roat.reward!=1.0);
+
+roat=RLGlue.RL_step();
+tester.check_fail(roat.terminal!=0);
+tester.check_fail(roat.reward!=-2.0);
+tester.check_fail(len(roat.o.intArray)!=5);
+tester.check_fail(len(roat.o.doubleArray)!=5);
+tester.check_fail(len(roat.o.charArray)!=5);
+tester.check_fail(roat.o.intArray[0]!=173);
+tester.check_fail(roat.o.intArray[1]!=-173);
+tester.check_fail(roat.o.intArray[2]!=2147483647);
+tester.check_fail(roat.o.intArray[3]!=0);
+tester.check_fail(roat.o.intArray[4]!=-2147483648);
+tester.check_fail(roat.o.doubleArray[0]!=0.0078125);
+tester.check_fail(roat.o.doubleArray[1]!=-0.0078125);
+tester.check_fail(roat.o.doubleArray[2]!=0.0);
+tester.check_fail(roat.o.doubleArray[3]!=0.0078125e150);
+tester.check_fail(roat.o.doubleArray[4]!=-0.0078125e150);
+tester.check_fail(roat.o.charArray[0]!='g');
+tester.check_fail(roat.o.charArray[1]!='F');
+tester.check_fail(roat.o.charArray[2]!='?');
+tester.check_fail(roat.o.charArray[3]!=' ');
+tester.check_fail(roat.o.charArray[4]!='&');
 
 print tester.get_summary()
 exit(tester.getFailCount())
