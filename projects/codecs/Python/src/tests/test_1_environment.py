@@ -47,30 +47,30 @@ class test_1_environment(Environment):
 		return self.o;
 	
 	def env_step(self,action):
-        ro=Reward_observation_terminal()
-        terminal=False
+		ro=Reward_observation_terminal()
+		terminal=False
 
-        if self.stepCount < 5:
-            self.o.doubleArray=[]
-            self.o.charArray=[]
-            self.o.intArray=[self.stepCount]
-            
-            self.stepCount=self.stepCount+1
-                        
-            if self.stepCount==5:
-                terminal=True
+		if self.stepCount < 5:
+			self.o.doubleArray=[]
+			self.o.charArray=[]
+			self.o.intArray=[self.stepCount]
+	
+			self.stepCount=self.stepCount+1
+				
+			if self.stepCount==5:
+				terminal=True
 
-            ro.r=1.0
+			ro.r=1.0
 
-        else:
-            self.o.doubleArray=[0.0078125,-0.0078125,0.0,0.0078125e150,-0.0078125e150]
-            self.o.charArray=['g','F','?',' ','&']
-            self.o.intArray=[173,-173,2147483647,0,-2147483648]
+		else:
+			self.o.doubleArray=[0.0078125,-0.0078125,0.0,0.0078125e150,-0.0078125e150]
+			self.o.charArray=['g','F','?',' ','&']
+			self.o.intArray=[173,-173,2147483647,0,-2147483648]
 
-            ro.r=-2.0
+			ro.r=-2.0
 
-        ro.o=self.o
-        ro.terminal=terminal
+		ro.o=self.o
+		ro.terminal=terminal
 		return ro	
 
 	def env_cleanup(self):
