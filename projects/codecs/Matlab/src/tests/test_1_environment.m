@@ -46,17 +46,24 @@ function rewardObservation=test_1_environment_step(theAction)
     global test_1_environment_struct;
 
 	theObservation = org.rlcommunity.rlglue.codec.types.Observation();
-	theObservation.intArray=[test_1_environment_struct.stepCount];
-
-    test_1_environment_struct.stepCount=test_1_environment_struct.stepCount+1;
-
-	terminal=0;
-	
-	if test_1_environment_struct.stepCount==5
-		terminal=1;
-    end
     
-	rewardObservation=org.rlcommunity.rlglue.codec.types.Reward_observation_terminal(1.0,theObservation,terminal);
+    if 5 > test_1_environment_struct.stepCount
+    	theObservation.intArray=[test_1_environment_struct.stepCount];
+
+        test_1_environment_struct.stepCount=test_1_environment_struct.stepCount+1;
+
+    	terminal=0;
+	
+        if test_1_environment_struct.stepCount==5
+            terminal=1;
+        end
+    	rewardObservation=org.rlcommunity.rlglue.codec.types.Reward_observation_terminal(1.0,theObservation,terminal);
+    else
+    	theObservation.intArray=[173 -173 2147483647 0 -2147483648];
+    	theObservation.doubleArray=[0.0078125 -0.0078125 0.0 0.0078125e150 -0.0078125e150];
+    	theObservation.charArray=['g' 'F' '?' ' ' '&'];
+    	rewardObservation=org.rlcommunity.rlglue.codec.types.Reward_observation_terminal(-1.0,theObservation,0);
+    end
 	
 end
 
