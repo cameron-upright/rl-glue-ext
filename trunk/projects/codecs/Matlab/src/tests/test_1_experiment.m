@@ -77,15 +77,31 @@ function failures=test_1_experiment()
     [failures,totalTests]=check_fail(~strcmp('five|4.|five',RL_agent_message('five')),failures,totalTests);
 	[failures,totalTests]=check_fail(roat.terminal==0,failures,totalTests);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+%Gabor has made it so this environment will step past terminal.  This is
+%not something we want to do in general at all.
+%But, in order to keep the other tests all working, I'll allow it
+   	roat=RL_step();
+	[failures,totalTests]=check_fail(length(roat.o.intArray)~=5,failures,totalTests);
+	[failures,totalTests]=check_fail(length(roat.o.doubleArray)~=5,failures,totalTests);
+	[failures,totalTests]=check_fail(length(roat.o.charArray)~=5,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.intArray(1)~=173,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.intArray(2)~=-173,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.intArray(3)~=2147483647,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.intArray(4)~=0,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.intArray(5)~=-2147483648,failures,totalTests);
+
+    [failures,totalTests]=check_fail(roat.o.doubleArray(1)~=0.0078125,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.doubleArray(2)~=-0.0078125,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.doubleArray(3)~=0,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.doubleArray(4)~=0.0078125e150,failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.doubleArray(5)~=-0.0078125e150,failures,totalTests);
+
+    [failures,totalTests]=check_fail(roat.o.charArray(1)~='g',failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.charArray(2)~='F',failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.charArray(3)~='?',failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.charArray(4)~=' ',failures,totalTests);
+	[failures,totalTests]=check_fail(roat.o.charArray(5)~='&',failures,totalTests);
 
             
         if(failures>0)
