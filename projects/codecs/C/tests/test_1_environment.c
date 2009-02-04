@@ -59,6 +59,10 @@ const reward_observation_terminal_t *env_step(const action_t *a)
 {
 	clearRLStruct(o);
 
+/* Gabor has made it so this environment will step past terminal.  This is
+   not something we want to do in general at all.
+
+   But, in order to keep the other tests all working, I'll allow it*/
     if(5 > stepCount)
     {
         makeKInts(o,1);
