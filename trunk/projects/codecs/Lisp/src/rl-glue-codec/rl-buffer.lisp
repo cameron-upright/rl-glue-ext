@@ -161,8 +161,8 @@
   #+(and scl 64bit)
   (let ((code (kernel:double-float-bits float)))
     (values
-     (ldb (byte #.+bytes-per-integer+ #.+bytes-per-integer+) code)
-     (ldb (byte #.+bytes-per-integer+ 0) code)))
+     (ldb (byte #.+bits-per-integer+ #.+bits-per-integer+) code)
+     (ldb (byte #.+bits-per-integer+ 0) code)))
   #+ccl
   (ccl::double-float-bits float)
   #+allegro
@@ -212,7 +212,7 @@
   #+(or cmu (and scl (not 64bit)))
   (kernel:make-double-float l-code r-code)
   #+(and scl 64bit)
-  (kernel:make-double-float (+ (ash l-code #.+bytes-per-integer+) r-code))
+  (kernel:make-double-float (+ (ash l-code #.+bits-per-integer+) r-code))
   #+ccl
   (ccl::double-float-from-bits l-code r-code)
   #+allegro
