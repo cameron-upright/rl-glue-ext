@@ -142,11 +142,16 @@
            "               Mean Return    Standard Deviation~%"
            "------------------------------------------------~%")
   (print-score 0 (evaluate-agent experiment))
+  (printer "Telling the environment to use fixed start state of 2,3.~%")
+  (rl-glue-codec:rl-env-message experiment "set-start-state 2 3")
+  (rl-glue-codec:rl-start experiment)
+  (printer "Telling the environment to print "
+           "the current state to the screen.~%")
+  (rl-glue-codec:rl-env-message experiment "print-state")
   (printer "~%Evaluating the agent a few times from a fixed start "
-           "state of 3,3:~%"
+           "state of 2,3:~%"
            "               Mean Return    Standard Deviation~%"
            "------------------------------------------------~%")
-  (rl-glue-codec:rl-env-message experiment "set-start-state 3 3")
   (print-score 0 (evaluate-agent experiment))
   (printer "~%Evaluating the agent again with the random start state:~%"
            "               Mean Return    Standard Deviation~%"

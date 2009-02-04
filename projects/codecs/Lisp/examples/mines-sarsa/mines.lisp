@@ -109,21 +109,44 @@
           ((= postype +world-mine+) (values -100.0d0 t))
           (t (values -1.0d0 nil)))))
 
-(defun set-random-start-state (env)
+(defun set-random-start-state (mines)
   "Sets a random start state for the agent."
   (with-accessors ((rand-state rand-state) (map field-map)
-                   (start-row start-row) (start-col start-col)) env
+                   (start-row start-row) (start-col start-col)) mines
     (loop
-       with row = (num-rows env)
-       with col = (num-cols env)
+       with row = (num-rows mines)
+       with col = (num-cols mines)
        for r = (random row rand-state)
        for c = (random col rand-state)
        while (/= +world-free+ (aref map r c))
        finally
          (setf start-row r)
          (setf start-col c))
-    (setf (agent-row env) start-row)
-    (setf (agent-col env) start-col)))
+    (setf (agent-row mines) start-row)
+    (setf (agent-col mines) start-col)))
+
+(defun print-state (mines)
+  "Prints the current state of MINES."
+  (with-accessors ((agent-row agent-row) (agent-col agent-col)
+                   (map field-map)) mines
+    (format t "Agent is at: ~d,~d~%" agent-row agent-col)
+    (format t "Columns:0-10                10-17~%")
+    (format t "Col   ")
+    (dotimes (col (num-cols mines))
+      (format t " ~d" (mod col 10)))
+    (format t "~%")
+    (dotimes (row (num-rows mines))
+      (format t "Row: ~d" row)
+      (dotimes (col (num-cols mines))
+        (format t " ~a"
+                (cond
+                  ((and (= agent-row row) (= agent-col col)) #\A)
+                  ((= (aref map row col) +world-goal+) #\G)
+                  ((= (aref map row col) +world-mine+) #\M)
+                  ((= (aref map row col) +world-obstacle+) #\*)
+                  ((= (aref map row col) +world-free+) #\Space)
+                  (t (error "Unknown state!")))))
+      (format t "~%"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -175,12 +198,16 @@
     ((string= input-message "set-random-start-state")
      (setf (fixed-start-state env) nil)
      "Message understood. Using random start state.")
-    ((string= (subseq input-message 0 15) "set-start-state")
+    ((and (>= (length input-message) 16)
+              (string= (subseq input-message 0 15) "set-start-state"))
      (with-input-from-string (s input-message :start 15)
        (setf (start-row env) (read s))
        (setf (start-col env) (read s)))
      (setf (fixed-start-state env) t)
      "Message understood. Using fixed start state.")
+    ((string= input-message "print-state")
+     (print-state env)
+     "Message understood. Printed the state.")
     (t "Mines environment does not respond to that message.")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
