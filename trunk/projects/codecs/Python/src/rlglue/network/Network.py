@@ -188,7 +188,7 @@ class Network:
 		if numChars > 0:
 			s = self.recvBuffer.read(numChars*kCharSize)
 			returnStruct.charArray = numpy.frombuffer(s, count=numChars,
-                                dtype=numpy_double_type)
+                                dtype=numpy_char_type)
 		return returnStruct
 		
 	def getObservation(self):
