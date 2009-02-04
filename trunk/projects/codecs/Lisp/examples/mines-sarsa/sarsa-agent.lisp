@@ -98,6 +98,7 @@
 
 (defun save-lookup-table (sarsa-agent filename)
   "Saves the value function (lookup-table) into a file."
+  (format t "Saving value function...")
   (with-open-file (stream filename :direction :output :if-exists :supersede)
     (loop
        for observation being the hash-keys
@@ -110,10 +111,12 @@
                           using (hash-value value)
                           collect (cons action value)))
                  :stream stream)))
+  (format t "saved.~%")
   sarsa-agent)
 
 (defun load-lookup-table (sarsa-agent filename)
   "Loads the value function (lookup-table) from a file."
+  (format t "Loading value function...")
   (with-open-file (stream filename :direction :input)
     (loop
        with lookup-table = (make-lookup-table)
@@ -127,6 +130,7 @@
                do (setf (gethash action actions-table) value)))
        finally
          (setf (lookup-table sarsa-agent) lookup-table)))
+  (format t "loaded.~%")
   sarsa-agent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -274,10 +278,12 @@
     ((string= input-message "unfreeze exploring")
      (setf (exploring-frozen agent) nil)
      "Message understood. Exploring is unfrozen.")
-    ((string= (subseq input-message 0 11) "save_policy")
+    ((and (>= (length input-message) 12)
+          (string= (subseq input-message 0 11) "save_policy"))
      (save-lookup-table agent (subseq input-message 12))
      "Message understood. Policy is saved.")
-    ((string= (subseq input-message 0 11) "load_policy")
+    ((and (>= (length input-message) 12)
+          (string= (subseq input-message 0 11) "load_policy"))
      (load-lookup-table agent (subseq input-message 12))
      (store-oav agent nil nil nil)
      "Message understood. Policy is loaded.")
