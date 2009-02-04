@@ -35,7 +35,7 @@ try:
     import numpy
     numpy_int_type = numpy.dtype('int32').newbyteorder('>')
     numpy_float_type = numpy.dtype('float64').newbyteorder('>')
-    numpy_char_type = numpy.dtype('uint8').newbyteorder('>')
+    numpy_char_type = 'S1'#numpy.dtype('uint8').newbyteorder('>')
 except:
     pass
 
