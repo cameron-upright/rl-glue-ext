@@ -46,7 +46,10 @@ function rewardObservation=test_1_environment_step(theAction)
     global test_1_environment_struct;
 
 	theObservation = org.rlcommunity.rlglue.codec.types.Observation();
-    
+%Gabor has made it so this environment will step past terminal.  This is
+%not something we want to do in general at all.
+%But, in order to keep the other tests all working, I'll allow it
+
     if 5 > test_1_environment_struct.stepCount
     	theObservation.intArray=[test_1_environment_struct.stepCount];
 
