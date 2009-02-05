@@ -100,5 +100,5 @@ tester.check_fail(roat.o.charArray[3]!=' ');
 tester.check_fail(roat.o.charArray[4]!='&');
 
 print tester.get_summary()
-exit(tester.getFailCount())
+sys.exit(tester.getFailCount())
 

@@ -59,5 +59,5 @@ tester.check_fail(RLGlue.RL_num_steps()!=5);
 
 
 print tester.get_summary()
-exit(tester.getFailCount())
+sys.exit(tester.getFailCount())
 

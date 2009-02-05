@@ -75,5 +75,5 @@ for whichEpisode in range(1, 5):
 		
 
 print tester.get_summary()
-exit(tester.getFailCount())
+sys.exit(tester.getFailCount())
 
