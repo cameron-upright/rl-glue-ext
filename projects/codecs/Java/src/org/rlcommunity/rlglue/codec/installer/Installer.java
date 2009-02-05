@@ -71,7 +71,11 @@ public class Installer {
                 "into one of your system extension directories.  This may " +
                 "require superuser or root access to do.  Also, depending on the " +
                 "location you choose, you may need to " +
-                "reinstall if you update your VM.");
+                "reinstall if you update your VM.\n\nYou should be aware that there are some "+
+				"disadvantages to installing the codec instead of just manually putting it into "+
+				"you java class path.  These are explained in the manual.");
+
+
 
 
         System.out.println();
