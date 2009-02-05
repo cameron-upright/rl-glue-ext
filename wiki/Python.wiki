@@ -5,7 +5,15 @@
 === Available Downloads (only one is required)===
 
  * [http://rl-glue-ext.googlecode.com/files/python-codec-2.0-RC1.tar.gz Python User Distribution 2.0-RC1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=python-codec-2.0-RC1.tar.gz (File Details)]
+ The *user* distribution is a no-nonsense distribution that most people will want to download.
+ It contains:
+   * src directory with setup.py script to install
+   * The documentation (PDF)
+   * The examples
+   * README file to get you started if you don't like manuals
+
  * [http://rl-glue-ext.googlecode.com/files/python-codec-dev-2.0-RC1.tar.gz Python Developer Distribution 2.0-RC1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=python-codec-dev-2.0-RC1.tar.gz (File Details)]
+ The *dev* distribution includes everything from the user distribution, but also the source code and compile scripts for the manual.  Not much more, but that might change over time.
 
  These are both platform-independent RL-Glue codecs written in Python.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
 
@@ -34,4 +42,3 @@ For more information about the Python codec, and others, please visit the RL-Glu
 
 And the Python Codec Homepage:
 [http://glue.rl-community.org/Home/Extensions/python-codec]
-
