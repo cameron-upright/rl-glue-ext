@@ -6,4 +6,4 @@
   * [Matlab Matlab Codec]
   * [Lisp Lisp Codec]
  
-===[http://glue.rl-community.org Back to RL-Glue Homepage]===
+*[http://glue.rl-community.org Back to RL-Glue Homepage]*
