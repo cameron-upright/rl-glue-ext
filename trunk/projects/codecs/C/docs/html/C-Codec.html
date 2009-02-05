@@ -42,63 +42,65 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html61"
+<LI><A NAME="tex2html63"
   HREF="C-Codec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html62"
-  HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
-<LI><A NAME="tex2html63"
-  HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
 <LI><A NAME="tex2html64"
-  HREF="C-Codec.html#SECTION00023000000000000000">Installing the Codec</A>
+  HREF="C-Codec.html#SECTION00021000000000000000">Software Requirements</A>
 <LI><A NAME="tex2html65"
-  HREF="C-Codec.html#SECTION00024000000000000000">Uninstall</A>
+  HREF="C-Codec.html#SECTION00022000000000000000">Getting the Codec</A>
+<LI><A NAME="tex2html66"
+  HREF="C-Codec.html#SECTION00023000000000000000">Installing from a Binary Package</A>
+<LI><A NAME="tex2html67"
+  HREF="C-Codec.html#SECTION00024000000000000000">Installing From Source</A>
+<LI><A NAME="tex2html68"
+  HREF="C-Codec.html#SECTION00025000000000000000">Uninstall</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html66"
+<LI><A NAME="tex2html69"
   HREF="C-Codec.html#SECTION00030000000000000000">Sample Project</A>
 <UL>
-<LI><A NAME="tex2html67"
-  HREF="C-Codec.html#SECTION00031000000000000000">Skeleton Agent</A>
-<LI><A NAME="tex2html68"
-  HREF="C-Codec.html#SECTION00032000000000000000">Custom Flags for Custom Installs</A>
-<LI><A NAME="tex2html69"
-  HREF="C-Codec.html#SECTION00033000000000000000">Skeleton Environment</A>
 <LI><A NAME="tex2html70"
-  HREF="C-Codec.html#SECTION00034000000000000000">Skeleton Experiment</A>
+  HREF="C-Codec.html#SECTION00031000000000000000">Skeleton Agent</A>
 <LI><A NAME="tex2html71"
+  HREF="C-Codec.html#SECTION00032000000000000000">Custom Flags for Custom Installs</A>
+<LI><A NAME="tex2html72"
+  HREF="C-Codec.html#SECTION00033000000000000000">Skeleton Environment</A>
+<LI><A NAME="tex2html73"
+  HREF="C-Codec.html#SECTION00034000000000000000">Skeleton Experiment</A>
+<LI><A NAME="tex2html74"
   HREF="C-Codec.html#SECTION00035000000000000000">Gotchas!</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html72"
+<LI><A NAME="tex2html75"
   HREF="C-Codec.html#SECTION00040000000000000000">Putting it all together</A>
 <UL>
-<LI><A NAME="tex2html73"
+<LI><A NAME="tex2html76"
   HREF="C-Codec.html#SECTION00041000000000000000">Going Further - Mines Sarsa Example Project</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html74"
+<LI><A NAME="tex2html77"
   HREF="C-Codec.html#SECTION00050000000000000000">Codec Specification, Memory Allocation, Types, and Function Prototypes</A>
-<LI><A NAME="tex2html75"
+<LI><A NAME="tex2html78"
   HREF="C-Codec.html#SECTION00060000000000000000">Advanced Features</A>
 <UL>
-<LI><A NAME="tex2html76"
+<LI><A NAME="tex2html79"
   HREF="C-Codec.html#SECTION00061000000000000000">Connecting to Custom Hosts and Ports</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html77"
+<LI><A NAME="tex2html80"
   HREF="C-Codec.html#SECTION00070000000000000000">Changes and 2.x Backward Compatibility</A>
-<LI><A NAME="tex2html78"
+<LI><A NAME="tex2html81"
   HREF="C-Codec.html#SECTION00080000000000000000">Frequently Asked Questions</A>
 <UL>
-<LI><A NAME="tex2html79"
+<LI><A NAME="tex2html82"
   HREF="C-Codec.html#SECTION00081000000000000000">Where can I get more help?</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html80"
+<LI><A NAME="tex2html83"
   HREF="C-Codec.html#SECTION00090000000000000000">Credits and Acknowledgements</A>
 <UL>
-<LI><A NAME="tex2html81"
+<LI><A NAME="tex2html84"
   HREF="C-Codec.html#SECTION00091000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
@@ -113,14 +115,14 @@ This document describes how to use the C/C++ RL-Glue Codec, a software library t
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot258"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot260"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in C and/or C++.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot259"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot261"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -138,36 +140,47 @@ by this codec.  The RL-Glue 3.0 technical manual can be found in the <TT>docs</T
 Software Requirements</A>
 </H2>
 This project requires that RL-Glue has been installed on your computer.  It has no additional requirements beyond RL-Glue: nothing more exotic than a C compiler, Make, etc.  This codec uses a configure script that was created by GNU Autotools<A NAME="tex2html7"
-  HREF="#foot260"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html9"
-  HREF="#foot261"><SUP>4</SUP></A>). 
+  HREF="#foot262"><SUP>3</SUP></A>, so it should compile and run without problems on most *nix platforms (Unix, Linux, Mac OS X, Windows using CYGWIN<A NAME="tex2html9"
+  HREF="#foot263"><SUP>4</SUP></A>). 
 
 <P>
 
 <H2><A NAME="SECTION00022000000000000000">
 Getting the Codec</A>
 </H2>
-The codec can be downloaded either as a tarball or can be checked out of the subversion repository where it is hosted.
+You can get the codec a number of ways, including from source as a .tar.gz file, or as a binary distribution.
 
 <P>
-The tarball distribution can be found here:
+All of the official downloads of the C/C++ codec can be found here:
 <BR>
 <TT><A NAME="tex2html11"
-  HREF="http://code.google.com/p/rl-glue-ext/downloads/list">http://code.google.com/p/rl-glue-ext/downloads/list</A></TT>
+  HREF="http://code.google.com/p/rl-glue-ext/wiki/CandCPP">http://code.google.com/p/rl-glue-ext/wiki/CandCPP</A></TT>
 <P>
-To check the code out of subversion:
+You may also check the code out directly from the subversion:
 <BR>
 <TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C C-Codec</TT>
 
 <P>
 
 <H2><A NAME="SECTION00023000000000000000">
-Installing the Codec</A>
+Installing from a Binary Package</A>
 </H2>
-The codec package was made with autotools, which means that you shouldn't have to do much work to get it installed.  
+
+<H3><A NAME="SECTION00023100000000000000">
+Intel Mac OX 10.3+ Package</A>
+</H3>
+This distribution is an installer package bundled into a Mac Disk Image (.dmg).  This is a graphical installer application and should be fairly self explanatory. This distribution comes with an uninstall script that can be used to remove this codec from your system.
 
 <P>
 
-<H3><A NAME="SECTION00023100000000000000">
+<H2><A NAME="SECTION00024000000000000000">
+Installing From Source</A>
+</H2>
+The .tar.gz distribution of the codec was made with autotools, which means that you shouldn't have to do much work to get it installed.  
+
+<P>
+
+<H3><A NAME="SECTION00024100000000000000">
 Simple Codec Install</A>
 </H3>
 If you are working on your own machine, it is usually easiest to install the headers and libraries into <TT>/usr/local</TT>, which is the default installation location but requires <I>sudo</I> or <I>root</I> access.
@@ -185,7 +198,7 @@ Provided everything goes well, the headers have now been installed to <TT>/usr/l
 
 <P>
 
-<H3><A NAME="SECTION00023200000000000000">
+<H3><A NAME="SECTION00024200000000000000">
 Install Codec when RL-Glue is in a custom location</A>
 </H3>
 
@@ -212,7 +225,7 @@ If you installed RL-Glue to some place other than <TT>/usr/local</TT>, say <TT>/
 
 <P>
 
-<H3><A NAME="SECTION00023300000000000000">
+<H3><A NAME="SECTION00024300000000000000">
 Install Codec To Custom Location (without <I>root</I> access)</A>
 </H3>
 If you don't have <I>sudo</I> or <I>root</I> access on the target machine, you can install the codec in your home directory (or other directory you have access to).
@@ -233,14 +246,14 @@ Provided everything goes well, the headers and libraries have been respectively 
 
 <P>
 
-<H2><A NAME="SECTION00024000000000000000">
+<H2><A NAME="SECTION00025000000000000000">
 Uninstall</A>
 </H2>
 If you decide that you don't want the RL-Glue C codec on your machine anymore, you can easily uninstall it.  The procedures varies a tiny bit depending on if you installed it to the default location, or somewhere custom.
 
 <P>
 
-<H3><A NAME="SECTION00024100000000000000">
+<H3><A NAME="SECTION00025100000000000000">
 Codec Installed To Default Location</A>
 </H3>
 <PRE>
@@ -253,7 +266,7 @@ This will remove all of the headers and libraries from <TT>/usr/local</TT>.
 
 <P>
 
-<H3><A NAME="SECTION00024200000000000000">
+<H3><A NAME="SECTION00025200000000000000">
 Codec Installed To Custom Location</A>
 </H3>
 You'll need to make sure that either you haven't reconfigured the directory you downloaded from, or, if you removed/changed that already, you have to run configure again the exact same way as when you installed it.  For example:
@@ -677,7 +690,7 @@ is internally a two-dimensional, discrete grid world where the agent receives a 
 
 <P>
 The task specification string<A NAME="tex2html12"
-  HREF="#foot263"><SUP>5</SUP></A> is manually because there is not yet a task spec builder for C/C++. 
+  HREF="#foot265"><SUP>5</SUP></A> is manually because there is not yet a task spec builder for C/C++. 
 
 <P>
 
@@ -890,9 +903,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 495 $
+Revision Number: $Rev: 611 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2009-02-01 11:08:48 -0700 (Sun, 01 Feb 2009) $
+Last Updated   : $Date: 2009-02-04 21:40:40 -0700 (Wed, 04 Feb 2009) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.tex $
 </PRE>
 
@@ -916,34 +929,34 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>C-Codec.tex -split 0 -dir html -mkdir -title 'RL-Glue C/C++ Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2009-02-04
+The translation was initiated by Brian Tanner on 2009-02-05
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot258">... RL-Glue</A><A
+<DT><A NAME="foot260">... RL-Glue</A><A
  HREF="C-Codec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot259">... Apache-2.0</A><A
+<DT><A NAME="foot261">... Apache-2.0</A><A
  HREF="C-Codec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot260">... Autotools</A><A
+<DT><A NAME="foot262">... Autotools</A><A
  HREF="C-Codec.html#tex2html7"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html8"
   HREF="http://sources.redhat.com/autobook/">http://sources.redhat.com/autobook/</A></TT>
 
 </DD>
-<DT><A NAME="foot261">... CYGWIN</A><A
+<DT><A NAME="foot263">... CYGWIN</A><A
  HREF="C-Codec.html#tex2html9"><SUP>4</SUP></A></DT>
 <DD><TT><A NAME="tex2html10"
   HREF="http://www.cygwin.com/">http://www.cygwin.com/</A></TT>
 
 </DD>
-<DT><A NAME="foot263">... string</A><A
+<DT><A NAME="foot265">... string</A><A
  HREF="C-Codec.html#tex2html12"><SUP>5</SUP></A></DT>
 <DD><TT><A NAME="tex2html13"
   HREF="http://glue.rl-community.org/Home/rl-glue/task-spec-language">http://glue.rl-community.org/Home/rl-glue/task-spec-language</A></TT>
@@ -958,7 +971,7 @@ The translation was initiated by Brian Tanner on 2009-02-04
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2009-02-04
+2009-02-05
 </ADDRESS>
 </BODY>
 </HTML>
