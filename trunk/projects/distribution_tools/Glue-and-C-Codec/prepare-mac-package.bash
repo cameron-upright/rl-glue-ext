@@ -12,11 +12,21 @@ rm -Rf $IMAGEFOLDER
 mkdir $IMAGEFOLDER
 mkdir $IMAGEFOLDER/codec
 mkdir $IMAGEFOLDER/rl-glue
+
+#Copy the Docs into the root of the package
 cp codec-trunk/docs/*.pdf $IMAGEFOLDER/codec/
 cp -R codec-trunk/examples $IMAGEFOLDER/codec/
 
 cp rl-glue-trunk/docs/*.pdf $IMAGEFOLDER/rl-glue/
 cp -R rl-glue-trunk/examples $IMAGEFOLDER/rl-glue/
+
+#Make the uninstall script
+python build-rlglue-uninstall-script.py
+
+#Copy the uninstall command into the DMG
+cp uninstall-rlglue.command $IMAGEFOLDER/
+#Copy the uninstall python script too
+cp -R uninstall-resources $IMAGEFOLDER/
 
 rm -Rf $MACDIR/*.pkg
 rm $MACDIR/*.dmg
