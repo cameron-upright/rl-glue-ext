@@ -5,7 +5,7 @@
 === Available Downloads (only one is required)===
 
  * [http://rl-glue-ext.googlecode.com/files/java-codec-2.0.tar.gz Java User Distribution 2.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-2.0.tar.gz (File Details)]
- The *user* distribution is no-nonsense distribution that most people will want to download.  It contains:
+ The *user* distribution is a no-nonsense distribution that most people will want to download.  It contains:
    * Java codec compiled into a JAR file (with installer)
    * The documentation (PDF)
    * The examples
