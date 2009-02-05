@@ -68,11 +68,11 @@ Contents</A>
   HREF="MatlabCodec.html#SECTION00040000000000000000">Sample Project</A>
 <UL>
 <LI><A NAME="tex2html75"
-  HREF="MatlabCodec.html#SECTION00041000000000000000">Agents</A>
+  HREF="MatlabCodec.html#SECTION00041000000000000000">Skeleton Agent</A>
 <LI><A NAME="tex2html76"
-  HREF="MatlabCodec.html#SECTION00042000000000000000">Environments</A>
+  HREF="MatlabCodec.html#SECTION00042000000000000000">Skeleton Environment</A>
 <LI><A NAME="tex2html77"
-  HREF="MatlabCodec.html#SECTION00043000000000000000">Experiments</A>
+  HREF="MatlabCodec.html#SECTION00043000000000000000">Skeleton Experiment</A>
 <LI><A NAME="tex2html78"
   HREF="MatlabCodec.html#SECTION00044000000000000000">Putting it all together</A>
 <LI><A NAME="tex2html79"
@@ -244,14 +244,14 @@ The <TT>skeleton</TT> contains all of the bare-bones plumbing that is required t
 The <TT>mines-sarsa-sample</TT> contains a fully functional tabular Sarsa learning algorithm, a discrete-observation grid world problem, and an experiment program that can run these together and gather results.  More details below in Section <A HREF="#mines-sarsa-sample">3.5</A>.
 
 <P>
-In the following sections, we will describe the skeleton project.  Running and using the <TT>mines-sarsa-sample</TT> is analagous.
+In the following sections, we will describe the skeleton project.  Running and using the <TT>mines-sarsa-sample</TT> is analogous.
 
 <P>
 
 <H2><A NAME="SECTION00041000000000000000"></A>
 <A NAME="sec:agent"></A>
 <BR>
-Agents
+Skeleton Agent
 </H2>
 We have provided a skeleton agent with the codec that is a good starting point for agents that you may write in the future.
 It implements all the required functions and provides a good example of how create and run a simple agent.
@@ -320,7 +320,7 @@ Using this method, you can stop and examine what your agent is learning, and pot
 You will see something like:
 <PRE>
 	&gt;&gt; runAgent(theAgent)
-	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision: 444 $)
+	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision: 491 $)
 	    Connecting to rl_glue at host: localhost on port 4096
 </PRE>
 
@@ -344,7 +344,7 @@ Please open it up and take a look.
 <H2><A NAME="SECTION00042000000000000000"></A>
 <A NAME="sec:env"></A>
 <BR>
-Environments
+Skeleton Environment
 </H2>
 
 <P>
@@ -379,7 +379,7 @@ You can compile and run the environment like:
 <P>
 You will see something like:
 <PRE>
-	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision: 444 $)
+	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision: 491 $)
 	    Connecting to rl_glue at host: localhost on port 4096
 </PRE>
 
@@ -397,9 +397,9 @@ Please open it up and take a look.
 <P>
 
 <H2><A NAME="SECTION00043000000000000000">
-Experiments</A>
+Skeleton Experiment</A>
 </H2>
-We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
+We have provided a skeleton experiment with the codec that is a good starting point for experiments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
 pattern as the agent version (Section <A HREF="#sec:agent">3.1</A>).  This section will be less detailed because many ideas are similar or identical.
 
@@ -422,7 +422,7 @@ This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the
 You will see something like:
 <PRE>
 	Experiment starting up!
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 444 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 491 $)
 	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
 </PRE>
 
@@ -467,7 +467,7 @@ In the Matlab interpreter:
 </PRE>
 
 <P>
-If RL-Glue is not installed in the default location, you'll have to start the <TT>rl_glue</TT> executable server using it's full path (unless it's in your <TT>PATH</TT> environment variable):
+If RL-Glue is not installed in the default location, you'll have to start the <TT>rl_glue</TT> executable server using its full path (unless it's in your <TT>PATH</TT> environment variable):
 <PRE>
 	&gt;$ /path/to/rl-glue/bin/rl_glue &amp;
 </PRE>
@@ -477,7 +477,7 @@ In the Matlab window, you should see the following if it worked:
 <PRE>
 	&gt;&gt; skeleton_experiment()
 	Experiment starting up!
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 444 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 491 $)
 	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
 	    Experiment Codec Connected
 	RL_init called, the environment sent task spec: VERSION RL-Glue-3.0 PROBLEMTYPE episodic 
@@ -624,7 +624,7 @@ For example, the following code:
 <P>
 That command could give output like:
 <PRE>
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 444 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 491 $)
 	     Connecting to rl_glue at host: yahoo.ca on port 4097
 </PRE>
 
@@ -802,9 +802,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 402 $
+Revision Number: $Rev: 491 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2008-12-10 19:05:12 -0800 (Wed, 10 Dec 2008) $
+Last Updated   : $Date: 2009-01-31 16:38:56 -0700 (Sat, 31 Jan 2009) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab/docs/MatlabCodec.tex $
 </PRE>
 
@@ -828,7 +828,7 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>MatlabCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Matlab Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2009-01-31
+The translation was initiated by Brian Tanner on 2009-02-04
 <BR><HR><H4>Footnotes</H4>
 <DL>
 <DT><A NAME="foot216">... RL-Glue</A><A
@@ -870,7 +870,7 @@ The translation was initiated by Brian Tanner on 2009-01-31
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2009-01-31
+2009-02-04
 </ADDRESS>
 </BODY>
 </HTML>

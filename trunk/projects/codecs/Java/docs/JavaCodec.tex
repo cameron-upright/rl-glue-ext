@@ -124,7 +124,7 @@ The pertinent file is:
 
 This agent does not learn anything and randomly chooses integer action $0$ or $1$.  
 
-You can compile and run the agent like:
+You can compile and run the agent by typing:
 \begin{verbatim}
 	>$ cd examples/skeleton
 	>$ javac SkeletonAgent.java
@@ -158,7 +158,7 @@ The pertinent file is:
 This environment is episodic, with 21 states, labeled $\{0, 1,\ldots,19,20\}$. States $\{0, 20\}$ are terminal and return rewards of $\{-1, +1\}$ respectively.  The other states return reward of $0$.
 There are two actions, $\{0, 1\}$.  Action $0$ decrements the state number, and action $1$ increments it. The environment starts in state 10.
 
-You can compile and run the environment like:
+You can compile and run the environment by typing:
 \begin{verbatim}
 	>$ cd examples/skeleton
 	>$ javac SkeletonEnvironment.java
@@ -180,7 +180,7 @@ The Skeleton environment is very simple and well documented, so we won't spend a
 Please open it up and take a look.
 
 \subsection{Skeleton Experiment}
-We have provided a skeleton experiment with the codec that is a good starting point for experiment that you may write in the future.
+We have provided a skeleton experiment with the codec that is a good starting point for experiments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
 pattern as the agent version (Section \ref{sec:agent}).  This section will be less detailed because many ideas are similar or identical.
 
@@ -225,7 +225,7 @@ directory if you have them all built, and RL-Glue installed in the default locat
 	>$ java SkeletonExperiment
 \end{verbatim}
 
-If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using it's full path (unless it's in your \texttt{PATH} environment variable):
+If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using its full path (unless it's in your \texttt{PATH} environment variable):
 \begin{verbatim}
 	>$ /path/to/rl-glue/bin/rl_glue &
 \end{verbatim}
