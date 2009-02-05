@@ -25,7 +25,7 @@ python ../googlecode_upload.py -s "RL-Glue C/C++ Codec $CODECVERSION" -p rl-glue
 
 # Update the Wiki
 python substitute-glue-strings.py $GLUEVERSION $GLUENAME $MACNAME
-python substitute-codec-strings.py $CODECVERSION $CODECNAME $MACNAME
+python substitute-codec-strings.py $CODECVERSION $CODECNAME $MACNAME $GLUEVERSION
 cp RLGlueCore.wiki ../wiki/core.new
 cp CandCPP.wiki ../wiki/candcpp.new
 cd ../wiki

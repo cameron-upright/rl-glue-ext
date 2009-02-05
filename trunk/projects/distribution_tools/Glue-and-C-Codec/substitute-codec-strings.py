@@ -5,6 +5,8 @@ theVersion=sys.argv[1]
 uploadedDevFileBase=sys.argv[2]
 uploadedDevFileName=uploadedDevFileBase+".tar.gz"
 uploadedMacFileBase=sys.argv[3]
+glueVersion=sys.argv[4]
+
 
 devLink="http://rl-glue-ext.googlecode.com/files/"+uploadedDevFileName
 devDetailsLink="http://code.google.com/p/rl-glue-ext/downloads/detail?name="+uploadedDevFileName
@@ -20,6 +22,7 @@ subs['CODEC-DEV-VERSION']=theVersion
 subs['CODEC-DEV-LINK']=devLink
 subs['CODEC-DEV-DETAILS-LINK']=devDetailsLink
 subs['CODEC-DEV-FILE-BASE']=uploadedDevFileBase
+subs['GLUE-DEV-VERSION']=glueVersion
 subs['MAC-LINK']=macLink
 subs['MAC-DETAILS-LINK']=macDetailsLink
 f = file(fileName)
