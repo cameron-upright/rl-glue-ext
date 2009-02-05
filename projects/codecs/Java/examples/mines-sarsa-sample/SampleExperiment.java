@@ -127,7 +127,7 @@ public class SampleExperiment {
         }
 
         System.out.println("The results of this experiment have been saved to a" +
-                " comma-separated value file called results.csv to you may open with Matlab, Octave, Excel, etc.");
+                " comma-separated value file called results.csv that you may open with Matlab, Octave, Excel, etc.");
 
         saveResultsToCSVFile(results, "results.csv");
 
