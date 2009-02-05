@@ -30,5 +30,5 @@ taskSpec=RLGlue.RL_init()
 tester.check_fail(taskSpec!="sample task spec")
 
 print tester.get_summary()
-exit(tester.getFailCount())
+sys.exit(tester.getFailCount())
 	

@@ -78,6 +78,6 @@ for ts in f:
 f.close()
 
 print tester.get_summary()
-exit(tester.getFailCount())
+sys.exit(tester.getFailCount())
 
 

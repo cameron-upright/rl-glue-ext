@@ -59,5 +59,5 @@ tester.check_fail("4555555555555555555555555555555555555555555555555555555565555
 
 
 print tester.get_summary()
-exit(tester.getFailCount())
+sys.exit(tester.getFailCount())
 
