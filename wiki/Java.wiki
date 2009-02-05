@@ -6,7 +6,7 @@
 
  * [http://rl-glue-ext.googlecode.com/files/java-codec-2.0.tar.gz Java User Distribution 2.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-2.0.tar.gz (File Details)]
 
- The *user* distribution is no-nonsense distribution that most people will want to download.  It contains:
+   The *user* distribution is no-nonsense distribution that most people will want to download.  It contains:
    * Java codec compiled into a JAR file (with installer)
    * The documentation (PDF)
    * The examples
@@ -14,7 +14,7 @@
 
  * [http://rl-glue-ext.googlecode.com/files/java-codec-dev-2.0.tar.gz Java Developer Distribution 2.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-dev-2.0.tar.gz (File Details)]
 
- The *dev* distribution is almost a snapshot of the developement directory of this project.  It includes all of the source code, the ant compile scripts, tests, javadocs, tests, etc. 
+   The *dev* distribution is almost a snapshot of the development directory of this project.  It includes all of the source code, the ant compile scripts, tests, javadocs, tests, etc. 
 
  These are both platform-independent RL-Glue codecs written in Java.  Java 1.5 or higher is required to use them.  Both distributions include a pre-compiled JAR file that has all of the Java classes already built and packaged.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
 
