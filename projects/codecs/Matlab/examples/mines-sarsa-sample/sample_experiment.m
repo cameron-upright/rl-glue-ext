@@ -47,6 +47,12 @@ function sample_experiment()
 %   is a bug.  If you need to, and are able to ctrl-c to abort this
 %   experiment, remember to call disconnectGlue()
  
+	fprintf(1,'Starting Sample Experiment.  Remember that currently the Matlab codec can only run\n');
+	fprintf(1,'ONE agent, environment, and experiment per Matlab instance.  To connect this experiment\n');
+	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
+	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
+	fprintf(1,'following URL and click the star to show your interest:\n');
+	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
  
 	RL_init();
     fprintf(1,'Starting offline demo\n----------------------------\nWill alternate learning for 25 episodes, then freeze policy and evaluate for 10 episodes.\n\n');
