@@ -1,28 +1,26 @@
 /* 
-* Copyright (C) 2007, Brian Tanner
-* 
+ * Copyright (C) 2007, Brian Tanner
+ *
 http://rl-glue-ext.googlecode.com/
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-* 
-*  $Revision$
-*  $Date$
-*  $Author$
-*  $HeadURL$
-* 
-*/
-
-
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ *
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
+ *
+ */
 package org.rlcommunity.rlglue.codec.network;
 
 import java.io.IOException;
@@ -32,197 +30,207 @@ import org.rlcommunity.rlglue.codec.AgentInterface;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 
-public class ClientAgent 
-{
-	protected static final String kUnknownMessage = "Unknown Message: ";
-	protected Network network;
-	protected AgentInterface agent;
-	
-	protected boolean killedFromLocalProcess=false;
-        
-        private boolean debug=false;
-	
-	/**
-	*If you are using ClientAgent in a local context (like from Matlab)
-	* this allows us to kill the agent without quitting matlab 
-	**/
-	public void killProcess(){
-		killedFromLocalProcess=true;
-	}
+public class ClientAgent {
 
-	public ClientAgent(AgentInterface agent) 
-	{
-		this.agent = agent;
-                assert agent!=null : "agent null in ClientAgent constructor";
-		this.network = new Network();
-	}
+    protected static final String kUnknownMessage = "Unknown Message: ";
+    protected Network network;
+    protected AgentInterface agent;
+    protected boolean killedFromLocalProcess = false;
+    private boolean debug = false;
 
-	protected void onAgentInit() throws UnsupportedEncodingException
-	{
-		String taskSpec = network.getString();
+    /**
+     *If you are using ClientAgent in a local context (like from Matlab)
+     * this allows us to kill the agent without quitting matlab
+     **/
+    public void killProcess() {
+        killedFromLocalProcess = true;
+    }
 
-		agent.agent_init(taskSpec);
+    public ClientAgent(AgentInterface agent) {
+        this.agent = agent;
+        assert agent != null : "agent null in ClientAgent constructor";
+        this.network = new Network();
+    }
 
-		network.clearSendBuffer();
-		network.putInt(Network.kAgentInit);
-                //BTANNER: Sept 16 2008.. why are we putting this here?
-                //OH, it's the size!  Ok.  I think.
-		network.putInt(0); // No data following this header
-	}
+    protected void onAgentInit() throws UnsupportedEncodingException {
+        String taskSpec = network.getString();
 
-	protected void onAgentStart()
-	{
-            if(debug)System.out.println("\tonAgentStart()");
-		Observation observation = network.getObservation();
-            if(debug)System.out.println("\t\tgot observation");
-		Action action = agent.agent_start(observation);
-            if(debug)System.out.println("\t\tgot action");
+        agent.agent_init(taskSpec);
 
-		int size = Network.sizeOf(action); 
+        network.clearSendBuffer();
+        network.putInt(Network.kAgentInit);
+        //BTANNER: Sept 16 2008.. why are we putting this here?
+        //OH, it's the size!  Ok.  I think.
+        network.putInt(0); // No data following this header
+    }
 
-		network.clearSendBuffer();
-		network.putInt(Network.kAgentStart);
-		network.putInt(size);
-		network.putAction(action);
-	}
+    protected void onAgentStart() {
+        if (debug) {
+            System.out.println("\tonAgentStart()");
+        }
+        Observation observation = network.getObservation();
+        if (debug) {
+            System.out.println("\t\tgot observation");
+        }
+        Action action = agent.agent_start(observation);
+        if (debug) {
+            System.out.println("\t\tgot action");
+        }
 
-	protected void onAgentStep()
-	{
-		double reward = network.getDouble();
-		Observation observation = network.getObservation();
-		Action action = agent.agent_step(reward, observation);
+        int size = Network.sizeOf(action);
 
-		int size = Network.sizeOf(action); 
-		network.clearSendBuffer();
-		network.putInt(Network.kAgentStep);
-		network.putInt(size);
-		network.putAction(action);
-	}
+        network.clearSendBuffer();
+        network.putInt(Network.kAgentStart);
+        network.putInt(size);
+        network.putAction(action);
+    }
 
-	protected void onAgentEnd()
-	{
-		//int size = network.getInt();
-		double reward = network.getDouble();
-		
-		agent.agent_end(reward);
+    protected void onAgentStep() {
+        double reward = network.getDouble();
+        Observation observation = network.getObservation();
+        Action action = agent.agent_step(reward, observation);
 
-		network.clearSendBuffer();
-		network.putInt(Network.kAgentEnd);
-		network.putInt(0); // No data in this packet
-	}
+        int size = Network.sizeOf(action);
+        network.clearSendBuffer();
+        network.putInt(Network.kAgentStep);
+        network.putInt(size);
+        network.putAction(action);
+    }
 
-	protected void onAgentCleanup()
-	{
-		agent.agent_cleanup();
+    protected void onAgentEnd() {
+        //int size = network.getInt();
+        double reward = network.getDouble();
 
-		network.clearSendBuffer();
-		network.putInt(Network.kAgentCleanup);
-		network.putInt(0); // No data in this packet
-	}
+        agent.agent_end(reward);
 
+        network.clearSendBuffer();
+        network.putInt(Network.kAgentEnd);
+        network.putInt(0); // No data in this packet
+    }
 
-	protected void onAgentMessage() throws UnsupportedEncodingException
-	{
-		String message = network.getString();
-		String reply = agent.agent_message(message);
-		
-		network.clearSendBuffer();
-		network.putInt(Network.kAgentMessage);
-		network.putInt(Network.sizeOf(reply));
-		network.putString(reply);
-	}
+    protected void onAgentCleanup() {
+        agent.agent_cleanup();
 
-        /**
-         * Called by agentloader.
-         * @param host
-         * @param port
-         * @param timeout
-         * @throws java.lang.Exception
-         */
-	public void connect(String host, int port, int timeout) throws Exception
-	{	
-		network.connect(host, port, timeout);
-            	network.clearSendBuffer();
-		network.putInt(Network.kAgentConnection);
-		network.putInt(0); // No body to this packet
-		network.flipSendBuffer();
-		network.send();
-	}
+        network.clearSendBuffer();
+        network.putInt(Network.kAgentCleanup);
+        network.putInt(0); // No data in this packet
+    }
 
-	public void close() throws IOException
-	{
-		network.close();
-	}
+    protected void onAgentMessage() throws UnsupportedEncodingException {
+        String message = network.getString();
+        String reply = agent.agent_message(message);
 
-	public void runAgentEventLoop() throws Exception
-	{		
-		int agentState = 0;
-		int dataSize = 0;
-		int recvSize = 0;
-		int remaining = 0;
-		
-		do {
-			
-			network.clearRecvBuffer();
+        network.clearSendBuffer();
+        network.putInt(Network.kAgentMessage);
+        network.putInt(Network.sizeOf(reply));
+        network.putString(reply);
+    }
 
-			recvSize = network.recv(8) - 8; // We may have received the header and part of the payload
-											// We need to keep track of how much of the payload was recv'd
+    /**
+     * Called by agentloader.
+     * @param host
+     * @param port
+     * @param timeout
+     * @throws java.lang.Exception
+     */
+    public void connect(String host, int port, int timeout) throws Exception {
+        network.connect(host, port, timeout);
+        network.clearSendBuffer();
+        network.putInt(Network.kAgentConnection);
+        network.putInt(0); // No body to this packet
+        network.flipSendBuffer();
+        network.send();
+    }
 
-			agentState = network.getInt(0);
-			dataSize = network.getInt(Network.kIntSize);
-			
-			remaining = dataSize - recvSize;
-			if (remaining < 0){
-				System.out.println("Remaining was less than 0!");
-				remaining = 0;
-			}
-			
+    public void close() throws IOException {
+        network.close();
+    }
 
-			int amountReceived = network.recv(remaining);			
+    public void runAgentEventLoop() throws Exception {
+        int agentState = 0;
+        int dataSize = 0;
+        int recvSize = 0;
+        int remaining = 0;
 
-			network.flipRecvBuffer();
-			
-			// We have already received the header, now we need to discard it.
-			network.getInt();
-			network.getInt();
+        do {
+            System.out.println("Top of agent loop -- about to clear recvbuffer");
 
-			switch(agentState) {
-			case Network.kAgentInit:
-				onAgentInit();
-				break;
+            network.clearRecvBuffer();
 
-			case Network.kAgentStart:
-				onAgentStart();
-				break;
+            while (!network.hasDataWaiting()) {
+                System.out.println("In agent event loop waiting for data, none yet.");
+                Thread.sleep(500);
+            }
+            System.out.println("Has data waiting is: " + network.hasDataWaiting());
 
-			case Network.kAgentStep:
-				onAgentStep();
-				break;
+            System.out.println("About to receive");
 
-			case Network.kAgentEnd:
-				onAgentEnd();
-				break;
+            try {
+                recvSize = network.recv(8) - 8; // We may have received the header and part of the payload
+                // We need to keep track of how much of the payload was recv'd
 
-			case Network.kAgentCleanup:
-				onAgentCleanup();
-				break;
+                System.out.println("recvSize is: " + recvSize);
+
+                agentState = network.getInt(0);
+                dataSize = network.getInt(Network.kIntSize);
+
+                remaining = dataSize - recvSize;
+                if (remaining < 0) {
+                    System.out.println("Remaining was less than 0!");
+                    remaining = 0;
+                }
+            } catch (RLGlueDisconnectException e) {
+                System.err.println(e.getMessage());
+                System.exit(1);
+            }
 
 
-			case Network.kAgentMessage:
-				onAgentMessage();
-				break;
+            int amountReceived = network.recv(remaining);
 
-			case Network.kRLTerm:
-				break;
+            network.flipRecvBuffer();
 
-			default:
-				System.err.println(kUnknownMessage + agentState);
-				System.exit(1);
-			break;
-			};
+            // We have already received the header, now we need to discard it.
+            network.getInt();
+            network.getInt();
 
-			network.flipSendBuffer();
-			network.send();
-		} while (agentState != Network.kRLTerm && !killedFromLocalProcess);
-	}
+            switch (agentState) {
+                case Network.kAgentInit:
+                    onAgentInit();
+                    break;
+
+                case Network.kAgentStart:
+                    onAgentStart();
+                    break;
+
+                case Network.kAgentStep:
+                    onAgentStep();
+                    break;
+
+                case Network.kAgentEnd:
+                    onAgentEnd();
+                    break;
+
+                case Network.kAgentCleanup:
+                    onAgentCleanup();
+                    break;
+
+
+                case Network.kAgentMessage:
+                    onAgentMessage();
+                    break;
+
+                case Network.kRLTerm:
+                    break;
+
+                default:
+                    System.err.println(kUnknownMessage + agentState);
+                    System.exit(1);
+                    break;
+            }
+            ;
+
+            network.flipSendBuffer();
+            network.send();
+        } while (agentState != Network.kRLTerm && !killedFromLocalProcess);
+    }
 }

@@ -71,7 +71,6 @@ public class Network {
     public static final int kRLAgentStart = 38;
     public static final int kRLAgentStep = 39;
     public static final int kRLAgentEnd = 40;
-
     public static final String kDefaultHost = "127.0.0.1";
     public static final int kDefaultPort = 4096;
     public static final int kRetryTimeout = 2;
@@ -80,8 +79,8 @@ public class Network {
     protected static final int kDoubleSize = 8;
     protected static final int kCharSize = 1;
     protected SocketChannel socketChannel;
-    protected ByteBuffer recvBuffer;
-    protected ByteBuffer sendBuffer;
+    private ByteBuffer recvBuffer;
+    private ByteBuffer sendBuffer;
     private boolean debug = false;
 
     public Network() {
@@ -90,13 +89,24 @@ public class Network {
     }
 
     public void connect(String host, int port, int retryTimeout) {
+        connect(host, port, retryTimeout, true);
+    }
+
+    /**
+     * Support for non-blocking.  Kinks not worked out yet though, don't set it to false.
+     * @param host
+     * @param port
+     * @param retryTimeout
+     * @param blocking
+     */
+    public void connect(String host, int port, int retryTimeout, boolean blocking) {
         boolean didConnect = false;
 
         while (!didConnect) {
             try {
                 InetSocketAddress address = new InetSocketAddress(host, port);
                 socketChannel = SocketChannel.open();
-                socketChannel.configureBlocking(true);
+                socketChannel.configureBlocking(blocking);
                 socketChannel.connect(address);
                 didConnect = true;
             } catch (IOException ioException) {
@@ -108,6 +118,11 @@ public class Network {
         }
     }
 
+    public boolean hasDataWaiting() {
+        System.out.println("Remaining is apparently: " + recvBuffer.remaining());
+        return recvBuffer.hasRemaining();
+    }
+
     public void close() throws IOException {
         socketChannel.close();
     }
@@ -116,14 +131,49 @@ public class Network {
         return socketChannel.write(sendBuffer);
     }
 
+    /**
+     *
+     * The below is all a lie.  I've gone back to only using blocking, so the changes
+     * here should not affect anything.
+     * 
+     * This method has been updated. It will return 0 if there is no data available.
+     * The Socket has been changed (Feb 7 2009) to be NON-BLOCKING.  So, it is possible
+     * that if there is no data available (for example, other components have not yet
+     * connected) then recv will return 0.  If recv gets ANYTHING when it first tries,
+     * then it WILL continue and poll until it gets all the data it was asked for.
+     *
+     * I am willing to do this because recv is only called directly 3 times in the entire
+     * code base, all of the other times people read right from the buffer, which recv should
+     * have filled if it didn't return 0.
+     *
+     * It also will not throw a RLGlueDisconnectException if it socketChannel.read returns
+     * -1 before size bytes have been read.  This is indicative that the other end of the
+     * socket is closed (IE, RL-Glue was quit or crashed).
+     * @param size
+     * @return
+     * @throws java.io.IOException
+     */
     public int recv(int size) throws IOException {
         this.ensureRecvCapacityRemains(size);
 
-        int recvSize = 0;
-        while (recvSize < size) {
-            recvSize += socketChannel.read(recvBuffer);
+        int recvTotal = 0;
+        while (recvTotal < size) {
+            int recvSize = 0;
+            recvSize = socketChannel.read(recvBuffer);
+            if (recvSize == -1) {
+                close();
+                throw new RLGlueDisconnectException("ERROR: Java Codec was expecting read: " + size + " bytes but only received: " + recvTotal + ".\n\tRL-Glue probably closed the connection.");
+            } else {
+                recvTotal += recvSize;
+            }
+
+            if(recvTotal==0){
+                //This MUST be the first iteration of the loop because we return
+                //if we receive 0 bytes on the first read.
+                return 0;
+            }
         }
-        return recvSize;
+        return recvTotal;
     }
 
     public void clearSendBuffer() {
