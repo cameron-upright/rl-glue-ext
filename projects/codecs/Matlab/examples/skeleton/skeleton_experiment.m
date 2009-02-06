@@ -21,6 +21,7 @@
 %  $HeadURL$
 %
 function skeleton_experiment()
+    	taskSpec = RL_init();
         global whichEpisode;
         whichEpisode = 0;
 

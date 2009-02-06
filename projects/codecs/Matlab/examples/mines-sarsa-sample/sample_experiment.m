@@ -48,9 +48,9 @@ function sample_experiment()
 %   experiment, remember to call disconnectGlue()
  
  
+	RL_init();
     fprintf(1,'Starting offline demo\n----------------------------\nWill alternate learning for 25 episodes, then freeze policy and evaluate for 10 episodes.\n\n');
 	fprintf(1,'After Episode\tMean Return\tStandard Deviation\n-------------------------------------------------------------------------\n');
-	RL_init();
 	offline_demo();
 	
 	

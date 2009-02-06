@@ -20,11 +20,18 @@
 %   $Author$
 %  $HeadURL$
 %
+%
+%NOTE: Because checkForJavaCodec might call javaddpath, which calls
+%clear('java'), we have to declare p__rlglueStruct as global BEFORE and
+%AFTER checkForJavaCodec.  Sometimes I hate matlab.  Well, usually.
 function forceConnection()
     global p__rlglueStruct;
            
     if ~isfield(p__rlglueStruct,'network')
+		%NOTE: If the java package isn't in your path already, this WILL delete all your globals
+		%because it calls javaddpath which calls clear('java')
 	    checkForJavaCodec();
+        global p__rlglueStruct;
         p__rlglueStruct.network = org.rlcommunity.rlglue.codec.network.Network;
 
 
