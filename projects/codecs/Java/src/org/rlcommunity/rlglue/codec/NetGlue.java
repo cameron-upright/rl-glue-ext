@@ -26,6 +26,7 @@ package org.rlcommunity.rlglue.codec;
 import java.io.IOException;
 import java.net.InetAddress;
 import org.rlcommunity.rlglue.codec.network.Network;
+import org.rlcommunity.rlglue.codec.network.RLGlueDisconnectException;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Observation_action;
@@ -257,14 +258,22 @@ public class NetGlue implements RLGlueInterface {
         }
     }
 
+    /**
+     * This method is called by the experiment program codec after sending something.
+     * February 9 2009 :: I am making it robust to non-blocking network.recv.
+     * @param state
+     * @throws java.io.IOException
+     */
     private synchronized void doStandardRecv(int state) throws IOException {
         network.clearRecvBuffer();
+        try{
 
-        int recvSize = network.recv(8) - 8;
+        int actualRecvSize=network.recv(8);
+        int recvSizeWithoutHeader = actualRecvSize-8;
 
         int glueState = network.getInt(0);
         int dataSize = network.getInt(Network.kIntSize);
-        int remaining = dataSize - recvSize;
+        int remaining = dataSize - recvSizeWithoutHeader;
 
         if (remaining < 0) {
             remaining = 0;
@@ -279,6 +288,10 @@ public class NetGlue implements RLGlueInterface {
 
         if (glueState != state) {
             System.err.println("Not synched with server. glueState = " + glueState + " but should be " + state);
+            System.exit(1);
+        }
+        }catch(RLGlueDisconnectException e){
+            System.err.println(e.getMessage());
             System.exit(1);
         }
     }
