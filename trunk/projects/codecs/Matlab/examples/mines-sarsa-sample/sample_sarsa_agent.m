@@ -39,6 +39,13 @@ function theAgent=sample_sarsa_agent()
     theAgent.agent_end=@sarsa_agent_end;
     theAgent.agent_cleanup=@sarsa_agent_cleanup;
     theAgent.agent_message=@sarsa_agent_message;
+
+	fprintf(1,'Sample Agent.  Remember that currently the Matlab codec can only run\n');
+	fprintf(1,'ONE agent, environment, and experiment per Matlab instance.  To connect this agent\n');
+	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
+	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
+	fprintf(1,'following URL and click the star to show your interest:\n');
+	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
 end
 
 % This is a very simple Sarsa agent for discrete-action, discrete-state
@@ -49,7 +56,8 @@ end
 % could store them just as ints.
 % @author Brian Tanner
 function sarsa_agent_init(taskSpecJavaString)
-global sarsa_vars;
+	
+	global sarsa_vars;
     sarsa_vars.policyFrozen=false;
     sarsa_vars.exploringFrozen=false;
     sarsa_vars.epsilon=.1;

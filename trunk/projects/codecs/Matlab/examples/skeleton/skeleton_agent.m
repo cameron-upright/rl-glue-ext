@@ -27,9 +27,17 @@ function theAgent=skeleton_agent()
     theAgent.agent_end=@skeleton_agent_end;
     theAgent.agent_cleanup=@skeleton_agent_cleanup;
     theAgent.agent_message=@skeleton_agent_message;
+
+	fprintf(1,'Sample Agent.  Remember that currently the Matlab codec can only run\n');
+	fprintf(1,'ONE agent, environment, and experiment per Matlab instance.  To connect this agen\n');
+	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
+	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
+	fprintf(1,'following URL and click the star to show your interest:\n');
+	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
 end
 
 function skeleton_agent_init(taskSpec)
+
 end    
 
 function theAction=skeleton_agent_start(theObservation)
