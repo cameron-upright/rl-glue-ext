@@ -22,10 +22,16 @@
 %
 function doCallWithNoParams(state)
     global p__rlglueStruct;
-
+    try
 		p__rlglueStruct.network.clearSendBuffer();
 		p__rlglueStruct.network.putInt(state);
 		p__rlglueStruct.network.putInt(0);
 		p__rlglueStruct.network.flipSendBuffer();
 		p__rlglueStruct.network.send();
+    catch JavaException
+        fprintf(1,'Java threw an exception when trying to do your Experiment command.\n');
+        fprintf(1,'Maybe you forgot to call disconnectGlue() after your last Experiment crashed?\n');
+        fprintf(1,'I have taken the liberty to call it for you.  Try your experiment again.\n');
+        disconnectGlue();
+    end
 end
