@@ -21,6 +21,8 @@
 %  $HeadURL$
 %
 function connectAgent(theAgent)
+	%NOTE: If the java package isn't in your path already, this WILL delete all your globals
+	%because it calls javaddpath which calls clear('java')
     checkForJavaCodec();
 
     global p__rlglueAgentStruct;
