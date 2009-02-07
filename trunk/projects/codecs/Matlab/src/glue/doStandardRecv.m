@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -20,32 +20,46 @@
 %   $Author$
 %  $HeadURL$
 %
-function doStandardRecv(state)
-    global p__rlglueStruct;
-		p__rlglueStruct.network.clearRecvBuffer();
-		
-		recvSize = p__rlglueStruct.network.recv(8) - 8;
+%This is a non-blocking method.  It will return true if it got some data,
+%false otherwise.
+function didSomething=doStandardRecv(state)
+global p__rlglueStruct;
+    didSomething=false;
+    p__rlglueStruct.network.clearRecvBuffer();
 
-		glueState = p__rlglueStruct.network.getInt(0);
-		dataSize = p__rlglueStruct.network.getInt(org.rlcommunity.rlglue.codec.network.Network.kIntSize);
-		remaining = dataSize - recvSize;
-
-		if remaining < 0
-			remaining = 0;
-        end
-		
-		remainingReceived=p__rlglueStruct.network.recv(remaining);
-
-		p__rlglueStruct.network.flipRecvBuffer();	
-		
-		% Discard the header - we should have a more elegant method for doing this.
-		p__rlglueStruct.network.getInt();
-		p__rlglueStruct.network.getInt();
-		
-		if glueState ~= state
-			fprintf(2,'Not synched with server. glueState = %d but should be %d\n',glueState,state);
-            exit(1);
-        end
+    
+    actualReceiveSize=p__rlglueStruct.network.recvNonBlock(8);
+    
+    if(actualReceiveSize>0)
+        didSomething=true;
+    else
+        return;
     end
+    
+    recvSize = actualReceiveSize - 8; %// We may have received the header and part of the payload
+                                    %// We need to keep track of how much
+                                    %of the payload was recv'd
+
+    glueState = p__rlglueStruct.network.getInt(0);
+    dataSize = p__rlglueStruct.network.getInt(org.rlcommunity.rlglue.codec.network.Network.kIntSize);
+    remaining = dataSize - recvSize;
+
+    if remaining < 0
+        remaining = 0;
+    end
+
+    remainingReceived=p__rlglueStruct.network.recv(remaining);
+
+    p__rlglueStruct.network.flipRecvBuffer();	
+
+    % Discard the header - we should have a more elegant method for doing this.
+    p__rlglueStruct.network.getInt();
+    p__rlglueStruct.network.getInt();
+
+    if glueState ~= state
+        errormessage=sprintf('Not synched with server. glueState = %d but should be %d\n',glueState,state);
+		error(errormessage,'gluestaterror');
+    end
+end
         
        

@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -20,14 +20,18 @@
 %   $Author$
 %  $HeadURL$
 %
-function skeleton_experiment()
-	fprintf(1,'Starting Sample Experiment.  Remember that currently the Matlab codec can only run\n');
-	fprintf(1,'ONE agent or ONE environment or ONE experiment per Matlab instance.  To connect this experiment\n');
-	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
-	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
-	fprintf(1,'following URL and click the star to show your interest:\n');
-	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
+%To use this experiment with the rest of the project together
+%use the runAllTogether Function.
 
+%TO USE THIS EXPERIMENT ON ITS OWN
+%order doesn't matter
+%   -  Start the rl_glue executable socket server on your computer
+%   -  Run the skeleton_agent and skeleton_environment from any
+%    codec (Python, Java, C, Lisp should all be fine)
+%   -  Execute this skeleton_experiment() function
+%   NOTE: Type CTRL-C to abort the connection.
+
+function skeleton_experiment()
     	taskSpec = RL_init();
         global whichEpisode;
         whichEpisode = 0;
@@ -43,7 +47,7 @@ function skeleton_experiment()
         fprintf(1,'Agent responded to \''what is your name?\'' with: %s\n',char(responseMessage));
 
         responseMessage = RL_agent_message('If at first you don\''t succeed; call it version 1.0');
-        fprintf(1,'Agent responded to \''If at first you do\''t succeed; call it version 1.0  \'' with: %s\n',char(responseMessage));
+        fprintf(1,'Agent responded to \''If at first you don\''t succeed; call it version 1.0  \'' with: %s\n',char(responseMessage));
 
         responseMessage = RL_env_message('what is your name?');
         fprintf(1,'Environment responded to \''what is your name?\'' with: %s\n',char(responseMessage));

@@ -20,8 +20,15 @@
 %   $Author$
 %  $HeadURL$
 %
-function RL_set_port(thePort)
-    global p__rlglueSettings;
-    
-    p__rlglueSettings.port=thePort;
+%If we are running a mult-experiment, this function can be trusted to 
+%check if an agent is involved, and block until the agent acts.
+function ensureAgentExecutesIfNecessary()
+global p__rlglueSettings;
+
+    if(p__rlglueSettings.hasAgent)
+        agentDidSomething=false;
+        while ~agentDidSomething
+              [agentShouldQuit,agentDidSomething]=runAgentLoop();
+        end
+    end
 end

@@ -20,8 +20,14 @@
 %   $Author$
 %  $HeadURL$
 %
-function RL_set_port(thePort)
-    global p__rlglueSettings;
+%This function is used when we want to block on receiving data for the
+%experiment program.
+function forceStandardRecv(state)
+    didSomething=false;
     
-    p__rlglueSettings.port=thePort;
+    while ~didSomething
+        didSomething=doStandardRecv(state);
+    end
 end
+        
+       

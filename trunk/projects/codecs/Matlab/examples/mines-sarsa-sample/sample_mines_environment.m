@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License');
 %  you may not use this file except in compliance with the License.
@@ -21,8 +21,10 @@
 %  $HeadURL$
 %
 
-%
-% TO USE THIS Environment [order doesn't matter]
+%To use this Environment with the rest of the example together
+%use the runAllTogether fnction.
+
+% TO USE THIS Environment on its own[order doesn't matter]
 %   -  Start the rl_glue executable socket server on your computer
 %   -  Run the SampleSarsaAgent and SampleExperiment from a
 %   different codec (Python, Java, C, Lisp should all be fine)
@@ -39,13 +41,6 @@ function theEnvironment=sample_mines_environment()
 	theEnvironment.env_step=@mines_step;
 	theEnvironment.env_cleanup=@mines_cleanup;
 	theEnvironment.env_message=@mines_message;
-
-	fprintf(1,'Sample Environment.  Remember that currently the Matlab codec can only run\n');
-	fprintf(1,'ONE agent or ONE environment or ONE experiment per Matlab instance.  To connect this environment\n');
-	fprintf(1,'To anything you will need to run them in a separate Matlab instance or using a different codec.\n');
-	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
-	fprintf(1,'following URL and click the star to show your interest:\n');
-	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
 end
 
  % This code is adapted from the Mines.cpp code written by Adam White
