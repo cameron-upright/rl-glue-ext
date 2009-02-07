@@ -211,8 +211,8 @@ You can kill the process by pressing \texttt{CTRL-c} on your keyboard.
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
 
-\subsection{Running All Three Componenets Together}
-At this point, we've run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  As of version 1.03, the Matlab codec supports running any combination of agent, environment, and experiment, all from a single Matlab instance.
+\subsection{Running All Three Components Together}
+At this point, we've run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  As of version 1.03, the Matlab codec supports running any combination of agent, environment, and experiment, all from a single Matlab instance.  Note that although they are all in Matlab, they are still running over a local network connection to talk to the \texttt{rl\_glue} executable socket server.  In a future version, we may provide a local RL-Glue implementation so that they can work together without needing sockets. This capability already exists in both the RLGlueCore project for C/C++ and the RL-Glue Java Extension codec.
 
 The following will work if you have the \texttt{rl\_glue} socket server is installed at \texttt{/usr/local/bin/rl\_glue}.
 
