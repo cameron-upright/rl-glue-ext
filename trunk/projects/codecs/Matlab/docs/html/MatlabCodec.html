@@ -29,7 +29,7 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <BR>
 <BR>
 <!--End of Navigation Panel-->
-<H1 ALIGN="CENTER">RL-Glue Matlab Codec 1.0 Manual </H1>
+<H1 ALIGN="CENTER">RL-Glue Matlab Codec 1.02 Manual </H1>
 <DIV>
 
 <P ALIGN="CENTER"><STRONG>Brian Tanner :: brian@tannerpages.com</STRONG></P>
@@ -42,73 +42,68 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html66"
+<LI><A NAME="tex2html65"
   HREF="MatlabCodec.html#SECTION00020000000000000000">Introduction</A>
 <UL>
-<LI><A NAME="tex2html67"
+<LI><A NAME="tex2html66"
   HREF="MatlabCodec.html#SECTION00021000000000000000">Software Requirements</A>
+<LI><A NAME="tex2html67"
+  HREF="MatlabCodec.html#SECTION00022000000000000000">Limitation: One Agent or Environment or Experiment per Matlab Instance</A>
 <LI><A NAME="tex2html68"
-  HREF="MatlabCodec.html#SECTION00022000000000000000">Getting the Codec</A>
+  HREF="MatlabCodec.html#SECTION00023000000000000000">Getting the Codec</A>
 <LI><A NAME="tex2html69"
-  HREF="MatlabCodec.html#SECTION00023000000000000000">Installing the Codec</A>
+  HREF="MatlabCodec.html#SECTION00024000000000000000">Installing the Codec</A>
 <LI><A NAME="tex2html70"
-  HREF="MatlabCodec.html#SECTION00024000000000000000">Removing the Codec</A>
+  HREF="MatlabCodec.html#SECTION00025000000000000000">Removing the Codec</A>
 </UL>
 <BR>
 <LI><A NAME="tex2html71"
-  HREF="MatlabCodec.html#SECTION00030000000000000000">Gotchas!</A>
+  HREF="MatlabCodec.html#SECTION00030000000000000000">Sample Project</A>
 <UL>
 <LI><A NAME="tex2html72"
-  HREF="MatlabCodec.html#SECTION00031000000000000000">One Component At A Time</A>
-</UL>
-<BR>
+  HREF="MatlabCodec.html#SECTION00031000000000000000">Skeleton Agent</A>
 <LI><A NAME="tex2html73"
-  HREF="MatlabCodec.html#SECTION00040000000000000000">Sample Project</A>
-<UL>
+  HREF="MatlabCodec.html#SECTION00032000000000000000">Skeleton Environment</A>
 <LI><A NAME="tex2html74"
-  HREF="MatlabCodec.html#SECTION00041000000000000000">Skeleton Agent</A>
+  HREF="MatlabCodec.html#SECTION00033000000000000000">Skeleton Experiment</A>
 <LI><A NAME="tex2html75"
-  HREF="MatlabCodec.html#SECTION00042000000000000000">Skeleton Environment</A>
+  HREF="MatlabCodec.html#SECTION00034000000000000000">Putting it all together</A>
 <LI><A NAME="tex2html76"
-  HREF="MatlabCodec.html#SECTION00043000000000000000">Skeleton Experiment</A>
+  HREF="MatlabCodec.html#SECTION00035000000000000000">Going Further - Mines Sarsa Example Project</A>
+</UL>
+<BR>
 <LI><A NAME="tex2html77"
-  HREF="MatlabCodec.html#SECTION00044000000000000000">Putting it all together</A>
+  HREF="MatlabCodec.html#SECTION00040000000000000000">Who creates and frees memory?</A>
 <LI><A NAME="tex2html78"
-  HREF="MatlabCodec.html#SECTION00045000000000000000">Going Further - Mines Sarsa Example Project</A>
-</UL>
-<BR>
+  HREF="MatlabCodec.html#SECTION00050000000000000000">Advanced Features</A>
+<UL>
 <LI><A NAME="tex2html79"
-  HREF="MatlabCodec.html#SECTION00050000000000000000">Who creates and frees memory?</A>
+  HREF="MatlabCodec.html#SECTION00051000000000000000">Task Specification Parser</A>
 <LI><A NAME="tex2html80"
-  HREF="MatlabCodec.html#SECTION00060000000000000000">Advanced Features</A>
-<UL>
-<LI><A NAME="tex2html81"
-  HREF="MatlabCodec.html#SECTION00061000000000000000">Task Specification Parser</A>
-<LI><A NAME="tex2html82"
-  HREF="MatlabCodec.html#SECTION00062000000000000000">Connecting on custom ports to custom hosts</A>
+  HREF="MatlabCodec.html#SECTION00052000000000000000">Connecting on custom ports to custom hosts</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html83"
-  HREF="MatlabCodec.html#SECTION00070000000000000000">Codec Specification Reference</A>
+<LI><A NAME="tex2html81"
+  HREF="MatlabCodec.html#SECTION00060000000000000000">Codec Specification Reference</A>
 <UL>
+<LI><A NAME="tex2html82"
+  HREF="MatlabCodec.html#SECTION00061000000000000000">Types</A>
+<LI><A NAME="tex2html83"
+  HREF="MatlabCodec.html#SECTION00062000000000000000">Functions</A>
+</UL>
+<BR>
 <LI><A NAME="tex2html84"
-  HREF="MatlabCodec.html#SECTION00071000000000000000">Types</A>
+  HREF="MatlabCodec.html#SECTION00070000000000000000">Frequently Asked Questions</A>
+<UL>
 <LI><A NAME="tex2html85"
-  HREF="MatlabCodec.html#SECTION00072000000000000000">Functions</A>
+  HREF="MatlabCodec.html#SECTION00071000000000000000">Where can I get more help?</A>
 </UL>
 <BR>
 <LI><A NAME="tex2html86"
-  HREF="MatlabCodec.html#SECTION00080000000000000000">Frequently Asked Questions</A>
+  HREF="MatlabCodec.html#SECTION00080000000000000000">Credits and Acknowledgements</A>
 <UL>
 <LI><A NAME="tex2html87"
-  HREF="MatlabCodec.html#SECTION00081000000000000000">Where can I get more help?</A>
-</UL>
-<BR>
-<LI><A NAME="tex2html88"
-  HREF="MatlabCodec.html#SECTION00090000000000000000">Credits and Acknowledgements</A>
-<UL>
-<LI><A NAME="tex2html89"
-  HREF="MatlabCodec.html#SECTION00091000000000000000">Contributing</A>
+  HREF="MatlabCodec.html#SECTION00081000000000000000">Contributing</A>
 </UL></UL>
 <!--End of Table of Contents-->
 <P>
@@ -123,14 +118,14 @@ have scorned us for not supporting Matlab earlier.  It turned out to not even be
 
 <P>
 For general information and motivation about the RL-Glue<A NAME="tex2html1"
-  HREF="#foot201"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
+  HREF="#foot197"><SUP>1</SUP></A> project, please refer to the documentation provided with that project.
 
 <P>
 This codec will allow you to create agents, environments, and experiment programs in Matlab.
 
 <P>
 This software project is licensed under the Apache-2.0<A NAME="tex2html3"
-  HREF="#foot202"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
+  HREF="#foot198"><SUP>2</SUP></A> license. We're not lawyers, but our intention is that this code 
 should be used however it is useful.  We'd appreciate to hear what you're using it for, and to get credit if appropriate.
 
 <P>
@@ -155,7 +150,22 @@ This Matlab codec uses the RL-Glue Java Extension, which means that Matlab needs
 
 <P>
 
-<H2><A NAME="SECTION00022000000000000000">
+<H2><A NAME="SECTION00022000000000000000"></A>
+<A NAME="one-at-a-time"></A>
+<BR>
+Limitation: One Agent or Environment or Experiment per Matlab Instance
+</H2>
+
+<P>
+Because Matlab is inherently single threaded, we had to limit each Matlab instance to running a single component at a time.  This means that you can only run ONE of an agent OR environment OR experiment in Matlab at a time.  If you are able to open multiple Matlab instances, you can run one
+component per instance.  We think that the usual case will probably be to run your agent in Matlab, but run the experiment and environment in another language, like Java, C, or Python.
+
+<P>
+We may find a clever way to lift this restriction in the future, or create a local glue engine so that all three can run together inside Matlab without the network.  If this is very important to you, then please go to the following webpage and mark the ``star'' icon to show that you are interested in solutions:
+<BR>
+<TT><A NAME="tex2html6"
+  HREF="http://code.google.com/p/rl-glue-ext/issues/detail?id=57">http://code.google.com/p/rl-glue-ext/issues/detail?id=57</A></TT>
+<H2><A NAME="SECTION00023000000000000000">
 Getting the Codec</A>
 </H2>
 The codec can be downloaded either as a .tar.gz or can be checked out of the subversion repository where it is hosted.
@@ -163,7 +173,7 @@ The codec can be downloaded either as a .tar.gz or can be checked out of the sub
 <P>
 The .tar.gz distribution can be found here:
 <BR>
-<TT><A NAME="tex2html6"
+<TT><A NAME="tex2html7"
   HREF="http://code.google.com/p/rl-glue-ext/wiki/Matlab">http://code.google.com/p/rl-glue-ext/wiki/Matlab</A></TT>
 <P>
 To check the code out of subversion:
@@ -171,7 +181,7 @@ To check the code out of subversion:
 <FONT SIZE="-1"><TT>svn checkout http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab Matlab-Codec</TT> </FONT>
 <P>
 
-<H2><A NAME="SECTION00023000000000000000">
+<H2><A NAME="SECTION00024000000000000000">
 Installing the Codec</A>
 </H2>
 This codec is package with a Matlab ``installer'' which copies the codec source files and the RL-Glue Java Extension JAR file to a user-configurable location and adds them to your Matlab path and Matlab Java classpaths.  This is the recommended way of using the codec.  Alternatively, you can skip the installer and setup these paths on your own.   This manual will assume that you are using the installer.
@@ -184,7 +194,7 @@ To run the installer, use the <TT>installRLGlue()</TT> function from within Matl
 
 <P>
 
-<H2><A NAME="SECTION00024000000000000000">
+<H2><A NAME="SECTION00025000000000000000">
 Removing the Codec</A>
 </H2>
 The Matlab codec can be uninstalled by deleting the directory that you installed it <BR>(eg. <TT>~/rl-glue/codecs/matlab</TT>), and using the Matlab path editor to remove the associated directories from your path.
@@ -192,25 +202,6 @@ The Matlab codec can be uninstalled by deleting the directory that you installed
 <P>
 
 <H1><A NAME="SECTION00030000000000000000">
-Gotchas!</A>
-</H1>
-
-<H2><A NAME="SECTION00031000000000000000"></A>
-<A NAME="one-at-a-time"></A>
-<BR>
-One Component At A Time
-</H2>
-Because Matlab is inherently single threaded, we had to limit each Matlab instance to running a single component at a time.  This means that you can only run ONE of an agent OR environment OR experiment in Matlab at a time.  If you are able to open multiple Matlab instances, you can run one
-component per instance.  We think that the usual case will probably be to run your agent in Matlab, but run the experiment and environment in another language, like Java, C, or Python.
-
-<P>
-We may find a clever way to lift this restriction in the future, or create a local glue engine so that all three can run together inside Matlab without the network.  If this is very important to you, then please go to the following webpage and mark the ``star'' icon to show that you are interested in solutions:
-<BR>
-<TT><A NAME="tex2html7"
-  HREF="http://code.google.com/p/rl-glue-ext/issues/detail?id=57">http://code.google.com/p/rl-glue-ext/issues/detail?id=57</A></TT>
-<P>
-
-<H1><A NAME="SECTION00040000000000000000">
 Sample Project</A>
 </H1>
 We have included two example projects with this codec, located in the <TT>examples</TT> directory.  Each project contains an agent, environment, and experiment written for this Matlab codec.  The two projects are <TT>skeleton</TT> and <TT>mines-sarsa-sample</TT>.
@@ -219,14 +210,14 @@ We have included two example projects with this codec, located in the <TT>exampl
 The <TT>skeleton</TT> contains all of the bare-bones plumbing that is required to create an agent / environment / experiment with this codec and might be a good starting point for creating your own components.
 
 <P>
-The <TT>mines-sarsa-sample</TT> contains a fully functional tabular Sarsa learning algorithm, a discrete-observation grid world problem, and an experiment program that can run these together and gather results.  More details below in Section <A HREF="#mines-sarsa-sample">3.5</A>.
+The <TT>mines-sarsa-sample</TT> contains a fully functional tabular Sarsa learning algorithm, a discrete-observation grid world problem, and an experiment program that can run these together and gather results.  More details below in Section <A HREF="#mines-sarsa-sample">2.5</A>.
 
 <P>
 In the following sections, we will describe the skeleton project.  Running and using the <TT>mines-sarsa-sample</TT> is analogous.
 
 <P>
 
-<H2><A NAME="SECTION00041000000000000000"></A>
+<H2><A NAME="SECTION00031000000000000000"></A>
 <A NAME="sec:agent"></A>
 <BR>
 Skeleton Agent
@@ -298,7 +289,7 @@ Using this method, you can stop and examine what your agent is learning, and pot
 You will see something like:
 <PRE>
 	&gt;&gt; runAgent(theAgent)
-	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision: 613 $)
+	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision: 624 $)
 	    Connecting to rl_glue at host: localhost on port 4096
 </PRE>
 
@@ -306,11 +297,7 @@ You will see something like:
 This means that the skeleton_agent is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
 
 <P>
-You can kill the process by pressing <TT>CTRL-c</TT> on your keyboard, and then starting  <TT>rl_glue</TT> on your local machine (this will cause Matlab to come back from Java, and process your kill command).
-
-<P>
-We're sorry that killing an agent (or environment) is so kludgy.  This is the first version of the Matlab codec, so there are some kinks to get out.  We welcome your expertise in helping 
-make this codec better!
+You can kill the process by pressing <TT>CTRL-c</TT> on your keyboard.
 
 <P>
 The Skeleton agent is very simple and well documented, so we won't spend any more time talking about it in these instructions.
@@ -318,7 +305,7 @@ Please open it up and take a look.
 
 <P>
 
-<H2><A NAME="SECTION00042000000000000000"></A>
+<H2><A NAME="SECTION00032000000000000000"></A>
 <A NAME="sec:env"></A>
 <BR>
 Skeleton Environment
@@ -327,7 +314,7 @@ Skeleton Environment
 <P>
 We have provided a skeleton environment with the codec that is a good starting point for environments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple environment.  This section will follow the same 
-pattern as the agent version (Section <A HREF="#sec:agent">3.1</A>).  This section will be less detailed because many ideas are similar or identical.
+pattern as the agent version (Section <A HREF="#sec:agent">2.1</A>).  This section will be less detailed because many ideas are similar or identical.
 
 <P>
 The pertinent file is:
@@ -356,7 +343,7 @@ You can compile and run the environment like:
 <P>
 You will see something like:
 <PRE>
-	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision: 613 $)
+	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision: 624 $)
 	    Connecting to rl_glue at host: localhost on port 4096
 </PRE>
 
@@ -364,8 +351,7 @@ You will see something like:
 This means that the skeleton_environment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096! 
 
 <P>
-You can kill the process by pressing <TT>CTRL-c</TT> on your keyboard, and then starting  <TT>rl_glue</TT> on your local machine (this will cause Matlab to come back from Java, and 
-process your kill command).
+You can kill the process by pressing <TT>CTRL-c</TT> on your keyboard.
 
 <P>
 The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
@@ -373,12 +359,12 @@ Please open it up and take a look.
 
 <P>
 
-<H2><A NAME="SECTION00043000000000000000">
+<H2><A NAME="SECTION00033000000000000000">
 Skeleton Experiment</A>
 </H2>
 We have provided a skeleton experiment with the codec that is a good starting point for experiments that you may write in the future.
 It implements all the required functions and provides a good example of how to compile a simple experiment.  This section will follow the same 
-pattern as the agent version (Section <A HREF="#sec:agent">3.1</A>).  This section will be less detailed because many ideas are similar or identical.
+pattern as the agent version (Section <A HREF="#sec:agent">2.1</A>).  This section will be less detailed because many ideas are similar or identical.
 
 <P>
 The pertinent files are:
@@ -399,7 +385,7 @@ This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the
 You will see something like:
 <PRE>
 	Experiment starting up!
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 613 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 624 $)
 	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
 </PRE>
 
@@ -407,8 +393,7 @@ You will see something like:
 This means that the skeleton_experiment is running, and trying to connect to the <TT>rl_glue</TT> executable server on the local machine through port 4096!  
 
 <P>
-You can kill the process by pressing <TT>CTRL-c</TT> on your keyboard, and then starting  <TT>rl_glue</TT> on your local machine (this will cause Matlab to come back from Java, and 
-process your kill command).
+You can kill the process by pressing <TT>CTRL-c</TT> on your keyboard.
 
 <P>
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
@@ -416,15 +401,15 @@ Please open it up and take a look.
 
 <P>
 
-<H2><A NAME="SECTION00044000000000000000">
+<H2><A NAME="SECTION00034000000000000000">
 Putting it all together</A>
 </H2>
-At this point, we've run each of the three components, now it's time to run them with the <TT>rl_glue</TT> executable server.  As mentioned in Section <A HREF="#one-at-a-time">2.1</A>, in Matlab we can 
+At this point, we've run each of the three components, now it's time to run them with the <TT>rl_glue</TT> executable server.  As mentioned in Section <A HREF="#one-at-a-time">1.2</A>, in Matlab we can 
 only run ONE of the agent, experiment, or environment at a time.  So, for this example we'll run the <TT>Java SkeletonAgent</TT> and <TT>Java SkeletonEnvironment</TT> with the <TT>Matlab skeleton_experiment</TT>.  You could really run any agent and environment of your choice.
 
 <P>
 The following will work if you have the <TT>rl_glue</TT> socket server installed on your path(the default location), and the Java RL-Glue Extension<A NAME="tex2html10"
-  HREF="#foot207"><SUP>3</SUP></A> installed.
+  HREF="#foot203"><SUP>3</SUP></A> installed.
 
 <P>
 For this, we'll use a separate terminal window in addition to the Matlab interpreter.  In a separate terminal window, do:
@@ -454,7 +439,7 @@ In the Matlab window, you should see the following if it worked:
 <PRE>
 	&gt;&gt; skeleton_experiment()
 	Experiment starting up!
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 613 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 624 $)
 	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
 	    Experiment Codec Connected
 	RL_init called, the environment sent task spec: VERSION RL-Glue-3.0 PROBLEMTYPE episodic 
@@ -494,7 +479,7 @@ Congratulations, you have run an RL-Glue experiment using the Matlab codec!  You
 
 <P>
 
-<H2><A NAME="SECTION00045000000000000000"></A>
+<H2><A NAME="SECTION00035000000000000000"></A>
 <A NAME="mines-sarsa-sample"></A>
 <BR>
 Going Further - Mines Sarsa Example Project
@@ -503,7 +488,7 @@ The <TT>skeleton</TT> sample project is extremely limited and only shows the mec
 
 <P>
 
-<H3><A NAME="SECTION00045100000000000000"></A>
+<H3><A NAME="SECTION00035100000000000000"></A>
 <A NAME="mines-sample"></A>
 <BR>
 Sample-Mines-Environment
@@ -515,11 +500,11 @@ is internally a two-dimensional, discrete grid world where the agent receives a 
 
 <P>
 The task specification string<A NAME="tex2html12"
-  HREF="#foot208"><SUP>4</SUP></A> is created in a semi-automated way using the Java RL-Glue Extension task spec parser/builder. 
+  HREF="#foot204"><SUP>4</SUP></A> is created in a semi-automated way using the Java RL-Glue Extension task spec parser/builder. 
 
 <P>
 
-<H3><A NAME="SECTION00045200000000000000"></A>
+<H3><A NAME="SECTION00035200000000000000"></A>
 <A NAME="sarsa-sample"></A>
 <BR>
 Samples-Sarsa-Agent
@@ -542,7 +527,7 @@ The SARSA agent parses the task specification string using the Java RL-Glue Exte
 
 <P>
 
-<H3><A NAME="SECTION00045300000000000000">
+<H3><A NAME="SECTION00035300000000000000">
 Sample-Experiment</A>
 </H3>
 The sample experiment program runs the show.  First, it alternates running the agent in the environment for a number of episodes, and telling the agent to pause learning so that the current performance can be evaluated.  These results are plotted with error-bars in a Matlab figure.
@@ -555,7 +540,7 @@ Finally, the experiment sends a message to specify that the environment should u
 
 <P>
 
-<H1><A NAME="SECTION00050000000000000000">
+<H1><A NAME="SECTION00040000000000000000">
 Who creates and frees memory?</A>
 </H1>
 The RL-Glue technical manual has a section called <I>Who creates and frees memory?</I>.  The general approach recommended there is to make a copy of data you want to keep beyond the method it was given to you.  The same rules of thumb from that manual should be followed when using the Matlab codec.  The observations and actions can be copied using the same techniques as <A NAME="tex2html17"
@@ -563,23 +548,23 @@ The RL-Glue technical manual has a section called <I>Who creates and frees memor
 
 <P>
 
-<H1><A NAME="SECTION00060000000000000000">
+<H1><A NAME="SECTION00050000000000000000">
 Advanced Features</A>
 </H1>
 
-<H2><A NAME="SECTION00061000000000000000">
+<H2><A NAME="SECTION00051000000000000000">
 Task Specification Parser</A>
 </H2>
 As of fall 2008, we've updated the task specification language:
 <BR><TT><A NAME="tex2html18"
   HREF="http://glue.rl-community.org/Home/rl-glue/task-spec-language">http://glue.rl-community.org/Home/rl-glue/task-spec-language</A></TT>
 <P>
-The Matlab codec uses the task spec parser implementation from the RL-Glue Java Extension.  This task spec parser/builder can be used in environments to create task specification strings for <TT>env_init</TT>.  The sample mines environment in Section <A HREF="#mines-sample">3.5.1</A> provides an example of creating a task spec in this way.  There are also several advanced examples of this in the RL-Library<A NAME="tex2html19"
-  HREF="#foot209"><SUP>5</SUP></A>.  The task spec parser/builder can also be used by agents to decode the task spec string for <TT>agent_init</TT>.  The sample sarsa agent in Section <A HREF="#sarsa-sample">3.5.2</A> demonstrates how to do this.
+The Matlab codec uses the task spec parser implementation from the RL-Glue Java Extension.  This task spec parser/builder can be used in environments to create task specification strings for <TT>env_init</TT>.  The sample mines environment in Section <A HREF="#mines-sample">2.5.1</A> provides an example of creating a task spec in this way.  There are also several advanced examples of this in the RL-Library<A NAME="tex2html19"
+  HREF="#foot205"><SUP>5</SUP></A>.  The task spec parser/builder can also be used by agents to decode the task spec string for <TT>agent_init</TT>.  The sample sarsa agent in Section <A HREF="#sarsa-sample">2.5.2</A> demonstrates how to do this.
 
 <P>
 
-<H2><A NAME="SECTION00062000000000000000">
+<H2><A NAME="SECTION00052000000000000000">
 Connecting on custom ports to custom hosts</A>
 </H2>
 This section will explain how to set custom target IP addresses (to connect over the network) and custom ports (to run multiple experiments on one machine or to avoid firewall issues).
@@ -601,7 +586,7 @@ For example, the following code:
 <P>
 That command could give output like:
 <PRE>
-	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 613 $)
+	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision: 624 $)
 	     Connecting to rl_glue at host: yahoo.ca on port 4097
 </PRE>
 
@@ -616,7 +601,7 @@ Remember, on most *nix systems, you need <TT>superuser</TT> privileges to listen
 
 <P>
 
-<H1><A NAME="SECTION00070000000000000000">
+<H1><A NAME="SECTION00060000000000000000">
 Codec Specification Reference</A>
 </H1>
 This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
@@ -627,13 +612,13 @@ Instead of re-creating information that is readily available in the MatlabDocs, 
 
 <P>
 
-<H2><A NAME="SECTION00071000000000000000">
+<H2><A NAME="SECTION00061000000000000000">
 Types</A>
 </H2>
 
 <P>
 
-<H3><A NAME="SECTION00071100000000000000">
+<H3><A NAME="SECTION00061100000000000000">
 Simple Types</A>
 </H3>
 Unlike the C/C++ codec, we will not be using <TT>typedef</TT> statements to create special labels for the types. Since Matlab is loosely typed, these things aren't so hard and 
@@ -652,7 +637,7 @@ fast:
 
 <P>
 
-<H3><A NAME="SECTION00071200000000000000"></A>
+<H3><A NAME="SECTION00061200000000000000"></A>
 <A NAME="sec:structure-types"></A>
 <BR>
 Structure Types
@@ -686,11 +671,11 @@ Java and Matlab play very well together, so you can do things like:
 
 <P>
 
-<H2><A NAME="SECTION00072000000000000000">
+<H2><A NAME="SECTION00062000000000000000">
 Functions</A>
 </H2>
 
-<H3><A NAME="SECTION00072100000000000000">
+<H3><A NAME="SECTION00062100000000000000">
 Agent Functions</A>
 </H3>
 All agent constructor functions <B>should set</B> the same functions as our <A NAME="tex2html22"
@@ -703,7 +688,7 @@ directory of the Matlab codec source.
 
 <P>
 
-<H3><A NAME="SECTION00072200000000000000">
+<H3><A NAME="SECTION00062200000000000000">
 Environment Functions</A>
 </H3>
 All environment constructor functions <B>should set</B> the same functions as our <A NAME="tex2html24"
@@ -716,7 +701,7 @@ directory of the Matlab codec source.
 
 <P>
 
-<H3><A NAME="SECTION00072300000000000000">
+<H3><A NAME="SECTION00062300000000000000">
 Experiments Functions</A>
 </H3>
 All experiments <B>can call</B> the methods in the  <A NAME="tex2html26"
@@ -726,18 +711,18 @@ In this case we'll include their prototypes, because the source file is full of 
 
 <P>
 
-<H1><A NAME="SECTION00080000000000000000">
+<H1><A NAME="SECTION00070000000000000000">
 Frequently Asked Questions</A>
 </H1>
 We're waiting to hear your questions!
 
 <P>
 
-<H2><A NAME="SECTION00081000000000000000">
+<H2><A NAME="SECTION00071000000000000000">
 Where can I get more help?</A>
 </H2>
 
-<H3><A NAME="SECTION00081100000000000000">
+<H3><A NAME="SECTION00071100000000000000">
 Online FAQ</A>
 </H3>
 We suggest checking out the online RL-Glue Matlab Codec FAQ:
@@ -749,7 +734,7 @@ The online FAQ may be more current than this document, which may have been distr
 
 <P>
 
-<H3><A NAME="SECTION00081200000000000000">
+<H3><A NAME="SECTION00071200000000000000">
 Google Group / Mailing List</A>
 </H3>
 First, you should join the RL-Glue Google Group Mailing List:
@@ -761,36 +746,36 @@ We're happy to answer any questions about RL-Glue.  Of course, try to search thr
 
 <P>
 
-<H1><A NAME="SECTION00090000000000000000">
+<H1><A NAME="SECTION00080000000000000000">
 Credits and Acknowledgements</A>
 </H1>
 Brian Tanner wrote the Matlab codec. He is also responsible for creating the installer, which is pretty nifty.  Yay Brian.
 
 <P>
 
-<H2><A NAME="SECTION00091000000000000000">
+<H2><A NAME="SECTION00081000000000000000">
 Contributing</A>
 </H2>
 If you would like to become a member of this project and contribute updates/changes to the code, please send a message to rl-glue@googlegroups.com.
 
 <P>
 
-<H1><A NAME="SECTION000100000000000000000">
+<H1><A NAME="SECTION00090000000000000000">
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 613 $
+Revision Number: $Rev: 624 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2009-02-05 00:28:23 -0700 (Thu, 05 Feb 2009) $
+Last Updated   : $Date: 2009-02-06 20:37:49 -0700 (Fri, 06 Feb 2009) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Matlab/docs/MatlabCodec.tex $
 </PRE>
 
 <P>
 
-<H1><A NAME="SECTION000110000000000000000">
+<H1><A NAME="SECTION000100000000000000000">
 About this document ...</A>
 </H1>
- <STRONG>RL-Glue Matlab Codec 1.0 Manual </STRONG><P>
+ <STRONG>RL-Glue Matlab Codec 1.02 Manual </STRONG><P>
 This document was generated using the
 <A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002-2-1 (1.71)
 <P>
@@ -805,34 +790,34 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>MatlabCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Matlab Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2009-02-06
+The translation was initiated by Brian Tanner on 2009-02-07
 <BR><HR><H4>Footnotes</H4>
 <DL>
-<DT><A NAME="foot201">... RL-Glue</A><A
+<DT><A NAME="foot197">... RL-Glue</A><A
  HREF="MatlabCodec.html#tex2html1"><SUP>1</SUP></A></DT>
 <DD><TT><A NAME="tex2html2"
   HREF="http://glue.rl-community.org/">http://glue.rl-community.org/</A></TT>
 
 </DD>
-<DT><A NAME="foot202">... Apache-2.0</A><A
+<DT><A NAME="foot198">... Apache-2.0</A><A
  HREF="MatlabCodec.html#tex2html3"><SUP>2</SUP></A></DT>
 <DD><TT><A NAME="tex2html4"
   HREF="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</A></TT>
 
 </DD>
-<DT><A NAME="foot207">... Extension</A><A
+<DT><A NAME="foot203">... Extension</A><A
  HREF="MatlabCodec.html#tex2html10"><SUP>3</SUP></A></DT>
 <DD><TT><A NAME="tex2html11"
   HREF="http://glue.rl-community.org/Home/Extensions/java-codec">http://glue.rl-community.org/Home/Extensions/java-codec</A></TT>
 
 </DD>
-<DT><A NAME="foot208">... string</A><A
+<DT><A NAME="foot204">... string</A><A
  HREF="MatlabCodec.html#tex2html12"><SUP>4</SUP></A></DT>
 <DD><TT><A NAME="tex2html13"
   HREF="http://glue.rl-community.org/Home/rl-glue/task-spec-language">http://glue.rl-community.org/Home/rl-glue/task-spec-language</A></TT>
 
 </DD>
-<DT><A NAME="foot209">... RL-Library</A><A
+<DT><A NAME="foot205">... RL-Library</A><A
  HREF="MatlabCodec.html#tex2html19"><SUP>5</SUP></A></DT>
 <DD><TT><A NAME="tex2html20"
   HREF="http://library.rl-community.org">http://library.rl-community.org</A></TT>
@@ -847,7 +832,7 @@ The translation was initiated by Brian Tanner on 2009-02-06
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2009-02-06
+2009-02-07
 </ADDRESS>
 </BODY>
 </HTML>
