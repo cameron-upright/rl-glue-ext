@@ -22,6 +22,10 @@ $key = q/sec:gotchas-shared-libs/;
 $external_labels{$key} = "$URL/" . q|JavaCodec.html|; 
 $noresave{$key} = "$nosave";
 
+$key = q/all-one-class/;
+$external_labels{$key} = "$URL/" . q|JavaCodec.html|; 
+$noresave{$key} = "$nosave";
+
 $key = q/mines-sarsa-sample/;
 $external_labels{$key} = "$URL/" . q|JavaCodec.html|; 
 $noresave{$key} = "$nosave";
@@ -40,6 +44,10 @@ $noresave{$key} = "$nosave";
 # LaTeX2HTML 2002-2-1 (1.71)
 # labels from external_latex_labels array.
 
+
+$key = q/all-one-class/;
+$external_latex_labels{$key} = q|2.4.1|; 
+$noresave{$key} = "$nosave";
 
 $key = q/mines-sample/;
 $external_latex_labels{$key} = q|2.5.1|; 
