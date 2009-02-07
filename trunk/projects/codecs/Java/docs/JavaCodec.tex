@@ -10,7 +10,7 @@
 %I like space between my paragraphs
 \setlength{\parskip}{10pt} 
 
-\title{RL-Glue Java Extension (Codec) 2.02 Manual }
+\title{RL-Glue Java Extension (Codec) 2.03 Manual }
 \author{Brian Tanner ::brian@tannerpages.com}
 
 \begin{document}
@@ -213,7 +213,7 @@ The Skeleton experiment is very simple and well documented, so we won't spend an
 Please open it up and take a look.
 
 
-\subsection{Putting it all together}
+\subsection{Running All Three Components Together}
 At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples 
 directory if you have them all built, and RL-Glue installed in the default location:
 \begin{verbatim}
@@ -295,6 +295,12 @@ OBSERVATIONS INTS (1 0 20)  ACTIONS INTS (1 0 1)  REWARDS (1 -1.0 1.0)  EXTRA
 
 \end{verbatim}
 
+\subsubsection{Running All Three From One Java Class}
+\label{all-one-class}
+If more than one of the components you are using is written in Java, you may appreciate a more convenient way to run them than using separate terminals.  In the case where your agent, environment, or experiment program are all written in Java, you can even start them all from a single Java file.
+
+New in Version 2.03 of the RL-Glue Java Extension, you can even run them locally, without network sockets or the \texttt{rl\_glue} executable socket server.  Examples of how to do this are provided with the sample skeleton project, both \htmladdnormallink{with sockets}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/mines-sarsa-sample/RunMinesSarsaExperiment.java} and \htmladdnormallink{without}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/mines-sarsa-sample/RunMinesSarsaExperimentNoSockets.java}.
+
 \subsection{Going Further -- Mines Sarsa Example Project}
 \label{mines-sarsa-sample}
 The \texttt{skeleton} sample project is extremely limited and only shows the mechanics of how RL-Glue components are structured using the Java codec.  The \texttt{mines-sarsa} sample project is much richer.
@@ -366,6 +372,11 @@ calls  in the same session:
 \end{verbatim}
 
 Remember, on most *nix systems, you need \texttt{superuser} privileges to listen on ports lower than $1024$, so you probably want to pick one higher than that.
+
+\subsection{Running in Local Mode without Network Sockets}
+A new feature has been added in version 2.03 of the RL-Glue Java Extension that lets you run you agents, environments, and experiments all together with Java, without using sockets to connect them together.  This mode is much faster per step than using network sockets.  
+
+The best part of this feature is that the technique used to bypass the sockets happens outside of the agent, environment, and experiment program, by a new class.  This means that you can program your components and experiment with them locally, but they are still 100\% RL-Glue compatible and can be shared with people for use in the language of their choice.  An example of how to do this is linked in Section \ref{all-one-class}.
 
 \section{Codec Specification Reference}
 This section will explain how the RL-Glue types and functions are defined for this codec.  This isn't meant to be the most exciting section of this document, but it will
