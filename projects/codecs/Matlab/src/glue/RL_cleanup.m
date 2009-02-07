@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -22,5 +22,14 @@
 %
 function RL_cleanup()
 	doCallWithNoParams(org.rlcommunity.rlglue.codec.network.Network.kRLCleanup);
-    doStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLCleanup);
+    
+    %If there is an environment (if we're running more than one
+    %component together), then make sure it executes (env_cleanup)
+    ensureEnvExecutesIfNecessary();
+
+    %If there is an agent (if we're running more than one
+    %component together), then make sure it executes (agent_cleanup)
+    ensureAgentExecutesIfNecessary();
+  
+    forceStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLCleanup);
 end

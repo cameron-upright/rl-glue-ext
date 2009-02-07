@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -37,20 +37,16 @@ function sample_experiment()
 %  * and loading the agent's value function to/from a binary data file.
 %  * @author Brian Tanner
 
+%To use this experiment with the rest of the project together
+%use the runAllTogether Function.
 
-%TO USE THIS EXPERIMENT [order doesn't matter]
+%TO USE THIS EXPERIMENT ON ITS OWN
+%order doesn't matter
 %   -  Start the rl_glue executable socket server on your computer
-%   -  Run the SampleSarsaAgent and SampleMinesEnvironment from a
-%   different codec (Python, Java, C, Lisp should all be fine)
+%   -  Run the SampleSarsaAgent and SampleMinesEnvironment from any
+%    codec (Python, Java, C, Lisp should all be fine)
 %   -  Execute this sample_experiment() function
 %   NOTE: Type CTRL-C to abort the connection.
- 
-	fprintf(1,'Starting Sample Experiment.  Remember that currently the Matlab codec can only run\n');
-	fprintf(1,'ONE agent or ONE environment or ONE experiment per Matlab instance.  To connect this experiment\n');
-	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
-	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
-	fprintf(1,'following URL and click the star to show your interest:\n');
-	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
  
 	RL_init();
     fprintf(1,'Starting offline demo\n----------------------------\nWill alternate learning for 25 episodes, then freeze policy and evaluate for 10 episodes.\n\n');

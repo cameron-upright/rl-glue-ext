@@ -20,8 +20,15 @@
 %   $Author$
 %  $HeadURL$
 %
-function RL_set_port(thePort)
-    global p__rlglueSettings;
-    
-    p__rlglueSettings.port=thePort;
+%If we are running a mult-experiment, this function can be trusted to 
+%check if an environment is involved, and block until the environment acts.
+function ensureEnvExecutesIfNecessary()
+global p__rlglueSettings;
+
+    if(p__rlglueSettings.hasEnvironment)
+        envDidSomething=false;
+        while ~envDidSomething
+              [environmentShouldQuit,envDidSomething]=runEnvironmentLoop();
+        end
+    end
 end

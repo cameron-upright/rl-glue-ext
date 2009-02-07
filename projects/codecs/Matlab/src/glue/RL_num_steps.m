@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -24,6 +24,6 @@ function steps=RL_num_steps()
         global p__rlglueStruct;
 
         doCallWithNoParams(org.rlcommunity.rlglue.codec.network.Network.kRLNumSteps);
-        doStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLNumSteps);
+        forceStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLNumSteps);
         steps = p__rlglueStruct.network.getInt();
 end

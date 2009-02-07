@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -20,6 +20,18 @@
 %   $Author$
 %  $HeadURL$
 %
+
+%To use this Environment with the rest of the example together
+%use the runAllTogether function.
+
+% TO USE THIS Environment on its own[order doesn't matter]
+%   -  Start the rl_glue executable socket server on your computer
+%   -  Run the skeleton_agent and skeleton_experiment from a
+%   different codec (Python, Java, C, Lisp should all be fine)
+%   -  Load this environment like:
+%       >> theEnvironment=skeleton_environment()
+%       >> runEnvironment(theEnvironment);
+%   NOTE: Type CTRL-C to abort the connection.
 function theEnvironment=skeleton_environment()
 %Assign members of the returning struct to be function pointers
 	theEnvironment.env_init=@skeleton_environment_init;
@@ -27,13 +39,6 @@ function theEnvironment=skeleton_environment()
 	theEnvironment.env_step=@skeleton_environment_step;
 	theEnvironment.env_cleanup=@skeleton_environment_cleanup;
 	theEnvironment.env_message=@skeleton_environment_message;
-
-	fprintf(1,'Sample Environment.  Remember that currently the Matlab codec can only run\n');
-	fprintf(1,'ONE agent or ONE environment or ONE experiment per Matlab instance.  To connect this environment\n');
-	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
-	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
-	fprintf(1,'following URL and click the star to show your interest:\n');
-	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
  end
 
 	% This is a very simple environment with discrete observations corresponding to states labeled {0,1,...,19,20}

@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -20,15 +20,29 @@
 %   $Author$
 %  $HeadURL$
 %
-function shouldQuit=runEnvironmentLoop()
+%It gets the environment from a struct that was created when the
+%environment was connected.
+%This is a non-blocking method.
+% - didSomething will return true if it got some data, false otherwise.
+% - shouldQuit will return true if it received the rlTerm signal
+function [shouldQuit,didSomething]=runEnvironmentLoop()
     global p__rlglueEnvStruct;
     %This is all just copied in from ClientEnv in the Java codec    
     
     shouldQuit=false;
+    didSomething=false;
     network=p__rlglueEnvStruct.network;
     env=p__rlglueEnvStruct.theEnviroment;
     network.clearRecvBuffer();
-    recvSize = network.recv(8) - 8; %// We may have received the header and part of the payload
+    actualReceiveSize=network.recvNonBlock(8);
+    
+    if(actualReceiveSize>0)
+        didSomething=true;
+    else
+        return;
+    end
+    
+    recvSize = actualReceiveSize - 8; %// We may have received the header and part of the payload
                                     %// We need to keep track of how much of the payload was recv'd
 
     envState = network.getInt(0);
@@ -94,8 +108,8 @@ function shouldQuit=runEnvironmentLoop()
         shouldQuit=true;
         return;
    otherwise
-        fprintf(2,'Unknown state in runEnvironmentLoop %d\n',envState);
-        exit(1);
+		errormessage=sprintf('Unknown state in runEnvironmentLoop %d\n',envState);
+		error(errormessage,'EnvironmentStateError');
     end
     
     network.flipSendBuffer();

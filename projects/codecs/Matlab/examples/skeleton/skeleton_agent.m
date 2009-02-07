@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -20,6 +20,19 @@
 %   $Author$
 %  $HeadURL$
 %
+%To use this agent with the rest of the example together:
+%>use the runAllTogether function.
+
+% TO USE THIS Agent on its own[order doesn't matter]
+%   -  Start the rl_glue executable socket server on your computer
+%   -  Run the SkeletonEnvironment and SkeletonExperiment from a
+%   different codec (Python, Java, C, Lisp should all be fine)
+%   -  Load this agent like:
+%       >> theAgent=skeleton_agent()
+%       >> runAgent(theAgent);
+%   NOTE: Type CTRL-C to abort the connection.
+%
+
 function theAgent=skeleton_agent()
     theAgent.agent_init=@skeleton_agent_init;
     theAgent.agent_start=@skeleton_agent_start;
@@ -27,13 +40,6 @@ function theAgent=skeleton_agent()
     theAgent.agent_end=@skeleton_agent_end;
     theAgent.agent_cleanup=@skeleton_agent_cleanup;
     theAgent.agent_message=@skeleton_agent_message;
-
-	fprintf(1,'Sample Agent.  Remember that currently the Matlab codec can only run\n');
-	fprintf(1,'ONE agent or ONE environment or ONE experiment per Matlab instance.  To connect this agen\n');
-	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
-	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
-	fprintf(1,'following URL and click the star to show your interest:\n');
-	fprintf(1,'http://code.google.com/p/rl-glue-ext/issues/detail?id=57\n\n');
 end
 
 function skeleton_agent_init(taskSpec)

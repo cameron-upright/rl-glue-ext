@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -23,10 +23,10 @@
 function connectAgent(theAgent)
 	%NOTE: If the java package isn't in your path already, this WILL delete all your globals
 	%because it calls javaddpath which calls clear('java')
-    checkForJavaCodec();
+    [alreadyInstalled, installedNow]=checkForJavaCodec();
 
     global p__rlglueAgentStruct;
-	global p__rlglueStruct;
+	global p__rlglueSettings;
     if isfield(p__rlglueAgentStruct,'network')
 		disconnectAgent();
     end
@@ -42,11 +42,11 @@ function connectAgent(theAgent)
     blocking=false;
     
 %Pick up user specifications if there are any
-	if isfield(p__rlglueStruct,'port')
-		port=p__rlglueStruct.port;
+	if isfield(p__rlglueSettings,'port')
+		port=p__rlglueSettings.port;
 	end
-	if isfield(p__rlglueStruct,'host')
-		host=p__rlglueStruct.host;
+	if isfield(p__rlglueSettings,'host')
+		host=p__rlglueSettings.host;
 	end
 
     

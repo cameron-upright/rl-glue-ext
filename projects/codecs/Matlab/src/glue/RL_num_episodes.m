@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -24,6 +24,6 @@ function episodes=RL_num_episodes()
         global p__rlglueStruct;
 
         doCallWithNoParams(org.rlcommunity.rlglue.codec.network.Network.kRLNumEpisodes);
-        doStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLNumEpisodes);
+        forceStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLNumEpisodes);
         episodes = p__rlglueStruct.network.getInt();
 end

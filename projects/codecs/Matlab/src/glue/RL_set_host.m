@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 %  $HeadURL$
 %
 function RL_set_host(theHost)
-    global p__rlglueStruct;
+    global p__rlglueSettings;
     
-    p__rlglueStruct.host=theHost;
+    p__rlglueSettings.host=theHost;
 end

@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -21,11 +21,22 @@
 %  $HeadURL$
 %
 function roat=RL_step()
-
     global p__rlglueStruct;
 
+    %Send the data to the glue that RL_start should be executed
     doCallWithNoParams(org.rlcommunity.rlglue.codec.network.Network.kRLStep);
-    doStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLStep);
+    
+    %If there is an environment (if we're running more than one
+    %component together), then make sure it executes (env_step)
+    ensureEnvExecutesIfNecessary();
+
+    %If there is an agent (if we're running more than one
+    %component together), then make sure it executes (agent_step or agent_end)
+    ensureAgentExecutesIfNecessary();
+
+
+    %Receive the response from rl_glue
+    forceStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLStep);
 
     roat = org.rlcommunity.rlglue.codec.types.Reward_observation_action_terminal;
     terminal=p__rlglueStruct.network.getInt();

@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -24,7 +24,19 @@ function taskSpec=RL_init()
 		forceConnection();
         global p__rlglueStruct;
 	
+        %Send the token to the glue that RL_init should be executed
         doCallWithNoParams(org.rlcommunity.rlglue.codec.network.Network.kRLInit);
-		doStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLInit);
+        
+        %If there is an environment (if we're running more than one
+        %component together), then make sure it executes (env_init)
+        ensureEnvExecutesIfNecessary();
+        
+        %If there is an agent (if we're running more than one
+        %component together), then make sure it executes (agent_init)
+        ensureAgentExecutesIfNecessary();
+        
+        %Receive the RL_init response from rl_glue
+
+        forceStandardRecv(org.rlcommunity.rlglue.codec.network.Network.kRLInit);
         taskSpec=p__rlglueStruct.network.getString();
 end

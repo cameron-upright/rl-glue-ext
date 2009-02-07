@@ -1,7 +1,7 @@
 %  Copyright 2008 Brian Tanner
 %  http://rl-glue-ext.googlecode.com/
 %  brian@tannerpages.com
-%  http://brian.tannerpages.com
+%  http://research.tannerpages.com
 %  
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -20,12 +20,16 @@
 %   $Author$
 %  $HeadURL$
 %
-function checkForJavaCodec()
+function [alreadyFound,foundAtAll]=checkForJavaCodec()
+alreadyFound=false;
+foundAtAll=false;
 %Check if Matlab can find the RL-Glue classes
 rlglueClassesFound=exist('org.rlcommunity.rlglue.codec.RLGlue','class');
 
 %8 is the return code for Java class
 if rlglueClassesFound==8
+    alreadyFound=true;
+    foundAtAll=true;
     return;
 end
 
@@ -33,6 +37,8 @@ foundCodec=tryToFindJavaCodec();
 
 if ~foundCodec
     error('Could not find the Java RL-Glue Codec. Please do: javaddpath(''/path/to/JavaRLGlueCodec.jar'' before using the Matlab RL-Glue codec.');
+else
+    foundAtAll=true;
 end
 
 end
@@ -50,7 +56,12 @@ function foundCodec=tryToFindJavaCodec()
     
     javaCodecJarPath=strcat(justPath,'../libs/JavaRLGlueCodec.jar');
     javaaddpath(javaCodecJarPath);
-    foundCodec=true;    
+
+    rlglueClassesFound=exist('org.rlcommunity.rlglue.codec.RLGlue','class');
+    %8 is the return code for Java class
+    if rlglueClassesFound==8
+        foundCodec=true;
+    end
 end
 
 %This is the old code before we had an installer.  Yay installer!
