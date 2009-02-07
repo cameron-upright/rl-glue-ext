@@ -37,6 +37,9 @@ function connectEnviroment(theEnviroment)
     host=char(org.rlcommunity.rlglue.codec.network.Network.kDefaultHost);
     port=org.rlcommunity.rlglue.codec.network.Network.kDefaultPort;
     timeout=org.rlcommunity.rlglue.codec.network.Network.kRetryTimeout;
+    %This is new as of version 1.02, it will allow us to more easily
+    %abort and experiment with CTRL-C while connecting.
+    blocking=false;
 
 %Pick up user specifications if there are any
 	if isfield(p__rlglueStruct,'port')
@@ -51,7 +54,17 @@ function connectEnviroment(theEnviroment)
     fprintf(1,'\tConnecting to rl_glue at host: %s on port %d\n', host, port);
 
     p__rlglueEnvStruct.network=org.rlcommunity.rlglue.codec.network.Network;
-    p__rlglueEnvStruct.network.connect(host,port,timeout);
+
+    % Connect
+    actuallyConnected=p__rlglueEnvStruct.network.connect(host,port,timeout,blocking);
+
+    % Since we are non-blocking, we need to be a bit careful and be
+    % sure that we are actually connected.  By doing this loop part in
+    % Matlab it means we can do CTRL-C
+    while ~actuallyConnected
+        actuallyConnected=p__rlglueEnvStruct.network.ensureConnected();
+        pause(1/2);
+    end
 
     fprintf(1,'\tEnvironment Codec Connected\n');
 

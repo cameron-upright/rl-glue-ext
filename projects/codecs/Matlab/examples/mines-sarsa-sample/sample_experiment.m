@@ -43,12 +43,10 @@ function sample_experiment()
 %   -  Run the SampleSarsaAgent and SampleMinesEnvironment from a
 %   different codec (Python, Java, C, Lisp should all be fine)
 %   -  Execute this sample_experiment() function
-%   NOTE: Matlab is touchy with sockets and sometimes will lock up if there
-%   is a bug.  If you need to, and are able to ctrl-c to abort this
-%   experiment, remember to call disconnectGlue()
+%   NOTE: Type CTRL-C to abort the connection.
  
 	fprintf(1,'Starting Sample Experiment.  Remember that currently the Matlab codec can only run\n');
-	fprintf(1,'ONE agent, environment, and experiment per Matlab instance.  To connect this experiment\n');
+	fprintf(1,'ONE agent or ONE environment or ONE experiment per Matlab instance.  To connect this experiment\n');
 	fprintf(1,'to anything you will need to run them in a separate Matlab instance or using a different codec.\n');
 	fprintf(1,'If running them all in one Matlab instance is very important to you, please go to the \n');
 	fprintf(1,'following URL and click the star to show your interest:\n');
