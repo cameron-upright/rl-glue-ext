@@ -16,10 +16,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  * 
- *  $Revision: 489 $
- *  $Date: 2009-01-31 14:34:21 -0700 (Sat, 31 Jan 2009) $
- *  $Author: brian@tannerpages.com $
- *  $HeadURL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/examples/skeleton/SkeletonExperiment.java $
+ *  $Revision$
+ *  $Date$
+ *  $Author$
+ *  $HeadURL$
  * 
  */
 
