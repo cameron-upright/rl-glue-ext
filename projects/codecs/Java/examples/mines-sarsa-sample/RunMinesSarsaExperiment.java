@@ -29,15 +29,15 @@ import org.rlcommunity.rlglue.codec.util.AgentLoader;
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 
 /**
-*  A simple example of how can you run all components of the skeleton project from a single Java class
+*  A simple example of how can you run all components of the samples-mines-sarsa project from a single Java class
 */
-public class RunAllSkeleton{
+public class RunMinesSarsaExperiment{
 	
 	public static void main(String[] args){
 		//Create an agentLoader that will start the agent when its run method is called
-		AgentLoader theAgentLoader=new AgentLoader(new SkeletonAgent());
+		AgentLoader theAgentLoader=new AgentLoader(new SampleSarsaAgent());
 		//Create an environmentloader that will start the environment when its run method is called
-		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new SkeletonEnvironment());
+		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new SampleMinesEnvironment());
 		
 		//Create threads so that the agent and environment can run asynchronously 		
 		Thread agentThread=new Thread(theAgentLoader);
@@ -47,10 +47,10 @@ public class RunAllSkeleton{
 		agentThread.start();
 		environmentThread.start();
 		
-		//Run the main method of the Skeleton Experiment, using the arguments were were passed
+		//Run the main method of the Sample Experiment, using the arguments were were passed
 		//This will run the experiment in the main thread.
-		SkeletonExperiment.main(args);
-		System.out.println("RunAllSkeleton Complete");
+		SampleExperiment.main(args);
+		System.out.println("RunMinesSarsaExperiment Complete");
 		
 		//Quit Java, including stopping the other threads
 		System.exit(1);

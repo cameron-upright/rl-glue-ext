@@ -134,9 +134,9 @@ public class SampleExperiment {
     }
 
     public void runExperiment() {
+        RLGlue.RL_init();
         System.out.println("Starting offline demo\n----------------------------\nWill alternate learning for 25 episodes, then freeze policy and evaluate for 10 episodes.\n");
         System.out.println("After Episode\tMean Return\tStandard Deviation\n-------------------------------------------------------------------------");
-        RLGlue.RL_init();
         offlineDemo();
 
         System.out.println("\nNow we will save the agent's learned value function to a file....");
