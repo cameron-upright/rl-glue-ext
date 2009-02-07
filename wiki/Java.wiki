@@ -40,3 +40,6 @@ For more information about the Java codec, and others, please visit the RL-Glue 
 And the Java Codec Homepage:
 [http://glue.rl-community.org/Home/Extensions/java-codec]
 
+=== Past Versions ===
+To list all past versions of the Java codec, go here:
+[http://code.google.com/p/rl-glue-ext/downloads/list?q=language:Java]
