@@ -29,6 +29,8 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
@@ -86,6 +88,7 @@ public class Network {
     protected static final int kDoubleSize = 8;
     protected static final int kCharSize = 1;
     protected SocketChannel socketChannel=null;
+    private InetSocketAddress theConnectAddress=null;
     private ByteBuffer recvBuffer;
     private ByteBuffer sendBuffer;
     private boolean debug = false;
@@ -107,20 +110,17 @@ public class Network {
      * @param retryTimeout
      * @param blocking
      */
-    public void connect(String host, int port, int retryTimeout, boolean blocking) {
-        boolean didConnect = false;
+    public boolean connect(String host, int port, int retryTimeout, boolean blocking) {
+        boolean didComplete = false;
+        boolean actuallyDidConnect=false;
 
-        while (!didConnect) {
+        while (!didComplete) {
             try {
-                InetSocketAddress address = new InetSocketAddress(host, port);
+                theConnectAddress = new InetSocketAddress(host, port);
                 socketChannel = SocketChannel.open();
                 socketChannel.configureBlocking(blocking);
-                socketChannel.connect(address);
-                //In non-blocking mode, we want to do this to try to actually
-                //connect.  In blocking mode, it returns immediately because we
-                //will have connected or exceptioned in the connect(address) call.
-                socketChannel.finishConnect();
-                didConnect = true;
+                actuallyDidConnect=socketChannel.connect(theConnectAddress);
+                didComplete = true;
             } catch (IOException ioException) {
                 try {
                     Thread.sleep(retryTimeout);
@@ -128,6 +128,7 @@ public class Network {
                 }
             }
         }
+        return actuallyDidConnect;
     }
 
 
@@ -138,9 +139,23 @@ public class Network {
  * @return
  * @throws java.io.IOException
  */
-    public boolean ensureConnected() throws IOException{
+    public boolean ensureConnected(){
         assert(socketChannel!=null);
-        return socketChannel.finishConnect();
+
+        boolean canFinishConnectionOrConnected=false;
+
+        try{
+            canFinishConnectionOrConnected=socketChannel.finishConnect();
+        }catch(Exception ex){
+            try {
+                //This can happen if RL-Glue isn't running yet.  We should try to connect
+                //again, return false, and hope that this works later.
+                canFinishConnectionOrConnected=socketChannel.connect(theConnectAddress);
+            } catch (IOException ex1) {
+            }
+
+        }
+        return canFinishConnectionOrConnected;
     }
 
 
