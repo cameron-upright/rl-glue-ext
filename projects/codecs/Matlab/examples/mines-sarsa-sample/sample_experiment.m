@@ -42,7 +42,7 @@ function sample_experiment()
 %   -  Start the rl_glue executable socket server on your computer
 %   -  Run the SampleSarsaAgent and SampleMinesEnvironment from a
 %   different codec (Python, Java, C, Lisp should all be fine)
-%   -  Execution this sample_experiment() function
+%   -  Execute this sample_experiment() function
 %   NOTE: Matlab is touchy with sockets and sometimes will lock up if there
 %   is a bug.  If you need to, and are able to ctrl-c to abort this
 %   experiment, remember to call disconnectGlue()

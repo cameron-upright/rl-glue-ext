@@ -37,10 +37,11 @@ This project has a home here:\\
 \subsection{Software Requirements}
 To run agents, environments, and experiments created with this codec, you will need to have RL-Glue installed on your computer.
 
-Compiling and running components with this codec requires Matlab.  The codec was developed on Matlab 7.6.0.x, it has not been tested extensively on other versions.  This Matlab codec uses the RL-Glue Java Extension, which means that Matlab needs to be running with the Java Virtual Machine enabled (it is by default).  The Java extension does not need to be installed independently.
+Compiling and running components with this codec requires Matlab.  The codec was developed on Matlab 7.6.0.x, it has not been tested extensively on other versions.  Reports from the community suggest that Matlab 7.5 or higher is required to run this codec.
 
-\textbf{Possible Contribution: }Someone with Matlab experience could help us find out what version of Matlab is required to use this codec, and could help us update the codec
-to be as robust as possible to older versions.
+This Matlab codec uses the RL-Glue Java Extension, which means that Matlab needs to be running with the Java Virtual Machine enabled (it is by default).  The Java extension does not need to be installed independently.
+
+\textbf{Possible Contribution: }Someone with Matlab experience could help us find out what exact version of Matlab is required to use this codec, and could help us update the codec to be as robust as possible to older versions.
 
 \subsection{Getting the Codec}
 The codec can be downloaded either as a .tar.gz or can be checked out of the subversion repository where it is hosted.
@@ -61,38 +62,22 @@ To run the installer, use the \texttt{installRLGlue()} function from within Matl
 \end{verbatim}
 
 \subsection{Removing the Codec}
-The Matlab codec can be uninstalled by deleting the directory that you installed it (eg. \texttt{\~{}/rl-glue/codecs/matlab}), and using the Matlab path editor to remove the associated directories from your path.
+The Matlab codec can be uninstalled by deleting the directory that you installed it \newline(eg. \texttt{\~{}/rl-glue/codecs/matlab}), and using the Matlab path editor to remove the associated directories from your path.
 
 
 \section{Gotchas!}
-\subsection{Disconnect your Agent/Environment/Experiment}
-Matlab is not really multithreaded.  This means that when Matlab is listening for a command from the network, it cannot be interrupted easily. Issuing the  \texttt{CTRL-c} command will not bring Matlab back when it is waiting to connect to \texttt{rl\_glue}.  It also means in some crash cases, Matlab will hang, or Matlab will come back to you, but the socket will not close properly so it will hang next time you try to make a connection.
-
-If your agent/environment/experiment crashes or terminates prematurely, you should manually disconnect your Matlab component so that the \texttt{Java} socket gets cleaned up.  Depending on what you were running, the code would be:
-\begin{verbatim}
-	>> disconnectAgent()                 %For agents
-	>> disconnectEnvironment()           %For environments
-	>> disconnectGlue()                  %For experiments
-\end{verbatim}
-
-If you don't disconnect manually in these cases, Matlab can get hung up and you'll have to restart it.
-
-If Matlab is otherwise hanging because it is blocked waiting on the network, you can sometimes bring it back by using \texttt{CTRL-c} and then making a network operation happen.  For example, if you started up an agent, and then decided you want to stop it, you could first do  \texttt{CTRL-c}.  There will be no feedback that anything happened, Matlab will stay hung. Then, go to your terminal/console and start \texttt{rl\_glue}.  The \texttt{CTRL-c} you did in Matlab will be processed after the agent connects to \texttt{rl\_glue} and you will be able to \texttt{disconnectAgent()} and continue.
-
-\textbf{Possible contribution:}  help make Matlab networking more reliable.  If anyone has experience, ideas, or enthusiasm, we would very much like to make Matlab more robust to communication and network problems like those described above.  They are quite frustrating.  If you are interested in helping, please contact us.
-
-
 \subsection{One Component At A Time}
 \label{one-at-a-time}
-Because Matlab is inherently single threaded, we had limit each Matlab instance to running a single component at a time.  This means that you can only run ONE of an agent OR environment OR experiment in Matlab at a time.  If you are able to open multiple Matlab instances, you can run one
+Because Matlab is inherently single threaded, we had to limit each Matlab instance to running a single component at a time.  This means that you can only run ONE of an agent OR environment OR experiment in Matlab at a time.  If you are able to open multiple Matlab instances, you can run one
 component per instance.  We think that the usual case will probably be to run your agent in Matlab, but run the experiment and environment in another language, like Java, C, or Python.
 
-We may lift find a clever way to lift this restriction in the future, or create a local glue engine so that all three can run together inside Matlab without the network.
+We may find a clever way to lift this restriction in the future, or create a local glue engine so that all three can run together inside Matlab without the network.  If this is very important to you, then please go to the following webpage and mark the ``star'' icon to show that you are interested in solutions:\newline
+\url{http://code.google.com/p/rl-glue-ext/issues/detail?id=57}
 
 \section{Sample Project}
 We have included two example projects with this codec, located in the \texttt{examples} directory.  Each project contains an agent, environment, and experiment written for this Matlab codec.  The two projects are \texttt{skeleton} and \texttt{mines-sarsa-sample}.
 
-The \texttt{skeleton} contains all of the bare-bones plumbing that is required to create an agent/environment/experiment with this codec and might be a good starting point for creating your own components.
+The \texttt{skeleton} contains all of the bare-bones plumbing that is required to create an agent / environment / experiment with this codec and might be a good starting point for creating your own components.
 
 The \texttt{mines-sarsa-sample} contains a fully functional tabular Sarsa learning algorithm, a discrete-observation grid world problem, and an experiment program that can run these together and gather results.  More details below in Section \ref{mines-sarsa-sample}.
 
@@ -159,8 +144,7 @@ You will see something like:
 
 This means that the skeleton\_agent is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
-You can kill the process by pressing \texttt{CTRL-c} on your keyboard, and then starting  \texttt{rl\_glue} on your local machine (this will cause Matlab to come back from Java, and 
-process your kill command).  Don't forget to \texttt{disconnectAgent()}.
+You can kill the process by pressing \texttt{CTRL-c} on your keyboard, and then starting  \texttt{rl\_glue} on your local machine (this will cause Matlab to come back from Java, and process your kill command).
 
 We're sorry that killing an agent (or environment) is so kludgy.  This is the first version of the Matlab codec, so there are some kinks to get out.  We welcome your expertise in helping 
 make this codec better!
@@ -200,7 +184,7 @@ You will see something like:
 This means that the skeleton\_environment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$! 
 
 You can kill the process by pressing \texttt{CTRL-c} on your keyboard, and then starting  \texttt{rl\_glue} on your local machine (this will cause Matlab to come back from Java, and 
-process your kill command).  Don't forget to \texttt{disconnectEnvironment()}.
+process your kill command).
 
 The Skeleton environment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
@@ -233,7 +217,7 @@ You will see something like:
 This means that the skeleton\_experiment is running, and trying to connect to the \texttt{rl\_glue} executable server on the local machine through port $4096$!  
 
 You can kill the process by pressing \texttt{CTRL-c} on your keyboard, and then starting  \texttt{rl\_glue} on your local machine (this will cause Matlab to come back from Java, and 
-process your kill command).  Don't forget to \texttt{disconnectGlue()}.
+process your kill command).
 
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
