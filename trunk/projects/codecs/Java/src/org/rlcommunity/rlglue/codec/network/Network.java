@@ -1,6 +1,6 @@
-/* 
+/*
  * Copyright (C) 2007, Brian Tanner
- * 
+ *
 http://rl-glue-ext.googlecode.com/
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
- * 
+ *
  *  $Revision$
  *  $Date$
  *  $Author$
  *  $HeadURL$
- * 
+ *
  */
 package org.rlcommunity.rlglue.codec.network;
 
@@ -37,7 +37,7 @@ import org.rlcommunity.rlglue.codec.types.RL_abstract_type;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 
 /**
- * This class does the heavy lifting of sendig and receiving data over the 
+ * This class does the heavy lifting of sendig and receiving data over the
  * network. It is used by both the Java and Matlab codecs.
  *
  * The Socket has been changed (Feb 7 2009) to be offer a NON-BLOCKING option.
@@ -50,6 +50,7 @@ import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
  * @author btanner
  */
 public class Network {
+
     public static final int kExperimentConnection = 1;
     public static final int kAgentConnection = 2;
     public static final int kEnvironmentConnection = 3;
@@ -87,8 +88,9 @@ public class Network {
     public static final int kIntSize = 4;
     protected static final int kDoubleSize = 8;
     protected static final int kCharSize = 1;
-    protected SocketChannel socketChannel=null;
-    private InetSocketAddress theConnectAddress=null;
+    protected SocketChannel socketChannel = null;
+    private InetSocketAddress theConnectAddress = null;
+    private boolean blocking = true;
     private ByteBuffer recvBuffer;
     private ByteBuffer sendBuffer;
     private boolean debug = false;
@@ -111,15 +113,14 @@ public class Network {
      * @param blocking
      */
     public boolean connect(String host, int port, int retryTimeout, boolean blocking) {
+        this.blocking = blocking;
         boolean didComplete = false;
-        boolean actuallyDidConnect=false;
+        boolean actuallyDidConnect = false;
 
         while (!didComplete) {
             try {
                 theConnectAddress = new InetSocketAddress(host, port);
-                socketChannel = SocketChannel.open();
-                socketChannel.configureBlocking(blocking);
-                actuallyDidConnect=socketChannel.connect(theConnectAddress);
+                actuallyDidConnect = connect(theConnectAddress, blocking);
                 didComplete = true;
             } catch (IOException ioException) {
                 try {
@@ -131,33 +132,45 @@ public class Network {
         return actuallyDidConnect;
     }
 
+    /**
+     * This is a private convenience method that will try to connect.
+     * It's meant to reduce duplicated code between methods.
+     * @return
+     * @throws java.io.IOException
+     */
+    private boolean connect(InetSocketAddress theAddress, boolean shouldBlock) throws IOException {
+        boolean actuallyDidConnect = false;
+        socketChannel = SocketChannel.open();
+        socketChannel.configureBlocking(shouldBlock);
+        actuallyDidConnect = socketChannel.connect(theAddress);
+        return actuallyDidConnect;
+    }
 
-/**
- * This can be used in NON-BLOCKING mode to be sure that the connection was made.
- * Probably call this in a loop.  In BLOCKING mode, you don't need to call this.
- * @since 2.02
- * @return
- * @throws java.io.IOException
- */
-    public boolean ensureConnected(){
-        assert(socketChannel!=null);
+    /**
+     * This can be used in NON-BLOCKING mode to be sure that the connection was made.
+     * Probably call this in a loop.  In BLOCKING mode, you don't need to call this.
+     * @since 2.02
+     * @return
+     * @throws java.io.IOException
+     */
+    public boolean ensureConnected() {
+        assert (socketChannel != null);
 
-        boolean canFinishConnectionOrConnected=false;
+        boolean canFinishConnectionOrConnected = false;
 
-        try{
-            canFinishConnectionOrConnected=socketChannel.finishConnect();
-        }catch(Exception ex){
+        try {
+            canFinishConnectionOrConnected = socketChannel.finishConnect();
+        } catch (Exception ex) {
             try {
                 //This can happen if RL-Glue isn't running yet.  We should try to connect
                 //again, return false, and hope that this works later.
-                canFinishConnectionOrConnected=socketChannel.connect(theConnectAddress);
+                canFinishConnectionOrConnected = connect(theConnectAddress, this.blocking);
             } catch (IOException ex1) {
             }
 
         }
         return canFinishConnectionOrConnected;
     }
-
 
     public void close() throws IOException {
         socketChannel.close();
@@ -169,7 +182,7 @@ public class Network {
 
     /**
      *
-     * 
+     *
      * This method has been updated. It will work as it used to, before we added
      * NON-BLOCKING mode.  It will either return after reading size (or more) bytes
      *  or it will throw an exception.
@@ -178,18 +191,17 @@ public class Network {
      * @throws java.io.IOException
      */
     public int recv(int size) throws IOException {
-        int amountReceived=0;
+        int amountReceived = 0;
 
-        amountReceived=recvNonBlock(size);
-        while(amountReceived==0){
+        amountReceived = recvNonBlock(size);
+        while (amountReceived == 0) {
             Thread.yield();
-            amountReceived=recvNonBlock(size);
+            amountReceived = recvNonBlock(size);
         }
         return amountReceived;
     }
 
-
-   /**
+    /**
      *
      *
      * This method has been added.  If the socket is in non-blockig mode, the
@@ -222,7 +234,7 @@ public class Network {
                 recvTotal += recvSize;
             }
 
-            if(recvTotal==0){
+            if (recvTotal == 0) {
                 //This MUST be the first iteration of the loop because we return
                 //if we receive 0 bytes on the first read.
                 return 0;
@@ -231,9 +243,10 @@ public class Network {
         return recvTotal;
     }
 
-    public boolean isConnected(){
+    public boolean isConnected() {
         return socketChannel.isConnected();
     }
+
     public void clearSendBuffer() {
         sendBuffer.clear();
     }
@@ -325,7 +338,7 @@ public class Network {
     }
 
     /*
-     * 
+     *
      * Hmm, this method might actually make it quite expensive to make abstract types because
      * we need to read them once, then make a copy immediately when we change them
      * into specialized supertypes...
