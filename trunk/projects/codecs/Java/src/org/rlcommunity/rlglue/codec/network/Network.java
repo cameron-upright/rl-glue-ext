@@ -37,10 +37,17 @@ import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 /**
  * This class does the heavy lifting of sendig and receiving data over the 
  * network. It is used by both the Java and Matlab codecs.
+ *
+ * The Socket has been changed (Feb 7 2009) to be offer a NON-BLOCKING option.
+ *
+ * The Java codec is JUST FINE using BLOCKING.  NON-BLOCKING is for MATLAB.  You may
+ * need NON-BLOCKING if you wanted to run an environment and/or agent and/or
+ * experiment all from the same Thread in Java.  But why would you do that?
+ * You would have them in different Threads or preferably different processes, so
+ * none of this matters.
  * @author btanner
  */
 public class Network {
-
     public static final int kExperimentConnection = 1;
     public static final int kAgentConnection = 2;
     public static final int kEnvironmentConnection = 3;
@@ -78,7 +85,7 @@ public class Network {
     public static final int kIntSize = 4;
     protected static final int kDoubleSize = 8;
     protected static final int kCharSize = 1;
-    protected SocketChannel socketChannel;
+    protected SocketChannel socketChannel=null;
     private ByteBuffer recvBuffer;
     private ByteBuffer sendBuffer;
     private boolean debug = false;
@@ -93,7 +100,8 @@ public class Network {
     }
 
     /**
-     * Support for non-blocking.  Kinks not worked out yet though, don't set it to false.
+     * Support for NON-BLOCKING added. If you are using NON-BLOCKING, then be
+     * sure to call ensureConnected() afterward until it returns true.
      * @param host
      * @param port
      * @param retryTimeout
@@ -108,6 +116,10 @@ public class Network {
                 socketChannel = SocketChannel.open();
                 socketChannel.configureBlocking(blocking);
                 socketChannel.connect(address);
+                //In non-blocking mode, we want to do this to try to actually
+                //connect.  In blocking mode, it returns immediately because we
+                //will have connected or exceptioned in the connect(address) call.
+                socketChannel.finishConnect();
                 didConnect = true;
             } catch (IOException ioException) {
                 try {
@@ -116,6 +128,19 @@ public class Network {
                 }
             }
         }
+    }
+
+
+/**
+ * This can be used in NON-BLOCKING mode to be sure that the connection was made.
+ * Probably call this in a loop.  In BLOCKING mode, you don't need to call this.
+ * @since 2.02
+ * @return
+ * @throws java.io.IOException
+ */
+    public boolean ensureConnected() throws IOException{
+        assert(socketChannel!=null);
+        return socketChannel.finishConnect();
     }
 
 
@@ -130,20 +155,35 @@ public class Network {
     /**
      *
      * 
-     * This method has been updated. It will return 0 if there is no data available.
-     * The Socket has been changed (Feb 7 2009) to be offer a NON-BLOCKING option.
-     * 
+     * This method has been updated. It will work as it used to, before we added
+     * NON-BLOCKING mode.  It will either return after reading size (or more) bytes
+     *  or it will throw an exception.
+     * @param size
+     * @return
+     * @throws java.io.IOException
+     */
+    public int recv(int size) throws IOException {
+        int amountReceived=0;
+
+        amountReceived=recvNonBlock(size);
+        while(amountReceived==0){
+            Thread.yield();
+            amountReceived=recvNonBlock(size);
+        }
+        return amountReceived;
+    }
+
+
+   /**
+     *
+     *
+     * This method has been added.  If the socket is in non-blockig mode, the
+     * It will return 0 if there is no data available.
+     *
      * If you use the NON-BLOCKING option, it is possible that if there is no data available
      * (for example, other components have not yet connected)
      * then recv will return 0.  If recv gets ANYTHING when it first tries,
      * then it WILL continue and poll until it gets all the data it was asked for.
-     *
-     * The Java codec is JUST FINE using BLOCKING.  This all for MATLAB.  You may
-     * need NON-BLOCKING if you wanted to run an environment and/or agent and/or
-     * experiment all from the same Thread in Java.  But why would you do that?
-     *
-     * You would have them in different Threads or preferably different processes, so
-     * none of this matters.
      *
      * It also will not throw a RLGlueDisconnectException if it socketChannel.read returns
      * -1 before size bytes have been read.  This is indicative that the other end of the
@@ -151,8 +191,9 @@ public class Network {
      * @param size
      * @return
      * @throws java.io.IOException
+     * @since 2.02
      */
-    public int recv(int size) throws IOException {
+    public int recvNonBlock(int size) throws IOException {
         this.ensureRecvCapacityRemains(size);
 
         int recvTotal = 0;
