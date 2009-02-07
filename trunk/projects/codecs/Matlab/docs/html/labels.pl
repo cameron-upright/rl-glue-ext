@@ -38,7 +38,7 @@ $noresave{$key} = "$nosave";
 
 
 $key = q/mines-sample/;
-$external_latex_labels{$key} = q|2.5.1|; 
+$external_latex_labels{$key} = q|2.6.1|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:env/;
@@ -46,15 +46,11 @@ $external_latex_labels{$key} = q|2.2|;
 $noresave{$key} = "$nosave";
 
 $key = q/sarsa-sample/;
-$external_latex_labels{$key} = q|2.5.2|; 
+$external_latex_labels{$key} = q|2.6.2|; 
 $noresave{$key} = "$nosave";
 
 $key = q/mines-sarsa-sample/;
-$external_latex_labels{$key} = q|2.5|; 
-$noresave{$key} = "$nosave";
-
-$key = q/one-at-a-time/;
-$external_latex_labels{$key} = q|1.2|; 
+$external_latex_labels{$key} = q|2.6|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:agent/;

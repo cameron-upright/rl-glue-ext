@@ -10,7 +10,7 @@
 %I like space between my paragraphs
 \setlength{\parskip}{10pt} 
 
-\title{RL-Glue Matlab Codec 1.02 Manual }
+\title{RL-Glue Matlab Codec 1.03 Manual }
 \author{Brian Tanner :: brian@tannerpages.com}
 \date{}                                        
 
@@ -44,14 +44,6 @@ This Matlab codec uses the RL-Glue Java Extension, which means that Matlab needs
 \textbf{Possible Contribution: }Someone with Matlab experience could help us find out what exact version of Matlab is required to use this codec, and could help us update the codec to be as robust as possible to older versions.
 
 
-\subsection{Limitation: One Agent or Environment or Experiment per Matlab Instance}
-\label{one-at-a-time}
-
-Because Matlab is inherently single threaded, we had to limit each Matlab instance to running a single component at a time.  This means that you can only run ONE of an agent OR environment OR experiment in Matlab at a time.  If you are able to open multiple Matlab instances, you can run one
-component per instance.  We think that the usual case will probably be to run your agent in Matlab, but run the experiment and environment in another language, like Java, C, or Python.
-
-We may find a clever way to lift this restriction in the future, or create a local glue engine so that all three can run together inside Matlab without the network.  If this is very important to you, then please go to the following webpage and mark the ``star'' icon to show that you are interested in solutions:\newline
-\url{http://code.google.com/p/rl-glue-ext/issues/detail?id=57}
 \subsection{Getting the Codec}
 The codec can be downloaded either as a .tar.gz or can be checked out of the subversion repository where it is hosted.
 
@@ -219,72 +211,87 @@ You can kill the process by pressing \texttt{CTRL-c} on your keyboard.
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
 
-\subsection{Putting it all together}
-At this point, we've run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  As mentioned in Section \ref{one-at-a-time}, in Matlab we can 
-only run ONE of the agent, experiment, or environment at a time.  So, for this example we'll run the \texttt{Java SkeletonAgent} and \texttt{Java SkeletonEnvironment} with the \texttt{Matlab skeleton\_experiment}.  You could really run any agent and environment of your choice.
+\subsection{Running All Three Componenets Together}
+At this point, we've run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  As of version 1.03, the Matlab codec supports running any combination of agent, environment, and experiment, all from a single Matlab instance.
 
-The following will work if you have the \texttt{rl\_glue} socket server installed on your path(the default location), and the Java RL-Glue Extension\footnote{\url{http://glue.rl-community.org/Home/Extensions/java-codec}} installed.
+The following will work if you have the \texttt{rl\_glue} socket server is installed at \texttt{/usr/local/bin/rl\_glue}.
 
-For this, we'll use a separate terminal window in addition to the Matlab interpreter.  In a separate terminal window, do:
-\begin{verbatim}
-	>$ cd /path/to/Java/codec/examples/skeleton
-	>$ rl_glue &
-	>$ javac *.java
-	>$ java SkeletonAgent &
-	>$ java SkeletonEnvironment &
-\end{verbatim}
-
+We will run all of the components in the Matlab interpreter.  Alternatively, it may be convenient to run \texttt{rl\_glue} in a terminal window of its own.
 In the Matlab interpreter:
 \begin{verbatim}
-	>$ cd examples/skeleton
-	>$ skeleton_experiment();
+	>> cd examples/skeleton
+	%Start the rl_glue socket server as a background process
+	>> !/usr/local/bin/rl_glue &
+	>> runAllTogether();
 \end{verbatim}
 
 If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using its full path (unless it's in your \texttt{PATH} environment variable):
 \begin{verbatim}
-	>$ /path/to/rl-glue/bin/rl_glue &
+	>> /path/to/rl-glue/bin/rl_glue &
 \end{verbatim}
 
 In the Matlab window, you should see the following if it worked:
 \begin{verbatim}
-	>> skeleton_experiment()
-	Experiment starting up!
+	>> runAllTogether
+	RL-Glue Matlab Agent Codec Version: 1.0 ($Revision$)
+		Connecting to rl_glue at host: 127.0.0.1 on port 4096
+		Agent Codec Connected
+	RL-Glue Matlab Environment Codec Version: 1.0 ($Revision$)
+		Connecting to rl_glue at host: 127.0.0.1 on port 4096
+		Environment Codec Connected
 	RL-Glue Matlab Experiment Codec Version: 1.0 ($Revision$)
-	    Connecting to rl_glue at host: 127.0.0.1 on port 4096
-	    Experiment Codec Connected
-	RL_init called, the environment sent task spec: VERSION RL-Glue-3.0 PROBLEMTYPE episodic 
-	DISCOUNTFACTOR 1.0 OBSERVATIONS INTS (0 20)  ACTIONS INTS (0 1) 
-	REWARDS (-1.0 1.0)  EXTRA skeleton_environment(Matlab) by Brian Tanner.
+		Connecting to rl_glue at host: 127.0.0.1 on port 4096
+		Experiment Codec Connected
+	Experiment starting up!
+	RL_init called, the environment sent task spec: VERSION RL-Glue-3.0 
+	PROBLEMTYPE episodic DISCOUNTFACTOR 1.0 OBSERVATIONS INTS (0 20)  
+	ACTIONS INTS (0 1)  REWARDS (-1.0 1.0)  
+	EXTRA skeleton_environment(Matlab) by Brian Tanner.
+
 
 	----------Sending some sample messages----------
-	Agent responded to 'what is your name?' with: my name is skeleton_agent, Java edition!
-	Agent responded to 'If at first you do't succeed; call it version 1.0  ' 
-	with: I don't know how to respond to your message
-
-	Environment responded to 'what is your name?' with: my name is skeleton_environment, Java edition!
-	Environment responded to 'If at first you don't succeed; call it version 1.0  ' 
-	with: I don't know how to respond to your message
+	Agent responded to 'what is your name?' with: 
+	my name is skeleton_agent, Matlab edition!
+	Agent responded to 'If at first you don't succeed; call it version 1.0  ' 
+	with: I don\'t know how to respond to your message
+	Environment responded to 'what is your name?' with: 
+	my name is skeleton_environment, Matlab edition!
+	Environment responded to 'If at first you don't succeed; 
+	call it version 1.0  ' with: 
+	I don\'t know how to respond to your message
 
 
 	----------Running a few episodes----------
-	Episode 0	 10 steps 	 -1.000000 total reward	 natural end 1
-	Episode 1	 10 steps 	 -1.000000 total reward	 natural end 1
-	Episode 2	 10 steps 	 -1.000000 total reward	 natural end 1
-	Episode 3	 10 steps 	 -1.000000 total reward	 natural end 1
-	Episode 4	 10 steps 	 -1.000000 total reward	 natural end 1
+	Episode 0	 48 steps 	 -1.000000 total reward	 natural end 1
+	Episode 1	 100 steps 	 0.000000 total reward	 natural end 0
+	Episode 2	 74 steps 	 -1.000000 total reward	 natural end 1
+	Episode 3	 34 steps 	 -1.000000 total reward	 natural end 1
+	Episode 4	 100 steps 	 0.000000 total reward	 natural end 0
 	Episode 5	 1 steps 	 0.000000 total reward	 natural end 0
-	Episode 6	 10 steps 	 -1.000000 total reward	 natural end 1
+	Episode 6	 70 steps 	 1.000000 total reward	 natural end 1
 
 
 	----------Stepping through an episode----------
-	First observation and action were: 10 and: 0
+	First observation and action were: 10 and: 1
 
 
 	----------Summary----------
-	It ran for 10, total reward was: -1.000000
+	It ran for 86, total reward was: -1.000000
 \end{verbatim}
 
-Congratulations, you have run an RL-Glue experiment using the Matlab codec!  You can mix and match the Matlab agent/environment/experiment with the appropriate sample skeleton agent/environment/experiments from any other codec.
+Congratulations, you have run an RL-Glue agent / environment / experiment together, all using the Matlab codec!
+
+\subsection{Notes on Running Agents, Environments, and Experiments Together}
+There is a function called \htmladdnormallink{\texttt{runRLGlueMultiExperiment}}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Matlab/src/runRLGlueMultiExperiment.m} that facilities running any combination of agent, environment, and experiment together within Matlab.
+
+This function takes a struct as a parameter, and the struct can have any combination of the following three fields set (at least one should be set):
+\begin{description}
+	\item[agent] An agent struct, like the one that is created by \texttt{skeleton\_agent}.
+	\item[environment] An environment struct, like the one that is created by \texttt{skeleton\_environment}.
+	\item[experiment] An experiment function pointer, like \texttt{\@skeleton\_experiment}.
+\end{description}
+
+As long as you set one more of these fields, then you can call \texttt{runRLGlueMultiExperiment} and the Matlab codec will make sure that everything gets called when it needs to. Don't forget to make sure you run any components that you \textbf{don't} specify with another codec or another Matlab instance!
 
 \subsection{Going Further -- Mines Sarsa Example Project}
 \label{mines-sarsa-sample}
