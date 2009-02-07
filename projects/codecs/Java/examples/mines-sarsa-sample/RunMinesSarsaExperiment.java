@@ -29,7 +29,17 @@ import org.rlcommunity.rlglue.codec.util.AgentLoader;
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
 
 /**
-*  A simple example of how can you run all components of the samples-mines-sarsa project from a single Java class
+*  A simple example of how can you run all components of the samples-mines-sarsa project from a single Java class.
+* This is strictly for the convenience of not having to run three terminal windows and start three 
+* separate processes all of the time.  In this case, all three components (agent/environment/experiment)
+* are communicating over sockets.
+*
+* You could use this same approach to run any pair of components too, so if only your agent and environment
+* were in Java, or only the agent and experiment, you could save some effort by bundling them like this, 
+* and run the final missing component from another language.
+*
+* See RunMinesSarsaExperimentNoSockets to see how you can use the new setGlue method of the RL-Glue Java Extension
+* to run Java Agent/Environment/Experiment without sockets in a single program.
 */
 public class RunMinesSarsaExperiment{
 	
