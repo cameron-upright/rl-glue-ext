@@ -54,7 +54,7 @@ $external_latex_labels{$key} = q|3.5|;
 $noresave{$key} = "$nosave";
 
 $key = q/one-at-a-time/;
-$external_latex_labels{$key} = q|2.2|; 
+$external_latex_labels{$key} = q|2.1|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sec:agent/;

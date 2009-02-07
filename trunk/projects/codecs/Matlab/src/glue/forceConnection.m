@@ -26,8 +26,19 @@
 %AFTER checkForJavaCodec.  Sometimes I hate matlab.  Well, usually.
 function forceConnection()
     global p__rlglueStruct;
-           
+    
+    needsSetup=false;
+    
     if ~isfield(p__rlglueStruct,'network')
+        needsSetup=true;
+    else
+       if ~p__rlglueStruct.network.isConnected()
+           needsSetup=true;
+       end
+    end
+    
+           
+    if needsSetup
 		%NOTE: If the java package isn't in your path already, this WILL delete all your globals
 		%because it calls javaddpath which calls clear('java')
 	    checkForJavaCodec();
