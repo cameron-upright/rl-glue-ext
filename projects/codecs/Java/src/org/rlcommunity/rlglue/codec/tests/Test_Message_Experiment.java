@@ -66,7 +66,7 @@ public class Test_Message_Experiment {
         return tester.getFailCount();
     }
     public static void main(String[] args){
-      System.exit(runTest());
+     System.exit(runTest());
     }
 
 }

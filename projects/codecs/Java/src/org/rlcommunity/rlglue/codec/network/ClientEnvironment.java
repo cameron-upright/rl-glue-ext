@@ -129,7 +129,7 @@ public class ClientEnvironment {
                 network.recv(remaining);
             } catch (RLGlueDisconnectException e) {
                 System.err.println(e.getMessage());
-                System.exit(1);
+               System.exit(1);
             }
 
             network.flipRecvBuffer();
@@ -164,7 +164,7 @@ public class ClientEnvironment {
 
                 default:
                     System.err.println(kUnknownMessage + envState);
-                    System.exit(1);
+                   System.exit(1);
                     break;
             }
             ;

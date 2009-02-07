@@ -92,7 +92,7 @@ import java.util.StringTokenizer;
         // check to make sure this is a valid task type
         if (episodic != 'e' && episodic != 'c') {
             System.err.println("Invalid task type. Specify episodic (e) or continuous (c)");
-            System.exit(1);
+           System.exit(1);
         }
 
         try {

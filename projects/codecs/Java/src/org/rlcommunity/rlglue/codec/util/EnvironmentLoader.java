@@ -135,7 +135,7 @@ public class EnvironmentLoader implements Runnable {
         if (args.length < 1) {
             System.out.println(usage);
             System.out.println(envVars);
-            System.exit(1);
+           System.exit(1);
         }
         EnvironmentLoader theEnvironmentLoader = loadEnvironment(args[0]);
         theEnvironmentLoader.run();

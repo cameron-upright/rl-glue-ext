@@ -57,13 +57,13 @@ public class Installer {
                     "remove the old one before installing the presumably newer one.  I (the one writing this) am the old one.\n");
 
             System.err.println("To remove me, try:\n java org.rlcommunity.rlglue.codec.RLGlueCore --uninstall");
-            System.exit(1);
+           System.exit(1);
         } 
 
         if (theJarFile == null) {
             System.err.println("Could not get the JAR that you are " +
                     "executing from, aborting.");
-            System.exit(1);
+           System.exit(1);
         }
 
         System.out.println("This program will install the RL-Glue Java " +
@@ -136,7 +136,7 @@ public class Installer {
                     theChoice = choiceMap.get(theIntChoice);
                 } else {
                     System.err.println("You did not enter a valid selection or chose to quit, cancelling installation.");
-                    System.exit(1);
+                   System.exit(1);
                 }
 
 
@@ -180,7 +180,7 @@ public class Installer {
             System.out.println("You cannot uninstall the RL-Glue Java Extension if " +
                     "it has not been formally \"installed\" on your system.  From " +
                     "what I can detect, you loaded the RL-Glue codec from: \n" + getThisJar());
-            System.exit(1);
+           System.exit(1);
         }
         File theJarFile = getThisJar();
         if (!theJarFile.getName().equals("JavaRLGlueCodec.jar")) {
@@ -188,7 +188,7 @@ public class Installer {
                     "is in appears to be part of a redistribution.  Deleting" +
                     "a jar that is not called \"JavaRLGlueCodec.jar\" might" +
                     "make you mad.  The jar that I was loaded from is: \n" + getThisJar());
-            System.exit(1);
+           System.exit(1);
         }
         System.out.println("Removing RL-Glue Java Extension from:\n"+getThisJar().getAbsolutePath());
         getThisJar().delete();

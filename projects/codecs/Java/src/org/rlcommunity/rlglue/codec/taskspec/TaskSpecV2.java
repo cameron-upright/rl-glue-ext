@@ -99,7 +99,7 @@ class TaskSpecV2 extends TaskSpecDelegate
 		if(episodic != 'e' && episodic != 'c')
 		{
 			System.err.println("Invalid task type. Specify episodic (e) or continuous (c)");
-			System.exit(1);
+			System.out.println("WOULD HAVE EXITED JAVA");//System.exit(1);
 		}
 
 		try {

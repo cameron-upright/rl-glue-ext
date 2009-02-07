@@ -60,7 +60,7 @@ public static int runTest(){
 }    
     public static void main(String[] args){
         
-        System.exit(runTest());
+       System.exit(runTest());
     }
 
 }

@@ -253,7 +253,7 @@ public class NetGlue implements RLGlueInterface {
                 network.send();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
-                System.exit(1);
+               System.exit(1);
             }
         }
     }
@@ -287,11 +287,11 @@ public class NetGlue implements RLGlueInterface {
 
         if (glueState != state) {
             System.err.println("Not synched with server. glueState = " + glueState + " but should be " + state);
-            System.exit(1);
+           System.exit(1);
         }
         }catch(RLGlueDisconnectException e){
             System.err.println(e.getMessage());
-            System.exit(1);
+           System.exit(1);
         }
     }
 
@@ -316,11 +316,11 @@ public class NetGlue implements RLGlueInterface {
 
         } catch (IOException ioException) {
             ioException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         } catch (NullPointerException nullException) {
             System.err.println("You must call RL_init before calling " + callerName);
             nullException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         }
 
     }
@@ -331,11 +331,11 @@ public class NetGlue implements RLGlueInterface {
             doStandardRecv(theCode);
         } catch (IOException ioException) {
             ioException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         } catch (NullPointerException nullException) {
             System.err.println("You must call RL_init before calling " + callerName);
             nullException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         }
 
     }
@@ -352,11 +352,11 @@ public class NetGlue implements RLGlueInterface {
             doStandardRecv(theCode);
         } catch (IOException ioException) {
             ioException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         } catch (NullPointerException nullException) {
             System.err.println("You must call RL_init before calling " + callerName);
             nullException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         }
 
     }
@@ -372,11 +372,11 @@ public class NetGlue implements RLGlueInterface {
             doStandardRecv(theCode);
         } catch (IOException ioException) {
             ioException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         } catch (NullPointerException nullException) {
             System.err.println("You must call RL_init before calling " + callerName);
             nullException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         }
 
     }
@@ -398,11 +398,11 @@ public class NetGlue implements RLGlueInterface {
             doStandardRecv(theCode);
         } catch (IOException ioException) {
             ioException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         } catch (NullPointerException nullException) {
             System.err.println("You must call RL_init before calling " + callerName);
             nullException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         }
 
     }
@@ -425,11 +425,11 @@ public class NetGlue implements RLGlueInterface {
             doStandardRecv(theCode);
         } catch (IOException ioException) {
             ioException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         } catch (NullPointerException nullException) {
             System.err.println("You must call RL_init before calling " + callerName);
             nullException.printStackTrace();
-            System.exit(1);
+           System.exit(1);
         }
 
     }

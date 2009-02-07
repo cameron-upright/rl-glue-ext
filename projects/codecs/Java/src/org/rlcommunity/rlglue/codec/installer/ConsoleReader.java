@@ -69,7 +69,7 @@ public class ConsoleReader {
             inputLine = reader.readLine();
         } catch (IOException e) {
             System.out.println(e);
-            System.exit(1);
+           System.exit(1);
         }
 
         return inputLine;

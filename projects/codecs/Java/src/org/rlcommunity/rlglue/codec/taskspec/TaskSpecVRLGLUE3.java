@@ -507,9 +507,9 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
                 return thisRange;
             }
         }
-        System.err.println("This task spec does not have discrete observation: " + i);
-        System.exit(1);
-        return null;
+        //This is a bit ugly, but I'm trying to replace all my System.exit() with
+        //exceptions, because they might close Matlab
+        throw new RuntimeException("This task spec does not have discrete observation: " + i);
     }
 
     @Override
@@ -521,9 +521,9 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
                 return thisRange;
             }
         }
-        System.err.println("This task spec does not have discrete action: " + i);
-        System.exit(1);
-        return null;
+        //This is a bit ugly, but I'm trying to replace all my System.exit() with
+        //exceptions, because they might close Matlab
+        throw new RuntimeException("This task spec does not have discrete action: " + i);
     }
 
     @Override
@@ -535,9 +535,9 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
                 return thisRange;
             }
         }
-        System.err.println("This task spec does not have Continuous observation: " + i);
-        System.exit(1);
-        return null;
+        //This is a bit ugly, but I'm trying to replace all my System.exit() with
+        //exceptions, because they might close Matlab
+        throw new RuntimeException("This task spec does not have Continuous observation: " + i);
     }
 
     public DoubleRange getContinuousActionRange(int i) {
@@ -548,9 +548,9 @@ public class TaskSpecVRLGLUE3 extends TaskSpecDelegate {
                 return thisRange;
             }
         }
-        System.err.println("This task spec does not have discrete action: " + i);
-        System.exit(1);
-        return null;
+        //This is a bit ugly, but I'm trying to replace all my System.exit() with
+        //exceptions, because they might close Matlab
+        throw new RuntimeException("This task spec does not have discrete action: " + i);
     }
 
     private AbstractRange getActionRange(int i) {

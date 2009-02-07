@@ -172,7 +172,7 @@ public class ClientAgent {
                 }
             } catch (RLGlueDisconnectException e) {
                 System.err.println(e.getMessage());
-                System.exit(1);
+               System.exit(1);
             }
 
 
@@ -215,7 +215,7 @@ public class ClientAgent {
 
                 default:
                     System.err.println(kUnknownMessage + agentState);
-                    System.exit(1);
+                   System.exit(1);
                     break;
             }
             ;
