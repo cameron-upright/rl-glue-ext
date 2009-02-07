@@ -153,23 +153,14 @@ public class ClientAgent {
         int remaining = 0;
 
         do {
-            System.out.println("Top of agent loop -- about to clear recvbuffer");
 
             network.clearRecvBuffer();
 
-            while (!network.hasDataWaiting()) {
-                System.out.println("In agent event loop waiting for data, none yet.");
-                Thread.sleep(500);
-            }
-            System.out.println("Has data waiting is: " + network.hasDataWaiting());
-
-            System.out.println("About to receive");
 
             try {
                 recvSize = network.recv(8) - 8; // We may have received the header and part of the payload
                 // We need to keep track of how much of the payload was recv'd
 
-                System.out.println("recvSize is: " + recvSize);
 
                 agentState = network.getInt(0);
                 dataSize = network.getInt(Network.kIntSize);

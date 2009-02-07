@@ -118,10 +118,6 @@ public class Network {
         }
     }
 
-    public boolean hasDataWaiting() {
-        System.out.println("Remaining is apparently: " + recvBuffer.remaining());
-        return recvBuffer.hasRemaining();
-    }
 
     public void close() throws IOException {
         socketChannel.close();
