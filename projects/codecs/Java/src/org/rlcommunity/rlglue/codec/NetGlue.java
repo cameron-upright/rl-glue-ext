@@ -267,7 +267,6 @@ public class NetGlue implements RLGlueInterface {
     private synchronized void doStandardRecv(int state) throws IOException {
         network.clearRecvBuffer();
         try{
-
         int actualRecvSize=network.recv(8);
         int recvSizeWithoutHeader = actualRecvSize-8;
 

@@ -133,18 +133,21 @@ public class Network {
 
     /**
      *
-     * The below is all a lie.  I've gone back to only using blocking, so the changes
-     * here should not affect anything.
      * 
      * This method has been updated. It will return 0 if there is no data available.
-     * The Socket has been changed (Feb 7 2009) to be NON-BLOCKING.  So, it is possible
-     * that if there is no data available (for example, other components have not yet
-     * connected) then recv will return 0.  If recv gets ANYTHING when it first tries,
+     * The Socket has been changed (Feb 7 2009) to be offer a NON-BLOCKING option.
+     * 
+     * If you use the NON-BLOCKING option, it is possible that if there is no data available
+     * (for example, other components have not yet connected)
+     * then recv will return 0.  If recv gets ANYTHING when it first tries,
      * then it WILL continue and poll until it gets all the data it was asked for.
      *
-     * I am willing to do this because recv is only called directly 3 times in the entire
-     * code base, all of the other times people read right from the buffer, which recv should
-     * have filled if it didn't return 0.
+     * The Java codec is JUST FINE using BLOCKING.  This all for MATLAB.  You may
+     * need NON-BLOCKING if you wanted to run an environment and/or agent and/or
+     * experiment all from the same Thread in Java.  But why would you do that?
+     *
+     * You would have them in different Threads or preferably different processes, so
+     * none of this matters.
      *
      * It also will not throw a RLGlueDisconnectException if it socketChannel.read returns
      * -1 before size bytes have been read.  This is indicative that the other end of the
@@ -176,6 +179,9 @@ public class Network {
         return recvTotal;
     }
 
+    public boolean isConnected(){
+        return socketChannel.isConnected();
+    }
     public void clearSendBuffer() {
         sendBuffer.clear();
     }
