@@ -139,7 +139,7 @@ public class AgentLoader implements Runnable {
         if (args.length < 1) {
             System.out.println(usage);
             System.out.println(envVars);
-            System.exit(1);
+           System.exit(1);
         }
 
         AgentLoader theLoader = loadAgent(args[0]);
