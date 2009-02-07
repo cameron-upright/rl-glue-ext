@@ -28,8 +28,9 @@
 %multiStruct.environment<--environment struct, like runEnvironment expects
 %multiStruct.experiment<-- a function pointer to an experiment function
 %   For example, like multiStruct.experiment=@skeleton_experiment
-function runRLGlueMultiExperiment(multiStruct)
-%Since this kills all globals if the 
+function experimentReturned=runRLGlueMultiExperiment(multiStruct)
+experimentReturned=[];
+%Since this kills some globals we might want
 checkForJavaCodec();
 
 global p__rlglueSettings;
@@ -91,7 +92,7 @@ end
 %the whole thing ourselves.
 %Connect the Environment
 if(p__rlglueSettings.hasExperiment)
-    p__rlglueSettings.experiment();
+    experimentReturned=p__rlglueSettings.experiment();
     return;
 end
 
