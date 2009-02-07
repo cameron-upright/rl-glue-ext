@@ -141,7 +141,6 @@ public class AgentLoader implements Runnable {
             System.out.println(envVars);
            System.exit(1);
         }
-
         AgentLoader theLoader = loadAgent(args[0]);
         theLoader.run();
     }
