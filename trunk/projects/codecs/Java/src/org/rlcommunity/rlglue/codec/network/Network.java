@@ -129,7 +129,6 @@ public class Network {
                 }
             }
         }
-        System.out.println("connect is returning: "+actuallyDidConnect);
         return actuallyDidConnect;
     }
 
