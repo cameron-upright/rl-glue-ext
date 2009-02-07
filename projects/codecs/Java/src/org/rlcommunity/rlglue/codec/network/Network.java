@@ -129,6 +129,7 @@ public class Network {
                 }
             }
         }
+        System.out.println("connect is returning: "+actuallyDidConnect);
         return actuallyDidConnect;
     }
 
@@ -191,6 +192,7 @@ public class Network {
      * @throws java.io.IOException
      */
     public int recv(int size) throws IOException {
+        if(size==0)return 0;
         int amountReceived = 0;
 
         amountReceived = recvNonBlock(size);
