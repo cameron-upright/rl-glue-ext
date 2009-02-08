@@ -24,7 +24,7 @@ cp -R rl-glue-trunk/examples $IMAGEFOLDER/rl-glue/
 python build-rlglue-uninstall-script.py
 
 #Copy the uninstall command into the DMG
-cp uninstall-rlglue.command $IMAGEFOLDER/
+cp "Uninstall RL-Glue (Double Click Me)" $IMAGEFOLDER/
 #Copy the uninstall python script too
 cp -R uninstall-resources $IMAGEFOLDER/
 
