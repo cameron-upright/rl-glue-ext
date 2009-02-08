@@ -1,4 +1,5 @@
 #!/bin/bash
+#This file assumes that glue and codec have been built, and now it will make a mac package out of the install directory.
 MACDIR=OSX-Package
 DISTDIR=dist
 VERSION=`./install_root/usr/local/bin/rl_glue --pv`

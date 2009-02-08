@@ -1,4 +1,6 @@
 #!/bin/bash
+
+#Downloads the C codec and installs it to install_root
 INSTALLDIR=`pwd`/install_root/usr/local
 rm -Rf codec-trunk
 svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/ codec-trunk

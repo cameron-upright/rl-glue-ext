@@ -5,23 +5,36 @@
 === Available Downloads (only one is required) ===
 
  * [http://rl-glue-ext.googlecode.com/files/rlglue-3.0-RC-FINAL-1.tar.gz RL-Glue Core Project Distribution 3.0-RC-FINAL-1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rlglue-3.0-RC-FINAL-1.tar.gz (File Details)]
- This is a platform-independent project that was built using the GNU Autotools.  It should install on most Linux and Unix platforms, including Mac OS X (Intel and PowerPC) and on Microsoft Windows under Cygwin.
+This is a platform-independent project that was built using the GNU Autotools.  It should install on most Linux and Unix platforms, including Mac OS X (Intel and PowerPC) and on Microsoft Windows under Cygwin.
 
  * [http://rl-glue-ext.googlecode.com/files/RL-Glue-3.0-RC-FINAL-1-and-C-Codec.dmg Mac OS X RL-Glue Core Project and C/C++ Codec Disk Image 3.0-RC-FINAL-1] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=RL-Glue-3.0-RC-FINAL-1-and-C-Codec.dmg (File Details)]
- This is an OS X disk image with familiar installer that will install both RL-Glue Core and the C/C++ Codec onto your Mac.  Intel Mac only. You do not need to install the C/C++ Codec separately if you use this option.
- It contains:
-   * Installer program (.pkg) for pre-compiled libraries, headers, and rl_glue executable socket server.
-   * Uninstall script for removing all of the above
-   * The documentation for RL-Glue and the C/C++ codec(PDF)
-   * The examples for RL-Glue and the C/C++ codec
+This is an OS X disk image with familiar installer that will install both RL-Glue Core and the C/C++ Codec onto your Mac.  Intel Mac only. You do not need to install the C/C++ Codec separately if you use this option.
+It contains:
+  * Installer program (.pkg) for pre-compiled libraries, headers, and rl_glue executable socket server.
+  * Uninstall script for removing all of the above
+  * The documentation for RL-Glue and the C/C++ codec(PDF)
+  * The examples for RL-Glue and the C/C++ codec
+
+ * [http://rl-glue-ext.googlecode.com/files/? Windows Binary .exe RL-Glue Core Project ?] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=? (File Details)]
+This is a 32-bit Windows binary package that does NOT require Cygwin to run.  No installation involved.  This does not help you if you want to write C/C++ codec, but it will work for all other codecs.
+
+It contains:
+  * rl_glue.exe executable socket server
+  * The documentation for RL-Glue (PDF)
+  * The examples for RL-Glue and the C/C++ codec
+
+<wiki:comment>
+ * [http://rl-glue-ext.googlecode.com/files/? Debian/Ubuntu binary .deb package RL-Glue Core Project ?] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=? (File Details)]
+</wiki:comment>
+ * Debian/Ubuntu binary .deb package -- coming soon!
 
 === Quick Install (Autotools Version)===
 {{{
 #Unpack the files
->$ tar -zxf rlglue-3.0-RC-FINAL-1.tar.gz
+>$ tar -zxf GLUE-DEV-FILE-BASE.tar.gz
 
 #Change to unpacked directory
->$ cd /path/to/rlglue-3.0-RC-FINAL-1
+>$ cd /path/to/GLUE-DEV-FILE-BASE
 
 #Configure the installation (for advanced options see the manual)
 >$ ./configure
@@ -44,4 +57,6 @@ For more information about RL-Glue and codecs, please visit the homepage:
 And the RL-Glue Core Homepage:
 [http://glue.rl-community.org/Home/rl-glue]
 
-
+=== Past Versions ===
+To list all past versions of the RLGlue Core project, go here:
+[http://code.google.com/p/rl-glue-ext/downloads/list?q=language:C]
