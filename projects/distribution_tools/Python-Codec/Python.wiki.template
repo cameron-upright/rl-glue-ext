@@ -5,9 +5,17 @@
 === Available Downloads (only one is required)===
 
  * [PYTHON-USER-LINK Python User Distribution PYTHON-USER-VERSION] [PYTHON-USER-DETAILS-LINK (File Details)]
- * [PYTHON-DEV-LINK Python Developer Distribution PYTHON-DEV-VERSION] [PYTHON-DEV-DETAILS-LINK (File Details)]
+ The *user* distribution is a no-nonsense distribution that most people will want to download.
+ It contains:
+   * src directory with setup.py script to install
+   * The documentation (PDF)
+   * The examples
+   * README file to get you started if you don't like manuals
 
- These are both platform-independent RL-Glue codecs written in Python.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
+ * [PYTHON-DEV-LINK Python Developer Distribution PYTHON-DEV-VERSION] [PYTHON-DEV-DETAILS-LINK (File Details)]
+ The *dev* distribution includes everything from the user distribution, but also the source code and compile scripts for the manual.  Not much more, but that might change over time.
+ 
+These are both platform-independent RL-Glue codecs written in Python.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
 
 === User Quick Install ===
 {{{
@@ -35,3 +43,6 @@ For more information about the Python codec, and others, please visit the RL-Glu
 And the Python Codec Homepage:
 [http://glue.rl-community.org/Home/Extensions/python-codec]
 
+=== Past Versions ===
+To list all past versions of the Python codec, go here:
+[http://code.google.com/p/rl-glue-ext/downloads/list?q=language:Python]
