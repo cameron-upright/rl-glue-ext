@@ -4,4 +4,4 @@ This is a 32-bit Windows binary package that does NOT require Cygwin to run.  No
 It contains:
   * rl_glue.exe executable socket server
   * The documentation for RL-Glue (PDF)
-
+---- 
