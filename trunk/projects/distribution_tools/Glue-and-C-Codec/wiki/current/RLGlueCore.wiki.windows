@@ -1,0 +1,7 @@
+ * [http://rl-glue-ext.googlecode.com/files/? Windows Binary .exe RL-Glue Core Project ?] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=? (File Details)]
+This is a 32-bit Windows binary package that does NOT require Cygwin to run.  No installation involved.  This does not help you if you want to write C/C++ codec, but it will work for all other codecs.
+
+It contains:
+  * rl_glue.exe executable socket server
+  * The documentation for RL-Glue (PDF)
+

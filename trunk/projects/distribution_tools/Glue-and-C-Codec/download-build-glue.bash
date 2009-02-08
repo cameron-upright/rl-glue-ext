@@ -1,4 +1,6 @@
 #!/bin/bash
+
+#Downloads the glue and installs it to install_root
 INSTALLDIR=`pwd`/install_root/usr/local
 rm -Rf rl-glue-trunk
 rm -Rf install_root
