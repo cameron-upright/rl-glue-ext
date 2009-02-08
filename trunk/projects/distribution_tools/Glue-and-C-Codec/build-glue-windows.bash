@@ -9,10 +9,15 @@ cd rl-glue-trunk
 ./configure --host i586-mingw32msvc --enable-mingw
 make
 BinaryName=RL-Glue-Windows-Binary-$VERSION.zip
-cp rl-glue-trunk/docs/Glue-Overview.pdf .
-cp rl-glue-trunk/docs/TechnicalManual.pdf .
-zip $BinaryName src/rl_glue.exe docs/Glue-Overview.pdf docs/TechnicalManual.pdf
-cp $BinaryName ../dist/
+mkdir tmp
+cp docs/Glue-Overview.pdf ./tmp/
+cp docs/TechnicalManual.pdf ./tmp/
+cp src/rl_glue.exe ./tmp/
+cd tmp
+zip $BinaryName rl_glue.exe Glue-Overview.pdf TechnicalManual.pdf
+cp $BinaryName ../../dist/
+cd ..
+rm -Rf tmp
 
 
 
