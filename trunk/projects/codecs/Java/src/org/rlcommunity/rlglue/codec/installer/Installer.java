@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Set;
@@ -149,6 +150,8 @@ public class Installer {
                 }
                 copyFileTo(theJarFile, DestinationFile);
                 System.out.println("Installation Complete!");
+                System.out.println("Test it by typing:");
+                System.out.println(">$ java org.rlcommunity.rlglue.codec.RLGlueCore --version");
             } catch (IOException ex) {
                 Logger.getLogger(Installer.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -210,8 +213,11 @@ public class Installer {
         File theJarFile = null;
         URL codeBase = Installer.class.getProtectionDomain().getCodeSource().getLocation();
         if (codeBase.getPath().endsWith(".jar")) {
-            String jarFileName = codeBase.getFile();
-            theJarFile = new File(jarFileName);
+            try {
+                theJarFile = new File(codeBase.toURI());
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(Installer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return theJarFile;
     }
