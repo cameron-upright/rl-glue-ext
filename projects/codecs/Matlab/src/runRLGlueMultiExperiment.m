@@ -92,7 +92,13 @@ end
 %the whole thing ourselves.
 %Connect the Environment
 if(p__rlglueSettings.hasExperiment)
-    experimentReturned=p__rlglueSettings.experiment();
+    %This is a tricky hack so we can either support experiments that return
+    %a value or don't.
+    if nargout(p__rlglueSettings.experiment) >= 1
+        experimentReturned=p__rlglueSettings.experiment();
+    else
+        p__rlglueSettings.experiment();
+    end
     return;
 end
 
