@@ -269,7 +269,7 @@ It implements all the required functions and provides a good example of how to c
 <P>
 The pertinent file is:
 <PRE>
-	examples/skeleton/SkeletonAgent.java
+	examples/skeleton-sample/SkeletonAgent.java
 </PRE>
 
 <P>
@@ -278,7 +278,7 @@ This agent does not learn anything and randomly chooses integer action 0 or 1.
 <P>
 You can compile and run the agent by typing:
 <PRE>
-	&gt;$ cd examples/skeleton
+	&gt;$ cd examples/skeleton-sample
 	&gt;$ javac SkeletonAgent.java
 	&gt;$ java SkeletonAgent
 </PRE>
@@ -314,7 +314,7 @@ pattern as the agent version (Section <A HREF="#sec:agent">2.1</A>).  This secti
 <P>
 The pertinent file is:
 <PRE>
-	examples/skeleton_environment/SkeletonEnvironment.java
+	examples/skeleton-sample/SkeletonEnvironment.java
 </PRE>
 
 <P>
@@ -330,7 +330,7 @@ There are two actions, {0, 1}.  Action 0 decrements the state number, and action
 <P>
 You can compile and run the environment by typing:
 <PRE>
-	&gt;$ cd examples/skeleton
+	&gt;$ cd examples/skeleton-sample
 	&gt;$ javac SkeletonEnvironment.java
 	&gt;$ java SkeletonEnvironment
 </PRE>
@@ -364,7 +364,7 @@ pattern as the agent version (Section <A HREF="#sec:agent">2.1</A>).  This secti
 <P>
 The pertinent files are:
 <PRE>
-	examples/skeleton/SkeletonExperiment.java
+	examples/skeleton-sample/SkeletonExperiment.java
 </PRE>
 
 <P>
@@ -372,7 +372,7 @@ This experiment runs <TT>RL_Episode</TT> a few times, sends some messages to the
 
 <P>
 <PRE>
-	&gt;$ cd examples/skeleton
+	&gt;$ cd examples/skeleton-sample
 	&gt;$ javac SkeletonExperiment.java
 	&gt;$ java SkeletonExperiment
 </PRE>
@@ -403,7 +403,7 @@ Running All Three Components Together</A>
 At this point, we've compiled and run each of the three components, now it's time to run them with the <TT>rl_glue</TT> executable server.  The following will work from the examples 
 directory if you have them all built, and RL-Glue installed in the default location:
 <PRE>
-	&gt;$ cd examples/skeleton
+	&gt;$ cd examples/skeleton-sample
 	&gt;$ rl_glue &amp;
 	&gt;$ javac *.java
 	&gt;$ java SkeletonAgent &amp;
@@ -876,9 +876,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 633 $
+Revision Number: $Rev: 647 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2009-02-07 09:56:01 -0700 (Sat, 07 Feb 2009) $
+Last Updated   : $Date: 2009-02-07 16:14:51 -0700 (Sat, 07 Feb 2009) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/docs/JavaCodec.tex $
 </PRE>
 
@@ -902,7 +902,7 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>JavaCodec.tex -split 0 -dir html -mkdir -title 'RL-Glue Java Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2009-02-07
+The translation was initiated by Brian Tanner on 2009-02-08
 <BR><HR><H4>Footnotes</H4>
 <DL>
 <DT><A NAME="foot218">... RL-Glue</A><A
@@ -944,7 +944,7 @@ The translation was initiated by Brian Tanner on 2009-02-07
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2009-02-07
+2009-02-08
 </ADDRESS>
 </BODY>
 </HTML>
