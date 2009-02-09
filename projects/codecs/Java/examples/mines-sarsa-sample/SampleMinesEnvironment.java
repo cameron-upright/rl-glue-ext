@@ -46,9 +46,9 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
  *	The reward per step is -1, with +10 for exiting the game successfully
  *	and -100 for stepping on a mine.
  *
- * This example follow my (Brian Tanner) favorite pattern of keeping the dynamics
+ * This example follows my (Brian Tanner) favorite pattern of keeping the dynamics
  * of the world fairly separate from the class that implements EnvironmentInterface.
- * In this case, I've put it in the clss WorldDescription, which is inside this
+ * In this case, I've put it in the class WorldDescription, which is inside this
  * same Java file as SampleMinesEnvironment.  Usually I would put it in a separate
  * file.  This separation means that SampleMinesEnvironment doesn't need to know
  * much about the dynamics of the world, and WorldDescription doesn't need to know
@@ -88,7 +88,7 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
         theWorld = new WorldDescription(world_map);
 
 
-        //Create a task spec programatically.  This task spec encodes that state, action, and reward space for the problem.
+        //Create a task spec programmatically.  This task spec encodes that state, action, and reward space for the problem.
         //You could forgo the task spec if your agent and environment have been created specifically to work with each other
         //ie, there is no need to share this information at run time.  You could also use your own ad-hoc task specification language,
         //or use the official one but just hard code the string instead of constructing it this way.
@@ -96,9 +96,9 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
         theTaskSpecObject.setEpisodic();
         theTaskSpecObject.setDiscountFactor(1.0d);
 
-        //Specify that there will be an integer observation [0,108] for the state
+        //Specify that there will be an integer observation [0,107] for the state
         theTaskSpecObject.addDiscreteObservation(new IntRange(0, theWorld.getNumStates() - 1));
-        //Specify that there will be an integer action [0,4]
+        //Specify that there will be an integer action [0,3]
         theTaskSpecObject.addDiscreteAction(new IntRange(0, 3));
         //Specify the reward range [-100,10]
         theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d));
@@ -256,7 +256,7 @@ class WorldDescription {
      * Sets the agent current state to startRow,startCol.
      * @param startRow
      * @param startCol
-     * @return true if the state is valid and not terminal, otherewise
+     * @return true if the state is valid and not terminal, otherwise
      * return false.
      */
     boolean setAgentState(int startRow, int startCol) {
