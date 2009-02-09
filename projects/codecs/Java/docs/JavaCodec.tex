@@ -119,14 +119,14 @@ It implements all the required functions and provides a good example of how to c
 
 The pertinent file is:
 \begin{verbatim}
-	examples/skeleton/SkeletonAgent.java
+	examples/skeleton-sample/SkeletonAgent.java
 \end{verbatim}
 
 This agent does not learn anything and randomly chooses integer action $0$ or $1$.  
 
 You can compile and run the agent by typing:
 \begin{verbatim}
-	>$ cd examples/skeleton
+	>$ cd examples/skeleton-sample
 	>$ javac SkeletonAgent.java
 	>$ java SkeletonAgent
 \end{verbatim}
@@ -152,7 +152,7 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent file is:
 \begin{verbatim}
-	examples/skeleton_environment/SkeletonEnvironment.java
+	examples/skeleton-sample/SkeletonEnvironment.java
 \end{verbatim}
 
 This environment is episodic, with 21 states, labeled $\{0, 1,\ldots,19,20\}$. States $\{0, 20\}$ are terminal and return rewards of $\{-1, +1\}$ respectively.  The other states return reward of $0$.
@@ -160,7 +160,7 @@ There are two actions, $\{0, 1\}$.  Action $0$ decrements the state number, and 
 
 You can compile and run the environment by typing:
 \begin{verbatim}
-	>$ cd examples/skeleton
+	>$ cd examples/skeleton-sample
 	>$ javac SkeletonEnvironment.java
 	>$ java SkeletonEnvironment
 \end{verbatim}
@@ -186,13 +186,13 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent files are:
 \begin{verbatim}
-	examples/skeleton/SkeletonExperiment.java
+	examples/skeleton-sample/SkeletonExperiment.java
 \end{verbatim}
 
 This experiment runs \texttt{RL\_Episode} a few times, sends some messages to the agent and environment, and then steps through one episode using \texttt{RL\_step}.
 
 \begin{verbatim}
-	>$ cd examples/skeleton
+	>$ cd examples/skeleton-sample
 	>$ javac SkeletonExperiment.java
 	>$ java SkeletonExperiment
 \end{verbatim}
@@ -217,7 +217,7 @@ Please open it up and take a look.
 At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples 
 directory if you have them all built, and RL-Glue installed in the default location:
 \begin{verbatim}
-	>$ cd examples/skeleton
+	>$ cd examples/skeleton-sample
 	>$ rl_glue &
 	>$ javac *.java
 	>$ java SkeletonAgent &
