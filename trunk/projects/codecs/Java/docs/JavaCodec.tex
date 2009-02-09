@@ -34,7 +34,11 @@ This project has a home here:\\
 
 
 \subsection{Software Requirements}
-To run agents, environments, and experiments created with this codec, you will need to have RL-Glue (or a surrogate) installed on your computer.
+To mix agents, environments, and experiments created with this codec with components from any different language, you will need to have RL-Glue executable socket server (\texttt{rl\_glue(.exe)}) installed on your computer.  It is available in several packages at:\newline
+\url{http://code.google.com/p/rl-glue-ext/wiki/RLGlueCore}
+
+If you are going to create your agents, environment, and experiment \textbf{strictly} in Java, then you do not need any more than what is in the Java RL-Glue Extension.  In that java-only case, you do not need to use sockets to connect your components together.  Be warned, most of the examples in this manual assume that you will be using sockets. A little more information about running without sockets is in Section \ref{no-sockets}.
+
 
 Compiling and running components with this codec requires Java 1.5 or higher. You can find out what version you have by doing the following at the command-line:
 \begin{verbatim}
@@ -89,6 +93,9 @@ To install the RL-Glue Java Extension, do the following:
 
 //Both distributions install the same way
 >$ java -jar JavaRLGlueCodec.jar --install
+
+//Test it by typing:
+>$ java org.rlcommunity.rlglue.codec.RLGlueCore --version
 \end{verbatim}
 
 This will provide you with a numbered list, prompting you to choose a Java extension folder to install to that is appropriate for your system.
@@ -378,6 +385,7 @@ calls  in the same session:
 Remember, on most *nix systems, you need \texttt{superuser} privileges to listen on ports lower than $1024$, so you probably want to pick one higher than that.
 
 \subsection{Running in Local Mode without Network Sockets}
+\label{no-sockets}
 A new feature has been added in version 2.03 of the RL-Glue Java Extension that lets you run you agents, environments, and experiments all together with Java, without using sockets to connect them together.  This mode is much faster per step than using network sockets.  
 
 The best part of this feature is that the technique used to bypass the sockets happens outside of the agent, environment, and experiment program, by a new class.  This means that you can program your components and experiment with them locally, but they are still 100\% RL-Glue compatible and can be shared with people for use in the language of their choice.  An example of how to do this is linked in Section \ref{all-one-class}.

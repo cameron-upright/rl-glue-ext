@@ -22,6 +22,10 @@ $key = q/sec:gotchas-shared-libs/;
 $ref_files{$key} = "$dir".q|JavaCodec.html|; 
 $noresave{$key} = "$nosave";
 
+$key = q/no-sockets/;
+$ref_files{$key} = "$dir".q|JavaCodec.html|; 
+$noresave{$key} = "$nosave";
+
 $key = q/all-one-class/;
 $ref_files{$key} = "$dir".q|JavaCodec.html|; 
 $noresave{$key} = "$nosave";
