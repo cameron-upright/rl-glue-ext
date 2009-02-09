@@ -13,13 +13,12 @@ http://glue.rl-community.org/Home/Extensions/matlab-codec
 Running
 ----------------------------
 - These instructions assume that you have installed the Matlab codec.  If not, you will need to add 'src' and all of its subdirectories to your Matlab path, and also you need the JavaRLGlueCodec.jar in your Matlab Java path.
-- They also assume that you have rl_glue (or rl_glue.exe) installed on your path so that you don't have to type the full path to it.
 
 
 -- Run All Together, Communicating over Sockets --
 This is the easiest option, it will run the agent, environment, and experiment all together.
 
->> !rl_glue & %(maybe !rl_glue.exe& or !/path/to/rl_glue.exe&)
+>> !/usr/local/bin/rl_glue & %(maybe !/usr/local/bin/rl_glue.exe &)
 >> runAllTogether()
 
 
