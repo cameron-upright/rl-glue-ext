@@ -21,6 +21,7 @@ PATH=$PATH:/usr/local/i386-mingw32-3.4.5/bin make
 
 BinaryName=RL-Glue-Windows-Binary-$VERSION.zip
 mkdir tmp
+cp windows-binaries/README.txt ./tmp/
 cp docs/Glue-Overview.pdf ./tmp/
 cp docs/TechnicalManual.pdf ./tmp/
 cp src/rl_glue.exe ./tmp/
