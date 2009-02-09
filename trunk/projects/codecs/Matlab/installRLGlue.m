@@ -2,6 +2,11 @@
 function installRLGlue(installLocation)
 %This relies on the JVM running, but that's ok so does the whole codec.
 pathSeparator=char(java.io.File.separator);
+    usingWindows=false;
+    if pathSeparator=='\'
+        usingWindows=true;
+    end
+
     suggestPath=false;
     
     if nargin==0
@@ -133,6 +138,10 @@ function shouldProceed=promptUserYN(theString)
     shouldProceed=false;
     
     thePrompt=strcat(theString,' yes/no [no]: ');
+    %Windows is picky and eats the separator char in the input function
+    if isWindows()
+       thePrompt=strrep(thePrompt,'\','\\');
+    end
     reply = input(thePrompt,'s');
     if ~isempty(reply)
         if strcmpi(reply,'y') || strcmpi(reply,'yes')
@@ -162,5 +171,12 @@ function userDir = getuserdir()
              'Explorer\Shell Folders'],'Personal');
     else
         userDir = char(java.lang.System.getProperty('user.home'));
+    end
+end
+
+function isWin= isWindows()
+    isWin=false;
+    if char(java.io.File.separator)=='\'
+        isWin=true;
     end
 end
