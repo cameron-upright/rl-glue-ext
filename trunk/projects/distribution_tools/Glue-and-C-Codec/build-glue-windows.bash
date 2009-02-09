@@ -5,9 +5,20 @@ VERSION=`$INSTALLDIR/bin/rl_glue --pv`
 #Created by download-build-glue
 cd rl-glue-trunk
 
-#configure for cross compile
-./configure --host i586-mingw32msvc --enable-mingw
-make
+#configure for cross compile on Ubuntu/Debian
+#./configure --host i586-mingw32msvc --enable-mingw
+
+#configure for cross compile on Mac OS with tools installed from:
+#http://crossgcc.rts-software.org/doku.php
+PATH=$PATH:/usr/local/i386-mingw32-3.4.5/bin ./configure --host i386-mingw32 --enable-mingw
+
+
+#Linux
+#make
+
+#Mac OS
+PATH=$PATH:/usr/local/i386-mingw32-3.4.5/bin make
+
 BinaryName=RL-Glue-Windows-Binary-$VERSION.zip
 mkdir tmp
 cp docs/Glue-Overview.pdf ./tmp/
