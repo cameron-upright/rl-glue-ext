@@ -299,24 +299,28 @@ OBSERVATIONS INTS (1 0 20)  ACTIONS INTS (1 0 1)  REWARDS (1 -1.0 1.0)  EXTRA
 \label{all-one-class}
 If more than one of the components you are using is written in Java, you may appreciate a more convenient way to run them than using separate terminals.  In the case where your agent, environment, or experiment program are all written in Java, you can even start them all from a single Java file.
 
-New in Version 2.03 of the RL-Glue Java Extension, you can even run them locally, without network sockets or the \texttt{rl\_glue} executable socket server.  Examples of how to do this are provided with the sample skeleton project, both \htmladdnormallink{with sockets}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/mines-sarsa-sample/RunMinesSarsaExperiment.java} and \htmladdnormallink{without}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/mines-sarsa-sample/RunMinesSarsaExperimentNoSockets.java}.
+New in Version 2.03 of the RL-Glue Java Extension, you can even run them locally, without network sockets or the \texttt{rl\_glue} executable socket server.  Examples of how to do this are provided with the sample skeleton project, both \htmladdnormallink{with sockets}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/skeleton-sample/RunAllSkeleton.java} and \htmladdnormallink{without}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/skeleton-sample/RunAllSkeletonNoSockets.java}.
 
 \subsection{Going Further -- Mines Sarsa Example Project}
 \label{mines-sarsa-sample}
 The \texttt{skeleton} sample project is extremely limited and only shows the mechanics of how RL-Glue components are structured using the Java codec.  The \texttt{mines-sarsa} sample project is much richer.
 
+More details about the \texttt{mines-sarsa} sample project can be found at their RL-Library home:\newline
+\url{http://library.rl-community.org/packages/mines-sarsa-sample}
+
 \subsubsection{Sample-Mines-Environment}
 \label{mines-sample}
 The 
-\htmladdnormallink{mines environment}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/mines-sarsa-sample/SampleMinesEnvironment.java} 
+\htmladdnormallink{mines environment}{http://code.google.com/p/rl-library/source/browse/trunk/projects/packages/examples/mines-sarsa-java/SampleMinesEnvironment.java} 
 is internally a two-dimensional, discrete grid world where the agent receives a penalty per step until reaching a goal state, hopefully without stepping on any exploding land-mines along the way.  The (x,y) state is flattened into a discrete, scalar observation for the agent.  This environment can receive special messages from the experiment program to print the current state to the screen, and also to toggle between random starting states and a fixed starting-state specified by the experiment.
+
 
 The task specification string\footnote{\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}} is created in a semi-automated way using the Java RL-Glue Extension task spec parser/builder. 
 
 \subsubsection{Samples-Sarsa-Agent}
 \label{sarsa-sample}
 The 
-\htmladdnormallink{SARSA agent}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Java/examples/mines-sarsa-sample/SampleSarsaAgent.java}
+\htmladdnormallink{SARSA agent}{http://code.google.com/p/rl-library/source/browse/trunk/projects/packages/examples/mines-sarsa-java/SampleSarsaAgent.java}
 is a tabular learning agent that uses $\epsilon-greedy$ exploration as described in \htmladdnormallink{Reinforcement Learning: An Introduction}{http://www.cs.ualberta.ca/~sutton/book/ebook/node64.html} by Sutton and Barto.
 
 The SARSA agent parses the task specification string using the Java RL-Glue Extension task spec parser.  This agent can receive special messages from the experiment program to pause/unpause learning, pause/unpause exploring, save the current value function to a file, and load the the value function from a file.
