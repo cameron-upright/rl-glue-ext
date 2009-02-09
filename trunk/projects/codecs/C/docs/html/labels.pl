@@ -10,6 +10,10 @@ $key = q/mines-sample/;
 $external_labels{$key} = "$URL/" . q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
 
+$key = q/custom-install-location/;
+$external_labels{$key} = "$URL/" . q|C-Codec.html|; 
+$noresave{$key} = "$nosave";
+
 $key = q/sec:env/;
 $external_labels{$key} = "$URL/" . q|C-Codec.html|; 
 $noresave{$key} = "$nosave";
@@ -47,6 +51,10 @@ $noresave{$key} = "$nosave";
 
 $key = q/sec:custom-flags/;
 $external_latex_labels{$key} = q|2.2|; 
+$noresave{$key} = "$nosave";
+
+$key = q/custom-install-location/;
+$external_latex_labels{$key} = q|1.4.3|; 
 $noresave{$key} = "$nosave";
 
 $key = q/mines-sample/;

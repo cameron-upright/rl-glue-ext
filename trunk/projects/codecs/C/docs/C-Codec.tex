@@ -68,6 +68,8 @@ The steps are:
 
 Provided everything goes well, the headers have now been installed to \texttt{/usr/local/include} and the libs to \texttt{/usr/local/lib}.
 
+\textbf{NOTE:} On many Linux systems, \texttt{/usr/local} is not actually on the library and header search paths by default, but \texttt{/usr} surely is. In this case, you may want to follow the instructions in Section \ref{custom-install-location} system with \texttt{--prefix=/usr}.
+
 \subsubsection{Install Codec when RL-Glue is in a custom location}
 
 If \texttt{configure} can't find RL-Glue installed on your machine, it will give you an error like the following:
@@ -89,7 +91,10 @@ If you installed RL-Glue to some place other than \texttt{/usr/local}, say \text
 	>$ sudo make install
 \end{verbatim}
 
-\subsubsection{Install Codec To Custom Location (without \textit{root} access)}
+\subsubsection{Install Codec To Custom Location (maybe without \textit{root} access)}
+\label{custom-install-location}
+You might want to install the codec to a location other than the default of \texttt{/usr/local}.
+
 If you don't have \textit{sudo} or \textit{root} access on the target machine, you can install the codec in your home directory (or other directory you have access to).
 If you install to a custom location, you will need set your \texttt{CFLAGS} and \texttt{LDFLAGS} variables appropriately when compiling your agents, environments, and experiments. See Section \ref{sec:custom-flags} for more information.
 
@@ -104,7 +109,7 @@ Provided everything goes well, the headers and libraries have been respectively 
 \texttt{/Users/btanner/tmp/rlglue/include} and \texttt{/Users/btanner/tmp/rlglue/lib}.
 
 
-\subsection{Uninstall}
+\subsubsection{Uninstall}
 If you decide that you don't want the RL-Glue C codec on your machine anymore, you can easily uninstall it.  The procedures varies a tiny bit depending on if you installed it to the default location, or somewhere custom.
 
 \subsubsection{Codec Installed To Default Location}
@@ -126,15 +131,17 @@ That's it!  This will remove all of the headers and libraries from \texttt{/User
 
 
 \section{Sample Project}
-We have included three example projects with this codec, located in the \texttt{examples} directory.  The  \texttt{skeleton} and \texttt{mines-sarsa-sample} projects each contain an agent, environment, and experiment written for this C/C++ codec.  
+We have included three example projects with this codec, located in the \texttt{examples} directory.  The  \texttt{skeleton-example} and \texttt{mines-sarsa-sample} projects each contain an agent, environment, and experiment written for this C/C++ codec.  
 
-The \texttt{skeleton} contains all of the bare-bones plumbing that is required to create an agent/environment/experiment with this codec and might be a good starting point for creating your own components.
+The \texttt{skeleton-example} contains all of the bare-bones plumbing that is required to create an agent/environment/experiment with this codec and might be a good starting point for creating your own components.
 
 The \texttt{mines-sarsa-sample} contains a fully functional tabular Sarsa learning algorithm, a discrete-observation grid world problem, and an experiment program that can run these together and gather results.  More details below in Section \ref{mines-sarsa-sample}.
 
 the \texttt{custom\_integrated\_env} in Section \ref{custom-env} shows how you can adapt this codec to help programs not originally meant for RL-Glue (Atari emulators, real-time strategy games, etc.) work with RL-Glue.
 
 In the following sections, we will describe the skeleton project.  Running and using the \texttt{mines-sarsa-sample} is analogous.
+
+The \texttt{README} file in the specific examples directories may also be helpful in getting started.
 
 
 \subsection{Skeleton Agent}
@@ -144,15 +151,15 @@ It implements all the required functions and provides a good example of how to c
 
 The pertinent files are:
 \begin{verbatim}
-	examples/skeleton_agent/SkeletonAgent.c
-	examples/skeleton_agent/Makefile
+	examples/skeleton-example/SkeletonAgent.c
+	examples/skeleton-example/Makefile
 \end{verbatim}
 
 This agent does not learn anything and randomly chooses integer action $0$ or $1$.  
 
 If RL-Glue and this codec have been installed in the default location, \texttt{/usr/local}, then you can compile and run the agent like:
 \begin{verbatim}
-	>$ cd examples/skeleton_agent
+	>$ cd examples/skeleton-example
 	>$ make
 	>$ ./SkeletonAgent
 \end{verbatim}
@@ -194,7 +201,7 @@ RLGlueNetDev provides implementations of the low level network code that is used
 %Find a place for this
 \subsection{Custom Flags for Custom Installs}
 \label{sec:custom-flags}
-If RL-Glue \textbf{or} this codec have been installed in a custom location (for example: \texttt{/Users/joe/glue}), then you will
+If RL-Glue \textbf{or} this codec have been installed in a custom location (for example: \texttt{/Users/joe/glue}), or if \texttt{/usr/local} isn't in your computers default library and header search paths, then you will
 need to set the header search path in \texttt{CFLAGS} and the library search path in \texttt{LDFLAGS}.  You can either do this each time you call make, 
 or you can export the values as environment variables.  These instructions apply to agents, environments, and experiment programs.
 
@@ -240,8 +247,8 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent files are:
 \begin{verbatim}
-	examples/skeleton_environment/SkeletonEnvironment.c
-	examples/skeleton_environment/Makefile
+	examples/skeleton-example/SkeletonEnvironment.c
+	examples/skeleton-example/Makefile
 \end{verbatim}
 
 This environment is episodic, with 21 states, labeled $\{0, 1,\ldots,19,20\}$. States $\{0, 20\}$ are terminal and return rewards of $\{-1, +1\}$ respectively.  The other states return reward of $0$.
@@ -249,7 +256,7 @@ There are two actions, $\{0, 1\}$.  Action $0$ decrements the state number, and 
 
 If RL-Glue and this codec have been installed in the default location, \texttt{/usr/local}, then you can compile and run the environment like:
 \begin{verbatim}
-	>$ cd examples/skeleton_environment
+	>$ cd examples/skeleton-example
 	>$ make
 	>$ ./SkeletonEnvironment
 \end{verbatim}
@@ -283,15 +290,15 @@ pattern as the agent version (Section \ref{sec:agent}).  This section will be le
 
 The pertinent files are:
 \begin{verbatim}
-	examples/skeleton_experiment/SkeletonExperiment.c
-	examples/skeleton_experiment/Makefile
+	examples/skeleton-example/SkeletonExperiment.c
+	examples/skeleton-example/Makefile
 \end{verbatim}
 
 This experiment runs \texttt{RL\_Episode} a few times, sends some messages to the agent and environment, and then steps through one episode using \texttt{RL\_step}.
 
 If RL-Glue and this codec have been installed in the default location, \texttt{/usr/local}, then you can compile and run the experiment like:
 \begin{verbatim}
-	>$ cd examples/skeleton_experiment
+	>$ cd examples/skeleton-example
 	>$ make
 	>$ ./SkeletonExperiment
 \end{verbatim}
@@ -347,9 +354,9 @@ If you see that \texttt{/usr/local/lib} is not in the search path, you may want 
 At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples directory if you have them all built, and RL-Glue installed in the default location:
 \begin{verbatim}
 	>$ rl_glue &
-	>$ skeleton_agent/SkeletonAgent &
-	>$ skeleton_environment/SkeletonEnvironment &
-	>$ skeleton_experiment/SkeletonExperiment	
+	>$ skeleton-example/SkeletonAgent &
+	>$ skeleton-example/SkeletonEnvironment &
+	>$ skeleton-example/SkeletonExperiment	
 \end{verbatim}
 
 If RL-Glue is not installed in the default location, you'll have to start the \texttt{rl\_glue} executable server using its full path (unless it's in your \texttt{PATH} environment variable):
@@ -363,19 +370,19 @@ You should see output like the following if it worked:
 	RL-Glue Version 3.0-alpha-3, Build 848:852M
 	RL-Glue is listening for connections on port=4096
 
-	>$ skeleton_agent/SkeletonAgent & 
+	>$ skeleton-example/SkeletonAgent & 
 	RL-Glue C Agent Codec Version 1.0-alpha-3, Build 192:208M
 		Connecting to host=127.0.0.1 on port=4096...
 		RL-Glue C Agent Codec :: Connected
 		RL-Glue :: Agent connected.
 
-	>$ skeleton_environment/SkeletonEnvironment & 
+	>$ skeleton-example/SkeletonEnvironment & 
 	RL-Glue C Environment Codec Version 1.0-alpha-3, Build 192:208M
 		Connecting to host=127.0.0.1 on port=4096...
 		RL-Glue C Environment Codec :: Connected
 		RL-Glue :: Environment connected.
 
-	$> skeleton_experiment/SkeletonExperiment
+	$> skeleton-example/SkeletonExperiment
 
 
 	Experiment starting up!
@@ -425,19 +432,22 @@ You should see output like the following if it worked:
 \label{mines-sarsa-sample}
 The \texttt{skeleton} sample project is extremely limited and only shows the mechanics of how RL-Glue components are structured using the C/C++ codec.  The \texttt{mines-sarsa} sample project is much richer.
 
+More details about the \texttt{mines-sarsa} sample project can be found at their RL-Library home:\newline
+\url{http://library.rl-community.org/packages/mines-sarsa-sample}
+
 \subsubsection{Sample-Mines-Environment}
 \label{mines-sample}
 The 
 \htmladdnormallink{mines
- environment}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/mines-sarsa-example/SampleMinesEnvironment.c} 
+ environment}{http://code.google.com/p/rl-library/source/browse/trunk/projects/packages/examples/mines-sarsa-c/SampleMinesEnvironment.c} 
 is internally a two-dimensional, discrete grid world where the agent receives a penalty per step until reaching a goal state, hopefully without stepping on any exploding land-mines along the way.  The (x,y) state is flattened into a discrete, scalar observation for the agent.  This environment can receive special messages from the experiment program to print the current state to the screen, and also to toggle between random starting states and a fixed starting-state specified by the experiment.
 
-The task specification string\footnote{\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}} is manually because there is not yet a task spec builder for C/C++. 
+The task specification string\footnote{\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}} is manually created because there is not yet a task spec builder for C/C++. 
 
 \subsubsection{Samples-Sarsa-Agent}
 \label{sarsa-sample}
 The 
-\htmladdnormallink{SARSA agent}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/C/examples/mines-sarsa-example/SampleSarsaAgent.c}
+\htmladdnormallink{SARSA agent}{http://code.google.com/p/rl-library/source/browse/trunk/projects/packages/examples/mines-sarsa-c/SampleSarsaAgent.c}
 is a tabular learning agent that uses $\epsilon-greedy$ exploration as described in \htmladdnormallink{Reinforcement Learning: An Introduction}{http://www.cs.ualberta.ca/~sutton/book/ebook/node64.html} by Sutton and Barto.
 
 The SARSA agent parses the task specification string using the C/C++ task spec parser.  This agent can receive special messages from the experiment program to pause/unpause learning, pause/unpause exploring, save the current value function to a file, and load the the value function from a file.
@@ -496,7 +506,7 @@ variables \texttt{RLGLUE\_HOST} and \texttt{RLGLUE\_PORT}.  These are both optio
 
 For example, try the following code:
 \begin{verbatim}
-	> $ RLGLUE_HOST=69.64.159.1 RLGLUE_PORT=1025 skeleton_agent/SkeletonAgent 
+	> $ RLGLUE_HOST=69.64.159.1 RLGLUE_PORT=1025 skeleton-example/SkeletonAgent 
 \end{verbatim}
 
 That command could give outcome:
@@ -507,7 +517,7 @@ RL-Glue C Agent Codec Version 2.0-RC1, Build 277
 
 Alternatively, you can actually use a host name:
 \begin{verbatim}
-	> $ RLGLUE_HOST=rlai.net skeleton_agent/SkeletonAgent 
+	> $ RLGLUE_HOST=rlai.net skeleton-example/SkeletonAgent 
 \end{verbatim}
 
 That command could give outcome:
@@ -520,7 +530,7 @@ If you don't like typing them every time, you can export them:
 \begin{verbatim}
 	> $ export RLGLUE_HOST=rlai.net
 	> $ export RLGLUE_PORT=1025
-	> $ skeleton_agent/SkeletonAgent 
+	> $ skeleton-example/SkeletonAgent 
 \end{verbatim}
 
 
