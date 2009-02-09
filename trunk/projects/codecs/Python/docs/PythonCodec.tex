@@ -38,8 +38,10 @@ To run agents, environments, and experiments created with this codec, you will n
 
 Compiling and running components with this codec requires Python.
 
+The code has some optimizations that detect if you have NumPy\footnote{\url{http://numpy.scipy.org/}} installed, and will speed up some parts of the code automatically in that case.  We're working on looking at more ways to transparently make this codec faster.
+
 \textbf{Possible Contribution: }Someone with Python experience could help us find out what version of Python is required to use this codec, and could help us update the codec
-to be as robust as possible to older versions.
+to be as robust as possible to older versions.  Also, if someone wants to speed up this codec, we have some ideas but we are not really Python programmers.
 
 \subsection{Getting the Codec}
 The codec can be downloaded either as a .tar.gz or can be checked out of the subversion repository where it is hosted.
@@ -54,7 +56,7 @@ To check the code out of subversion:\newline
 \subsection{Installing the Codec}
 There are two options on how you can install the Python codec, depending on whether you'd like to use the automated method, or if you'd like to setup your Python paths yourself.
 
-\subsection{setup.py}
+\subsubsection{setup.py}
 You can install the Python codec the ``usual'' way, using the \texttt{setup.py} script that is made possible by Python Distutils\footnote{\url{http://docs.python.org/distutils/index.html}}.
 
 There are many options for exactly how to build and where to install the codec.  If you are interested in a custom install or installing to a custom location, we recommend reading the \htmladdnormallink{Python installation docs}{http://docs.python.org/install/index.html\#the-new-standard-distutils}.
@@ -76,14 +78,14 @@ If you are not able to install the codec because it requires root access on your
 After installing the Python codec, you will be able to access all of the RL-Glue Python classes and functions without needing to specify them in your 
 \texttt{\$PYTHONPATH} environment variable.
 
-\subsubsection{Removing the Codec}
+\textbf{Removing the Codec}\newline
 Distutils does not provide an automated way to remove the Python modules that it installs, because in general there may be dependencies between modules and it does not want to break your system. We recommend that you only remove the installed Python codec from your system manually if you know what you are doing.  Future versions of the codec will install over the existing one.
 
 
 % \subsection{RPM Package}
 % \subsection{Windows Installer}
 
-\subsection{The no-install install}
+\subsubsection{The no-install install}
 You may prefer not to install the codec, to instead specify the codec source files in your \texttt{\$PYTHONPATH} variable when necessary.  In this case, there is no real ``installation'' for the codec per-se.  The important thing is to put the source code somewhere that is easy to get at.
 
 For the rest of this section, we'll assume you've put this project in a subdirectory of your home directory called PythonCodec, 
@@ -214,7 +216,7 @@ You can kill the process by pressing \texttt{CTRL-C} on your keyboard.
 The Skeleton experiment is very simple and well documented, so we won't spend any more time talking about it in these instructions.
 Please open it up and take a look.
 
-\subsection{Putting it all together}
+\subsection{Running All Three Components Together}
 At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples 
 directory if you have them all built, and RL-Glue installed in the default location:
 \begin{verbatim}
@@ -298,11 +300,15 @@ It ran for 66 steps, total reward was: -1.0
 \label{mines-sarsa-sample}
 The \texttt{skeleton} sample project is extremely limited and only shows the mechanics of how RL-Glue components are structured using the Python codec.  The \texttt{mines-sarsa} sample project is much richer.
 
+More details about the \texttt{mines-sarsa} sample project can be found at their RL-Library home:\newline
+\url{http://library.rl-community.org/packages/mines-sarsa-sample}
+
+
 \subsubsection{Sample-Mines-Environment}
 \label{mines-sample}
 The 
 \htmladdnormallink{mines
- environment}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/examples/mines-sarsa-example/sample_mines_environment.py} 
+ environment}{http://code.google.com/p/rl-library/source/browse/trunk/projects/packages/examples/mines-sarsa-python/sample_mines_environment.py} 
 is internally a two-dimensional, discrete grid world where the agent receives a penalty per step until reaching a goal state, hopefully without stepping on any exploding land-mines along the way.  The (x,y) state is flattened into a discrete, scalar observation for the agent.  This environment can receive special messages from the experiment program to print the current state to the screen, and also to toggle between random starting states and a fixed starting-state specified by the experiment.
 
 The task specification string\footnote{\url{http://glue.rl-community.org/Home/rl-glue/task-spec-language}} is manually because there is not yet a task spec builder for Python. 
@@ -310,7 +316,7 @@ The task specification string\footnote{\url{http://glue.rl-community.org/Home/rl
 \subsubsection{Samples-Sarsa-Agent}
 \label{sarsa-sample}
 The 
-\htmladdnormallink{SARSA agent}{http://code.google.com/p/rl-glue-ext/source/browse/trunk/projects/codecs/Python/examples/mines-sarsa-example/sample_sarsa_agent.py}
+\htmladdnormallink{SARSA agent}{http://code.google.com/p/rl-library/source/browse/trunk/projects/packages/examples/mines-sarsa-python/sample_sarsa_agent.py}
 is a tabular learning agent that uses $\epsilon-greedy$ exploration as described in \htmladdnormallink{Reinforcement Learning: An Introduction}{http://www.cs.ualberta.ca/~sutton/book/ebook/node64.html} by Sutton and Barto.
 
 The SARSA agent parses the task specification string using the Python task spec parser.  This agent can receive special messages from the experiment program to pause/unpause learning, pause/unpause exploring, save the current value function to a file, and load the the value function from a file.
