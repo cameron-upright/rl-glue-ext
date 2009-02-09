@@ -18,7 +18,7 @@ Running
 -- Run All Together, Communicating over Sockets --
 This is the easiest option, it will run the agent, environment, and experiment all together.
 
->> !/usr/local/bin/rl_glue & %(maybe !/usr/local/bin/rl_glue.exe &)
+>> !/usr/local/bin/rl_glue & %(maybe !rl_glue.exe &)
 >> runAllTogether()
 
 
