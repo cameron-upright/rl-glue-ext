@@ -56,6 +56,14 @@ cat <<- EOF
 EOF
 }
 
+function lisp_compile_asdf
+{
+local asdf=${1}
+cat <<- EOF
+  (asdf:oos 'asdf:compile-op ${asdf} :verbose nil)
+EOF
+}
+
 function lisp_load_asdf
 {
 local asdf=${1}

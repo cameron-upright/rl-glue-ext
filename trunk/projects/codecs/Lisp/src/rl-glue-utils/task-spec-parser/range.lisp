@@ -46,7 +46,7 @@
      (:documentation "Number range.")))
 
 (make-range int-range integer)
-(make-range float-range double-float)
+(make-range float-range float)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
