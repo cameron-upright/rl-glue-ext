@@ -8,6 +8,7 @@ rm -Rf $DISTDIR
 svn export http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python $DEVDIR
 VERSION=`PYTHONPATH=$DEVDIR/src/ python get_version.py`
 
+rm -f $DEVDIR/WINDOWS-README.txt
 cp -R $DEVDIR $USERDIR
 mkdir $DISTDIR
 
