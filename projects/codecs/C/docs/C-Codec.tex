@@ -350,12 +350,14 @@ You can troubleshoot this problem by doing:
 \end{verbatim}
 If you see that \texttt{/usr/local/lib} is not in the search path, you may want to add it to your library search path using \texttt{LDFLAGS} or \texttt{LD\_LIBRARY\_PATH}.  See Section \ref{sec:custom-flags} for more information.  
 
-\section{Putting it all together}
-At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples directory if you have them all built, and RL-Glue installed in the default location:
+\section{Running the Agent, Environment, and Experiment Together}
+At this point, we've compiled and run each of the three components, now it's time to run them with the \texttt{rl\_glue} executable server.  The following will work from the examples directory if you have them all built, and RL-Glue installed in the default location.
+
+You can either execute the following four commands in the same terminal window if you put each on in the background (\& on the end), or run them in separate terminal windows:
 \begin{verbatim}
-	>$ rl_glue &
-	>$ skeleton-example/SkeletonAgent &
-	>$ skeleton-example/SkeletonEnvironment &
+	>$ rl_glue
+	>$ skeleton-example/SkeletonAgent 
+	>$ skeleton-example/SkeletonEnvironment 
 	>$ skeleton-example/SkeletonExperiment	
 \end{verbatim}
 

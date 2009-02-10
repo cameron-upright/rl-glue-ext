@@ -71,7 +71,7 @@ Contents</A>
 </UL>
 <BR>
 <LI><A NAME="tex2html75"
-  HREF="C-Codec.html#SECTION00040000000000000000">Putting it all together</A>
+  HREF="C-Codec.html#SECTION00040000000000000000">Running the Agent, Environment, and Experiment Together</A>
 <UL>
 <LI><A NAME="tex2html76"
   HREF="C-Codec.html#SECTION00041000000000000000">Going Further - Mines Sarsa Example Project</A>
@@ -597,13 +597,16 @@ If you see that <TT>/usr/local/lib</TT> is not in the search path, you may want 
 <P>
 
 <H1><A NAME="SECTION00040000000000000000">
-Putting it all together</A>
+Running the Agent, Environment, and Experiment Together</A>
 </H1>
-At this point, we've compiled and run each of the three components, now it's time to run them with the <TT>rl_glue</TT> executable server.  The following will work from the examples directory if you have them all built, and RL-Glue installed in the default location:
+At this point, we've compiled and run each of the three components, now it's time to run them with the <TT>rl_glue</TT> executable server.  The following will work from the examples directory if you have them all built, and RL-Glue installed in the default location.
+
+<P>
+You can either execute the following four commands in the same terminal window if you put each on in the background (&amp; on the end), or run them in separate terminal windows:
 <PRE>
-	&gt;$ rl_glue &amp;
-	&gt;$ skeleton-example/SkeletonAgent &amp;
-	&gt;$ skeleton-example/SkeletonEnvironment &amp;
+	&gt;$ rl_glue
+	&gt;$ skeleton-example/SkeletonAgent 
+	&gt;$ skeleton-example/SkeletonEnvironment 
 	&gt;$ skeleton-example/SkeletonExperiment
 </PRE>
 
@@ -917,9 +920,9 @@ If you would like to become a member of this project and contribute updates/chan
 Document Information</A>
 </H1>
 <PRE>
-Revision Number: $Rev: 613 $
+Revision Number: $Rev: 681 $
 Last Updated By: $Author: brian@tannerpages.com $
-Last Updated   : $Date: 2009-02-05 00:28:23 -0700 (Thu, 05 Feb 2009) $
+Last Updated   : $Date: 2009-02-08 20:03:55 -0700 (Sun, 08 Feb 2009) $
 $URL: https://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.tex $
 </PRE>
 
@@ -943,7 +946,7 @@ Mathematics Department, Macquarie University, Sydney.
 The command line arguments were: <BR>
  <STRONG>latex2html</STRONG> <TT>C-Codec.tex -split 0 -dir html -mkdir -title 'RL-Glue C/C++ Codec' -local_icons -math</TT>
 <P>
-The translation was initiated by Brian Tanner on 2009-02-08
+The translation was initiated by Brian Tanner on 2009-02-09
 <BR><HR><H4>Footnotes</H4>
 <DL>
 <DT><A NAME="foot271">... RL-Glue</A><A
@@ -985,7 +988,7 @@ The translation was initiated by Brian Tanner on 2009-02-08
 <!--End of Navigation Panel-->
 <ADDRESS>
 Brian Tanner
-2009-02-08
+2009-02-09
 </ADDRESS>
 </BODY>
 </HTML>
