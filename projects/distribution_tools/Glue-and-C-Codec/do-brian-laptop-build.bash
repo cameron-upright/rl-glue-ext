@@ -28,16 +28,16 @@ bash ./build-glue-native.bash
 
 #Upload Everything
 bash ./upload-gluecore-fromsource.bash
-bash ./upload-cpp-fromsource.bash
+bash ./upload-cpp-fromsource.bash $CODECVERSION
 bash ./upload-macbinary.bash
 bash ./upload-winbinary.bash
 
 #Figure out the wiki updates
-bash ./update-wiki-cpp-partial-fromsource.bash
+bash ./update-wiki-cpp-partial-fromsource.bash $CODECVERSION
 bash ./update-wiki-gluecore-partial-fromsource.bash
 #Don't do debian, that will be in do-brian-linux-build.bash
 bash ./update-wiki-gluecore-partial-windows.bash
-bash ./update-partial-mac.bash
+bash ./update-wiki-partial-mac.bash
 
 #Coalesce, copy, and commit the wikis
 bash ./do-finalize-wikis.bash
