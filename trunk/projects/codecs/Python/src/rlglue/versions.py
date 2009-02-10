@@ -10,4 +10,4 @@ def get_svn_codec_version():
 	return justTheNumber
 
 def get_codec_version():
-	return "2.0-RC1"
+	return "2.01"
