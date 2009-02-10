@@ -25,6 +25,14 @@ load_functional_test_config ${testname}
 
 ###############################################################################
 
+${LISP} <<- EOF
+    `lisp_init`
+    `lisp_compile_asdf :rl-glue-tests`
+    `lisp_quit`
+EOF
+
+###############################################################################
+
 execute_rl_glue
 
 {

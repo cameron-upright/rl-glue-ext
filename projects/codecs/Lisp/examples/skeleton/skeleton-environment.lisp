@@ -59,7 +59,8 @@
                     :rewards (make-instance
                               'rl-glue-utils:float-range
                               :min-value -1.0
-                              :max-value  1.0))))
+                              :max-value  1.0)
+                    :extra-spec "skeleton environment (Lisp)")))
     (rl-glue-utils:to-string task-spec)))
 
 (defmethod rl-glue-codec:env-start ((env skeleton-environment))

@@ -33,7 +33,7 @@
   (let* ((terminal (rl-glue-codec:rl-episode exp step-limit))
          (total-steps (rl-glue-codec:rl-num-steps exp))
          (total-reward (rl-glue-codec:rl-return exp)))
-    (format t "Episode ~d ~20t~d steps ~30t~f reward ~40t~d natural end~%"
+    (format t "Episode ~d ~15t~d steps ~30t~f reward ~50t~d natural end~%"
             (which-episode exp)
             total-steps
             total-reward
@@ -62,7 +62,7 @@
             response-message))
   (let ((response-message (rl-glue-codec:rl-env-message
                            exp "What is your name?")))
-    (format t "Environment responded to \"What is your name?\" with: ~a~%"
+    (format t "~%Environment responded to \"What is your name?\" with: ~a~%"
             response-message))
   (let ((response-message (rl-glue-codec:rl-env-message
                            exp (concatenate 'string

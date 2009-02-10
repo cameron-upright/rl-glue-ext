@@ -10,7 +10,7 @@
     (load #p"/usr/share/common-lisp/source/asdf/asdf.lisp"
           :print nil :verbose nil)))
 
-(push #p"/usr/share/common-lisp/systems/" asdf:*central-registry*)
+(pushnew #p"/usr/share/common-lisp/systems/" asdf:*central-registry*)
 
 (let ((*compile-print* nil)
       (*compile-verbose* nil)

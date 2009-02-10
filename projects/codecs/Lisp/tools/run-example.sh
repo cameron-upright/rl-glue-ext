@@ -24,6 +24,14 @@ load_lisp_config ${lispimpl}
 
 ###############################################################################
 
+${LISP} <<- EOF
+    `lisp_init`
+    `lisp_compile_asdf :rl-glue-examples`
+    `lisp_quit`
+EOF
+
+###############################################################################
+
 execute_rl_glue
 
 {
