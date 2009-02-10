@@ -1,3 +1,8 @@
- * [http://rl-glue-ext.googlecode.com/files/dist/python-codec-2.01-windows.zip Python Developer Distribution 2.01] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=dist/python-codec-2.01-windows.zip (File Details)]
- The *dev* distribution includes everything from the user distribution, but also the source code and compile scripts for the manual.  Not much more, but that might change over time.
+ * [http://rl-glue-ext.googlecode.com/files/dist/python-codec-2.01-win32.zip Python User Distribution For Windows 2.01] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=dist/python-codec-2.01-win32.zip (File Details)]
+ The *user* distribution is a no-nonsense distribution for Windows that most Windows users will want.
+ It contains:
+   * Windows install.exe installer program
+   * The documentation (PDF)
+   * The examples
+   * README file to get you started if you don't like manuals
 ----
