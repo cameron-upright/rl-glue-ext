@@ -35,7 +35,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
+DIST_COMMON = $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/config/config.h.in \
 	$(top_srcdir)/configure ChangeLog INSTALL config/compile \
 	config/config.guess config/config.sub config/depcomp \
@@ -180,7 +180,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = src tests
-EXTRA_DIST = examples docs README INSTALL ChangeLog LICENSE-2.0.txt
+EXTRA_DIST = examples docs README.txt INSTALL ChangeLog LICENSE-2.0.txt
 all: all-recursive
 
 .SUFFIXES:

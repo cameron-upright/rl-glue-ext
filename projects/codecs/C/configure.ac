@@ -5,7 +5,7 @@ AM_INIT_AUTOMAKE([1.9 tar-ustar])
 
 AC_MSG_CHECKING(if custom rl-glue path was specified)
 AC_ARG_WITH(rl-glue,
-    [  --with-rl-glue=path      Look for rl-glue in path ],
+    [  --with-rl-glue=PATH     look for rl-glue in PATH (should be an absolute path) ],
     [LDFLAGS="$LDFLAGS -L$withval/lib"
 	CFLAGS="$CFLAGS -I$withval/include"
      CPPFLAGS="$CPPFLAGS -I$withval/include"
