@@ -6,7 +6,7 @@
 
  * [http://rl-glue-ext.googlecode.com/files/c-codec-2.0.tar.gz C/C++ Codec Source Distribution 2.0 (.tar.gz)] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=c-codec-2.0.tar.gz (File Details)]
  This is a platform-independent project that was built using the GNU Autotools.  It should install on most Linux and Unix platforms, including Mac OS X (Intel and PowerPC) and on Microsoft Windows under Cygwin.
----- 
+----- 
  * [http://rl-glue-ext.googlecode.com/files/RL-Glue-3.0-and-C-Codec.dmg Mac OS X RL-Glue Core Project and C/C++ Codec Disk Image 3.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=RL-Glue-3.0-and-C-Codec.dmg (File Details)]
 This is an OS X disk image with familiar installer that will install both RL-Glue Core and the C/C++ Codec onto your Mac.  Intel Mac only. You do not need to install the C/C++ Codec separately if you use this option.
 It contains:
@@ -14,7 +14,7 @@ It contains:
   * Uninstall script for removing all of the above
   * The documentation for RL-Glue and the C/C++ codec(PDF)
   * The examples for RL-Glue and the C/C++ codec
----- 
+----- 
 === User Quick Install ===
 {{{
 #Unpack the files
