@@ -1,5 +1,5 @@
 
-;;; Copyright 2008 Gabor Balazs
+;;; Copyright 2009 Gabor Balazs
 ;;; Licensed under the Apache License, Version 2.0 (the "License");
 ;;; you may not use this file except in compliance with the License.
 ;;; You may obtain a copy of the License at
@@ -15,38 +15,17 @@
 ;;; $Revision$
 ;;; $Date$
 
-(in-package #:cl-user)
+(in-package :cl-user)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defpackage #:org.rl-community.rl-glue-utils
-  (:nicknames #:rl-glue-utils)
-  (:use #:common-lisp #:rl-glue-codec)
+(defpackage #:rl-glue-skeleton
+  (:use #:common-lisp)
   (:export
-   ;; generic
-   #:to-string
-   ;; task-spec-parser
-   #:range
-   #:int-range
-   #:float-range
-   #:repeat-count
-   #:min-value
-   #:max-value
-   #:task-spec
-   #:version
-   #:problem-type
-   #:discount-factor
-   #:int-observations
-   #:float-observations
-   #:char-observations
-   #:int-actions
-   #:float-actions
-   #:char-actions
-   #:rewards
-   #:extra-spec
-   #:make-int-range-array
-   #:make-float-range-array
-   #:parse-task-spec
-   #:across-ranges
-   #:ranges-dimension))
+   #:skeleton-agent
+   #:skeleton-environment
+   #:skeleton-experiment
+   #:start-agent
+   #:start-environment
+   #:start-experiment))
 
