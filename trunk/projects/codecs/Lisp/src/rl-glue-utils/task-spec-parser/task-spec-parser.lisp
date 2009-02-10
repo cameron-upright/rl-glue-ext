@@ -19,67 +19,74 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun make-empty-int-range-array ()
-  "Makes empty array of int-range element type."
-  (make-array 0
-              :element-type 'int-range
-              :initial-element (make-instance 'int-range)))
+(defun make-int-range-array (size &key initial-contents)
+  "Makes an array of SIZE with the package supported int-range elements."
+  (rl-glue-codec::make-typed-array size 'int-range initial-contents))
 
-(defun make-empty-float-range-array ()
-  "An empty array of float-range element type."
-  (make-array 0
-              :element-type 'float-range
-              :initial-element (make-instance 'float-range)))
+(defun make-float-range-array (size &key initial-contents)
+  "Makes an array of SIZE with the package supported float-range elements."
+  (rl-glue-codec::make-typed-array size 'float-range initial-contents))
 
 (defclass task-spec ()
   ((version
     :accessor version
+    :initarg :version
     :type string
     :documentation "Version name of the task specification language.")
    (problem-type
     :accessor problem-type
+    :initarg :problem-type
     :type string
     :documentation "Type of the problem to be solved.")
    (discount-factor
     :accessor discount-factor
+    :initarg :discount-factor
     :type (float 0.0 1.0)
     :documentation "Discount factor.")
    (int-observations
     :accessor int-observations
-    :initform (make-empty-int-range-array)
+    :initarg :int-observations
+    :initform (make-int-range-array 0)
     :type (simple-array int-range)
     :documentation "Observation ranges with integer values.")
    (float-observations
     :accessor float-observations
-    :initform (make-empty-float-range-array)
+    :initarg :float-observatinos
+    :initform (make-float-range-array 0)
     :type (simple-array float-range)
     :documentation "Observation ranges with floating point values.")
    (char-observations
     :accessor char-observations
+    :initarg :char-observations
     :initform 0
     :type (integer 0 *)
     :documentation "Number of characters specified for observations.")
    (int-actions
     :accessor int-actions
-    :initform (make-empty-int-range-array)
+    :initarg :int-actions
+    :initform (make-int-range-array 0)
     :type (simple-array int-range)
     :documentation "Action ranges with integer values.")
    (float-actions
     :accessor float-actions
-    :initform (make-empty-float-range-array)
+    :initarg :float-actions
+    :initform (make-float-range-array 0)
     :type (simple-array float-range)
     :documentation "Action ranges with floating point values.")
    (char-actions
     :accessor char-actions
+    :initarg :char-actions
     :initform 0
     :type (integer 0 *)
     :documentation "Number of characters specified for actions.")
    (rewards
     :accessor rewards
+    :initarg :rewards
     :type float-range
     :documentation "Range of rewards.")
    (extra-spec
     :accessor extra-spec
+    :initarg :extra-spec
     :initform ""
     :type string
     :documentation "An optional extra specification."))

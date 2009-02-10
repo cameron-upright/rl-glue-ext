@@ -34,7 +34,14 @@
   :description "Examples for RL-Glue components."
   :serial t
   :components
-  ((:module mines-sarsa
+  ((:module skeleton
+            :serial t
+            :components
+            ((:file "package")
+             (:file "skeleton-agent")
+             (:file "skeleton-environment")
+             (:file "skeleton-experiment")))
+   (:module mines-sarsa
             :serial t
             :components
             ((:file "package")
