@@ -37,27 +37,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defmethod rl-glue-codec:env-init ((env skeleton-environment))
-  (let ((task-spec (make-instance
-                    'rl-glue-utils:task-spec
-                    :version "RL-Glue-3.0"
-                    :problem-type "episodic"
+  (let ((task-spec (rl-glue-utils:make-task-spec
+                    :episodic t
                     :discount-factor 1.0
                     :int-observations (rl-glue-utils:make-int-range-array
                                        1
                                        :initial-contents
-                                       (list (make-instance
-                                              'rl-glue-utils:int-range
+                                       (list (rl-glue-utils:make-int-range
                                               :min-value 0
                                               :max-value 20)))
                     :int-actions (rl-glue-utils:make-int-range-array
                                   1
                                   :initial-contents
-                                  (list (make-instance
-                                         'rl-glue-utils:int-range
+                                  (list (rl-glue-utils:make-int-range
                                          :min-value 0
                                          :max-value 1)))
-                    :rewards (make-instance
-                              'rl-glue-utils:float-range
+                    :rewards (rl-glue-utils:make-float-range
                               :min-value -1.0
                               :max-value  1.0)
                     :extra-spec "skeleton environment (Lisp)")))

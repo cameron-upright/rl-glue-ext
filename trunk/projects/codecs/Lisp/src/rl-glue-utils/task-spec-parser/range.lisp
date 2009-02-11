@@ -46,7 +46,16 @@
      (:documentation "Number range.")))
 
 (make-range int-range integer)
+
+(defun make-int-range (&rest args)
+  "Creates an int-range object."
+  (apply #'make-instance 'int-range args))
+
 (make-range float-range float)
+
+(defun make-float-range (&rest args)
+  "Creates a float-range object."
+  (apply #'make-instance 'float-range args))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
