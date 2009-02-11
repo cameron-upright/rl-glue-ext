@@ -31,16 +31,19 @@
   ((version
     :accessor version
     :initarg :version
+    :initform "RL-Glue-3.0"
     :type string
     :documentation "Version name of the task specification language.")
    (problem-type
     :accessor problem-type
     :initarg :problem-type
+    :initform ""
     :type string
     :documentation "Type of the problem to be solved.")
    (discount-factor
     :accessor discount-factor
     :initarg :discount-factor
+    :initform 0.0
     :type (float 0.0 1.0)
     :documentation "Discount factor.")
    (int-observations
@@ -82,6 +85,7 @@
    (rewards
     :accessor rewards
     :initarg :rewards
+    :initform (make-float-range)
     :type float-range
     :documentation "Range of rewards.")
    (extra-spec
@@ -91,6 +95,22 @@
     :type string
     :documentation "An optional extra specification."))
   (:documentation "Task specification parameters."))
+
+(defmethod initialize-instance :after ((task-spec task-spec)
+                                       &key
+                                       episodic
+                                       continuing)
+  (with-accessors ((problem-type problem-type)) task-spec
+    (assert (or (not episodic) (not continuing)) (problem-type)
+            "Ambiguous problem-type definition!")
+    (cond
+      (episodic (setf problem-type "episodic"))
+      (continuing (setf problem-type "continuing"))))
+  task-spec)
+
+(defun make-task-spec (&rest args)
+  "Creates a task-spec object."
+  (apply #'make-instance 'task-spec args))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

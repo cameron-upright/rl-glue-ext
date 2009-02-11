@@ -28,11 +28,16 @@
    ;; task-spec-parser
    #:range
    #:int-range
+   #:make-int-range
    #:float-range
+   #:make-float-range
    #:repeat-count
    #:min-value
    #:max-value
+   #:make-int-range-array
+   #:make-float-range-array
    #:task-spec
+   #:make-task-spec
    #:version
    #:problem-type
    #:discount-factor
@@ -44,8 +49,6 @@
    #:char-actions
    #:rewards
    #:extra-spec
-   #:make-int-range-array
-   #:make-float-range-array
    #:parse-task-spec
    #:across-ranges
    #:ranges-dimension))
