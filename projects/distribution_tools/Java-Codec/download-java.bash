@@ -11,8 +11,8 @@ mkdir $DISTDIR
 mkdir $USERDIR
 cp $DEVDIR/products/JavaRLGlueCodec.jar $USERDIR
 cp $DEVDIR/docs/JavaCodec.pdf $USERDIR
-mv $DEVDIR/USER-README $USERDIR/README
-mv $DEVDIR/DEV-README $DEVDIR/README
+mv $DEVDIR/USER-README.txt $USERDIR/README.txt
+mv $DEVDIR/DEV-README.txt $DEVDIR/README.txt
 cp -R $DEVDIR/examples $USERDIR/examples
 java org.rlcommunity.rlglue.codec.RLGlueCore --uninstall
 VERSION=`java -jar $USERDIR/JavaRLGlueCodec.jar --version`

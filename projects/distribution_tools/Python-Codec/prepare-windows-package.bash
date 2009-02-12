@@ -12,8 +12,14 @@ python setup.py bdist_wininst
 cp dist/RL_Glue_PythonCodec-$VERSION.win32.exe ../
 cd ..
 rm -Rf src
-zip $USERZIP PythonCodec.pdf *.exe README.txt	examples	LICENSE-2.0.txt
+unix2dos *.txt
+unix2dos ./examples/skeleton/*.py ./examples/skeleton/*.txt
+unix2dos ./examples/mines-sarsa-example/*.py ./examples/mines-sarsa-example/*.txt
+zip -r $USERZIP PythonCodec.pdf *.exe README.txt	examples	LICENSE-2.0.txt
+#in case there already is one
+rm -f ../dist/$USERZIP
 cp $USERZIP ../dist
+
 
 
 
