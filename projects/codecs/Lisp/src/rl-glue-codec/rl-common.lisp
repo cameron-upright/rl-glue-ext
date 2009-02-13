@@ -73,14 +73,14 @@ typed elements."
   () (:documentation "General RL-Glue observation data representation."))
 
 (defun make-observation (&rest args)
-  "Makes an empty observation object."
+  "Makes an observation object."
   (apply #'make-instance 'observation args))
 
 (defclass action (rl-abstract-type)
   () (:documentation "General RL-Glue action data representation."))
 
 (defun make-action (&rest args)
-  "Makes an empty action object."
+  "Makes an action object."
   (apply #'make-instance 'action args))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

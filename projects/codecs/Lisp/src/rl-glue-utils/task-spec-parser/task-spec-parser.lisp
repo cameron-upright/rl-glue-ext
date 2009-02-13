@@ -194,7 +194,7 @@
 (defun parse-task-spec (task-spec-string)
   "Parses TASK-SPEC-STRING and stores it into a task-spec structure.
 
-PARAMETERS.
+PARAMETERS:
   task-spec-string : task specification string [string]
 
 RETURNS:
