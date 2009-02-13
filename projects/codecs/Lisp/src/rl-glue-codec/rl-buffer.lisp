@@ -50,12 +50,6 @@
     "Number of bits in the exponent part of the floating point type.")
   (defconstant +sigd-bits+ 52
     "Number of bits in the significand part of the floating point type.")
-
-  ;; Because of the floating point encoding and decoding optimizations,
-  ;; only the 32 bit architecture is supported when the code of a double-float 
-  ;; is represented by two integer codes. If one wants to add support for the
-  ;; 64 bit architectures, one should reimplement the float-encoder, 
-  ;; float-decoder, buffer-read-float and buffer-write-float functions.
   (defconstant +bits-per-float+ (+ 1 +expo-bits+ +sigd-bits+)
     "Number of bits in the floating point type.")
   (defconstant +bytes-per-float+ (/ +bits-per-float+ +bits-per-byte+)
@@ -64,7 +58,18 @@
     "Maximum significand value of the floating point type.")
   (defconstant +expo-offset+ (1- (expt 2 (1- +expo-bits+)))
     "Exponent offset for floating point encoding/decoding.")
-  (deftype float-code-t () `(unsigned-byte ,+bits-per-float+)))
+  (deftype float-code-t () `(unsigned-byte ,+bits-per-float+))
+
+  #+lispworks
+  (progn
+    (defconstant +high-index+
+      #+little-endian 0
+      #-little-endian 1
+      "Index of the high byte in the byte array representing a double.")
+    (defconstant +low-index+
+      #+little-endian 1
+      #-little-endian 0
+      "Index of the low byte in the byte array representing a double.")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -147,7 +152,7 @@
 
 (declaim (inline float-encoder))
 (defun float-encoder (float)
-  "Returns the codes of FLOAT."
+  "Returns the codes (high and low parts respectively) of FLOAT."
   (declare #.*optimize-settings*)
   (declare (type double-float float))
   #+sbcl
@@ -171,7 +176,11 @@
     (values
      (+ (ash ll #.+bits-per-short+) lr)
      (+ (ash rl #.+bits-per-short+) rr)))
-  #-(or sbcl cmu ccl scl allegro)
+  #+lispworks
+  (fli:with-dynamic-foreign-objects ((d :double float))
+    (values (fli:dereference d :type '(:unsigned :int) :index +high-index+)
+            (fli:dereference d :type '(:unsigned :int) :index +low-index+)))
+  #-(or sbcl cmu ccl scl allegro lispworks)
   (flet ((create-float-code (sign expo sigd)
            (declare #.*optimize-settings*)
            (declare (type fixnum sign expo))
@@ -204,35 +213,40 @@
                                    (round (* +max-sigd+ (1- (* sigd 2)))))))))))
 
 (declaim (inline float-decoder))
-(defun float-decoder (l-code r-code)
-  "Returns the float generated from the L-CODE and R-CODE codes."
+(defun float-decoder (high low)
+  "Returns the float generated from the HIGH and LOW codes."
   (declare #.*optimize-settings*)
   #+sbcl
-  (sb-kernel:make-double-float l-code r-code)
+  (sb-kernel:make-double-float high low)
   #+(or cmu (and scl (not 64bit)))
-  (kernel:make-double-float l-code r-code)
+  (kernel:make-double-float high low)
   #+(and scl 64bit)
-  (kernel:make-double-float (+ (ash l-code #.+bits-per-integer+) r-code))
+  (kernel:make-double-float (+ (ash high #.+bits-per-integer+) low))
   #+ccl
-  (ccl::double-float-from-bits l-code r-code)
+  (ccl::double-float-from-bits high low)
   #+allegro
   (excl:shorts-to-double-float
-   (ldb (byte #.+bits-per-short+ #.+bits-per-short+) l-code)
-   (ldb (byte #.+bits-per-short+ 0) l-code)
-   (ldb (byte #.+bits-per-short+ #.+bits-per-short+) r-code)
-   (ldb (byte #.+bits-per-short+ 0) r-code))
-  #-(or sbcl cmu ccl scl allegro)
-  (let ((sign (ldb (byte 1 (1- +bits-per-integer+)) l-code))
+   (ldb (byte #.+bits-per-short+ #.+bits-per-short+) high)
+   (ldb (byte #.+bits-per-short+ 0) high)
+   (ldb (byte #.+bits-per-short+ #.+bits-per-short+) low)
+   (ldb (byte #.+bits-per-short+ 0) low))
+  #+lispworks
+  (fli:with-dynamic-foreign-objects ((i (:c-array (:unsigned :int) 2)))
+    (setf (fli:foreign-aref i +high-index+) high)
+    (setf (fli:foreign-aref i +low-index+) low)
+    (fli:dereference i :type :double))
+  #-(or sbcl cmu ccl scl allegro lispworks)
+  (let ((sign (ldb (byte 1 (1- +bits-per-integer+)) high))
         (expo (ldb (byte +expo-bits+ (- +bits-per-integer+ 1 +expo-bits+))
-                   l-code))
-        (l-sigd (ldb (byte (- +sigd-bits+ +bits-per-integer+) 0) l-code)))
+                   high))
+        (l-sigd (ldb (byte (- +sigd-bits+ +bits-per-integer+) 0) high)))
     (declare (type (bit) sign))
     (declare (type (unsigned-byte #.+expo-bits+) expo))
     (declare (type (signed-byte #.(1+ +sigd-bits+)) l-sigd))
     (if (zerop expo)
         (setf expo 1)
         (setf (ldb (byte 1 (- +sigd-bits+ +bits-per-integer+)) l-sigd) 1))
-    (let ((sigd (logior (ash l-sigd +bits-per-integer+) r-code)))
+    (let ((sigd (logior (ash l-sigd +bits-per-integer+) low)))
       (declare (type float-code-t sigd))
       (scale-float (coerce (if (zerop sign) sigd (- sigd)) 'double-float)
                    (- expo (+ +expo-offset+ +sigd-bits+))))))
@@ -344,10 +358,10 @@ of the encoded value in bytes."
   (declare #.*optimize-settings*)
   (declare (type double-float float))
   (when adjust-p (auto-adjust buffer +bytes-per-float+))
-  (multiple-value-bind (l-code r-code) (float-encoder float)
-    (declare (type int-code-t l-code r-code))
-    (buffer-write #.+bytes-per-integer+ l-code buffer)
-    (buffer-write #.+bytes-per-integer+ r-code buffer))
+  (multiple-value-bind (high low) (float-encoder float)
+    (declare (type int-code-t high low))
+    (buffer-write #.+bytes-per-integer+ high buffer)
+    (buffer-write #.+bytes-per-integer+ low buffer))
   float)
 
 (defmacro buffer-read-seq (elem-type elem-size reader-fn buffer size buffchk-p)
