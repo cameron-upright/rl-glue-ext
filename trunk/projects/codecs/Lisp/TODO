@@ -24,29 +24,6 @@ ext:read-float and ext:write-float of CLISP...
 -------------------------------------------------------------------------------
 
 TITLE:
-Optimizing Lispworks floating point coding.
-
-DESCRIPTION:
-This would be done by using ffi. Something like this:
-
-(fli:with-dynamic-foreign-objects ((d :double 4.2d100))
-  (values (fli:dereference d :type '(:unsigned :int))
-          (fli:dereference d :type '(:unsigned :int) :index 1)))
-
-(fli:with-dynamic-foreign-objects ((i (:c-array (:unsigned :int) 2)))
-  (setf (fli:foreign-aref i 0) 2594766966)
-  (setf (fli:foreign-aref i 1) 1423127490)
-  (fli:dereference i :type :double))
-
-You might need to use the feature :LITTLE-ENDIAN to choose which is the 
-"high" word.
-
-BENEFIT:
-Faster Lispworks operation.
-
--------------------------------------------------------------------------------
-
-TITLE:
 Supporting more Lisp implementations.
 
 DESCRIPTION:
