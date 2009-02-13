@@ -29,8 +29,8 @@
 (defsystem rl-glue-examples
   :name "RL-Glue Common Lisp Codec Examples"
   :licence "Apache v2"
-  :author "Gabor Balazs <gabalz@gmail.com>"
-  :maintainer "Gabor Balazs <gabalz@gmail.com>"
+  :author "Gabor Balazs <gabalz@rl-community.org>"
+  :maintainer "Gabor Balazs <gabalz@rl-community.org>"
   :description "Examples for RL-Glue components."
   :serial t
   :components
