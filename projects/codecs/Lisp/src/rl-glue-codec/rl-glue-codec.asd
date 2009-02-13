@@ -29,8 +29,8 @@
 (defsystem rl-glue-codec
   :name "RL-Glue Common Lisp Codec"
   :licence "Apache v2"
-  :author "Gabor Balazs <gabalz@gmail.com>"
-  :maintainer "Gabor Balazs <gabalz@gmail.com>"
+  :author "Gabor Balazs <gabalz@rl-community.org>"
+  :maintainer "Gabor Balazs <gabalz@rl-community.org>"
   :description "Software protocol for connecting reinforcement 
 learning agents, environments and experiments."
   :serial t
