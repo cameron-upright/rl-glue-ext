@@ -1,4 +1,4 @@
-=== User Quick Install ===
+= Source / AutoTools Quick Install Guide =
 {{{
 #Unpack the files
 >$ tar -zxf c-codec-2.0-RC-FINAL-1.tar.gz
@@ -16,10 +16,10 @@
 >$ sudo make install
 }}}
 
-=== Official Documentation ===
+= Official Documentation =
  * C/C++ Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.pdf (PDF)] 
 
-=== C/C++ Codec Homepage ===
+= C/C++ Codec Homepage =
 For more information about the C/C++ codec, and others, please visit the RL-Glue homepage:
 [http://glue.rl-community.org]
 
