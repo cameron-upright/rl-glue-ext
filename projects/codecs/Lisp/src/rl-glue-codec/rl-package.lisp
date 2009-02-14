@@ -78,6 +78,8 @@
     (safety 0)
     (space 0)
     (debug 0)
-    (compilation-speed 0))
+    (compilation-speed 0)
+    #+lispworks
+    (float 0))
   "General optimization settings of the package.")
 
