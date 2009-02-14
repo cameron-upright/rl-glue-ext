@@ -80,6 +80,8 @@
     (debug 0)
     (compilation-speed 0)
     #+lispworks
-    (float 0))
+    (float 0)
+    #+lispworks
+    (hcl:fixnum-safety 0))
   "General optimization settings of the package.")
 
