@@ -18,7 +18,7 @@
 These are both platform-independent RL-Glue codecs written in Python.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
 
 === User Quick Install ===
-{{{
+<code language="bash">
 #Unpack the files
 >$ tar -zxf PYTHON-USER-FILE-BASE.tar.gz
 
@@ -31,7 +31,7 @@ These are both platform-independent RL-Glue codecs written in Python.  There is 
 #Install the Codec
 >$ python setup.py install
 
-}}}
+</code>
 
 === Official Documentation ===
  * Python Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Python/docs/PythonCodec.pdf (PDF)] 

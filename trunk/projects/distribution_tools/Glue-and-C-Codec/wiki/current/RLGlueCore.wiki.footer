@@ -1,5 +1,5 @@
 = Source Distribution Quick Install Guide =
-{{{
+<code language="bsh">
 #Unpack the files
 > tar -zxf GLUE-DEV-FILE-BASE.tar.gz
 
@@ -14,7 +14,7 @@
 
 #Install the software (requires admin privileges)
 > sudo make install
-}}}
+</code>
 
 = Official Documentation =
  * RL-Glue Overview [http://rl-glue.googlecode.com/svn/trunk/docs/html/index.html (HTML)] [http://rl-glue.googlecode.com/svn/trunk/docs/Glue-Overview.pdf (PDF)]

@@ -19,7 +19,7 @@
 These are both platform-independent RL-Glue codecs written in Java.  Java 1.5 or higher is required to use them.  Both distributions include a pre-compiled JAR file that has all of the Java classes already built and packaged.  There is also an automated installer program to add the RL-Glue classes as a system extension so they can be used easily by your programs.  It should install on most Linux and Unix platforms, including Mac OS X and on Microsoft Windows.
 
 === User Quick Install ===
-{{{
+<code language="bash">
 #Unpack the files
 >$ tar -zxf JAVA-USER-FILE-BASE.tar.gz
 
@@ -28,7 +28,7 @@ These are both platform-independent RL-Glue codecs written in Java.  Java 1.5 or
 
 #Install the Codec
 >$ java -jar JavaRLGlueCodec.jar --install
-}}}
+</code>
 
 === Official Documentation ===
  * Java Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Java/docs/JavaCodec.pdf (PDF)] 
