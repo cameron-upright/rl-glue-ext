@@ -1,4 +1,4 @@
-= Source Distribution AutoTools Quick Install Guide =
+= Source Distribution Quick Install Guide =
 {{{
 #Unpack the files
 > tar -zxf c-codec-2.0-RC-FINAL-1.tar.gz
