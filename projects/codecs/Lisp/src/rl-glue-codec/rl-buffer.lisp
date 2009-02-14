@@ -157,11 +157,11 @@
   (declare (type double-float float))
   #+sbcl
   (values
-   (sb-kernel:double-float-high-bits float)
+   (integer-encoder (sb-kernel:double-float-high-bits float))
    (sb-kernel:double-float-low-bits float))
   #+(or cmu (and scl (not 64bit)))
   (values
-   (kernel:double-float-high-bits float)
+   (integer-encoder (kernel:double-float-high-bits float))
    (kernel:double-float-low-bits float))
   #+(and scl 64bit)
   (let ((code (kernel:double-float-bits float)))
@@ -216,10 +216,11 @@
 (defun float-decoder (high low)
   "Returns the float generated from the HIGH and LOW codes."
   (declare #.*optimize-settings*)
+  (declare (type int-code-t high low))
   #+sbcl
-  (sb-kernel:make-double-float high low)
+  (sb-kernel:make-double-float (integer-decoder high) low)
   #+(or cmu (and scl (not 64bit)))
-  (kernel:make-double-float high low)
+  (kernel:make-double-float (integer-decoder high) low)
   #+(and scl 64bit)
   (kernel:make-double-float (+ (ash high #.+bits-per-integer+) low))
   #+ccl
