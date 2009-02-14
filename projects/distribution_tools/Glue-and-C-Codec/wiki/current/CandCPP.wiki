@@ -18,7 +18,7 @@ It contains:
   * Uninstall script for removing all of the above
   * The documentation for RL-Glue and the C/C++ codec(PDF)
   * The examples for RL-Glue and the C/C++ codec
-= Source Distribution AutoTools Quick Install Guide =
+= Source Distribution Quick Install Guide =
 {{{
 #Unpack the files
 > tar -zxf c-codec-2.0-RC-FINAL-1.tar.gz
