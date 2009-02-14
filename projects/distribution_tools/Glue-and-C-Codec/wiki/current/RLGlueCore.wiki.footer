@@ -1,19 +1,19 @@
-= Source / AutoTools Quick Install Guide =
+= Source Distribution AutoTools Quick Install Guide =
 {{{
 #Unpack the files
->$ tar -zxf GLUE-DEV-FILE-BASE.tar.gz
+> tar -zxf GLUE-DEV-FILE-BASE.tar.gz
 
 #Change to unpacked directory
->$ cd /path/to/GLUE-DEV-FILE-BASE
+> cd /path/to/GLUE-DEV-FILE-BASE
 
 #Configure the installation (for advanced options see the manual)
->$ ./configure
+> ./configure
 
 #Build the software
->$ make
+> make
 
 #Install the software (requires admin privileges)
->$ sudo make install
+> sudo make install
 }}}
 
 = Official Documentation =
