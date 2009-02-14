@@ -63,12 +63,12 @@
   #+lispworks
   (progn
     (defconstant +high-index+
-      #+little-endian 0
-      #-little-endian 1
-      "Index of the high byte in the byte array representing a double.")
-    (defconstant +low-index+
       #+little-endian 1
       #-little-endian 0
+      "Index of the high byte in the byte array representing a double.")
+    (defconstant +low-index+
+      #+little-endian 0
+      #-little-endian 1
       "Index of the low byte in the byte array representing a double.")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
