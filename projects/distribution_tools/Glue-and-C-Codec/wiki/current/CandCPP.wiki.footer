@@ -1,5 +1,5 @@
 = Source Distribution Quick Install Guide =
-{{{
+<code language="bsh">
 #Unpack the files
 > tar -zxf c-codec-2.0-RC-FINAL-1.tar.gz
 
@@ -14,7 +14,7 @@
 
 #Install the software (requires admin privileges)
 > sudo make install
-}}}
+</code>
 
 = Official Documentation =
  * C/C++ Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/html/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/C/docs/C-Codec.pdf (PDF)] 
