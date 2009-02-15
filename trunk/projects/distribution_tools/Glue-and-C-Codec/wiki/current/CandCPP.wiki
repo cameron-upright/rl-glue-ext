@@ -11,7 +11,7 @@
  This is a platform-independent project that was built using the GNU Autotools.  It should install on most Linux and Unix platforms, including Mac OS X (Intel and PowerPC) and on Microsoft Windows under Cygwin.
 
 ==Disk Image (Intel Mac OS X)==
-  [http://rl-glue-ext.googlecode.com/files/RL-Glue-3.01-and-C-Codec.dmg Mac OS X RL-Glue Core Project and C/C++ Codec Disk Image 3.01] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=RL-Glue-3.01-and-C-Codec.dmg (File Details)]
+  [http://rl-glue-ext.googlecode.com/files/RL-Glue-3.02-and-C-Codec.dmg Mac OS X RL-Glue Core Project and C/C++ Codec Disk Image 3.02] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=RL-Glue-3.02-and-C-Codec.dmg (File Details)]
 This is an OS X disk image with familiar installer that will install both RL-Glue Core and the C/C++ Codec onto your Mac.  Intel Mac only. You do not need to install the C/C++ Codec separately if you use this option.
 It contains:
   * Installer program (.pkg) for pre-compiled libraries, headers, and rl_glue executable socket server.
