@@ -9,7 +9,8 @@
   This is a platform-independent RL-Glue codec written in Lisp.  This codec supports a variety of Lisp variants, including: SBCL, CMUCL, Lispworks, Allegro CL, CLISP, Scieneer, and CCL/OpenMCL.
 
 === Official Documentation ===
- * Lisp Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Lisp/doc/reference/index.html (HTML)] [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Lisp/doc/manual/lisp-codec.pdf (PDF)] 
+ * Lisp Codec Manual [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Lisp/doc/manual/lisp-codec.pdf (PDF)] 
+ * Lisp Codec API Reference [http://rl-glue-ext.googlecode.com/svn/trunk/projects/codecs/Lisp/doc/reference/index.html (HTML)] 
 
 === Lisp Codec Homepage ===
 For more information about the Lisp codec, and others, please visit the RL-Glue homepage:
