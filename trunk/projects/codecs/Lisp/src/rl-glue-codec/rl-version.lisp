@@ -25,5 +25,5 @@
 
 (defun get-codec-version ()
   "Returns the official codec version."
-  "1.0-RC3")
+  "1.0")
 
