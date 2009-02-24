@@ -9,18 +9,22 @@ mkdir $DISTDIR
 PACKAGERELEASE=1
 
 cd rl-glue-trunk
+EXTRA_FLAGS=-m32
 
-./configure --host x86_32-unknown-linux-gnu
+
+CFLAGS="$EXTRA_FLAGS" ./configure --host=i386
 sudo make clean
-make
-sudo checkinstall -y --pkgname rl-glue --pkgversion $VERSION --pkgrelease $PACKAGERELEASE --pkglicense "Apache\ License\ 2.0" --pkggroup devel --maintainer "Iordanis\ Daroglou\ \<idaroglo\@csd.auth.gr\>" --provides rlglue -D
+CFLAGS="$EXTRA_FLAGS" make
+CFLAGS="$EXTRA_FLAGS" sudo make install
+CFLAGS="$EXTRA_FLAGS" sudo checkinstall -y --pkgname rl-glue --pkgversion $VERSION --pkgrelease $PACKAGERELEASE --pkglicense "Apache\ License\ 2.0" --pkggroup devel --maintainer "Iordanis\ Daroglou\ \<idaroglo\@csd.auth.gr\>" --provides rlglue -D
 sudo make clean
 
-./configure --host x86_64-unknown-linux-gnu
-make
-sudo checkinstall -y --pkgname rl-glue --pkgversion $VERSION --pkgrelease $PACKAGERELEASE --pkglicense "Apache\ License\ 2.0" --pkggroup devel --maintainer "Iordanis\ Daroglou\ \<idaroglo\@csd.auth.gr\>" --provides rlglue -D
-
-cp *.deb $DISTDIR/
+#./configure --host x86_64-unknown-linux-gnu
+#make
+#sudo make install
+#sudo checkinstall -y --pkgname rl-glue --pkgversion $VERSION --pkgrelease $PACKAGERELEASE --pkglicense "Apache\ License\ 2.0" --pkggroup devel --maintainer "Iordanis\ Daroglou\ \<idaroglo\@csd.auth.gr\>" --provides rlglue -D
+#sudo make clean
+#cp *.deb $DISTDIR/
 
 #rm -Rf $MACDIR/*.pkg
 #rm $MACDIR/*.dmg
