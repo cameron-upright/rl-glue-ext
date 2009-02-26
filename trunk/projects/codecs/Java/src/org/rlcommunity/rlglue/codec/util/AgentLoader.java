@@ -83,7 +83,6 @@ public class AgentLoader implements Runnable {
             } catch (Exception e) {
                 System.err.println("Could not use port you requested: " + portString + " could not be parsed as an int.");
                 e.printStackTrace();
-
             }
         }
     }
@@ -102,6 +101,7 @@ public class AgentLoader implements Runnable {
             agent = (AgentInterface) Class.forName(agentClassName).newInstance();
         } catch (Exception ex) {
             System.err.println("loadAgent(" + agentClassName + ") threw Exception: " + ex);
+            ex.printStackTrace();
         }
         AgentLoader theLoader = new AgentLoader(agent);
         return theLoader;

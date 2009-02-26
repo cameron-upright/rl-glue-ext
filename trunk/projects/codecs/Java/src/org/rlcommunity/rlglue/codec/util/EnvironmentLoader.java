@@ -83,6 +83,7 @@ public class EnvironmentLoader implements Runnable {
                 }
             } catch (Exception e) {
                 System.err.println("Could not use port you requested: " + portString + " could not be parsed as an int.");
+                e.printStackTrace();
             }
         }
     }
@@ -120,6 +121,7 @@ public class EnvironmentLoader implements Runnable {
             env = (EnvironmentInterface) Class.forName(envClassName).newInstance();
         } catch (Exception e) {
             System.err.println("loadEnvironment(" + envClassName + ") threw Exception: " + e);
+            e.printStackTrace();
         }
 
         return new EnvironmentLoader(env);
