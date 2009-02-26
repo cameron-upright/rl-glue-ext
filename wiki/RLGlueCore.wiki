@@ -26,11 +26,23 @@ It contains:
   * The documentation for RL-Glue (PDF)
   * A README.txt file with some hints on how to put rl_glue.exe into your path
 -----
-<wiki:comment>
- * [http://rl-glue-ext.googlecode.com/files/? Debian/Ubuntu binary .deb package RL-Glue Core Project ?] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=? (File Details)]
-</wiki:comment>
- * Debian/Ubuntu binary .deb package -- coming soon!
+==Linux .deb and .rpm packages==
 
+
+===Debian/Ubuntu .deb packages ===
+  [http://rl-glue-ext.googlecode.com/files/rl-glue_3.03-1_i386.deb  RL-Glue Core .deb package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue_3.03-1_i386.deb (File Details)]
+
+===Debian/Ubuntu .deb packages ===
+  [FILE-LINK  RL-Glue Core .deb package (64-bit) VERSION] [DETAILS-LINK (File Details)]
+
+This is an Debian/Ubuntu package with familiar installer procedure that will install RL-Glue Core
+
+It contains:
+  * Installer package (.deb) for pre-compiled libraries, headers, and rl_glue executable socket server.
+  * Can be uninstalled with apt
+  * The documentation for RL-Glue (HTML)
+  * Man page (man rl_glue)
+  * The examples for RL-Glue
 = Source Distribution Quick Install Guide =
 <code language="bsh">
 #Unpack the files
