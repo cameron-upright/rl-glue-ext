@@ -16,5 +16,4 @@ Description: inter-language protocol for reinforcement learning experiments
  programs together, even if they are written in different languages. This 
  package provides the rl_glue  executable socket server that connects agents,
  environment, and experiments together over POSIX sockets, as well as shared
- network and utility libraries required for compiling RL-Glue components
- (including the RL-Glue C/C++ codec).
+ network and utility libraries required for compiling RL-Glue components.
