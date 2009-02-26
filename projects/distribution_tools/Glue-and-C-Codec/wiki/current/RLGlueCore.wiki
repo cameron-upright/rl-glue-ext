@@ -44,7 +44,7 @@ It contains:
   * Man page (man rl_glue)
   * The examples for RL-Glue
 ===Redhat and friends .rpm packages ===
-  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-2_i386.rpm  RL-Glue Core .rpm package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-2_i386.rpm (File Details)]
+  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-2.i386.rpm  RL-Glue Core .rpm package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-2.i386.rpm (File Details)]
 
 
   [FILE-LINK  RL-Glue Core .deb package (64-bit) VERSION] [DETAILS-LINK (File Details)]
