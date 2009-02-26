@@ -19,11 +19,12 @@ DEB_CFG=$BASEDIR/debian/debcfg
 
 # target dir, where the debs & rpms end up - also the place where we get the source tar.gz from
 DIST=$BASEDIR/dist
+rm $DIST/*.rpm
+rm $DIST/*.deb
 
 # variables for the filenames of the lintian logs - (un)comment according to arch
 # if we want no logs, we can ommit them
 THE_ARCH=$(uname -m)
-THE_ARCH=x86_64
 if [ $THE_ARCH = x86_64 ]; then
 	echo "Building 64 Bit Packages..."
 	LINTLOG=lintian64.$TSTAMPNUM.log
@@ -31,14 +32,6 @@ else
 	echo "Building 32 Bit Packages..."
 	LINTLOG=lintian32_$TSTAMPNUM.log
 fi
-
-# get latest upstream distribution
-#==================================
-#bash download-build-glue.bash
-#bash create-glue-dist.bash
-
-# 'debug' printout
-echo startarollin
 
 # prepare the updated package debian sources (section 'identical' for both arches)
 #==================================================================================
