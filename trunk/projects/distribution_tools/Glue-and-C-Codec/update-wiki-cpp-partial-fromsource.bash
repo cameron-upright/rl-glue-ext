@@ -1,5 +1,5 @@
 #!/bin/bash
-#Update the C/C++ codec tarball partial
+#Update the GlueCore deb package
 if [ -z $1 ]
 then
   CODECVERSION=UNKNOWN
