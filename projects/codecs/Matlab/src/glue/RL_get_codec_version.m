@@ -21,5 +21,5 @@
 %  $HeadURL$
 %
 function codecVersion=RL_get_codec_version()
-	codecVersion='1.03';
+	codecVersion='1.04';
 end
