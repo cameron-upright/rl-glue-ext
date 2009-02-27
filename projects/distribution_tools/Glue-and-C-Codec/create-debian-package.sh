@@ -81,7 +81,7 @@ dpkg-buildpackage -rfakeroot -uc -us
 cd ..
 lintian rl-glue*.deb > $DIST/$LINTLOG
 cd $DASHED_DIR
-fakeroot alien -r ../rl-glue*.deb
+fakeroot alien -r -k ../rl-glue*.deb
 cd ..
 cp rl-glue*.deb $DIST
 mv $DASHED_DIR/rl-glue*.rpm $DIST
