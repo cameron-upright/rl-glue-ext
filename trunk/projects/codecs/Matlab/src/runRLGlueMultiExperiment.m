@@ -48,7 +48,6 @@ end
 
 if(isfield(p__rlglueSettings,'agent'))
    p__rlglueSettings=rmfield(p__rlglueSettings,'agent');
-   p__rlglueSettings.hasAgent=false;
 end
 
 if(isfield(p__rlglueSettings,'experiment'))
@@ -99,6 +98,10 @@ if(p__rlglueSettings.hasExperiment)
     else
         p__rlglueSettings.experiment();
     end
+    %These are harmless if not connected already.
+    disconnectAgent();
+    disconnectEnvironment();
+    disconnectGlue();
     return;
 end
 
@@ -115,4 +118,10 @@ while(~agentShouldQuit || ~environmentShouldQuit)
    end
     
 end
+    
+%These are harmless if not connected already.
+disconnectAgent();
+disconnectEnvironment();
+disconnectGlue();
 
+end

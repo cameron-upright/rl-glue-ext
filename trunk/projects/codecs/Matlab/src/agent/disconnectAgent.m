@@ -20,12 +20,17 @@
 %   $Author$
 %  $HeadURL$
 %
-function disconnectAgent(network)
+function disconnectAgent()
     global p__rlglueAgentStruct;
+    global p__rlglueSettings;
     
     if isfield(p__rlglueAgentStruct,'network')
         p__rlglueAgentStruct.network.close();
 		p__rlglueAgentStruct=rmfield(p__rlglueAgentStruct,'network');
     end
     
+    if(isfield(p__rlglueSettings,'agent'))
+        p__rlglueSettings=rmfield(p__rlglueSettings,'agent');
+        p__rlglueSettings.hasAgent=false;
+    end
 end
