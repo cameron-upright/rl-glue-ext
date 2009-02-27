@@ -20,12 +20,18 @@
 %   $Author$
 %  $HeadURL$
 %
-function disconnectEnvironment(network)
+function disconnectEnvironment()
     global p__rlglueEnvStruct;
+    global p__rlglueSettings;
     
 	if isfield(p__rlglueEnvStruct,'network')
 	    p__rlglueEnvStruct.network.close();
 		p__rlglueEnvStruct=rmfield(p__rlglueEnvStruct,'network');
-	end
+    end
 
+        
+    if(isfield(p__rlglueSettings,'environment'))
+        p__rlglueSettings=rmfield(p__rlglueSettings,'environment');
+        p__rlglueSettings.hasEnvironment=false;
+    end
 end
