@@ -117,11 +117,15 @@ public class EnvironmentLoader implements Runnable {
      */
     public static EnvironmentLoader loadEnvironment(String envClassName) {
         EnvironmentInterface env = null;
+
+        //Had to use the system classloader in case the codec was actually installed.
+        //If its installed, it uses a different classloader.
         try {
-            env = (EnvironmentInterface) Class.forName(envClassName).newInstance();
+            env = (EnvironmentInterface) ClassLoader.getSystemClassLoader().loadClass(envClassName).newInstance();
         } catch (Exception e) {
             System.err.println("loadEnvironment(" + envClassName + ") threw Exception: " + e);
             e.printStackTrace();
+            System.exit(1);
         }
 
         return new EnvironmentLoader(env);

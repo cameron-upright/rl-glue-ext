@@ -98,10 +98,13 @@ public class AgentLoader implements Runnable {
     public static AgentLoader loadAgent(String agentClassName) {
         AgentInterface agent = null;
         try {
-            agent = (AgentInterface) Class.forName(agentClassName).newInstance();
+            //Have to use the system classloader because if the codec is installed,
+            //class.forName will use the ext classloader which won't find your classes.
+            agent = (AgentInterface) ClassLoader.getSystemClassLoader().loadClass(agentClassName).newInstance();
         } catch (Exception ex) {
             System.err.println("loadAgent(" + agentClassName + ") threw Exception: " + ex);
             ex.printStackTrace();
+            System.exit(1);
         }
         AgentLoader theLoader = new AgentLoader(agent);
         return theLoader;

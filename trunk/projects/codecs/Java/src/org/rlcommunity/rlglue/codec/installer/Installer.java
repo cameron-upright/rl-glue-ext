@@ -195,7 +195,11 @@ public class Installer {
         }
         System.out.println("Removing RL-Glue Java Extension from:\n"+getThisJar().getAbsolutePath());
         getThisJar().delete();
-        System.out.println("Uninstallation Complete!");
+        if(getThisJar().exists()){
+            System.err.println("Could not delete the file.  Try again with sudo or root access.");
+        }else{
+            System.out.println("Uninstallation Complete!");
+        }
     }
 
     private static Set<File> getExtensionDirs() {
