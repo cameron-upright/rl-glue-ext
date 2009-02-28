@@ -4,7 +4,7 @@
 
 === Available Downloads (only one is required)===
 
- * [http://rl-glue-ext.googlecode.com/files/java-codec-2.05.tar.gz Java User Distribution 2.05] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-2.05.tar.gz (File Details)]
+ * [http://rl-glue-ext.googlecode.com/files/java-codec-2.04.tar.gz Java User Distribution 2.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-2.04.tar.gz (File Details)]
  The *user* distribution is no-nonsense distribution that most people will want to download.
  It contains:
    * Java codec compiled into a JAR file (with installer)
@@ -12,7 +12,7 @@
    * The examples
    * README file to get you started if you don't like manuals
 
- * [http://rl-glue-ext.googlecode.com/files/java-codec-dev-2.05.tar.gz Java Developer Distribution 2.05] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-dev-2.05.tar.gz (File Details)]
+ * [http://rl-glue-ext.googlecode.com/files/java-codec-dev-2.04.tar.gz Java Developer Distribution 2.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=java-codec-dev-2.04.tar.gz (File Details)]
  The *dev* distribution is almost a snapshot of the development directory of this project.  It includes all of the source code, the ant compile scripts, tests, javadocs, tests, etc.
 
 
@@ -21,10 +21,10 @@ These are both platform-independent RL-Glue codecs written in Java.  Java 1.5 or
 === User Quick Install ===
 <code language="bash">
 #Unpack the files
->$ tar -zxf java-codec-2.05.tar.gz
+>$ tar -zxf java-codec-2.04.tar.gz
 
 #Change to unpacked directory
->$ cd /path/to/java-codec-2.05
+>$ cd /path/to/java-codec-2.04
 
 #Install the Codec
 >$ java -jar JavaRLGlueCodec.jar --install
