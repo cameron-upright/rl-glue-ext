@@ -20,7 +20,7 @@
     
     <target name="compile"  depends="set-debug, rl-compile">
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="${build.debug}" deprecation="${build.deprecation}"/> 
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="${build.debug}" deprecation="${build.deprecation}" target="1.5"/> 
     </target>
 
     <target name="jar" depends="compile,get.svn.version" >
@@ -46,7 +46,7 @@
     
     <target name="compile-tests" depends="jar">
 	    <mkdir dir="${test.classes.dir}"/>
-        <javac srcdir="${test.dir}" destdir="${test.classes.dir}">
+        <javac srcdir="${test.dir}" destdir="${test.classes.dir}" target="1.5">
             <classpath>
                 <path refid="junit.classpath" />
  				<path refid="result.jar.classpath" />
