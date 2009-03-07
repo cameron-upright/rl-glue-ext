@@ -1,21 +1,10 @@
 #!/bin/bash
-#Update the GlueCore deb package
-if [ -z $1 ]
-then
-  CODECVERSION=UNKNOWN
-  echo "You didn't pass a version for the codec so using UNKNOWN"
-else
-  CODECVERSION=$1
-fi
+
+CODECFILE=$(ls dist/ | grep c-codec)
+CODECVERSION=$(bash substr.bash $CODECFILE c-codec- .tar.gz)
 
 CODECNAME=c-codec-$CODECVERSION
-CODECUPLOADFILE=$CODECNAME.tar.gz
-CODECZIP=dist/$CODECUPLOADFILE
-#Upload to Google Code
-#python ../googlecode_upload.py -s "RL-Glue C/C++ Codec $CODECVERSION" -p rl-glue-ext --labels=Type-Installer,OpSys-All,Language-C,Audience-User,Audience-Dev $CODECZIP
+CODECZIP=dist/$CODECFILE
 
-# Update the Wiki
-
-# Update the Wiki
-python filesubstitution.py $CODECVERSION $CODECUPLOADFILE wiki/templates/CandCPP.wiki.fromsource.template wiki/current/CandCPP.wiki.fromsource
+python filesubstitution.py $CODECVERSION $CODECFILE wiki/templates/CandCPP.wiki.fromsource.template wiki/current/CandCPP.wiki.fromsource
 

@@ -5,15 +5,6 @@
 #GlueCore + C/C++ Mac Binary Disk Image
 #Windows .exe binary
 
-if [ -z $1 ]
-then
-  CODECVERSION=UNKNOWN
-  echo "You didn't pass a version for the c/cpp codec so using aborting do-brian-laptop-build"
-  exit 1
-else
-  CODECVERSION=$1
-fi
-
 #Build everything
 bash ./download-build-glue.bash
 bash ./download-build-codec.bash
@@ -28,12 +19,12 @@ bash ./build-glue-native.bash
 
 #Upload Everything
 bash ./upload-gluecore-fromsource.bash
-bash ./upload-cpp-fromsource.bash $CODECVERSION
+bash ./upload-cpp-fromsource.bash
 bash ./upload-macbinary.bash
 bash ./upload-winbinary.bash
 
 #Figure out the wiki updates
-bash ./update-wiki-cpp-partial-fromsource.bash $CODECVERSION
+bash ./update-wiki-cpp-partial-fromsource.bash 
 bash ./update-wiki-gluecore-partial-fromsource.bash
 #Don't do debian, that will be in do-brian-linux-build.bash
 bash ./update-wiki-gluecore-partial-windows.bash
