@@ -47,7 +47,7 @@ It contains:
   [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-1.i386.rpm  RL-Glue Core .rpm package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-1.i386.rpm (File Details)]
 
 
-  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-2.x86_64.rpm  RL-Glue Core .deb package (64-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-2.x86_64.rpm (File Details)]
+  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-1.x86_64.rpm  RL-Glue Core .rpm package (64-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-1.x86_64.rpm (File Details)]
 
 This is an RPM package with familiar installer procedure that will install RL-Glue Core
 
