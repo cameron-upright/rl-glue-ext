@@ -13,8 +13,8 @@ bash ./update-wiki-gluecore-partial-deb64.bash
 bash ./update-wiki-gluecore-partial-rpm64.bash
 
 bash ./create-c-codec-deb.bash
-bash ./update-wiki-gluecore-partial-deb64.bash
-bash ./update-wiki-gluecore-partial-rpm64.bash
+bash ./update-wiki-cpp-partial-deb64.bash
+bash ./update-wiki-cpp-partial-rpm64.bash
 
 bash ./upload-deb64.bash
 bash ./upload-rpm64.bash

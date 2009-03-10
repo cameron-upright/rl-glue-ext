@@ -10,8 +10,8 @@ sh ./create-debian-package.bash
 bash ./update-wiki-gluecore-partial-deb32.bash
 bash ./update-wiki-gluecore-partial-rpm32.bash
 bash ./create-c-codec-deb.bash
-bash ./update-wiki-gluecore-partial-deb32.bash
-bash ./update-wiki-gluecore-partial-rpm32.bash
+bash ./update-wiki-cpp-partial-deb32.bash
+bash ./update-wiki-cpp-partial-rpm32.bash
 
 bash ./upload-deb32.bash
 bash ./upload-rpm32.bash
