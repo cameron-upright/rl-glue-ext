@@ -1,5 +1,4 @@
 #!/bin/bash
-
 CODECFILE=$(ls dist/ | grep c-codec)
 CODECVERSION=$(bash substr.bash $CODECFILE c-codec- .tar.gz)
 

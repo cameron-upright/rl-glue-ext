@@ -21,10 +21,6 @@ DEB_CFG=$BASEDIR/debian/debcfg/codec
 # target dir, where the debs & rpms end up - also the place where we get the source tar.gz from
 DIST=$BASEDIR/dist
 
-# get latest upstream distribution
-#==================================
-bash download-build-codec.bash
-bash create-codec-dist.bash
 
 # variables for the filenames of the lintian check logs - (un)comment according to arch
 # if we want no logs, we can ommit them
@@ -41,9 +37,9 @@ fi
 
 # prepare the updated package debian sources (section 'identical' for both arches)
 #==================================================================================
-cp $DIST/*.tar.gz $DEBBASE_DIR
+cp $DIST/c-codec*.tar.gz $DEBBASE_DIR
 cd $DEBBASE_DIR
-tar -xzf *.tar.gz
+tar -xzf c-codec*.tar.gz
 
 # this one renames the folder in the appropriate way (rl-glue-c-codec-XX), no need to know about version numbers etc.
 # since we cannot do find -name bla -exec cd {} \;, we have to do some tricks to get the versioned dir
