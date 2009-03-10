@@ -36,7 +36,7 @@ fi
 
 # prepare the updated package debian sources (section 'identical' for both arches)
 #==================================================================================
-cp $DIST/*.tar.gz $DEBBASE_DIR
+cp $DIST/rlglue*.tar.gz $DEBBASE_DIR
 cd $DEBBASE_DIR
 tar -xzf *.tar.gz
 
