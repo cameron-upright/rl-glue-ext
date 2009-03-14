@@ -47,7 +47,8 @@ We are not lawyers, but our intention is that this codec should be used however
 it is useful. We would appreciate to hear what you are using it for, and to get
 credit if appropriate.
 
-\hypertarget{softreqs}{\subsection{Software requirements}}
+\subsection{Software requirements}
+\hypertarget{softreqs}{}
 
 Required libraries for the codec.
 \begin{itemize}
@@ -72,7 +73,7 @@ Required libraries for the codec.
 The codec can be downloaded either as a tarball or can be checked out of the
 subversion repository.
 
-The tarball distribution can be found here: \\
+The tarball distributions can be found here: \\
 \selfref{http://code.google.com/p/rl-glue-ext/wiki/Lisp}
 
 The subversion trunk can be checked out this way: \\
@@ -82,146 +83,98 @@ The subversion trunk can be checked out this way: \\
 
 \subsection{Installation}
 
-The codec is provides two ASDF packages, so the
+The codec provides ASDF packages, so the
 \footref{ASDF library}{http://common-lisp.net/project/asdf/} has to be set up
-for your Lisp implementation. If you are unfamiliar with it, take a look to
-our \hyperlink{asdfintro}{quick ASDF introduction.}
+for your Lisp implementation. If you want to know more about it, take a look
+at our \hyperlink{asdfintro}{quick ASDF introduction.}
 
-The provided ASDF packages are \prompttext{rl-glue-codec} and
+The main ASDF packages are \prompttext{rl-glue-codec} and
 \prompttext{rl-glue-utils}. The former provides the connectivity with the
 RL-Glue component, the latter contains utilities which can be helpful during
-using the codec.
+using the codec. The \prompttext{rl-glue-examples} package contains the
+agent, environment and experiment examples described later in this document.
 
-Change to the lisp-codec directory. \\
-\shprompt{cd lisp-codec}
+The codec is distributed in three different ways described in the following
+sections. Choose according to your needs and knowledge, but if you remain
+unsure at the end, we recommend the full distribution.
 
-\subsubsection{Manual installation}
+\subsubsection{Full distribution}
 
-Install the library dependencies first. Download the
-\hyperlink{softreqs}{required libraries} into the \prompttext{lisp-codec} directory.
-Then you can see something like this. \\
-\shprompt{ls *.tar.gz} \\
-\prompttext{split-sequence.tar.gz usocket-0.4.1.tar.gz} \\
-Extract them into your \prompttext{asdf-source-dir}. \\
-\shprompt{tar -zxvf split-sequence.tar.gz -C /asdf-source-dir/} \\
-\shprompt{tar -zxvf usocket-0.4.1.tar.gz -C /asdf-source-dir/} \\
-And create the symlinks for the library packages. \\
-\shprompt{cd /asdf-system-dir/} \\
-\shprompt{ln -s /asdf-source-dir/split-sequence/split-sequence.asd
-          split-sequence.asd} \\
-\shprompt{ln -s /asdf-source-dir/usocket-0.4.1/usocket.asd
-          usocket.asd} \\
-\shprompt{cd -}
+\textsl{Recommended for users without ASDF experience.}
 
-If you downloaded the tarball, just copy the sources into the ASDF source
-directory. \\
-\shprompt{cp -r src/rl-glue-codec /asdf-source-dir/} \\
-\shprompt{cp -r src/rl-glue-utils /asdf-source-dir/}
+This distribution contains a pre-configured ASDF environment with all the
+libraries required to use the codec. It also provides the manual and the
+API reference documentation. You don't need any ASDF installation and
+configuration knowledge to use this distribution.
 
-If you checked out the SVN repository, you probably do not want to have the
-\prompttext{.svn} directories under your \prompttext{asdf-source-dir}.
-If you don't care, just copy as described above, otherwise you can try the
-following commands. \\
-\shprompt{cd src} \\
-\shprompt{find rl-glue-codec -name .svn -prune
-          -o $\backslash$( $\backslash$!~-name *\~{} -print0 $\backslash$) | \\
-\mbox{~~}cpio -pmd0 /asdf-source-dir/} \\
-\shprompt{find rl-glue-utils -name .svn -prune
-          -o $\backslash$( $\backslash$!~-name *\~{} -print0 $\backslash$) | \\
-\mbox{~~}cpio -pmd0 /asdf-source-dir/} \\
-\shprompt{cd -}
+The installation is very simple.
 
-Create the symlinks for the \prompttext{rl-glue} packages. \\
-\shprompt{cd /asdf-system-dir/} \\
-\shprompt{ln -s /asdf-source-dir/rl-glue-codec/rl-glue-codec.asd
-          rl-glue-codec.asd} \\
-\shprompt{ln -s /asdf-source-dir/rl-glue-utils/rl-glue-utils.asd
-          rl-glue-utils.asd} \\
-\shprompt{cd -}
+Choose the install destination. \\
+\shprompt{cd /path/to}
 
-\hypertarget{asdfinst}{\subsubsection{Installation by ASDF-Install}}
+Unpack the files. \\
+\shprompt{tar -zxf lisp-codec-full-<version>.tar.gz} \\
 
-You need the ASDF-Install library for this. If you do not have this, the
-installation instructions can be found on
-\selfref{http://common-lisp.net/project/asdf-install/}.
+Then you are able to use the codec.
 
-On \footref{Windows}{http://en.wikipedia.org/wiki/Microsoft\_Windows}
-ASDF-Install is only supported officially under
-\footref{Cygwin}{http://www.cygwin.com/}, but it can be possible to use it
-without that (you have to test it on your own). A description can be found on
-\selfref{http://sean-ross.blogspot.com/2007/05/asdf-install-windows.html}.
-
-Create the compressed ASDF packages. \\
-\shprompt{tools/make-asdf-package.sh rl-glue-codec} \\
-\shprompt{tools/make-asdf-package.sh rl-glue-utils}
-
-Start the Lisp interpreter with the appropriate user having read/write rights
-to the target ASDF directories. If you want to install the packages system-wide,
-the user probably has to be root. \\
+Start your Lisp. \\
 \shprompt{lisp} \\
 \lispprompt{}
 
-Set up ASDF, ASDF-Install (optionally ASDF-Binary-Locations) according to
-their manual.
+Initialize the ASDF sustem. \\
+\lispprompt{(load \#p"/path/to/lisp-codec-full/setup")} \\
 
-Install the packages. \\
-\lispprompt{(asdf-install:install "./rl-glue-codec.tar.gz")} \\
-\lispprompt{(asdf-install:install "./rl-glue-utils.tar.gz")}
+Now you are ready to load the rl-glue ASDF packages. The ASDF system will
+compile them automatically on the first time to reduce the loading time of
+the later occasions. Continue by reading the
+\hyperlink{usage}{usage instructions}.
 
-It is important to note that you have to load the asdf-install package
-before you try to load any other package installed by it. So it may be
-comfortable to add this line to your Lisp init file. \\
-\prompttext{(asdf:oos 'asdf:load-op :asdf-install)}
+\subsubsection{ASDF distribution}
+
+\textsl{Recommended for users with ASDF experience.}
+
+If you are an experienced ASDF user, you probably have an installed and
+configured ASDF system. Then this distribution is for you, it contains
+the \prompttext{rl-glue-codec}, \prompttext{rl-glue-utils} and
+\prompttext{rl-glue-examples} ASDF packages which can be installed as any
+other ASDF package. It also provides the manual and the API reference
+documentation.
+
+If you choose this distribution, you have to install the
+\hyperlink{softreqs}{library dependencies} on your own. Of course,
+you can use a sophisticated installer (like
+\footref{ASDF-Install}{http://www.cliki.net/ASDF-Install}
+or
+\footref{clbuild}{http://common-lisp.net/project/clbuild/})
+which can handle this problem.
+
+\subsubsection{Developer distribution}
+
+\textsl{Recommended for Lisp codec developers.}
+
+This distribution is a snapshot of the Lisp codec development directory.
+It contains all the source code, tests, documentation and development tools.
+If you choose this, you have to do the installation as in case of the ASDF
+distribution.
 
 \subsection{Uninstallation}
 
-The codec can be uninstalled manually or by ASDF-Install depending on how
-it was installed.  If you do not need the dependent libraries installed for
-the codec, you have to uninstall them one by one.
+Just delete what you don't need anymore.
 
-\subsubsection{Manual uninstallation}
+If you used a sophisticated tool for the installation (like
+ASDF-Install or clbuild), you should use its uninstall method.
 
-Delete the source files. \\
-\shprompt{rm -r /asdf-source-dir/rl-glue-codec/} \\
-\shprompt{rm -r /asdf-source-dir/rl-glue-utils/} \\
-Delete the codec dependencies the same way if you want to remove those
-libraries as well.
-
-Delete the symlinks. \\
-\shprompt{rm /asdf-system-dir/rl-glue-codec.asd} \\
-\shprompt{rm /asdf-system-dir/rl-glue-utils.asd} \\
-Delete the codec dependencies the same way if you want to remove those
-libraries as well.
-
-If you use ASDF-Binary-Locations, do not forget to delete the compiled
-Lisp files from its directory.
-
-\subsubsection{Uninstallation by ASDF-Install}
-
-You had to \hyperlink{asdfinst}{install the codec by ASDF-Install} to use this
-method.
-
-Start the Lisp interpreter. \\
-\shprompt{lisp} \\
-\lispprompt{}
-
-Set up ASDF, ASDF-Install according to their manual.
-
-Uninstall the packages. \\
-\lispprompt{(asdf-install:uninstall :rl-glue-codec)} \\
-\lispprompt{(asdf-install:uninstall :rl-glue-utils)} \\
-Uninstall the codec dependencies the same way if you want to remove those
-libraries as well.
+If you have used ASDF-Binary-Locations, don't forget to remove the
+\prompttext{fasl} files.
 
 \subsection{Credits and acknowledgment}
 
-Gabor Balazs wrote the Lisp codec, that's me!
+G\'abor Bal\'azs wrote the Lisp codec, that's me!
 
 I would like thank the lispers on the
-\footref{\prompttext{\#lisp}}{http://www.cliki.net/IRC}
-\footref{IRC}{http://en.wikipedia.org/wiki/IRC} channel on
-\footref{irc.freenode.net}{http://en.wikipedia.org/wiki/Freenode}
-of their patience and their great help in many Lisp specific questions.
+\footref{\prompttext{\#lisp} IRC channel}{http://www.cliki.net/IRC}
+on \textsl{irc.freenode.net} of their great help in many Lisp specific
+questions.
 
 \subsubsection{Contributing}
 
@@ -231,6 +184,7 @@ updates/changes to the code, please send a message to rl-glue@googlegroups.com.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Using the codec}
+\hypertarget{usage}{}
 
 This section describes how the codec can be used to create agents, environments
 and experiments in Lisp, and how they can be glued into a running system.
@@ -240,11 +194,11 @@ and experiments in Lisp, and how they can be glued into a running system.
 The codec has an own (ASDF) package named \prompttext{rl-glue-codec}. \\
 \lispprompt{(asdf:oos 'asdf:load-op :rl-glue-codec)}
 
-One can use the proper package qualified symbol names, e.g. \\
+You can use the proper package qualified symbol names, e.g. \\
 \lispprompt{(defclass my-agent (rl-glue-codec:agent) \ldots)} \\
 \lispprompt{(defmethod rl-glue-codec:env-init ((env my-env)) \ldots)}
 
-Or one can import all the symbols into one's package by the \prompttext{:use}
+Or you can import all the symbols into your package by the \prompttext{:use}
 directive, and use the codec symbols without any package qualification
 (the further examples will assume this case). \\
 \lispprompt{(defpackage :my-package (:use :rl-glue \ldots)~\ldots)}
@@ -398,7 +352,8 @@ The output of the Lisp experiment. \\
 \prompttext{RL-Glue Lisp Experiment Codec Version 1.0, Build 414 \\
 \mbox{~~~~~~~~}Connecting to 127.0.0.1:4096 .~ok}
 
-\hypertarget{rlutils}{\subsection{Utilities}}
+\subsection{Utilities}
+\hypertarget{rlutils}{}
 
 The utilities has an own (ASDF) package named \prompttext{rl-glue-utils}. \\
 \lispprompt{(asdf:oos 'asdf:load-op :rl-glue-utils)}
@@ -444,7 +399,8 @@ Their documentation can be checked by the \prompttext{documentation} function.
 \lispprompt{(documentation 'rl-glue-utils:across-ranges 'function)} \\
 \lispprompt{(documentation 'rl-glue-utils:ranges-dimension 'function)}
 
-\hypertarget{examples}{\subsection{Examples}}
+\subsection{Examples}
+\hypertarget{examples}{}
 
 There is an (ASDF) package named \prompttext{rl-glue-examples} located
 in the \prompttext{example} directory. You have to load it before you
@@ -462,7 +418,7 @@ It randomly selects the actions and rewarded differently on the ends of
 the line. The experiment tries to cover the presentation of the used
 features.
 
-To run the example one has to do the following. \\
+To run the example you have to do the following. \\
 Running the RL-Glue core. \\
 \shprompt{rl\_glue} \\
 Starting the agent (in the first Lisp thread). \\
@@ -484,7 +440,7 @@ values. A few basic functionalities like turning learning or exploration
 on/off, saving the value function and setting the starting position are
 implemented by the message system of RL-Glue.
 
-To run the example one has to do the following. \\
+To run the example you have to do the following. \\
 Running the RL-Glue core. \\
 \shprompt{rl\_glue} \\
 Starting the agent (in the first Lisp thread). \\
@@ -498,7 +454,8 @@ Starting the experiment (in the third Lisp thread). \\
 
 We provide here example solutions for a few Lisp related problems.
 
-\hypertarget{asdfintro}{\subsection{Quick introduction to ASDF}}
+\subsection{Quick introduction to ASDF}
+\hypertarget{asdfintro}{}
 
 ASDF (Another System Definition Facility) is a library with which another
 Lisp libraries can be distributed. The home page of ASDF is here
@@ -506,7 +463,7 @@ Lisp libraries can be distributed. The home page of ASDF is here
 be found here \selfref{http://www.cliki.net/Library}.
 
 Sometimes ASDF is included by the Lisp implementation (e.g. in case of SBCL
-or CCL), in other cases one can download it from its home page. It is only a
+or CCL), in other cases you can download it from its home page. It is only a
 single Lisp file which does not depend on anything, so it can be simply loaded.
 
 The ASDF facility usually has two directories. The source directory in which
@@ -541,7 +498,8 @@ appropriate (there can be more, e.g. for testing) .asd file(s) from the
 \prompttext{asdf-system-dir} directory.
 
 You can compile and load the installed libraries by this command. \\
-\lispprompt{(asdf:oos 'asdf:load-op :library-name)} \\
+\lispprompt{(asdf:oos 'asdf:load-op :library-name)}
+
 By default the compiled Lisp file is placed next to the source which is
 usually unwanted because of two reasons. First it messes up the source
 directory, but more importantly if the source directory was created by an
@@ -552,11 +510,12 @@ The cure for this problem is the ASDF-Binary-Locations library. Its home
 page is located here
 \selfref{http://common-lisp.net/project/asdf-binary-locations/}. It stores
 the compiled files under a specifiable directory in the same structure as
-the sources are organised.
+the sources are organised. \\
 
 You can install this library using the above described method. Download and
 unpack it to \prompttext{asdf-source-dir}, then create the appropriate
-symbolic link. \\
+symbolic link.
+
 \shprompt{cd asdf-system-dir} \\
 \shprompt{ln -s
 /asdf-source-dir/asdf-binary-locations/asdf-binary-locations.asd \\
@@ -580,7 +539,7 @@ definition search functionality can be redefined to find the \prompttext{.asd}
 files recursively under the \prompttext{asdf:*central-registry*} directories.
 It will let you simply ``drop-in'' the new packages into these directories,
 and they will be available for loading without any further steps. For this
-one might want to add the following to the Lisp init file just after loading
+you might want to add the following to the Lisp init file just after loading
 the \prompttext{asdf.lisp} file.
 
 \prompttext{(in-package :asdf) \\
