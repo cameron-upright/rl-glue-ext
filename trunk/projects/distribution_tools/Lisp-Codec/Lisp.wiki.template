@@ -11,20 +11,20 @@
   _Recommended for users without [http://common-lisp.net/project/asdf/ ASDF] experience._
 
   Quick install and usage
-  <code>
-  $ # Choose the install destination.
-  $ cd /path/to
+  {{{
+$ # Choose the install destination.
+$ cd /path/to
 
-  $ # Unpack the files
-  $ tar -zxf LISP-FULL-FILE-BASE.tar.gz
+$ # Unpack the files
+$ tar -zxf LISP-FULL-FILE-BASE.tar.gz
 
-  $ # Start your Lisp
-  $ lisp
-  *
+$ # Start your Lisp
+$ lisp
+*
 
-  * ; Initalize the ASDF system
-  * (load #p"/path/to/lisp-codec-full/setup")
-  </code>
+* ; Initalize the ASDF system
+* (load #p"/path/to/lisp-codec-full/setup")
+  }}}
 
  * [LISP-ASDF-LINK Lisp Codec ASDF Distribution LISP-CODEC-VERSION] [LISP-ASDF-DETAILS-LINK (File Details)]
 
@@ -32,7 +32,7 @@
 
   _Recommended for users with [http://common-lisp.net/project/asdf/ ASDF] experience._
 
- * [LISP-ASDF-DEV Lisp Codec Developer Distribution LISP-CODEC-VERSION] [LISP-DEV-DETAILS-LINK (File Details)]
+ * [LISP-DEV-LINK Lisp Codec Developer Distribution LISP-CODEC-VERSION] [LISP-DEV-DETAILS-LINK (File Details)]
 
   The *dev* distribution contains a snapshot of the development directory. It includes source code, tests, documentation and development tools.
   
