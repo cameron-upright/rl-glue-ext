@@ -13,6 +13,7 @@ dvi: $(FNAME).dvi
 $(FNAME).dvi: $(FNAME).tex
 	latex $<
 	latex $<
+	latex $<
 
 html/$(FNAME).html: $(FNAME).tex
 	latex2html $< -split 0 -dir html -mkdir -local_icons -noinfo -strict \
