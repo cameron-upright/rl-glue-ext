@@ -11,20 +11,20 @@
   _Recommended for users without [http://common-lisp.net/project/asdf/ ASDF] experience._
 
   Quick install and usage
-  <code>
-  $ # Choose the install destination.
-  $ cd /path/to
+  {{{
+$ # Choose the install destination.
+$ cd /path/to
 
-  $ # Unpack the files
-  $ tar -zxf lisp-codec-full-1.0.tar.gz
+$ # Unpack the files
+$ tar -zxf lisp-codec-full-1.0.tar.gz
 
-  $ # Start your Lisp
-  $ lisp
-  *
+$ # Start your Lisp
+$ lisp
+*
 
-  * ; Initalize the ASDF system
-  * (load #p"/path/to/lisp-codec-full/setup")
-  </code>
+* ; Initalize the ASDF system
+* (load #p"/path/to/lisp-codec-full/setup")
+  }}}
 
  * [http://rl-glue-ext.googlecode.com/files/lisp-codec-asdf-1.0.tar.gz Lisp Codec ASDF Distribution 1.0] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=lisp-codec-asdf-1.0.tar.gz (File Details)]
 
