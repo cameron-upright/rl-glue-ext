@@ -19,12 +19,17 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(declaim (inline make-typed-array))
 (defun make-typed-array (size type &optional initial-contents)
   "Makes an array of SIZE with elements of TYPE."
+  (declare #.*optimize-settings*)
+  (check-type size fixnum)
+  (check-type initial-contents list)
   (assert (or (null initial-contents)
-              (= size (length initial-contents)))
+              (= (the fixnum size) (length (the list initial-contents))))
           (size initial-contents))
-  (let ((array (make-array size :element-type type)))
+  (let ((array (make-array (the fixnum size) :element-type type)))
+    (declare (type simple-array array))
     (when initial-contents
       (loop
          for e in initial-contents
@@ -35,11 +40,13 @@
 (defun make-int-array (size &key initial-contents)
   "Makes an integer array of SIZE with the package supported integer 
 typed elements."
+  (declare #.*optimize-settings*)
   (make-typed-array size 'integer-t initial-contents))
 
 (defun make-float-array (size &key initial-contents)
   "Makes a float array of SIZE with the package supported floating point 
 typed elements."
+  (declare #.*optimize-settings*)
   (make-typed-array size 'double-float initial-contents))
 
 (defparameter *init-integer-array* (make-int-array 0)
@@ -74,6 +81,7 @@ typed elements."
 
 (defun make-observation (&rest args)
   "Makes an observation object."
+  (declare #.*optimize-settings*)
   (apply #'make-instance 'observation args))
 
 (defclass action (rl-abstract-type)
@@ -81,6 +89,7 @@ typed elements."
 
 (defun make-action (&rest args)
   "Makes an action object."
+  (declare #.*optimize-settings*)
   (apply #'make-instance 'action args))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
