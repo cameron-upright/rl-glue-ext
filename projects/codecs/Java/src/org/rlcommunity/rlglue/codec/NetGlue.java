@@ -387,6 +387,7 @@ public class NetGlue implements RLGlueInterface {
      * @param callerName
      */
     private synchronized void send_abstract_type(RL_abstract_type theObject, int theCode, String callerName) {
+        assert theObject!=null : "Someone tried to send a null object in NetGlue from: "+callerName;
         try {
             network.clearSendBuffer();
             network.putInt(theCode);
@@ -400,7 +401,8 @@ public class NetGlue implements RLGlueInterface {
             ioException.printStackTrace();
            System.exit(1);
         } catch (NullPointerException nullException) {
-            System.err.println("You must call RL_init before calling " + callerName);
+            System.err.println("NULL Exception in send_abstract_type.  Assuming it's because the network is null.\n  Is it: (network==null)="+(network==null)+"?.\nYou must call RL_init before calling " + callerName);
+            System.out.println(nullException);
             nullException.printStackTrace();
            System.exit(1);
         }
