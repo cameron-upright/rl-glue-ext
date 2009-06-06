@@ -5,10 +5,10 @@
 <wiki:toc />
 
 = Available Downloads (only one is required) =
-==Source (All Platforms)==
-  [http://rl-glue-ext.googlecode.com/files/rlglue-3.02.tar.gz RL-Glue Core Project Source Distribution 3.02 (.tar.gz)] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rlglue-3.02.tar.gz (File Details)]
+==All Platforms : Source Distribution==
+  [http://rl-glue-ext.googlecode.com/files/rlglue-3.04.tar.gz RL-Glue Core Project Source Distribution 3.04 (.tar.gz)] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rlglue-3.04.tar.gz (File Details)]
 This is a platform-independent project that was built using the GNU Autotools.  It should install on most Linux and Unix platforms, including Mac OS X (Intel and PowerPC) and on Microsoft Windows under Cygwin.
-----
+
 ==Mac OS X : Disk Image (Intel Only)==
   [http://rl-glue-ext.googlecode.com/files/RL-Glue-3.04-and-C-Codec.dmg Mac OS X RL-Glue Core Project and C/C++ Codec Disk Image 3.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=RL-Glue-3.04-and-C-Codec.dmg (File Details)]
 This is an OS X disk image with familiar installer that will install both RL-Glue Core and the C/C++ Codec onto your Mac.  Intel Mac only. You do not need to install the C/C++ Codec separately if you use this option.
@@ -87,9 +87,11 @@ For more information about RL-Glue and codecs, please visit the homepage:
 And the RL-Glue Core Homepage:
 [http://glue.rl-community.org/Home/rl-glue]
 
-= ChangeLog =
+
+= Change Log =
 == Version 3.04 ==
 - Fixed a bug in the RL_network.c code where it would dereference a null pointer if an empty abstract type was sent into rlCopyADTToBuffer.  This bug would sometimes (some codecs) manifest if an episode was ended on the first call to env_step.  Thanks to Jason Williams for identifying this problem.
+
 = Past Versions =
 To list all past versions of the RLGlue Core project, go here:
 [http://code.google.com/p/rl-glue-ext/downloads/list?q=language:C]
