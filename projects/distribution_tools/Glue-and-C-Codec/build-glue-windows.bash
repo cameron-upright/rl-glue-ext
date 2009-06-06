@@ -25,7 +25,7 @@ cp ../windows-binaries/README.txt ./tmp/
 unix2dos ./tmp/README.txt
 cp docs/Glue-Overview.pdf ./tmp/
 cp docs/TechnicalManual.pdf ./tmp/
-cp src/rl_glue.exe ./tmp/
+cp src/.libs/rl_glue.exe ./tmp/
 cd tmp
 zip $BinaryName rl_glue.exe Glue-Overview.pdf TechnicalManual.pdf README.txt
 cp $BinaryName ../../dist/
