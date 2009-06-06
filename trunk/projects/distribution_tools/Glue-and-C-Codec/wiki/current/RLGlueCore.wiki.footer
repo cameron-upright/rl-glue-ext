@@ -27,6 +27,9 @@ For more information about RL-Glue and codecs, please visit the homepage:
 And the RL-Glue Core Homepage:
 [http://glue.rl-community.org/Home/rl-glue]
 
+= ChangeLog =
+== Version 3.04 ==
+- Fixed a bug in the RL_network.c code where it would dereference a null pointer if an empty abstract type was sent into rlCopyADTToBuffer.  This bug would sometimes (some codecs) manifest if an episode was ended on the first call to env_step.  Thanks to Jason Williams for identifying this problem.
 = Past Versions =
 To list all past versions of the RLGlue Core project, go here:
 [http://code.google.com/p/rl-glue-ext/downloads/list?q=language:C]
