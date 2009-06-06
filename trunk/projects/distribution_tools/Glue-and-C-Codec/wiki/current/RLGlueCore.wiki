@@ -34,7 +34,7 @@ It contains:
   [http://rl-glue-ext.googlecode.com/files/rl-glue_3.03-1_i386.deb  RL-Glue Core .deb package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue_3.03-1_i386.deb (File Details)]
 
 
-  [http://rl-glue-ext.googlecode.com/files/rl-glue_3.03-1_amd64.deb  RL-Glue Core .deb package (64-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue_3.03-1_amd64.deb (File Details)]
+  [http://rl-glue-ext.googlecode.com/files/rl-glue_3.04-1_amd64.deb  RL-Glue Core .deb package (64-bit) 3.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue_3.04-1_amd64.deb (File Details)]
 
 This is an Debian/Ubuntu package with familiar installer procedure that will install RL-Glue Core
 
@@ -48,7 +48,7 @@ It contains:
   [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-1.i386.rpm  RL-Glue Core .rpm package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-1.i386.rpm (File Details)]
 
 
-  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-1.x86_64.rpm  RL-Glue Core .rpm package (64-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-1.x86_64.rpm (File Details)]
+  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.04-1.x86_64.rpm  RL-Glue Core .rpm package (64-bit) 3.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.04-1.x86_64.rpm (File Details)]
 
 This is an RPM package with familiar installer procedure that will install RL-Glue Core
 
@@ -86,7 +86,6 @@ For more information about RL-Glue and codecs, please visit the homepage:
 
 And the RL-Glue Core Homepage:
 [http://glue.rl-community.org/Home/rl-glue]
-
 
 = Change Log =
 == Version 3.04 ==
