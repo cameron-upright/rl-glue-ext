@@ -31,7 +31,7 @@ It contains:
 
 
 ===Debian/Ubuntu : DEB packages ===
-  [http://rl-glue-ext.googlecode.com/files/rl-glue_3.03-1_i386.deb  RL-Glue Core .deb package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue_3.03-1_i386.deb (File Details)]
+  [http://rl-glue-ext.googlecode.com/files/rl-glue_3.04-1_i386.deb  RL-Glue Core .deb package (32-bit) 3.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue_3.04-1_i386.deb (File Details)]
 
 
   [http://rl-glue-ext.googlecode.com/files/rl-glue_3.04-1_amd64.deb  RL-Glue Core .deb package (64-bit) 3.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue_3.04-1_amd64.deb (File Details)]
@@ -45,7 +45,7 @@ It contains:
   * Man page (man rl_glue)
   * The examples for RL-Glue
 ===Redhat and friends : RPM packages ===
-  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.03-1.i386.rpm  RL-Glue Core .rpm package (32-bit) 3.03] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.03-1.i386.rpm (File Details)]
+  [http://rl-glue-ext.googlecode.com/files/rl-glue-3.04-1.i386.rpm  RL-Glue Core .rpm package (32-bit) 3.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.04-1.i386.rpm (File Details)]
 
 
   [http://rl-glue-ext.googlecode.com/files/rl-glue-3.04-1.x86_64.rpm  RL-Glue Core .rpm package (64-bit) 3.04] [http://code.google.com/p/rl-glue-ext/downloads/detail?name=rl-glue-3.04-1.x86_64.rpm (File Details)]
