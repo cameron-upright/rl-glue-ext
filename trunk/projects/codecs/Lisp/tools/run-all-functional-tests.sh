@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Runs all the functional tests with the selected lisp implementation.
 # If the lisp implementation is not specified, the tests are run with all

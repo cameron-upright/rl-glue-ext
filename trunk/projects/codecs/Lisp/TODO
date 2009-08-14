@@ -27,8 +27,7 @@ TITLE:
 Supporting more Lisp implementations.
 
 DESCRIPTION:
-The codec should be changed so to be able to compile and use with ECL and
-ABCL as well.
+The codec should be changed so to be able to compile and use with ABCL.
 
 BENEFIT:
 Maybe more users.

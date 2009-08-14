@@ -44,7 +44,7 @@
     :accessor discount-factor
     :initarg :discount-factor
     :initform 0.0
-    :type (float 0.0 1.0)
+    :type (float 0.0d0 1.0d0)
     :documentation "Discount factor.")
    (int-observations
     :accessor int-observations

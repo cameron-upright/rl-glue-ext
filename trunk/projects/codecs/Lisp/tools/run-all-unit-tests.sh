@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Runs all the unit tests with the selected lisp implementation.
 # If the lisp implementation is not specified, the test are run with all

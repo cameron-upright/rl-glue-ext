@@ -1,4 +1,4 @@
-#/bin/sh
+#/bin/bash
 #
 # Runs a random cross test of each functional test type with the selected lisp
 # implementation. If it is not specified, the full round is run with all the

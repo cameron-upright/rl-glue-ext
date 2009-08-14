@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Runs the unit tests of the specified package with a selected Lisp
 # implementation and prints the result to the standard output.

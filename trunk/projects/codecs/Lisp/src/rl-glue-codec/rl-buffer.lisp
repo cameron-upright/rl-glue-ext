@@ -71,6 +71,21 @@
       #-little-endian 1
       "Index of the low byte in the byte array representing a double.")))
 
+#+ecl
+(defun get-high-index ()
+  (ffi:c-inline
+   () () :int
+   "{
+     const int one = 1;
+     const char endian = *(char*)&one;
+     @(return) = (int)endian;
+    }"
+   :side-effects nil))
+#+ecl
+(progn
+  (defparameter +high-index+ (get-high-index))
+  (defparameter +low-index+ (- 1 +high-index+)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defparameter *init-buffer-size* 2048 "Initial buffer size in bytes.")
@@ -153,7 +168,10 @@
 (declaim (inline float-encoder))
 (defun float-encoder (float)
   "Returns the codes (high and low parts respectively) of FLOAT."
+  #-ecl
   (declare #.*optimize-settings*)
+  #+ecl
+  (declare (optimize (speed 3) (safety 2) (debug 0)))
   (declare (type double-float float))
   #+sbcl
   (values
@@ -180,7 +198,17 @@
   (fli:with-dynamic-foreign-objects ((d :double float))
     (values (fli:dereference d :type '(:unsigned :int) :index +high-index+)
             (fli:dereference d :type '(:unsigned :int) :index +low-index+)))
-  #-(or sbcl cmu ccl scl allegro lispworks)
+  #+ecl
+  (ffi:c-inline (float +high-index+ +low-index+)
+                (:double :unsigned-int :unsigned-int)
+                (values :unsigned-int :unsigned-int)
+                "{
+                   double d = #0;
+                   @(return 0) = *(((unsigned int *)&d)+#1);
+                   @(return 1) = *(((unsigned int *)&d)+#2);
+                 }"
+                :side-effects nil)
+  #-(or sbcl cmu ccl scl allegro lispworks ecl)
   (flet ((create-float-code (sign expo sigd)
            (declare #.*optimize-settings*)
            (declare (type fixnum sign expo))
@@ -215,7 +243,10 @@
 (declaim (inline float-decoder))
 (defun float-decoder (high low)
   "Returns the float generated from the HIGH and LOW codes."
+  #-ecl
   (declare #.*optimize-settings*)
+  #+ecl
+  (declare (optimize (speed 3) (safety 2) (debug 0)))
   (declare (type int-code-t high low))
   #+sbcl
   (sb-kernel:make-double-float (integer-decoder high) low)
@@ -236,7 +267,18 @@
     (setf (fli:foreign-aref i +high-index+) high)
     (setf (fli:foreign-aref i +low-index+) low)
     (fli:dereference i :type :double))
-  #-(or sbcl cmu ccl scl allegro lispworks)
+  #+ecl
+  (ffi:c-inline (high low +high-index+ +low-index+)
+                (:unsigned-int :unsigned-int :unsigned-int :unsigned-int)
+                :double
+                "{
+                   double d = 0.0;
+                   *(((unsigned int *)&d)+#2) = #0;
+                   *(((unsigned int *)&d)+#3) = #1;
+                   @(return) = d;
+                 }"
+                :side-effects nil)
+  #-(or sbcl cmu ccl scl allegro lispworks ecl)
   (let ((sign (ldb (byte 1 (1- +bits-per-integer+)) high))
         (expo (ldb (byte +expo-bits+ (- +bits-per-integer+ 1 +expo-bits+))
                    high))
@@ -389,7 +431,9 @@ data for the read operation."
 BUFFER by the WRITER-FN function. If given, the SIZE parameter specifies the 
 number of elements to be written. Otherwise it is calculated from SEQ. If 
 WRITE-SIZE-P is T, it is written to the BUFFER before writing the sequence."
-  `(let* ((elem-num (or ,size (length (the simple-array ,seq))))
+  `(let* ((elem-num ,(if (null size)
+                         `(length (the simple-array ,seq))
+                         `(or ,size (length (the simple-array ,seq)))))
           (byte-num (* ,elem-size elem-num)))
      (declare (type fixnum elem-num byte-num))
      (if ,write-size-p
@@ -399,7 +443,7 @@ WRITE-SIZE-P is T, it is written to the BUFFER before writing the sequence."
          (auto-adjust ,buffer byte-num))
      (when (plusp elem-num)
        (dotimes (i (length ,seq))
-         (,writer-fn (aref ,seq i) ,buffer nil)))
+         (,writer-fn (elt ,seq i) ,buffer nil)))
      ,seq))
 
 (defun buffer-read-int-seq (buffer &optional size (buffchk-p t))
