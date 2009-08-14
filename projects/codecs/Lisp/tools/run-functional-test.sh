@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Runs a specified functional test with a selected Lisp implementation
 # and prints the result to the standard output.

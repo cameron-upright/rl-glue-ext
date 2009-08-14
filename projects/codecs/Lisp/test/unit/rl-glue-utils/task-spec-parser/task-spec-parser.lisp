@@ -129,7 +129,7 @@
     (check-with-spec
       (concatenate 'string
                    "VERSION RL-Glue-3.0 PROBLEMTYPE episodic "
-                   "DISCOUNTFACTOR 0.7 OBSERVATIONS INTS (UNSPEC 1) "
+                   "DISCOUNTFACTOR 0.5 OBSERVATIONS INTS (UNSPEC 1) "
                    "ACTIONS DOUBLES (NEGINF POSINF) CHARCOUNT 2 "
                    "REWARDS (UNSPEC UNSPEC) EXTRA Name: Test Problem A"))
     (check-with-spec

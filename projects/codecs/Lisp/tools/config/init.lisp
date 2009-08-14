@@ -7,10 +7,10 @@
       (*compile-verbose* nil)
       #+cmu (ext:*gc-verbose* nil))
   (handler-bind ((warning #'muffle-warning))
-    (load #p"/usr/share/common-lisp/source/asdf/asdf.lisp"
+    (load #p"/data/development/cllib/source/asdf/asdf.lisp"
           :print nil :verbose nil)))
 
-(pushnew #p"/usr/share/common-lisp/systems/" asdf:*central-registry*)
+(pushnew #p"/data/development/cllib/systems/" asdf:*central-registry*)
 
 (let ((*compile-print* nil)
       (*compile-verbose* nil)
